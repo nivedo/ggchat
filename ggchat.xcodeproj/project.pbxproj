@@ -14,6 +14,9 @@
 		D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */; };
 		D4683E6B1BF0486F00E02886 /* ggchatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E6A1BF0486F00E02886 /* ggchatTests.swift */; };
 		D4683E761BF0486F00E02886 /* ggchatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E751BF0486F00E02886 /* ggchatUITests.swift */; };
+		D4683E861BF0494B00E02886 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E851BF0494B00E02886 /* Message.swift */; };
+		D4683E881BF04B9000E02886 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E871BF04B9000E02886 /* MessageData.swift */; };
+		D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E891BF04C6C00E02886 /* MessageMediaData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		D4683E711BF0486F00E02886 /* ggchatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ggchatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E751BF0486F00E02886 /* ggchatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ggchatUITests.swift; sourceTree = "<group>"; };
 		D4683E771BF0486F00E02886 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4683E851BF0494B00E02886 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		D4683E871BF04B9000E02886 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
+		D4683E891BF04C6C00E02886 /* MessageMediaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +103,7 @@
 		D4683E541BF0486F00E02886 /* ggchat */ = {
 			isa = PBXGroup;
 			children = (
+				D4683E831BF048CC00E02886 /* Model */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
@@ -123,6 +130,16 @@
 				D4683E771BF0486F00E02886 /* Info.plist */,
 			);
 			path = ggchatUITests;
+			sourceTree = "<group>";
+		};
+		D4683E831BF048CC00E02886 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D4683E851BF0494B00E02886 /* Message.swift */,
+				D4683E871BF04B9000E02886 /* MessageData.swift */,
+				D4683E891BF04C6C00E02886 /* MessageMediaData.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +276,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
+				D4683E881BF04B9000E02886 /* MessageData.swift in Sources */,
+				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
