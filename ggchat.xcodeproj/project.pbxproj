@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
+		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
+		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
+		D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4683E5C1BF0486F00E02886 /* Assets.xcassets */; };
+		D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */; };
+		D4683E6B1BF0486F00E02886 /* ggchatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E6A1BF0486F00E02886 /* ggchatTests.swift */; };
+		D4683E761BF0486F00E02886 /* ggchatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E751BF0486F00E02886 /* ggchatUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D4683E671BF0486F00E02886 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4683E4A1BF0486F00E02886 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4683E511BF0486F00E02886;
+			remoteInfo = ggchat;
+		};
+		D4683E721BF0486F00E02886 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4683E4A1BF0486F00E02886 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4683E511BF0486F00E02886;
+			remoteInfo = ggchat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D4683E5A1BF0486F00E02886 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D4683E5C1BF0486F00E02886 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D4683E5F1BF0486F00E02886 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D4683E611BF0486F00E02886 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4683E661BF0486F00E02886 /* ggchatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ggchatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4683E6A1BF0486F00E02886 /* ggchatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ggchatTests.swift; sourceTree = "<group>"; };
+		D4683E6C1BF0486F00E02886 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4683E711BF0486F00E02886 /* ggchatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ggchatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4683E751BF0486F00E02886 /* ggchatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ggchatUITests.swift; sourceTree = "<group>"; };
+		D4683E771BF0486F00E02886 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D4683E4F1BF0486F00E02886 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4683E631BF0486F00E02886 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4683E6E1BF0486F00E02886 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D4683E491BF0486F00E02886 = {
+			isa = PBXGroup;
+			children = (
+				D4683E541BF0486F00E02886 /* ggchat */,
+				D4683E691BF0486F00E02886 /* ggchatTests */,
+				D4683E741BF0486F00E02886 /* ggchatUITests */,
+				D4683E531BF0486F00E02886 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D4683E531BF0486F00E02886 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4683E521BF0486F00E02886 /* ggchat.app */,
+				D4683E661BF0486F00E02886 /* ggchatTests.xctest */,
+				D4683E711BF0486F00E02886 /* ggchatUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4683E541BF0486F00E02886 /* ggchat */ = {
+			isa = PBXGroup;
+			children = (
+				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
+				D4683E571BF0486F00E02886 /* ViewController.swift */,
+				D4683E591BF0486F00E02886 /* Main.storyboard */,
+				D4683E5C1BF0486F00E02886 /* Assets.xcassets */,
+				D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */,
+				D4683E611BF0486F00E02886 /* Info.plist */,
+			);
+			path = ggchat;
+			sourceTree = "<group>";
+		};
+		D4683E691BF0486F00E02886 /* ggchatTests */ = {
+			isa = PBXGroup;
+			children = (
+				D4683E6A1BF0486F00E02886 /* ggchatTests.swift */,
+				D4683E6C1BF0486F00E02886 /* Info.plist */,
+			);
+			path = ggchatTests;
+			sourceTree = "<group>";
+		};
+		D4683E741BF0486F00E02886 /* ggchatUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D4683E751BF0486F00E02886 /* ggchatUITests.swift */,
+				D4683E771BF0486F00E02886 /* Info.plist */,
+			);
+			path = ggchatUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D4683E511BF0486F00E02886 /* ggchat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4683E7A1BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchat" */;
+			buildPhases = (
+				D4683E4E1BF0486F00E02886 /* Sources */,
+				D4683E4F1BF0486F00E02886 /* Frameworks */,
+				D4683E501BF0486F00E02886 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ggchat;
+			productName = ggchat;
+			productReference = D4683E521BF0486F00E02886 /* ggchat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D4683E651BF0486F00E02886 /* ggchatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4683E7D1BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchatTests" */;
+			buildPhases = (
+				D4683E621BF0486F00E02886 /* Sources */,
+				D4683E631BF0486F00E02886 /* Frameworks */,
+				D4683E641BF0486F00E02886 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4683E681BF0486F00E02886 /* PBXTargetDependency */,
+			);
+			name = ggchatTests;
+			productName = ggchatTests;
+			productReference = D4683E661BF0486F00E02886 /* ggchatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D4683E701BF0486F00E02886 /* ggchatUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4683E801BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchatUITests" */;
+			buildPhases = (
+				D4683E6D1BF0486F00E02886 /* Sources */,
+				D4683E6E1BF0486F00E02886 /* Frameworks */,
+				D4683E6F1BF0486F00E02886 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4683E731BF0486F00E02886 /* PBXTargetDependency */,
+			);
+			name = ggchatUITests;
+			productName = ggchatUITests;
+			productReference = D4683E711BF0486F00E02886 /* ggchatUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D4683E4A1BF0486F00E02886 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Blub;
+				TargetAttributes = {
+					D4683E511BF0486F00E02886 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 366VR48A29;
+					};
+					D4683E651BF0486F00E02886 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 366VR48A29;
+						TestTargetID = D4683E511BF0486F00E02886;
+					};
+					D4683E701BF0486F00E02886 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 366VR48A29;
+						TestTargetID = D4683E511BF0486F00E02886;
+					};
+				};
+			};
+			buildConfigurationList = D4683E4D1BF0486F00E02886 /* Build configuration list for PBXProject "ggchat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D4683E491BF0486F00E02886;
+			productRefGroup = D4683E531BF0486F00E02886 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D4683E511BF0486F00E02886 /* ggchat */,
+				D4683E651BF0486F00E02886 /* ggchatTests */,
+				D4683E701BF0486F00E02886 /* ggchatUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D4683E501BF0486F00E02886 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
+				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
+				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4683E641BF0486F00E02886 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4683E6F1BF0486F00E02886 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D4683E4E1BF0486F00E02886 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
+				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4683E621BF0486F00E02886 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4683E6B1BF0486F00E02886 /* ggchatTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4683E6D1BF0486F00E02886 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4683E761BF0486F00E02886 /* ggchatUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D4683E681BF0486F00E02886 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4683E511BF0486F00E02886 /* ggchat */;
+			targetProxy = D4683E671BF0486F00E02886 /* PBXContainerItemProxy */;
+		};
+		D4683E731BF0486F00E02886 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4683E511BF0486F00E02886 /* ggchat */;
+			targetProxy = D4683E721BF0486F00E02886 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D4683E591BF0486F00E02886 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D4683E5A1BF0486F00E02886 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D4683E5F1BF0486F00E02886 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D4683E781BF0486F00E02886 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D4683E791BF0486F00E02886 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D4683E7B1BF0486F00E02886 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ggchat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D4683E7C1BF0486F00E02886 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ggchat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D4683E7E1BF0486F00E02886 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ggchatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ggchat.app/ggchat";
+			};
+			name = Debug;
+		};
+		D4683E7F1BF0486F00E02886 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ggchatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ggchat.app/ggchat";
+			};
+			name = Release;
+		};
+		D4683E811BF0486F00E02886 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ggchatUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ggchat;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		D4683E821BF0486F00E02886 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ggchatUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ggchat;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D4683E4D1BF0486F00E02886 /* Build configuration list for PBXProject "ggchat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4683E781BF0486F00E02886 /* Debug */,
+				D4683E791BF0486F00E02886 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4683E7A1BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4683E7B1BF0486F00E02886 /* Debug */,
+				D4683E7C1BF0486F00E02886 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D4683E7D1BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4683E7E1BF0486F00E02886 /* Debug */,
+				D4683E7F1BF0486F00E02886 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D4683E801BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchatUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4683E811BF0486F00E02886 /* Debug */,
+				D4683E821BF0486F00E02886 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D4683E4A1BF0486F00E02886 /* Project object */;
+}
