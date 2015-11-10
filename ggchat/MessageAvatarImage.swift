@@ -1,5 +1,5 @@
 //
-//  MessageAvatarImageDataSource.swift
+//  MessageAvatarImage.swift
 //  ggchat
 //
 //  Created by Gary Chang on 11/8/15.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MessageAvatarImageDataSource {
+class MessageAvatarImage {
     
     func avatarImage() -> UIImage {
         return UIImage()

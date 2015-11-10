@@ -19,8 +19,13 @@
 		D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E891BF04C6C00E02886 /* MessageMediaData.swift */; };
 		D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E8E1BF0500500E02886 /* MessagesViewController.swift */; };
 		D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E911BF050A200E02886 /* MessagesCollectionView.swift */; };
-		D478409F1BF067D300441A2D /* MessageBubbleImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D478409E1BF067D300441A2D /* MessageBubbleImageDataSource.swift */; };
-		D47840A11BF0684200441A2D /* MessageAvatarImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A01BF0684200441A2D /* MessageAvatarImageDataSource.swift */; };
+		D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D478409E1BF067D300441A2D /* MessageBubbleImage.swift */; };
+		D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A01BF0684200441A2D /* MessageAvatarImage.swift */; };
+		D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */; };
+		D47840A71BF1AD8100441A2D /* UIColor+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A61BF1AD8100441A2D /* UIColor+Messages.swift */; };
+		D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A91BF1B67800441A2D /* UIImage+Messages.swift */; };
+		D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */; };
+		D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +64,13 @@
 		D4683E891BF04C6C00E02886 /* MessageMediaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaData.swift; sourceTree = "<group>"; };
 		D4683E8E1BF0500500E02886 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		D4683E911BF050A200E02886 /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
-		D478409E1BF067D300441A2D /* MessageBubbleImageDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImageDataSource.swift; sourceTree = "<group>"; };
-		D47840A01BF0684200441A2D /* MessageAvatarImageDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImageDataSource.swift; sourceTree = "<group>"; };
+		D478409E1BF067D300441A2D /* MessageBubbleImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImage.swift; sourceTree = "<group>"; };
+		D47840A01BF0684200441A2D /* MessageAvatarImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImage.swift; sourceTree = "<group>"; };
+		D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImageFactory.swift; sourceTree = "<group>"; };
+		D47840A61BF1AD8100441A2D /* UIColor+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Messages.swift"; sourceTree = "<group>"; };
+		D47840A91BF1B67800441A2D /* UIImage+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Messages.swift"; sourceTree = "<group>"; };
+		D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GGMessagesAssets.bundle; sourceTree = "<group>"; };
+		D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+Messages.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +121,9 @@
 		D4683E541BF0486F00E02886 /* ggchat */ = {
 			isa = PBXGroup;
 			children = (
+				D47840AB1BF1B99C00441A2D /* Assets */,
+				D47840A51BF1AD6F00441A2D /* Categories */,
+				D47840A21BF176C200441A2D /* Factories */,
 				D4683E901BF0505F00E02886 /* Views */,
 				D4683E8B1BF04F2600E02886 /* Controllers */,
 				D4683E831BF048CC00E02886 /* Models */,
@@ -148,8 +161,8 @@
 				D4683E851BF0494B00E02886 /* Message.swift */,
 				D4683E871BF04B9000E02886 /* MessageData.swift */,
 				D4683E891BF04C6C00E02886 /* MessageMediaData.swift */,
-				D478409E1BF067D300441A2D /* MessageBubbleImageDataSource.swift */,
-				D47840A01BF0684200441A2D /* MessageAvatarImageDataSource.swift */,
+				D478409E1BF067D300441A2D /* MessageBubbleImage.swift */,
+				D47840A01BF0684200441A2D /* MessageAvatarImage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -168,6 +181,32 @@
 				D4683E911BF050A200E02886 /* MessagesCollectionView.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		D47840A21BF176C200441A2D /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */,
+			);
+			name = Factories;
+			sourceTree = "<group>";
+		};
+		D47840A51BF1AD6F00441A2D /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D47840A61BF1AD8100441A2D /* UIColor+Messages.swift */,
+				D47840A91BF1B67800441A2D /* UIImage+Messages.swift */,
+				D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		D47840AB1BF1B99C00441A2D /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
+				D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */,
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
 			);
@@ -304,12 +344,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D47840A11BF0684200441A2D /* MessageAvatarImageDataSource.swift in Sources */,
+				D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */,
 				D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */,
+				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
+				D47840A71BF1AD8100441A2D /* UIColor+Messages.swift in Sources */,
+				D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */,
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
+				D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */,
 				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
-				D478409F1BF067D300441A2D /* MessageBubbleImageDataSource.swift in Sources */,
+				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
 				D4683E881BF04B9000E02886 /* MessageData.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
