@@ -27,6 +27,10 @@
 		D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */; };
 		D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */; };
 		D4A9F4E41BF1E1BF00FA4444 /* MessagesLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E31BF1E1BF00FA4444 /* MessagesLabel.swift */; };
+		D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */; };
+		D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */; };
+		D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4ED1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift */; };
+		D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F4EE1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +77,10 @@
 		D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GGMessagesAssets.bundle; sourceTree = "<group>"; };
 		D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+Messages.swift"; sourceTree = "<group>"; };
 		D4A9F4E31BF1E1BF00FA4444 /* MessagesLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesLabel.swift; sourceTree = "<group>"; };
+		D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellTextView.swift; sourceTree = "<group>"; };
+		D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
+		D4A9F4ED1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingMessagesCollectionViewCell.swift; sourceTree = "<group>"; };
+		D4A9F4EE1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingMessagesCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +190,10 @@
 			children = (
 				D4683E911BF050A200E02886 /* MessagesCollectionView.swift */,
 				D4A9F4E31BF1E1BF00FA4444 /* MessagesLabel.swift */,
+				D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */,
+				D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */,
+				D4A9F4ED1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift */,
+				D4A9F4EE1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -320,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
+				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
 				D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */,
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
@@ -349,8 +362,10 @@
 			files = (
 				D4A9F4E41BF1E1BF00FA4444 /* MessagesLabel.swift in Sources */,
 				D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */,
+				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
+				D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */,
 				D47840A71BF1AD8100441A2D /* UIColor+Messages.swift in Sources */,
 				D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */,
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
@@ -358,6 +373,7 @@
 				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
+				D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
 				D4683E881BF04B9000E02886 /* MessageData.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
