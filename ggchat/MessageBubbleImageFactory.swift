@@ -23,8 +23,8 @@ class MessageBubbleImageFactory: NSObject {
         }
     }
     
-    convenience init(bubbleImage: UIImage) {
-        self.init(bubbleImage: bubbleImage, capInsets: UIEdgeInsetsZero)
+    override convenience init() {
+        self.init(bubbleImage: UIImage.gg_bubbleCompactImage(), capInsets: UIEdgeInsetsZero)
     }
     
     func outgoingMessagesBubbleImageWithColor(color: UIColor) -> MessageBubbleImage {

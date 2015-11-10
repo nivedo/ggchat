@@ -26,6 +26,7 @@
 		D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A91BF1B67800441A2D /* UIImage+Messages.swift */; };
 		D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */; };
 		D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */; };
+		D4A9F4E41BF1E1BF00FA4444 /* MessagesLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E31BF1E1BF00FA4444 /* MessagesLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		D47840A91BF1B67800441A2D /* UIImage+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Messages.swift"; sourceTree = "<group>"; };
 		D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GGMessagesAssets.bundle; sourceTree = "<group>"; };
 		D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+Messages.swift"; sourceTree = "<group>"; };
+		D4A9F4E31BF1E1BF00FA4444 /* MessagesLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				D4683E911BF050A200E02886 /* MessagesCollectionView.swift */,
+				D4A9F4E31BF1E1BF00FA4444 /* MessagesLabel.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A9F4E41BF1E1BF00FA4444 /* MessagesLabel.swift in Sources */,
 				D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */,
 				D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
