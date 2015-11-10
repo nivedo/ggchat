@@ -14,7 +14,8 @@ protocol MessageData {
     var senderDisplayName: String { get}
     var date: NSDate { get }
     var isMediaMessage: Bool { get }
-    var messageHash: UInt { get }
     var text: String? { get }
     var media: MessageMediaData? { get }
+    
+    func messageHash() -> UInt
 }

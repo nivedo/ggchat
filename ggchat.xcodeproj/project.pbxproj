@@ -17,6 +17,10 @@
 		D4683E861BF0494B00E02886 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E851BF0494B00E02886 /* Message.swift */; };
 		D4683E881BF04B9000E02886 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E871BF04B9000E02886 /* MessageData.swift */; };
 		D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E891BF04C6C00E02886 /* MessageMediaData.swift */; };
+		D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E8E1BF0500500E02886 /* MessagesViewController.swift */; };
+		D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E911BF050A200E02886 /* MessagesCollectionView.swift */; };
+		D478409F1BF067D300441A2D /* MessageBubbleImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D478409E1BF067D300441A2D /* MessageBubbleImageDataSource.swift */; };
+		D47840A11BF0684200441A2D /* MessageAvatarImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A01BF0684200441A2D /* MessageAvatarImageDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,10 @@
 		D4683E851BF0494B00E02886 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		D4683E871BF04B9000E02886 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
 		D4683E891BF04C6C00E02886 /* MessageMediaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaData.swift; sourceTree = "<group>"; };
+		D4683E8E1BF0500500E02886 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		D4683E911BF050A200E02886 /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
+		D478409E1BF067D300441A2D /* MessageBubbleImageDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImageDataSource.swift; sourceTree = "<group>"; };
+		D47840A01BF0684200441A2D /* MessageAvatarImageDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImageDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +111,9 @@
 		D4683E541BF0486F00E02886 /* ggchat */ = {
 			isa = PBXGroup;
 			children = (
-				D4683E831BF048CC00E02886 /* Model */,
+				D4683E901BF0505F00E02886 /* Views */,
+				D4683E8B1BF04F2600E02886 /* Controllers */,
+				D4683E831BF048CC00E02886 /* Models */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
@@ -132,14 +142,32 @@
 			path = ggchatUITests;
 			sourceTree = "<group>";
 		};
-		D4683E831BF048CC00E02886 /* Model */ = {
+		D4683E831BF048CC00E02886 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				D4683E851BF0494B00E02886 /* Message.swift */,
 				D4683E871BF04B9000E02886 /* MessageData.swift */,
 				D4683E891BF04C6C00E02886 /* MessageMediaData.swift */,
+				D478409E1BF067D300441A2D /* MessageBubbleImageDataSource.swift */,
+				D47840A01BF0684200441A2D /* MessageAvatarImageDataSource.swift */,
 			);
-			name = Model;
+			name = Models;
+			sourceTree = "<group>";
+		};
+		D4683E8B1BF04F2600E02886 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D4683E8E1BF0500500E02886 /* MessagesViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		D4683E901BF0505F00E02886 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D4683E911BF050A200E02886 /* MessagesCollectionView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,8 +304,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47840A11BF0684200441A2D /* MessageAvatarImageDataSource.swift in Sources */,
+				D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */,
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
+				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
+				D478409F1BF067D300441A2D /* MessageBubbleImageDataSource.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
 				D4683E881BF04B9000E02886 /* MessageData.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
@@ -507,6 +539,7 @@
 				D4683E7C1BF0486F00E02886 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4683E7D1BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchatTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +548,7 @@
 				D4683E7F1BF0486F00E02886 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4683E801BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchatUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +557,7 @@
 				D4683E821BF0486F00E02886 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
