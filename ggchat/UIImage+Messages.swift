@@ -36,7 +36,7 @@ extension UIImage {
     class func gg_bubbleImageFromBundleWithName(name: String) -> UIImage {
         let bundle = NSBundle.gg_messagesAssetBundle()
         let path = bundle.pathForResource(name, ofType:"png", inDirectory:"Images")!
-        return UIImage(contentsOfFile: path)
+        return UIImage(contentsOfFile: path)!
     }
     
     class func gg_bubbleRegularImage() -> UIImage {

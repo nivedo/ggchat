@@ -11,7 +11,7 @@ import UIKit
 
 extension UIColor {
     
-    func gg_messageBubbleGreenColor() -> UIColor {
+    class func gg_messageBubbleGreenColor() -> UIColor {
         return UIColor(
             hue:130.0 / 360.0,
             saturation:0.68,
@@ -19,7 +19,7 @@ extension UIColor {
             alpha:1.0)
     }
     
-     func gg_messageBubbleBlueColor() -> UIColor {
+    class func gg_messageBubbleBlueColor() -> UIColor {
         return UIColor(
             hue: 210.0 / 360.0,
             saturation: 0.94,
@@ -27,7 +27,7 @@ extension UIColor {
             alpha: 1.0)
     }
     
-     func gg_messageBubbleRedColor() -> UIColor {
+    class func gg_messageBubbleRedColor() -> UIColor {
         return UIColor(
             hue: 0.0 / 360.0,
             saturation: 0.79,
@@ -35,7 +35,7 @@ extension UIColor {
             alpha: 1.0)
     }
     
-     func gg_messageBubbleLightGrayColor() -> UIColor {
+    class func gg_messageBubbleLightGrayColor() -> UIColor {
         return UIColor(
             hue: 240.0 / 360.0,
             saturation: 0.02,
@@ -43,8 +43,7 @@ extension UIColor {
             alpha: 1.0)
     }
     
-    
-     func gg_colorByDarkeningColorWithValue(value: CGFloat) -> UIColor {
+    func gg_colorByDarkeningColorWithValue(value: CGFloat) -> UIColor {
         let totalComponents = CGColorGetNumberOfComponents(self.CGColor)
         let isGreyscale = (totalComponents == 2) ? true : false
         
