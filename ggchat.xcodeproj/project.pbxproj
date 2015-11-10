@@ -31,6 +31,8 @@
 		D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */; };
 		D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4ED1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift */; };
 		D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F4EE1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib */; };
+		D4A9F4F31BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F11BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift */; };
+		D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D4A9F4ED1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingMessagesCollectionViewCell.swift; sourceTree = "<group>"; };
 		D4A9F4EE1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingMessagesCollectionViewCell.xib; sourceTree = "<group>"; };
+		D4A9F4F11BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingMessagesCollectionViewCell.swift; sourceTree = "<group>"; };
+		D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OutgoingMessagesCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +198,8 @@
 				D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */,
 				D4A9F4ED1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift */,
 				D4A9F4EE1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib */,
+				D4A9F4F11BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift */,
+				D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -335,6 +341,7 @@
 				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
 				D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */,
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
+				D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,6 +377,7 @@
 				D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */,
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
 				D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */,
+				D4A9F4F31BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift in Sources */,
 				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
