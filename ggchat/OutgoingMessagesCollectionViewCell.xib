@@ -112,9 +112,14 @@
                 <constraint firstItem="BGD-qY-E0o" firstAttribute="top" secondItem="DZf-LO-Mjz" secondAttribute="bottom" id="wYT-ZC-TCL"/>
             </constraints>
             <connections>
+                <outlet property="avatarContainerView" destination="WOk-3d-b4L" id="3Mq-yW-AlE"/>
+                <outlet property="avatarImageView" destination="Ejy-0n-2DI" id="cI4-r5-8Cm"/>
                 <outlet property="cellBottomLabel" destination="FyK-BI-YcW" id="wz3-rl-WOZ"/>
                 <outlet property="cellTopLabel" destination="DZf-LO-Mjz" id="0p7-FZ-fXF"/>
+                <outlet property="messageBubbleContainerView" destination="iYp-dz-DkR" id="R3B-1O-JNI"/>
+                <outlet property="messageBubbleImageView" destination="va9-h1-Qlp" id="v7x-zL-DCQ"/>
                 <outlet property="messageBubbleTopLabel" destination="BGD-qY-E0o" id="nio-iC-lHG"/>
+                <outlet property="textView" destination="60m-yv-GFf" id="j0I-aa-TrT"/>
             </connections>
             <point key="canvasLocation" x="138" y="515"/>
         </collectionViewCell>

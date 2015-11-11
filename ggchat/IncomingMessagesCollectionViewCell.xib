@@ -121,8 +121,12 @@
             </constraints>
             <size key="customSize" width="240" height="175"/>
             <connections>
+                <outlet property="avatarContainerView" destination="jxR-jy-U2S" id="rWN-vW-Dg4"/>
+                <outlet property="avatarImageView" destination="eYd-Db-U2e" id="Huw-nP-ngG"/>
                 <outlet property="cellBottomLabel" destination="h36-eA-i5B" id="5jj-53-P90"/>
                 <outlet property="cellTopLabel" destination="YJb-gP-pVg" id="bBZ-sc-IV1"/>
+                <outlet property="messageBubbleContainerView" destination="GZ0-1y-QjP" id="4Td-Bx-xBZ"/>
+                <outlet property="messageBubbleImageView" destination="UMy-wY-2ol" id="Tve-df-hY1"/>
                 <outlet property="messageBubbleTopLabel" destination="XdS-3H-25R" id="JNL-hn-wRb"/>
                 <outlet property="textView" destination="PcV-sU-TcX" id="PbL-t5-gkk"/>
             </connections>
