@@ -10,16 +10,24 @@ import Foundation
 import UIKit
 
 class MessageAvatarImage {
-    
-    func avatarImage() -> UIImage {
-        return UIImage()
+  
+    var avatarImage: UIImage?
+    var avatarHighlightedImage: UIImage?
+    var avatarPlaceholderImage: UIImage
+   
+    init(avatarImage: UIImage?,
+        highlightedImage: UIImage?,
+        placeholderImage: UIImage) {
+        
+        self.avatarImage = avatarImage
+        self.avatarHighlightedImage = highlightedImage
+        self.avatarPlaceholderImage = placeholderImage
+    }
+    class func avatarWithImage(image: UIImage) -> MessageAvatarImage {
+       return MessageAvatarImage(avatarImage: image, highlightedImage: image, placeholderImage: image)
     }
     
-    func avatarHighlightedImage() -> UIImage {
-        return UIImage()
-    }
-    
-    func avatarPlaceholderImage() -> UIImage {
-        return UIImage()
+    class func avatarImageWithPlaceholder(placeholder: UIImage) -> MessageAvatarImage {
+       return MessageAvatarImage(avatarImage: nil, highlightedImage: nil, placeholderImage: placeholder)
     }
 }

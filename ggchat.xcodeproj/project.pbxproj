@@ -35,6 +35,8 @@
 		D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */; };
 		D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F51BF2ED2A00FA4444 /* UIDevice+Messages.swift */; };
 		D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */; };
+		D4A9F4FA1BF2FB8900FA4444 /* DemoModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */; };
+		D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +91,8 @@
 		D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OutgoingMessagesCollectionViewCell.xib; sourceTree = "<group>"; };
 		D4A9F4F51BF2ED2A00FA4444 /* UIDevice+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Messages.swift"; sourceTree = "<group>"; };
 		D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Messages.swift"; sourceTree = "<group>"; };
+		D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoModelData.swift; sourceTree = "<group>"; };
+		D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImageFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,7 @@
 				D4683E5C1BF0486F00E02886 /* Assets.xcassets */,
 				D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */,
 				D4683E611BF0486F00E02886 /* Info.plist */,
+				D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */,
 			);
 			path = ggchat;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */,
+				D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -378,6 +384,7 @@
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
 				D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */,
+				D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
 				D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */,
 				D47840A71BF1AD8100441A2D /* UIColor+Messages.swift in Sources */,
@@ -390,6 +397,7 @@
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
 				D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */,
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,
+				D4A9F4FA1BF2FB8900FA4444 /* DemoModelData.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
 				D4683E881BF04B9000E02886 /* MessageData.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
