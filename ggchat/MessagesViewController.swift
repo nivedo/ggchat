@@ -12,6 +12,101 @@ private let reuseIdentifier = "Cell"
 
 class MessagesViewController: UICollectionViewController {
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    // Properties
+    //////////////////////////////////////////////////////////////////////////////////////
+    
+    var automaticallyScrollsToMostRecentMessage: Bool
+    var outgoingCellIdentifier: String
+    var outgoingMediaCellIdentifier: String
+    var incomingCellIdentifier: String
+    var incomingMediaCellIdentifier: String
+    var showTypingIndicator: Bool
+    var showLoadEarlierMessagesHeader: Bool
+    var topContentAdditionalInset: CGFloat
+    var gg_isObserving: Bool
+    
+    // var toolbarHeightConstraint: NSLayoutConstraint
+    // var toolbarBottomLayoutGuide: NSLayoutConstraint
+    
+    //////////////////////////////////////////////////////////////////////////////////////
+    
+    var senderId: String
+    var senderDisplayName: String
+    let incomingBubble = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(
+        UIColor(red: 10/255, green: 180/255, blue: 230/255, alpha: 1.0))
+    let outgoingBubble = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(
+        UIColor.lightGrayColor())
+    
+    var messages = [Message]()
+    
+    //////////////////////////////////////////////////////////////////////////////////////
+    
+    func setup() {
+        self.senderId = UIDevice.currentDevice().identifierForVendor!.UUIDString
+        self.senderDisplayName = UIDevice.currentDevice().identifierForVendor!.UUIDString
+        
+        self.view.backgroundColor = UIColor.whiteColor()
+        self.gg_isObserving = false
+        
+        // self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
+        
+        self.collectionView?.dataSource = self;
+        self.collectionView?.delegate = self;
+        
+        // self.inputToolbar.delegate = self;
+        // self.inputToolbar.contentView.textView.placeHolder = [NSBundle jsq_localizedStringForKey:@"new_message"];
+        // self.inputToolbar.contentView.textView.delegate = self;
+        
+        self.automaticallyScrollsToMostRecentMessage = true
+        
+        self.outgoingCellIdentifier =
+            OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
+        self.outgoingMediaCellIdentifier =
+            OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier()
+        
+        self.incomingCellIdentifier =
+            IncomingMessagesCollectionViewCell.cellReuseIdentifier()
+        self.incomingMediaCellIdentifier =
+            IncomingMessagesCollectionViewCell.mediaCellReuseIdentifier()
+        
+        // NOTE: let this behavior be opt-in for now
+        // [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
+        
+        self.showTypingIndicator = false
+        self.showLoadEarlierMessagesHeader = false
+        self.topContentAdditionalInset = 0.0
+        
+        self.gg_updateCollectionViewInsets()
+        
+        // Don't set keyboardController if client creates custom content view via -loadToolbarContentView
+        /*
+        if (self.inputToolbar.contentView.textView != nil) {
+        self.keyboardController = [[JSQMessagesKeyboardController alloc] initWithTextView:self.inputToolbar.contentView.textView
+        contextView:self.view
+        panGestureRecognizer:self.collectionView.panGestureRecognizer
+        delegate:self];
+        }
+        */
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    // UICollectionViewController utilities
+    //////////////////////////////////////////////////////////////////////////////////////
+   
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    func gg_updateCollectionViewInsets() {
+        
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////////////
+    // UICollectionViewController methods
+    //////////////////////////////////////////////////////////////////////////////////////
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +117,7 @@ class MessagesViewController: UICollectionViewController {
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        self.setup()
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +135,9 @@ class MessagesViewController: UICollectionViewController {
     }
     */
 
+    //////////////////////////////////////////////////////////////////////////////////////
     // MARK: UICollectionViewDataSource
+    //////////////////////////////////////////////////////////////////////////////////////
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -48,8 +146,7 @@ class MessagesViewController: UICollectionViewController {
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return self.messages.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -91,4 +188,30 @@ class MessagesViewController: UICollectionViewController {
     }
     */
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    // MARK - Data Source
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    func collectionView(collectionView: MessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageData! {
+        let data = self.messages[indexPath.row]
+        return data
+    }
+    
+     func collectionView(collectionView: MessagesCollectionView!, didDeleteMessageAtIndexPath indexPath: NSIndexPath!) {
+        self.messages.removeAtIndex(indexPath.row)
+    }
+    
+     func collectionView(collectionView: MessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageBubbleImage! {
+        let data = messages[indexPath.row]
+        switch(data.senderId) {
+        case self.senderId:
+            return self.outgoingBubble
+        default:
+            return self.incomingBubble
+        }
+    }
+    
+     func collectionView(collectionView: MessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageAvatarImage! {
+        return nil
+    }
 }

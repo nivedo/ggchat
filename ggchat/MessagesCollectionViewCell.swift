@@ -87,23 +87,23 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     {
     return [UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle bundleForClass:[self class]]];
     }
+*/
     
-    + (NSString *)cellReuseIdentifier
-    {
-    return NSStringFromClass([self class]);
+    class func cellReuseIdentifier() -> String {
+        return NSStringFromClass(self);
     }
     
-    + (NSString *)mediaCellReuseIdentifier
-    {
-    return [NSString stringWithFormat:@"%@_JSQMedia", NSStringFromClass([self class])];
+    class func mediaCellReuseIdentifier() -> String {
+        return "\(NSStringFromClass(self))_GGMedia"
     }
-    
+
+    /*
     + (void)registerMenuAction:(SEL)action
     {
     [jsqMessagesCollectionViewCellActions addObject:NSStringFromSelector(action)];
     }
-*/
-    
+    */
+
     // pragma mark - Initialization
     
     override func awakeFromNib() {

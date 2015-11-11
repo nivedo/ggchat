@@ -12,6 +12,15 @@ private let reuseIdentifier = "Cell"
 
 class GGMessagesViewController: MessagesViewController {
 
+    
+    override func receiveMessagePressed(sender: UIBarButtonItem) {
+        
+    }
+    
+    override func closePressed(sender: UIBarButtonItem) {
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
