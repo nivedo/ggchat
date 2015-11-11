@@ -17,7 +17,7 @@
 		D4683E861BF0494B00E02886 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E851BF0494B00E02886 /* Message.swift */; };
 		D4683E881BF04B9000E02886 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E871BF04B9000E02886 /* MessageData.swift */; };
 		D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E891BF04C6C00E02886 /* MessageMediaData.swift */; };
-		D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E8E1BF0500500E02886 /* MessagesViewController.swift */; };
+		D4683E8F1BF0500500E02886 /* MessagesViewControllerTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E8E1BF0500500E02886 /* MessagesViewControllerTemp.swift */; };
 		D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E911BF050A200E02886 /* MessagesCollectionView.swift */; };
 		D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D478409E1BF067D300441A2D /* MessageBubbleImage.swift */; };
 		D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A01BF0684200441A2D /* MessageAvatarImage.swift */; };
@@ -38,6 +38,7 @@
 		D4A9F4FA1BF2FB8900FA4444 /* DemoModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */; };
 		D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */; };
 		D4A9F4FE1BF330D800FA4444 /* GGMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */; };
+		D4A9F5001BF3333B00FA4444 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FF1BF3333B00FA4444 /* MessagesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +75,7 @@
 		D4683E851BF0494B00E02886 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		D4683E871BF04B9000E02886 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
 		D4683E891BF04C6C00E02886 /* MessageMediaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaData.swift; sourceTree = "<group>"; };
-		D4683E8E1BF0500500E02886 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		D4683E8E1BF0500500E02886 /* MessagesViewControllerTemp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewControllerTemp.swift; sourceTree = "<group>"; };
 		D4683E911BF050A200E02886 /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
 		D478409E1BF067D300441A2D /* MessageBubbleImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImage.swift; sourceTree = "<group>"; };
 		D47840A01BF0684200441A2D /* MessageAvatarImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImage.swift; sourceTree = "<group>"; };
@@ -95,6 +96,7 @@
 		D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoModelData.swift; sourceTree = "<group>"; };
 		D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImageFactory.swift; sourceTree = "<group>"; };
 		D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGMessagesViewController.swift; sourceTree = "<group>"; };
+		D4A9F4FF1BF3333B00FA4444 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,7 +198,8 @@
 		D4683E8B1BF04F2600E02886 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D4683E8E1BF0500500E02886 /* MessagesViewController.swift */,
+				D4683E8E1BF0500500E02886 /* MessagesViewControllerTemp.swift */,
+				D4A9F4FF1BF3333B00FA4444 /* MessagesViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -387,7 +390,8 @@
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
 				D4A9F4FE1BF330D800FA4444 /* GGMessagesViewController.swift in Sources */,
-				D4683E8F1BF0500500E02886 /* MessagesViewController.swift in Sources */,
+				D4683E8F1BF0500500E02886 /* MessagesViewControllerTemp.swift in Sources */,
+				D4A9F5001BF3333B00FA4444 /* MessagesViewController.swift in Sources */,
 				D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
 				D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */,

@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class GGMessagesViewController: UICollectionViewController {
+class GGMessagesViewController: MessagesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
