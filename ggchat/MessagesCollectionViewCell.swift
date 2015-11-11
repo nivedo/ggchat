@@ -14,6 +14,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cellBottomLabel: MessagesLabel!
     @IBOutlet weak var cellTopLabel: MessagesLabel!
     @IBOutlet weak var messageBubbleTopLabel: MessagesLabel!
+    @IBOutlet weak var textView: MessageCellTextView!
     /*
     static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     
