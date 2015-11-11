@@ -46,14 +46,14 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GZ0-1y-QjP" userLabel="Bubble container">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZ0-1y-QjP" userLabel="Bubble container">
                         <rect key="frame" x="36" y="40" width="244" height="94"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UMy-wY-2ol" userLabel="Bubble image view">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UMy-wY-2ol" userLabel="Bubble image view">
                                 <rect key="frame" x="0.0" y="0.0" width="244" height="94"/>
                                 <animations/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-sU-TcX" userLabel="Text view" customClass="MessageCellTextView" customModule="ggchat" customModuleProvider="target">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-sU-TcX" userLabel="Text view" customClass="MessageCellTextView" customModule="ggchat" customModuleProvider="target">
                                 <rect key="frame" x="3" y="0.0" width="238" height="94"/>
                                 <animations/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -79,6 +79,25 @@
                             <constraint firstAttribute="trailing" secondItem="PcV-sU-TcX" secondAttribute="trailing" id="vh5-vq-GuW"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxR-jy-U2S" userLabel="Avatar container">
+                        <rect key="frame" x="0.0" y="100" width="34" height="34"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eYd-Db-U2e" userLabel="Avatar image view">
+                                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                                <animations/>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="eYd-Db-U2e" secondAttribute="bottom" id="W6O-sR-IHx"/>
+                            <constraint firstAttribute="trailing" secondItem="eYd-Db-U2e" secondAttribute="trailing" id="WIm-DM-qTn"/>
+                            <constraint firstAttribute="width" constant="34" id="Xdt-Ns-TmP"/>
+                            <constraint firstAttribute="height" constant="34" id="dEr-L3-Nk4"/>
+                            <constraint firstItem="eYd-Db-U2e" firstAttribute="leading" secondItem="jxR-jy-U2S" secondAttribute="leading" id="s6F-3C-ezu"/>
+                            <constraint firstItem="eYd-Db-U2e" firstAttribute="top" secondItem="jxR-jy-U2S" secondAttribute="top" id="vfM-Xo-ZUv"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -90,9 +109,12 @@
                 <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="GZ0-1y-QjP" secondAttribute="bottom" id="CeA-bz-Fa4"/>
                 <constraint firstAttribute="trailing" secondItem="YJb-gP-pVg" secondAttribute="trailing" id="M7j-iF-MO7"/>
                 <constraint firstItem="h36-eA-i5B" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="S1R-ui-059"/>
+                <constraint firstItem="jxR-jy-U2S" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="a7N-jR-1pB"/>
+                <constraint firstItem="GZ0-1y-QjP" firstAttribute="leading" secondItem="jxR-jy-U2S" secondAttribute="trailing" constant="2" id="eFC-cW-5LT"/>
                 <constraint firstAttribute="trailing" secondItem="XdS-3H-25R" secondAttribute="trailing" id="hdg-EO-pia"/>
                 <constraint firstItem="YJb-gP-pVg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="jID-lN-PJ1"/>
                 <constraint firstAttribute="bottom" secondItem="h36-eA-i5B" secondAttribute="bottom" id="jUv-SU-jRP"/>
+                <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="jxR-jy-U2S" secondAttribute="bottom" id="nvF-yg-Odt"/>
                 <constraint firstItem="XdS-3H-25R" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="q40-1G-x4R"/>
                 <constraint firstItem="XdS-3H-25R" firstAttribute="top" secondItem="YJb-gP-pVg" secondAttribute="bottom" id="sO5-YO-VBb"/>
                 <constraint firstItem="GZ0-1y-QjP" firstAttribute="top" secondItem="XdS-3H-25R" secondAttribute="bottom" id="ybh-eI-ekL"/>
