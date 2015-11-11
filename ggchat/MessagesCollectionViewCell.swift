@@ -21,10 +21,11 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var avatarContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
    
-    var mediaView: UIView
     var avatarViewSize: CGSize
     var textViewFrameInsets: UIEdgeInsets
     var tapGestureRecognizer: UITapGestureRecognizer
+    
+    static var ggMessagesCollectionViewCellActions = NSMutableSet()
     
     /*
     static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
@@ -151,8 +152,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         self.avatarImageView.image = nil;
         self.avatarImageView.highlightedImage = nil;
     }
-    */
-    
+
     - (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
     {
         return layoutAttributes;
@@ -193,6 +193,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         self.avatarViewSize = customAttributes.outgoingAvatarViewSize;
         }
     }
+    */
     
     override var highlighted: Bool {
         didSet {
@@ -222,35 +223,34 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     
     // pragma mark - Menu actions
     
-    - (BOOL)respondsToSelector:(SEL)aSelector
-    {
-        if ([jsqMessagesCollectionViewCellActions containsObject:NSStringFromSelector(aSelector)]) {
-        return YES;
+    override func respondsToSelector(aSelector: Selector) -> Bool {
+        if (self.dynamicType.ggMessagesCollectionViewCellActions.containsObject(NSStringFromSelector(aSelector))) {
+            return true
         }
         
-        return [super respondsToSelector:aSelector];
+        return super.respondsToSelector(aSelector)
     }
     
-    - (void)forwardInvocation:(NSInvocation *)anInvocation
-    {
-        if ([jsqMessagesCollectionViewCellActions containsObject:NSStringFromSelector(anInvocation.selector)]) {
-        __unsafe_unretained id sender;
-        [anInvocation getArgument:&sender atIndex:0];
-        [self.delegate messagesCollectionViewCell:self didPerformAction:anInvocation.selector withSender:sender];
-        }
-        else {
-        [super forwardInvocation:anInvocation];
+    /*
+    override func forwardInvocation(anInvocation: NSInvocation) {
+        if (self.dynamicType.ggMessagesCollectionViewCellActions.containsObject(NSStringFromSelector(anInvocation.selector))) {
+            // __unsafe_unretained id sender;
+            var sender
+            anInvocation.getArgument(&sender, atIndex:0)
+            self.delegate.messagesCollectionViewCell(self, didPerformAction:anInvocation.selector, withSender:sender)
+        } else {
+            super.forwardInvocation(anInvocation)
         }
     }
-    
-    - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
-    {
-        if ([jsqMessagesCollectionViewCellActions containsObject:NSStringFromSelector(aSelector)]) {
-        return [NSMethodSignature signatureWithObjCTypes:"v@:@"];
+
+    func methodSignatureForSelector(aSelector: Selector) -> NSMethodSignature {
+        if (self.dynamicType.ggMessagesCollectionViewCellActions.containsObject(NSStringFromSelector(aSelector))) {
+            return NSMethodSignature.signatureWithObjCTypes("v@:@")
         }
         
-        return [super methodSignatureForSelector:aSelector];
+        return super.methodSignatureForSelector(aSelector)
     }
+    */
     
     // pragma mark - Setters
    
@@ -268,17 +268,16 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    - (void)setAvatarViewSize:(CGSize)avatarViewSize
-    {
+    /*
+    func setAvatarViewSize(avatarViewSize: CGSize) {
         if (CGSizeEqualToSize(avatarViewSize, self.avatarViewSize)) {
-        return;
+            return;
         }
         
-        [self jsq_updateConstraint:self.avatarContainerViewWidthConstraint withConstant:avatarViewSize.width];
-        [self jsq_updateConstraint:self.avatarContainerViewHeightConstraint withConstant:avatarViewSize.height];
+        self.gg_updateConstraint(self.avatarContainerViewWidthConstraint, withConstant:avatarViewSize.width)
+        self.gg_updateConstraint(self.avatarContainerViewHeightConstraint, withConstant:avatarViewSize.height)
     }
    
-    /*
     func setTextViewFrameInsets(textViewFrameInsets: UIEdgeInsets) {
         if (UIEdgeInsetsEqualToEdgeInsets(textViewFrameInsets, self.textViewFrameInsets)) {
             return
@@ -291,27 +290,32 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     }
     */
     
-    func setMediaView(mediaView: UIView) {
-        self.messageBubbleImageView.removeFromSuperview()
-        self.textView.removeFromSuperview()
-        
-        mediaView.translatesAutoresizingMaskIntoConstraints = false
-        mediaView.frame = self.messageBubbleContainerView.bounds
-        
-        self.messageBubbleContainerView.addSubview(mediaView)
-        self.messageBubbleContainerView.gg_pinAllEdgesOfSubview(mediaView)
-        self.mediaView = mediaView;
-        
-        //  because of cell re-use (and caching media views, if using built-in library media item)
-        //  we may have dequeued a cell with a media view and add this one on top
-        //  thus, remove any additional subviews hidden behind the new media view
-        dispatch_async(dispatch_get_main_queue()) {
-            for (var i = 0; i < self.messageBubbleContainerView.subviews.count; i++) {
-                if (self.messageBubbleContainerView.subviews[i] != self.mediaView) {
-                    self.messageBubbleContainerView.subviews[i].removeFromSuperview()
+    var mediaView: UIView {
+        set (mediaView) {
+            self.messageBubbleImageView.removeFromSuperview()
+            self.textView.removeFromSuperview()
+            
+            mediaView.translatesAutoresizingMaskIntoConstraints = false
+            mediaView.frame = self.messageBubbleContainerView.bounds
+            
+            self.messageBubbleContainerView.addSubview(mediaView)
+            self.messageBubbleContainerView.gg_pinAllEdgesOfSubview(mediaView)
+            self.mediaView = mediaView;
+            
+            //  because of cell re-use (and caching media views, if using built-in library media item)
+            //  we may have dequeued a cell with a media view and add this one on top
+            //  thus, remove any additional subviews hidden behind the new media view
+            dispatch_async(dispatch_get_main_queue()) {
+                for (var i = 0; i < self.messageBubbleContainerView.subviews.count; i++) {
+                    if (self.messageBubbleContainerView.subviews[i] != self.mediaView) {
+                        self.messageBubbleContainerView.subviews[i].removeFromSuperview()
+                    }
                 }
             }
-        })
+        }
+        get {
+            return self.mediaView
+        }
     }
     
     // pragma mark - Getters
@@ -342,7 +346,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     }
     
     // pragma mark - Gesture recognizers
-    
+    /*
     func gg_handleTapGesture(tap: UITapGestureRecognizer) {
         let touchPt: CGPoint = tap.locationInView(self)
         
@@ -356,6 +360,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
             self.delegate.messagesCollectionViewCellDidTapCell(self, atPosition:touchPt)
         }
     }
+    */
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         let touchPt: CGPoint = touch.locationInView(self)
