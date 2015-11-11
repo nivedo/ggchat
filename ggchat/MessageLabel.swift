@@ -1,5 +1,5 @@
 //
-//  MessagesLabel.swift
+//  MessageLabel.swift
 //  ggchat
 //
 //  Created by Gary Chang on 11/10/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MessagesLabel: UILabel {
+class MessageLabel: UILabel {
 
     /*
     // Only override drawRect: if you perform custom drawing.

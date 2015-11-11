@@ -11,9 +11,9 @@ import UIKit
 class MessagesCollectionViewCell: UICollectionViewCell {
    
     
-    @IBOutlet weak var cellBottomLabel: MessagesLabel!
-    @IBOutlet weak var cellTopLabel: MessagesLabel!
-    @IBOutlet weak var messageBubbleTopLabel: MessagesLabel!
+    @IBOutlet weak var cellBottomLabel: MessageLabel!
+    @IBOutlet weak var cellTopLabel: MessageLabel!
+    @IBOutlet weak var messageBubbleTopLabel: MessageLabel!
     @IBOutlet weak var textView: MessageCellTextView!
     
     @IBOutlet weak var messageBubbleContainerView: UIView!
