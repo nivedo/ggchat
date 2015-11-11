@@ -13,7 +13,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cell top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZf-LO-Mjz" userLabel="Cell top label" customClass="MessagesLabel" customModule="ggchat" customModuleProvider="target">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="cell top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZf-LO-Mjz" userLabel="Cell top label" customClass="MessagesLabel" customModule="ggchat" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -21,7 +21,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cell bottom label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FyK-BI-YcW" userLabel="Cell bottom label" customClass="MessagesLabel" customModule="ggchat" customModuleProvider="target">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="cell bottom label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FyK-BI-YcW" userLabel="Cell bottom label" customClass="MessagesLabel" customModule="ggchat" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="134" width="320" height="20"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -29,7 +29,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="bubble top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGD-qY-E0o" userLabel="Bubble top level" customClass="MessagesLabel" customModule="ggchat" customModuleProvider="target">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="bubble top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGD-qY-E0o" userLabel="Bubble top level" customClass="MessagesLabel" customModule="ggchat" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="320" height="20"/>
                         <animations/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,15 +37,34 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ug8-W1-WUx" userLabel="Bubble container">
-                        <rect key="frame" x="-140" y="-223" width="600" height="600"/>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WOk-3d-b4L" userLabel="Avatar container">
+                        <rect key="frame" x="286" y="100" width="34" height="34"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VFr-9A-nLV" userLabel="Bubble image view">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ejy-0n-2DI" userLabel="Avatar image view">
+                                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                                <animations/>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="34" id="8EI-1C-Lf5"/>
+                            <constraint firstItem="Ejy-0n-2DI" firstAttribute="top" secondItem="WOk-3d-b4L" secondAttribute="top" id="JbU-g9-Sh7"/>
+                            <constraint firstAttribute="bottom" secondItem="Ejy-0n-2DI" secondAttribute="bottom" id="ayM-Ac-Z5e"/>
+                            <constraint firstAttribute="trailing" secondItem="Ejy-0n-2DI" secondAttribute="trailing" id="c7z-y9-tmw"/>
+                            <constraint firstItem="Ejy-0n-2DI" firstAttribute="leading" secondItem="WOk-3d-b4L" secondAttribute="leading" id="k83-ed-CpI"/>
+                            <constraint firstAttribute="width" constant="34" id="vmp-dL-Dhl"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iYp-dz-DkR" userLabel="Bubble container">
+                        <rect key="frame" x="40" y="40" width="244" height="94"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="va9-h1-Qlp" userLabel="Bubble image view">
                                 <rect key="frame" x="0.0" y="0.0" width="244" height="94"/>
                                 <animations/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4WC-4A-X6P" userLabel="Text view" customClass="MessageCellTextView" customModule="ggchat" customModuleProvider="target">
-                                <rect key="frame" x="3" y="0.0" width="594" height="600"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="60m-yv-GFf" userLabel="Text view" customClass="MessageCellTextView" customModule="ggchat" customModuleProvider="target">
+                                <rect key="frame" x="3" y="0.0" width="238" height="94"/>
                                 <animations/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -55,10 +74,19 @@
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4WC-4A-X6P" firstAttribute="leading" secondItem="Ug8-W1-WUx" secondAttribute="leading" constant="6" id="75a-VL-xTZ"/>
-                            <constraint firstItem="4WC-4A-X6P" firstAttribute="top" secondItem="Ug8-W1-WUx" secondAttribute="top" id="Tv7-z3-Yhn"/>
-                            <constraint firstAttribute="bottom" secondItem="4WC-4A-X6P" secondAttribute="bottom" id="V6Q-r5-a8e"/>
-                            <constraint firstAttribute="trailing" secondItem="4WC-4A-X6P" secondAttribute="trailing" id="amo-hS-oNj"/>
+                            <constraint firstAttribute="trailing" secondItem="60m-yv-GFf" secondAttribute="trailing" id="0NA-nM-c14"/>
+                            <constraint firstItem="60m-yv-GFf" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" constant="6" id="0nz-Zp-IS3"/>
+                            <constraint firstAttribute="trailing" secondItem="60m-yv-GFf" secondAttribute="trailing" id="5fR-sQ-Rvp"/>
+                            <constraint firstAttribute="bottom" secondItem="va9-h1-Qlp" secondAttribute="bottom" id="6Ih-oH-Dlj"/>
+                            <constraint firstAttribute="trailing" secondItem="va9-h1-Qlp" secondAttribute="trailing" id="7yn-Vn-d9p"/>
+                            <constraint firstItem="va9-h1-Qlp" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" id="EPq-ge-wgZ"/>
+                            <constraint firstItem="60m-yv-GFf" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="top" id="GBY-h7-PhD"/>
+                            <constraint firstAttribute="bottom" secondItem="60m-yv-GFf" secondAttribute="bottom" id="MC5-U2-wiz"/>
+                            <constraint firstItem="va9-h1-Qlp" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="top" id="lqS-3x-Ykj"/>
+                            <constraint firstItem="60m-yv-GFf" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="top" id="ohZ-N0-eHs"/>
+                            <constraint firstAttribute="bottom" secondItem="60m-yv-GFf" secondAttribute="bottom" id="vYR-X1-gX7"/>
+                            <constraint firstAttribute="width" constant="244" id="xOM-Po-gAb"/>
+                            <constraint firstItem="60m-yv-GFf" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" constant="6" id="zg6-MX-FkX"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -66,11 +94,29 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <animations/>
+            <constraints>
+                <constraint firstItem="WOk-3d-b4L" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="trailing" constant="2" id="3wb-nP-SZZ"/>
+                <constraint firstItem="BGD-qY-E0o" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5uN-ja-9Ob"/>
+                <constraint firstAttribute="trailing" secondItem="DZf-LO-Mjz" secondAttribute="trailing" id="CPW-Up-lew"/>
+                <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="bottom" id="DgU-N8-EvM"/>
+                <constraint firstAttribute="trailing" secondItem="BGD-qY-E0o" secondAttribute="trailing" id="PqF-uC-oNF"/>
+                <constraint firstAttribute="trailing" secondItem="FyK-BI-YcW" secondAttribute="trailing" id="Prv-Tt-ahs"/>
+                <constraint firstItem="DZf-LO-Mjz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Z0X-Jn-fe3"/>
+                <constraint firstAttribute="bottom" secondItem="FyK-BI-YcW" secondAttribute="bottom" id="grX-Xc-zkU"/>
+                <constraint firstItem="FyK-BI-YcW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="h8d-vn-pEE"/>
+                <constraint firstAttribute="trailing" secondItem="WOk-3d-b4L" secondAttribute="trailing" id="jjj-SB-cgF"/>
+                <constraint firstItem="iYp-dz-DkR" firstAttribute="top" secondItem="BGD-qY-E0o" secondAttribute="bottom" id="ldu-Zb-Zcp"/>
+                <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="WOk-3d-b4L" secondAttribute="bottom" id="lmx-gx-3cE"/>
+                <constraint firstItem="DZf-LO-Mjz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ohg-tf-RpQ"/>
+                <constraint firstItem="BGD-qY-E0o" firstAttribute="top" secondItem="DZf-LO-Mjz" secondAttribute="bottom" id="uEm-BC-0XJ"/>
+                <constraint firstItem="BGD-qY-E0o" firstAttribute="top" secondItem="DZf-LO-Mjz" secondAttribute="bottom" id="wYT-ZC-TCL"/>
+            </constraints>
             <connections>
                 <outlet property="cellBottomLabel" destination="FyK-BI-YcW" id="wz3-rl-WOZ"/>
                 <outlet property="cellTopLabel" destination="DZf-LO-Mjz" id="0p7-FZ-fXF"/>
                 <outlet property="messageBubbleTopLabel" destination="BGD-qY-E0o" id="nio-iC-lHG"/>
             </connections>
+            <point key="canvasLocation" x="138" y="515"/>
         </collectionViewCell>
     </objects>
 </document>
