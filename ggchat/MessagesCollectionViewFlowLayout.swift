@@ -9,214 +9,188 @@
 import UIKit
 
 class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    
+    let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 20.0
+    let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 30.0
+   
+    var collectionView: MessagesCollectionView?
+    
+    // pragma mark - Getters
+    
+    var dynamicAnimator: UIDynamicAnimator? {
+        get {
+            if (self.dynamicAnimator == nil) {
+                self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout:self)
+            }
+            return self.dynamicAnimator
+        }
+        set (newDynamicAnimator) {
+            self.dynamicAnimator = newDynamicAnimator
+        }
+    }
+    var visibleIndexPaths: NSMutableSet = NSMutableSet()
+
+    var itemWidth : CGFloat {
+        get {
+            return CGRectGetWidth(self.collectionView!.frame) - self.sectionInset.left - self.sectionInset.right;
+        }
+    }
+  
+    var latestDelta: CGFloat
+    var messageBubbleTextViewFrameInsets: UIEdgeInsets
+    var springResistanceFactor: CGFloat
+
+    var springinessEnabled: Bool {
+        get {
+            return self.springinessEnabled
+        }
+        set (newSpringinessEnabled) {
+            if (self.springinessEnabled == newSpringinessEnabled) {
+                return
+            }
+                
+            self.springinessEnabled = newSpringinessEnabled
+            
+            if (!self.springinessEnabled) {
+                self.dynamicAnimator!.removeAllBehaviors()
+                self.visibleIndexPaths.removeAllObjects()
+            }
+            self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        }
+    }
+
+    var messageBubbleFont: UIFont {
+        set (newMessageBubbleFont) {
+            if (self.messageBubbleFont.isEqual(newMessageBubbleFont)) {
+                return;
+            }
+            self.messageBubbleFont = newMessageBubbleFont
+        self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        }
+        get {
+            return self.messageBubbleFont
+        }
+    }
+
+    var messageBubbleLeftRightMargin: CGFloat {
+        set (newMessageBubbleLeftRightMargin) {
+            assert(newMessageBubbleLeftRightMargin >= 0.0)
+            self.messageBubbleLeftRightMargin = CGFloat(ceilf(Float(newMessageBubbleLeftRightMargin)))
+            self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        }
+        get {
+            return self.messageBubbleLeftRightMargin
+        }
+    }
+
+    var messageBubbleTextViewTextContainerInsets: UIEdgeInsets {
+        set (newMessageBubbleTextViewTextContainerInsets) {
+            if (UIEdgeInsetsEqualToEdgeInsets(self.messageBubbleTextViewTextContainerInsets, newMessageBubbleTextViewTextContainerInsets)) {
+                return
+            }
+            
+            self.messageBubbleTextViewTextContainerInsets = newMessageBubbleTextViewTextContainerInsets
+            self.invalidateLayoutWithContext (MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        }
+        get {
+            return self.messageBubbleTextViewTextContainerInsets
+        }
+    }
+    
+    var incomingAvatarViewSize: CGSize {
+        set (newIncomingAvatarViewSize) {
+            if (CGSizeEqualToSize(self.incomingAvatarViewSize, newIncomingAvatarViewSize)) {
+                return
+            }
+            
+            self.incomingAvatarViewSize = newIncomingAvatarViewSize
+        self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        }
+        get {
+            return self.incomingAvatarViewSize
+        }
+    }
+    
+    var outgoingAvatarViewSize: CGSize {
+        set (newOutgoingAvatarViewSize) {
+            if (CGSizeEqualToSize(self.outgoingAvatarViewSize, newOutgoingAvatarViewSize)) {
+                return
+            }
+            
+            self.outgoingAvatarViewSize = newOutgoingAvatarViewSize
+        self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        }
+        get {
+            return self.outgoingAvatarViewSize
+        }
+    }
+
+    func gg_configureFlowLayout() {
+        self.scrollDirection = UICollectionViewScrollDirection.Vertical
+        self.sectionInset = UIEdgeInsetsMake(10.0, 4.0, 10.0, 4.0)
+        self.minimumLineSpacing = 4.0
+        
+        self.messageBubbleFont = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        
+        if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+            self.messageBubbleLeftRightMargin = 240.0
+        } else {
+            self.messageBubbleLeftRightMargin = 50.0
+        }
+        
+        self.messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 6.0)
+        self.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0, 14.0, 7.0, 14.0)
+        
+        let defaultAvatarSize: CGSize = CGSizeMake(kMessagesCollectionViewAvatarSizeDefault, kMessagesCollectionViewAvatarSizeDefault)
+        self.incomingAvatarViewSize = defaultAvatarSize
+        self.outgoingAvatarViewSize = defaultAvatarSize
+        
+        self.springinessEnabled = false
+        self.springResistanceFactor = 1000
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "gg_didReceiveApplicationMemoryWarningNotification:",
+            name: UIApplicationDidReceiveMemoryWarningNotification,
+            object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "gg_didReceiveDeviceOrientationDidChangeNotification:",
+            name: UIDeviceOrientationDidChangeNotification,
+            object: nil)
+    }
+    
+    /*
+    override init() {
+        super.init()
+        self.gg_configureFlowLayout()
+    }
+    */
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.gg_configureFlowLayout()
+    }
+    
+    /*
+    + (Class)layoutAttributesClass
+    {
+        return [MessagesCollectionViewLayoutAttributes class];
+    }
+    */
+
+    override class func invalidationContextClass() -> AnyClass {
+        return MessagesCollectionViewFlowLayoutInvalidationContext.self
+    }
+
+    // pragma mark - Setters
+    /*
+    - (void)setBubbleSizeCalculator:(id<MessagesBubbleSizeCalculating>)bubbleSizeCalculator
+    {
+        NSParameterAssert(bubbleSizeCalculator != nil);
+        _bubbleSizeCalculator = bubbleSizeCalculator;
+    }
+    */
 /*
-const CGFloat kMessagesCollectionViewCellLabelHeightDefault = 20.0f;
-const CGFloat kMessagesCollectionViewAvatarSizeDefault = 30.0f;
-
-
-@interface MessagesCollectionViewFlowLayout ()
-
-@property (strong, nonatomic) UIDynamicAnimator *dynamicAnimator;
-@property (strong, nonatomic) NSMutableSet *visibleIndexPaths;
-
-@property (assign, nonatomic) CGFloat latestDelta;
-
-- (void)gg_configureFlowLayout;
-
-- (void)gg_didReceiveApplicationMemoryWarningNotification:(NSNotification *)notification;
-- (void)gg_didReceiveDeviceOrientationDidChangeNotification:(NSNotification *)notification;
-
-- (void)gg_resetLayout;
-- (void)gg_resetDynamicAnimator;
-
-- (void)gg_configureMessageCellLayoutAttributes:(MessagesCollectionViewLayoutAttributes *)layoutAttributes;
-
-- (UIAttachmentBehavior *)gg_springBehaviorWithLayoutAttributesItem:(UICollectionViewLayoutAttributes *)item;
-- (void)gg_addNewlyVisibleBehaviorsFromVisibleItems:(NSArray *)visibleItems;
-- (void)gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths:(NSSet *)visibleItemsIndexPaths;
-- (void)gg_adjustSpringBehavior:(UIAttachmentBehavior *)springBehavior forTouchLocation:(CGPoint)touchLocation;
-
-@end
-
-
-
-@implementation MessagesCollectionViewFlowLayout
-
-@dynamic collectionView;
-
-@synthesize bubbleSizeCalculator = _bubbleSizeCalculator;
-
-#pragma mark - Initialization
-
-- (void)gg_configureFlowLayout
-{
-    self.scrollDirection = UICollectionViewScrollDirectionVertical;
-    self.sectionInset = UIEdgeInsetsMake(10.0f, 4.0f, 10.0f, 4.0f);
-    self.minimumLineSpacing = 4.0f;
-    
-    _messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        _messageBubbleLeftRightMargin = 240.0f;
-    }
-    else {
-        _messageBubbleLeftRightMargin = 50.0f;
-    }
-    
-    _messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 6.0f);
-    _messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 7.0f, 14.0f);
-    
-    CGSize defaultAvatarSize = CGSizeMake(kMessagesCollectionViewAvatarSizeDefault, kMessagesCollectionViewAvatarSizeDefault);
-    _incomingAvatarViewSize = defaultAvatarSize;
-    _outgoingAvatarViewSize = defaultAvatarSize;
-    
-    _springinessEnabled = NO;
-    _springResistanceFactor = 1000;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(gg_didReceiveApplicationMemoryWarningNotification:)
-                                                 name:UIApplicationDidReceiveMemoryWarningNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(gg_didReceiveDeviceOrientationDidChangeNotification:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [self gg_configureFlowLayout];
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    [self gg_configureFlowLayout];
-}
-
-+ (Class)layoutAttributesClass
-{
-    return [MessagesCollectionViewLayoutAttributes class];
-}
-
-+ (Class)invalidationContextClass
-{
-    return [MessagesCollectionViewFlowLayoutInvalidationContext class];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    _messageBubbleFont = nil;
-    _bubbleSizeCalculator = nil;
-    
-    [_dynamicAnimator removeAllBehaviors];
-    _dynamicAnimator = nil;
-    
-    [_visibleIndexPaths removeAllObjects];
-    _visibleIndexPaths = nil;
-}
-
-#pragma mark - Setters
-
-- (void)setBubbleSizeCalculator:(id<MessagesBubbleSizeCalculating>)bubbleSizeCalculator
-{
-    NSParameterAssert(bubbleSizeCalculator != nil);
-    _bubbleSizeCalculator = bubbleSizeCalculator;
-}
-
-- (void)setSpringinessEnabled:(BOOL)springinessEnabled
-{
-    if (_springinessEnabled == springinessEnabled) {
-        return;
-    }
-    
-    _springinessEnabled = springinessEnabled;
-    
-    if (!springinessEnabled) {
-        [_dynamicAnimator removeAllBehaviors];
-        [_visibleIndexPaths removeAllObjects];
-    }
-    [self invalidateLayoutWithContext:[MessagesCollectionViewFlowLayoutInvalidationContext context]];
-}
-
-- (void)setMessageBubbleFont:(UIFont *)messageBubbleFont
-{
-    if ([_messageBubbleFont isEqual:messageBubbleFont]) {
-        return;
-    }
-    
-    NSParameterAssert(messageBubbleFont != nil);
-    _messageBubbleFont = messageBubbleFont;
-    [self invalidateLayoutWithContext:[MessagesCollectionViewFlowLayoutInvalidationContext context]];
-}
-
-- (void)setMessageBubbleLeftRightMargin:(CGFloat)messageBubbleLeftRightMargin
-{
-    NSParameterAssert(messageBubbleLeftRightMargin >= 0.0f);
-    _messageBubbleLeftRightMargin = ceilf(messageBubbleLeftRightMargin);
-    [self invalidateLayoutWithContext:[MessagesCollectionViewFlowLayoutInvalidationContext context]];
-}
-
-- (void)setMessageBubbleTextViewTextContainerInsets:(UIEdgeInsets)messageBubbleTextContainerInsets
-{
-    if (UIEdgeInsetsEqualToEdgeInsets(_messageBubbleTextViewTextContainerInsets, messageBubbleTextContainerInsets)) {
-        return;
-    }
-    
-    _messageBubbleTextViewTextContainerInsets = messageBubbleTextContainerInsets;
-    [self invalidateLayoutWithContext:[MessagesCollectionViewFlowLayoutInvalidationContext context]];
-}
-
-- (void)setIncomingAvatarViewSize:(CGSize)incomingAvatarViewSize
-{
-    if (CGSizeEqualToSize(_incomingAvatarViewSize, incomingAvatarViewSize)) {
-        return;
-    }
-    
-    _incomingAvatarViewSize = incomingAvatarViewSize;
-    [self invalidateLayoutWithContext:[MessagesCollectionViewFlowLayoutInvalidationContext context]];
-}
-
-- (void)setOutgoingAvatarViewSize:(CGSize)outgoingAvatarViewSize
-{
-    if (CGSizeEqualToSize(_outgoingAvatarViewSize, outgoingAvatarViewSize)) {
-        return;
-    }
-    
-    _outgoingAvatarViewSize = outgoingAvatarViewSize;
-    [self invalidateLayoutWithContext:[MessagesCollectionViewFlowLayoutInvalidationContext context]];
-}
-
-#pragma mark - Getters
-
-- (CGFloat)itemWidth
-{
-    return CGRectGetWidth(self.collectionView.frame) - self.sectionInset.left - self.sectionInset.right;
-}
-
-- (UIDynamicAnimator *)dynamicAnimator
-{
-    if (!_dynamicAnimator) {
-        _dynamicAnimator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];
-    }
-    return _dynamicAnimator;
-}
-
-- (NSMutableSet *)visibleIndexPaths
-{
-    if (!_visibleIndexPaths) {
-        _visibleIndexPaths = [NSMutableSet new];
-    }
-    return _visibleIndexPaths;
-}
-
 - (id<MessagesBubbleSizeCalculating>)bubbleSizeCalculator
 {
     if (_bubbleSizeCalculator == nil) {
@@ -225,58 +199,55 @@ const CGFloat kMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
     return _bubbleSizeCalculator;
 }
+*/
 
-#pragma mark - Notifications
+    // pragma mark - Notifications
 
-- (void)gg_didReceiveApplicationMemoryWarningNotification:(NSNotification *)notification
-{
-    [self gg_resetLayout];
-}
-
-- (void)gg_didReceiveDeviceOrientationDidChangeNotification:(NSNotification *)notification
-{
-    [self gg_resetLayout];
-    [self invalidateLayoutWithContext:[MessagesCollectionViewFlowLayoutInvalidationContext context]];
-}
-
-#pragma mark - Collection view flow layout
-
-- (void)invalidateLayoutWithContext:(MessagesCollectionViewFlowLayoutInvalidationContext *)context
-{
-    if (context.invalidateDataSourceCounts) {
-        context.invalidateFlowLayoutAttributes = YES;
-        context.invalidateFlowLayoutDelegateMetrics = YES;
+    func gg_didReceiveApplicationMemoryWarningNotification(notification: NSNotification) {
+        self.gg_resetLayout()
     }
-    
-    if (context.invalidateFlowLayoutAttributes
-        || context.invalidateFlowLayoutDelegateMetrics) {
-        [self gg_resetDynamicAnimator];
-    }
-    
-    if (context.invalidateFlowLayoutMessagesCache) {
-        [self gg_resetLayout];
-    }
-    
-    [super invalidateLayoutWithContext:context];
-}
 
-- (void)prepareLayout
-{
-    [super prepareLayout];
-    
-    if (self.springinessEnabled) {
-        //  pad rect to avoid flickering
-        CGFloat padding = -100.0f;
-        CGRect visibleRect = CGRectInset(self.collectionView.bounds, padding, padding);
+    func gg_didReceiveDeviceOrientationDidChangeNotification(notification: NSNotification) {
+        self.gg_resetLayout()
+        self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+    }
+
+    // pragma mark - Collection view flow layout
+
+    func invalidateLayoutWithContext(context: MessagesCollectionViewFlowLayoutInvalidationContext) {
+        if (context.invalidateDataSourceCounts) {
+            context.invalidateFlowLayoutAttributes = true
+            context.invalidateFlowLayoutDelegateMetrics = true
+        }
         
-        NSArray *visibleItems = [super layoutAttributesForElementsInRect:visibleRect];
-        NSSet *visibleItemsIndexPaths = [NSSet setWithArray:[visibleItems valueForKey:NSStringFromSelector(@selector(indexPath))]];
+        if (context.invalidateFlowLayoutAttributes
+            || context.invalidateFlowLayoutDelegateMetrics) {
+            self.gg_resetDynamicAnimator()
+        }
         
-        [self gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths:visibleItemsIndexPaths];
+        if (context.invalidateFlowLayoutMessagesCache) {
+            self.gg_resetLayout()
+        }
         
-        [self gg_addNewlyVisibleBehaviorsFromVisibleItems:visibleItems];
+        super.invalidateLayoutWithContext(context)
     }
-}
+
+    override func prepareLayout() {
+        super.prepareLayout()
+        
+        if (self.springinessEnabled) {
+            //  pad rect to avoid flickering
+            let padding: CGFloat = -100.0
+            let visibleRect: CGRect = CGRectInset(self.collectionView.bounds, padding, padding)
+            
+            NSArray *visibleItems = [super layoutAttributesForElementsInRect:visibleRect];
+            NSSet *visibleItemsIndexPaths = [NSSet setWithArray:[visibleItems valueForKey:NSStringFromSelector(@selector(indexPath))]];
+            
+            [self gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths:visibleItemsIndexPaths];
+            
+            [self gg_addNewlyVisibleBehaviorsFromVisibleItems:visibleItems];
+        }
+    }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
@@ -383,23 +354,21 @@ const CGFloat kMessagesCollectionViewAvatarSizeDefault = 30.0f;
     }];
 }
 
-#pragma mark - Invalidation utilities
+    // pragma mark - Invalidation utilities
 
-- (void)gg_resetLayout
-{
-    [self.bubbleSizeCalculator prepareForResettingLayout:self];
-    [self gg_resetDynamicAnimator];
-}
-
-- (void)gg_resetDynamicAnimator
-{
-    if (self.springinessEnabled) {
-        [self.dynamicAnimator removeAllBehaviors];
-        [self.visibleIndexPaths removeAllObjects];
+    func gg_resetLayout() {
+        // self.bubbleSizeCalculator.prepareForResettingLayout(self)
+        self.gg_resetDynamicAnimator()
     }
-}
 
-#pragma mark - Message cell layout utilities
+    func gg_resetDynamicAnimator() {
+        if (self.springinessEnabled) {
+            self.dynamicAnimator!.removeAllBehaviors()
+            self.visibleIndexPaths.removeAllObjects()
+        }
+    }
+
+    // pragma mark - Message cell layout utilities
 
 - (CGSize)messageBubbleSizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -40,6 +40,7 @@
 		D4A9F5001BF3333B00FA4444 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FF1BF3333B00FA4444 /* MessagesViewController.swift */; };
 		D4A9F5041BF33C6300FA4444 /* MessageInputToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5031BF33C6300FA4444 /* MessageInputToolBar.swift */; };
 		D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5061BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift */; };
+		D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5081BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		D4A9F4FF1BF3333B00FA4444 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		D4A9F5031BF33C6300FA4444 /* MessageInputToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputToolBar.swift; sourceTree = "<group>"; };
 		D4A9F5061BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		D4A9F5081BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayoutInvalidationContext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				D4A9F5061BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift */,
+				D4A9F5081BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				D4A9F4FE1BF330D800FA4444 /* GGMessagesViewController.swift in Sources */,
 				D4A9F5001BF3333B00FA4444 /* MessagesViewController.swift in Sources */,
 				D4A9F5041BF33C6300FA4444 /* MessageInputToolBar.swift in Sources */,
+				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
 				D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
 				D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */,
