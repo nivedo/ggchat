@@ -44,6 +44,7 @@ class MessagesViewController: UICollectionViewController {
     //////////////////////////////////////////////////////////////////////////////////////
     
     func setup() {
+        self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
         self.view.backgroundColor = UIColor.whiteColor()
         
         // self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
@@ -91,7 +92,7 @@ class MessagesViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.registerClass(MessagesCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
         self.setup()
