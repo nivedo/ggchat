@@ -119,7 +119,7 @@ class MessagesViewController: UICollectionViewController {
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
@@ -171,15 +171,18 @@ class MessagesViewController: UICollectionViewController {
     //////////////////////////////////////////////////////////////////////////////////////
 
     func collectionView(collectionView: MessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageData! {
+        print("MVC::messageDataForItemAtIndexPath")
         let data = self.messages[indexPath.row]
         return data
     }
     
     func collectionView(collectionView: MessagesCollectionView!, didDeleteMessageAtIndexPath indexPath: NSIndexPath!) {
+        print("MVC::didDeleteMessageAtIndexPath")
         self.messages.removeAtIndex(indexPath.row)
     }
     
     func collectionView(collectionView: MessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageBubbleImage! {
+        print("MVC::messageBubbleImageDataForItemAtIndexPath")
         let data = messages[indexPath.row]
         switch(data.senderId) {
         case self.senderId:
@@ -196,6 +199,7 @@ class MessagesViewController: UICollectionViewController {
     //////////////////////////////////////////////////////////////////////////////////////
     
     func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
+        print("MVC::messageBubbleImageDataForItemAtIndexPath")
         /**
         *  You may return nil here if you do not want bubbles.
         *  In this case, you should set the background color of your collection view cell's textView.
@@ -212,6 +216,7 @@ class MessagesViewController: UICollectionViewController {
     }
     
     func collectionView(collectionView: MessagesCollectionView, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
+        print("MVC::avatarImageDataForItemAtIndexPath")
         /**
         *  Return `nil` here if you do not want avatars.
         *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
@@ -250,6 +255,7 @@ class MessagesViewController: UICollectionViewController {
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        print("MVC::attributedTextForCellTopLabelAtIndexPath")
         /**
         *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
         *  The other label text delegate methods should follow a similar pattern.
@@ -265,6 +271,7 @@ class MessagesViewController: UICollectionViewController {
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        print("MVC::attributedTextForCellTopLabelAtIndexPath")
         let message: Message = self.messages[indexPath.item]
         
         /**
@@ -288,6 +295,7 @@ class MessagesViewController: UICollectionViewController {
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        print("MVC::attributedTextForCellBottomLabelAtIndexPath")
         return nil;
     }
 }
