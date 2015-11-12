@@ -15,7 +15,6 @@ class MessagesViewController: UICollectionViewController {
     //////////////////////////////////////////////////////////////////////////////////////
     // Properties
     //////////////////////////////////////////////////////////////////////////////////////
-    
     var automaticallyScrollsToMostRecentMessage: Bool = true
     var outgoingCellIdentifier: String = OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
     var outgoingMediaCellIdentifier: String = OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier()

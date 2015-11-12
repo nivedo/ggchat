@@ -14,9 +14,12 @@ extension NSBundle {
     }
     
     class func gg_messagesAssetBundle() -> NSBundle {
-        let bundleResourcePath = NSBundle.gg_messagesBundle().resourcePath!
+        // let bundleResourcePath = NSBundle.gg_messagesBundle().resourcePath!
+        let bundleResourcePath = NSBundle.mainBundle().resourcePath!
+        print(bundleResourcePath)
         let assetPath = NSURL(fileURLWithPath: bundleResourcePath).URLByAppendingPathComponent("GGMessagesAssets.bundle")
-        return NSBundle(path: assetPath.absoluteString)!
+        print(assetPath.absoluteString)
+        return NSBundle(URL: assetPath)!
     }
     
     class func gg_localizedStringForKey(key: String) -> String {
