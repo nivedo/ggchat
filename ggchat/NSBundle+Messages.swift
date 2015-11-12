@@ -16,9 +16,9 @@ extension NSBundle {
     class func gg_messagesAssetBundle() -> NSBundle {
         // let bundleResourcePath = NSBundle.gg_messagesBundle().resourcePath!
         let bundleResourcePath = NSBundle.mainBundle().resourcePath!
-        print(bundleResourcePath)
+        // print(bundleResourcePath)
         let assetPath = NSURL(fileURLWithPath: bundleResourcePath).URLByAppendingPathComponent("GGMessagesAssets.bundle")
-        print(assetPath.absoluteString)
+        // print(assetPath.absoluteString)
         return NSBundle(URL: assetPath)!
     }
     

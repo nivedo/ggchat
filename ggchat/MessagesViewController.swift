@@ -84,6 +84,7 @@ class MessagesViewController: UICollectionViewController {
     //////////////////////////////////////////////////////////////////////////////////////
     
     override func viewDidLoad() {
+        print("MessagesViewController::viewDidLoad()")
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
