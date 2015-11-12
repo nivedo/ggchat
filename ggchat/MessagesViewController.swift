@@ -175,11 +175,11 @@ class MessagesViewController: UICollectionViewController {
         return data
     }
     
-     func collectionView(collectionView: MessagesCollectionView!, didDeleteMessageAtIndexPath indexPath: NSIndexPath!) {
+    func collectionView(collectionView: MessagesCollectionView!, didDeleteMessageAtIndexPath indexPath: NSIndexPath!) {
         self.messages.removeAtIndex(indexPath.row)
     }
     
-     func collectionView(collectionView: MessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageBubbleImage! {
+    func collectionView(collectionView: MessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageBubbleImage! {
         let data = messages[indexPath.row]
         switch(data.senderId) {
         case self.senderId:
@@ -189,7 +189,7 @@ class MessagesViewController: UICollectionViewController {
         }
     }
     
-     func collectionView(collectionView: MessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageAvatarImage! {
+    func collectionView(collectionView: MessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageAvatarImage! {
         return nil
     }
     
