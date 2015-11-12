@@ -1,5 +1,5 @@
 //
-//  DemoModelData.swift
+//  GGModelData.swift
 //  ggchat
 //
 //  Created by Gary _chang on 11/10/15.
@@ -23,12 +23,19 @@ class Demo {
     static var avatarSize: CGFloat = 30.0
 }
 
-class DemoModelData {
+class GGModelData {
     var messages = [Message]()
     var avatars = [String:MessageAvatarImage]()
     var users = [String:String]()
     var outgoingBubbleImage: MessageBubbleImage
     var incomingBubbleImage: MessageBubbleImage
+   
+    class var sharedInstance: GGModelData {
+        struct Singleton {
+            static let instance = GGModelData()
+        }
+        return Singleton.instance
+    }
     
     init() {
         loadMessages()

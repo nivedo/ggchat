@@ -37,6 +37,8 @@ class MessagesViewController: UICollectionViewController {
         UIColor(red: 10/255, green: 180/255, blue: 230/255, alpha: 1.0))
     let outgoingBubble = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(
         UIColor.lightGrayColor())
+    var outgoingBubbleImage: MessageBubbleImage
+    var incomingBubbleImage: MessageBubbleImage
     
     var messages = [Message]()
     
@@ -69,6 +71,10 @@ class MessagesViewController: UICollectionViewController {
             IncomingMessagesCollectionViewCell.cellReuseIdentifier()
         self.incomingMediaCellIdentifier =
             IncomingMessagesCollectionViewCell.mediaCellReuseIdentifier()
+        
+        let bubbleFactory = MessageBubbleImageFactory()
+        self.outgoingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleLightGrayColor())
+        self.incomingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
         
         // NOTE: let this behavior be opt-in for now
         // [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
@@ -213,5 +219,103 @@ class MessagesViewController: UICollectionViewController {
     
      func collectionView(collectionView: MessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageAvatarImage! {
         return nil
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////////////
+    
+    func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
+        /**
+        *  You may return nil here if you do not want bubbles.
+        *  In this case, you should set the background color of your collection view cell's textView.
+        *
+        *  Otherwise, return your previously created bubble image data objects.
+        */
+        let message: Message = self.messages[indexPath.item]
+    
+        if (message.senderId == self.senderId) {
+            return self.outgoingBubbleImage
+        }
+        
+        return self.incomingBubbleImage
+    }
+    
+    func collectionView(collectionView: MessagesCollectionView, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
+        /**
+        *  Return `nil` here if you do not want avatars.
+        *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
+        *
+        *  self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
+        *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+        *
+        *  It is possible to have only outgoing avatars or only incoming avatars, too.
+        */
+        
+        /**
+        *  Return your previously created avatar image data objects.
+        *
+        *  Note: these the avatars will be sized according to these values:
+        *
+        *  self.collectionView.collectionViewLayout.incomingAvatarViewSize
+        *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize
+        *
+        *  Override the defaults in `viewDidLoad`
+        */
+        let message: Message = self.messages[indexPath.item]
+    
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if (message.senderId == self.senderId) {
+            if (!defaults.boolForKey("outgoingAvatarSetting")) {
+                return nil;
+            }
+        }
+        else {
+            if (!defaults.boolForKey("incomingAvatarSetting")) {
+                return nil;
+            }
+        }
+        
+        return GGModelData.sharedInstance.avatars[message.senderId];
+    }
+    
+    func collectionView(collectionView: MessagesCollectionView, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        /**
+        *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
+        *  The other label text delegate methods should follow a similar pattern.
+        *
+        *  Show a timestamp for every 3rd message
+        */
+        if (indexPath.item % 3 == 0) {
+            let message: Message = self.messages[indexPath.item]
+            // return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+            return NSAttributedString(string: message.senderId)
+        }
+        return nil;
+    }
+    
+    func collectionView(collectionView: MessagesCollectionView, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        let message: Message = self.messages[indexPath.item]
+        
+        /**
+        *  iOS7-style sender name labels
+        */
+        if (message.senderId == self.senderId) {
+            return nil
+        }
+        
+        if (indexPath.item - 1 > 0) {
+            let previousMessage: Message = self.messages[indexPath.item - 1]
+            if (previousMessage.senderId == message.senderId) {
+                return nil
+            }
+        }
+    
+        /**
+        *  Don't specify attributes to use the defaults.
+        */
+        return NSAttributedString(string: message.senderDisplayName)
+    }
+    
+    func collectionView(collectionView: MessagesCollectionView, attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        return nil;
     }
 }

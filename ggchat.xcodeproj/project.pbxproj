@@ -35,7 +35,7 @@
 		D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */; };
 		D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F51BF2ED2A00FA4444 /* UIDevice+Messages.swift */; };
 		D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */; };
-		D4A9F4FA1BF2FB8900FA4444 /* DemoModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */; };
+		D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */; };
 		D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */; };
 		D4A9F4FE1BF330D800FA4444 /* GGMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */; };
 		D4A9F5001BF3333B00FA4444 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FF1BF3333B00FA4444 /* MessagesViewController.swift */; };
@@ -94,7 +94,7 @@
 		D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OutgoingMessagesCollectionViewCell.xib; sourceTree = "<group>"; };
 		D4A9F4F51BF2ED2A00FA4444 /* UIDevice+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Messages.swift"; sourceTree = "<group>"; };
 		D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Messages.swift"; sourceTree = "<group>"; };
-		D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoModelData.swift; sourceTree = "<group>"; };
+		D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGModelData.swift; sourceTree = "<group>"; };
 		D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImageFactory.swift; sourceTree = "<group>"; };
 		D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGMessagesViewController.swift; sourceTree = "<group>"; };
 		D4A9F4FF1BF3333B00FA4444 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				D4683E831BF048CC00E02886 /* Models */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
-				D4A9F4F91BF2FB8900FA4444 /* DemoModelData.swift */,
+				D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */,
 				D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
 				D4683E5C1BF0486F00E02886 /* Assets.xcassets */,
@@ -409,7 +409,7 @@
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
 				D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */,
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,
-				D4A9F4FA1BF2FB8900FA4444 /* DemoModelData.swift in Sources */,
+				D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
 				D4683E881BF04B9000E02886 /* MessageData.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,

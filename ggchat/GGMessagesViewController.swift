@@ -13,13 +13,7 @@ private let reuseIdentifier = "Cell"
 class GGMessagesViewController: MessagesViewController {
 
     
-    override func receiveMessagePressed(sender: UIBarButtonItem) {
-        
-    }
-    
-    override func closePressed(sender: UIBarButtonItem) {
-        
-    }
+    //////////////////////////////////////////////////////////////////////////////////////    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +25,10 @@ class GGMessagesViewController: MessagesViewController {
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        self.senderId = Demo.id_chang
+        self.senderDisplayName = Demo.displayName_chang
+        self.messages = GGModelData.sharedInstance().messages
+        self.showLoadEarlierMessagesHeader = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,5 +97,4 @@ class GGMessagesViewController: MessagesViewController {
     
     }
     */
-
 }
