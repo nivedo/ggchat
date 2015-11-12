@@ -16,40 +16,36 @@ class MessagesViewController: UICollectionViewController {
     // Properties
     //////////////////////////////////////////////////////////////////////////////////////
     
-    var automaticallyScrollsToMostRecentMessage: Bool
-    var outgoingCellIdentifier: String
-    var outgoingMediaCellIdentifier: String
-    var incomingCellIdentifier: String
-    var incomingMediaCellIdentifier: String
-    var showTypingIndicator: Bool
-    var showLoadEarlierMessagesHeader: Bool
-    var topContentAdditionalInset: CGFloat
-    var gg_isObserving: Bool
+    var automaticallyScrollsToMostRecentMessage: Bool = true
+    var outgoingCellIdentifier: String = OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
+    var outgoingMediaCellIdentifier: String = OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier()
+    var incomingCellIdentifier: String = IncomingMessagesCollectionViewCell.cellReuseIdentifier()
+    var incomingMediaCellIdentifier: String = IncomingMessagesCollectionViewCell.mediaCellReuseIdentifier()
+    var showTypingIndicator: Bool = false
+    var showLoadEarlierMessagesHeader: Bool = false
+    var topContentAdditionalInset: CGFloat = 0.0
+    var gg_isObserving: Bool = false
     
     // var toolbarHeightConstraint: NSLayoutConstraint
     // var toolbarBottomLayoutGuide: NSLayoutConstraint
     
     //////////////////////////////////////////////////////////////////////////////////////
     
-    var senderId: String
-    var senderDisplayName: String
+    var senderId: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
+    var senderDisplayName: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
     let incomingBubble = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(
         UIColor(red: 10/255, green: 180/255, blue: 230/255, alpha: 1.0))
     let outgoingBubble = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(
         UIColor.lightGrayColor())
-    var outgoingBubbleImage: MessageBubbleImage
-    var incomingBubbleImage: MessageBubbleImage
+    var outgoingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleLightGrayColor())
+    var incomingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
     
     var messages = [Message]()
     
     //////////////////////////////////////////////////////////////////////////////////////
     
     func setup() {
-        self.senderId = UIDevice.currentDevice().identifierForVendor!.UUIDString
-        self.senderDisplayName = UIDevice.currentDevice().identifierForVendor!.UUIDString
-        
         self.view.backgroundColor = UIColor.whiteColor()
-        self.gg_isObserving = false
         
         // self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
         
@@ -60,28 +56,8 @@ class MessagesViewController: UICollectionViewController {
         // self.inputToolbar.contentView.textView.placeHolder = [NSBundle jsq_localizedStringForKey:@"new_message"];
         // self.inputToolbar.contentView.textView.delegate = self;
         
-        self.automaticallyScrollsToMostRecentMessage = true
-        
-        self.outgoingCellIdentifier =
-            OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
-        self.outgoingMediaCellIdentifier =
-            OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier()
-        
-        self.incomingCellIdentifier =
-            IncomingMessagesCollectionViewCell.cellReuseIdentifier()
-        self.incomingMediaCellIdentifier =
-            IncomingMessagesCollectionViewCell.mediaCellReuseIdentifier()
-        
-        let bubbleFactory = MessageBubbleImageFactory()
-        self.outgoingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleLightGrayColor())
-        self.incomingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
-        
         // NOTE: let this behavior be opt-in for now
         // [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
-        
-        self.showTypingIndicator = false
-        self.showLoadEarlierMessagesHeader = false
-        self.topContentAdditionalInset = 0.0
         
         self.gg_updateCollectionViewInsets()
         
@@ -99,11 +75,6 @@ class MessagesViewController: UICollectionViewController {
     //////////////////////////////////////////////////////////////////////////////////////
     // UICollectionViewController utilities
     //////////////////////////////////////////////////////////////////////////////////////
-   
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
-    }
     
     func gg_updateCollectionViewInsets() {
         

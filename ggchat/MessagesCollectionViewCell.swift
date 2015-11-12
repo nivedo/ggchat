@@ -21,9 +21,9 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var avatarContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
    
-    var avatarViewSize: CGSize
-    var textViewFrameInsets: UIEdgeInsets
-    var tapGestureRecognizer: UITapGestureRecognizer
+    var avatarViewSize: CGSize?
+    var textViewFrameInsets: UIEdgeInsets?
+    var tapGestureRecognizer: UITapGestureRecognizer?
     
     static var ggMessagesCollectionViewCellActions = NSMutableSet()
     

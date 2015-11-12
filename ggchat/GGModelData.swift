@@ -38,14 +38,13 @@ class GGModelData {
     }
     
     init() {
-        loadMessages()
-        loadAvatars()
-        loadUsers()
-        
         let bubbleFactory = MessageBubbleImageFactory()
         
         self.outgoingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleLightGrayColor())
         self.incomingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
+        self.loadMessages()
+        self.loadAvatars()
+        self.loadUsers()
     }
     
     func loadMessages() {
