@@ -18,9 +18,10 @@ class MessagesCollectionViewFlowLayoutInvalidationContext: UICollectionViewFlowL
         
     // pragma mark - Initialization
     override init() {
+        self.invalidateFlowLayoutMessagesCache = false
+        super.init()
         self.invalidateFlowLayoutDelegateMetrics = false
         self.invalidateFlowLayoutAttributes = false
-        self.invalidateFlowLayoutMessagesCache = false
     }
     
     class func context() -> MessagesCollectionViewFlowLayoutInvalidationContext {

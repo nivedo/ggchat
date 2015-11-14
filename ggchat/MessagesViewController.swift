@@ -173,7 +173,7 @@ class MessagesViewController: UICollectionViewController {
     // MARK - Data Source
     //////////////////////////////////////////////////////////////////////////////////////
 
-    func collectionView(collectionView: MessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageData! {
+    func collectionView(collectionView: MessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> Message! {
         print("MVC::messageDataForItemAtIndexPath")
         let data = self.messages[indexPath.row]
         return data

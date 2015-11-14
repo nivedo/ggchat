@@ -124,14 +124,16 @@ class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
         return super.isEqual(object)
     }
     
-    func hash() -> Int {
-        return self.indexPath.hash
+    override var hash: Int {
+        get {
+            return self.indexPath.hash
+        }
     }
     
     // pragma mark - NSCopying
     
-    func copyWithZone(zone: NSZone) -> MessagesCollectionViewLayoutAttributes {
-        let copy: MessagesCollectionViewLayoutAttributes = super.copyWithZone(zone)
+    override func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy: MessagesCollectionViewLayoutAttributes = super.copyWithZone(zone) as! MessagesCollectionViewLayoutAttributes
         
         if (copy.representedElementCategory != UICollectionElementCategory.Cell) {
             return copy

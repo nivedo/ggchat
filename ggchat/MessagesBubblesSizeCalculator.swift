@@ -75,8 +75,9 @@ class MessagesBubblesSizeCalculator {
             let horizontalInsetsTotal: CGFloat = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble
             let maximumTextWidth: CGFloat = self.textBubbleWidthForLayout(layout) - avatarSize.width - layout.messageBubbleLeftRightMargin - horizontalInsetsTotal
             
-            let stringRect: CGRect = messageData.text.boundingRectWithSize(CGSizeMake(maximumTextWidth, CGFLOAT_MAX)),
-                options: (NSStringDrawingoptions.UsesLineFragmentOrigin.rawValue | NSStringDrawingOptions.UsesFontLeading.rawValue ),
+            let stringRect: CGRect = messageData.text!.boundingRectWithSize(
+                CGSizeMake(maximumTextWidth, CGFloat.max),
+                options: NSStringDrawingOptions(rawValue: NSStringDrawingOptions.UsesLineFragmentOrigin.rawValue | NSStringDrawingOptions.UsesFontLeading.rawValue ),
                 attributes: [ NSFontAttributeName : layout.messageBubbleFont ],
                 context: nil)
             
@@ -95,8 +96,8 @@ class MessagesBubblesSizeCalculator {
             finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets)
         }
         
-        [self.cache setObject:[NSValue valueWithCGSize:finalSize] forKey:@([messageData messageHash])];
-        
+        self.cache.setObject(NSValue(CGSize: finalSize), forKey: messageData.messageHash());
+    
         return finalSize;
     }
     

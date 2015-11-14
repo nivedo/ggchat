@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol MessageMediaData {
+class MessageMediaData {
     
     var mediaView: UIView?
     var mediaViewDisplaySize: CGSize?

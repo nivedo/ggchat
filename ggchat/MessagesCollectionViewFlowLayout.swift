@@ -12,8 +12,8 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 20.0
     let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 30.0
-   
-    var collectionView: MessagesCollectionView?
+    
+    // var collectionView: MessagesCollectionView?
     
     // pragma mark - Getters
     
@@ -36,9 +36,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
   
-    var latestDelta: CGFloat
-    var messageBubbleTextViewFrameInsets: UIEdgeInsets
-    var springResistanceFactor: CGFloat
+    var latestDelta: CGFloat = 0.0
+    var messageBubbleTextViewFrameInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 6.0)
+    var springResistanceFactor: CGFloat = 1000
 
     var springinessEnabled: Bool {
         get {
@@ -159,13 +159,17 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             object: nil)
     }
     
-    /*
     override init() {
         super.init()
         self.gg_configureFlowLayout()
     }
-    */
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.gg_configureFlowLayout()
+    }
 
+    /*
     override func awakeFromNib() {
         super.awakeFromNib()
         self.gg_configureFlowLayout()
@@ -482,4 +486,5 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             item.center = center
         }
     }
+    */
 }
