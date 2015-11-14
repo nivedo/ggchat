@@ -17,5 +17,6 @@ class MessagesCollectionView: UICollectionView {
         // Drawing code
     }
     */
-
+    
+    var messagesDataSource: MessagesViewController?
 }

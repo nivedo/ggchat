@@ -13,7 +13,12 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 20.0
     let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 30.0
     
-    // var collectionView: MessagesCollectionView?
+    var messagesCollectionView: MessagesCollectionView?
+    override var collectionView: MessagesCollectionView {
+        get {
+            return self.messagesCollectionView!
+        }
+    }
     
     // pragma mark - Getters
     
@@ -32,7 +37,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     var itemWidth : CGFloat {
         get {
-            return CGRectGetWidth(self.collectionView!.frame) - self.sectionInset.left - self.sectionInset.right;
+            return CGRectGetWidth(self.collectionView.frame) - self.sectionInset.left - self.sectionInset.right;
         }
     }
   
@@ -400,18 +405,18 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         layoutAttributes.messageBubbleFont = self.messageBubbleFont
         layoutAttributes.incomingAvatarViewSize = self.incomingAvatarViewSize
         layoutAttributes.outgoingAvatarViewSize = self.outgoingAvatarViewSize
-        layoutAttributes.cellTopLabelHeight = self.collectionView!.delegate.collectionView(
-            self.collectionView!,
+        layoutAttributes.cellTopLabelHeight = self.collectionView.delegate.collectionView(
+            self.collectionView,
             layout:self,
             heightForCellTopLabelAtIndexPath:indexPath)
         
-        layoutAttributes.messageBubbleTopLabelHeight = self.collectionView!.delegate.collectionView(
-            self.collectionView!,
+        layoutAttributes.messageBubbleTopLabelHeight = self.collectionView.delegate.collectionView(
+            self.collectionView,
             layout: self,
             heightForMessageBubbleTopLabelAtIndexPath:indexPath)
         
-        layoutAttributes.cellBottomLabelHeight = self.collectionView!.delegate.collectionView(
-            self.collectionView!,
+        layoutAttributes.cellBottomLabelHeight = self.collectionView.delegate.collectionView(
+            self.collectionView,
             layout:self,
             heightForCellBottomLabelAtIndexPath:indexPath)
     }
