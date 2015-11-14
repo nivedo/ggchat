@@ -11,9 +11,9 @@ import UIKit
 
 protocol MessageMediaData {
     
-    var mediaView: UIView { get }
-    var mediaViewDisplaySize: CGSize { get }
-    var mediaPlaceholderView: UIView { get}
-    var mediaHash: UInt { get }
+    var mediaView: UIView?
+    var mediaViewDisplaySize: CGSize?
+    var mediaPlaceholderView: UIView?
+    var mediaHash: UInt?
     
 }

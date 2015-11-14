@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Message: MessageData {
+class Message {
     
     var senderId: String
     var senderDisplayName: String
