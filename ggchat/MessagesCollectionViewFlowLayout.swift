@@ -238,121 +238,114 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         if (self.springinessEnabled) {
             //  pad rect to avoid flickering
             let padding: CGFloat = -100.0
-            let visibleRect: CGRect = CGRectInset(self.collectionView.bounds, padding, padding)
+            let visibleRect: CGRect = CGRectInset((self.collectionView?.bounds)!, padding, padding)
             
-            NSArray *visibleItems = [super layoutAttributesForElementsInRect:visibleRect];
-            NSSet *visibleItemsIndexPaths = [NSSet setWithArray:[visibleItems valueForKey:NSStringFromSelector(@selector(indexPath))]];
+            let visibleItems: NSArray = super.layoutAttributesForElementsInRect(visibleRect)
+            let visibleItemsIndexPaths: NSSet = NSSet.setWithArray(visibleItems.valueForKey(NSStringFromSelector(Selector(indexPath))))
             
-            [self gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths:visibleItemsIndexPaths];
+            self.gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths(visibleItemsIndexPaths)
             
-            [self gg_addNewlyVisibleBehaviorsFromVisibleItems:visibleItems];
+            self.gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems)
         }
     }
 
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
-{
-    NSArray *attributesInRect = [super layoutAttributesForElementsInRect:rect];
+    func layoutAttributesForElementsInRect(rect: CGRect) -> NSArray {
+        var attributesInRect: NSArray = super.layoutAttributesForElementsInRect(rect)
     
-    if (self.springinessEnabled) {
-        NSMutableArray *attributesInRectCopy = [attributesInRect mutableCopy];
-        NSArray *dynamicAttributes = [self.dynamicAnimator itemsInRect:rect];
-        
-        //  avoid duplicate attributes
-        //  use dynamic animator attribute item instead of regular item, if it exists
-        for (UICollectionViewLayoutAttributes *eachItem in attributesInRect) {
+        if (self.springinessEnabled) {
+            let attributesInRectCopy: NSMutableArray = attributesInRect.mutableCopy()
+            let dynamicAttributes: NSArray = self.dynamicAnimator?.itemsInRect(rect)
             
-            for (UICollectionViewLayoutAttributes *eachDynamicItem in dynamicAttributes) {
-                if ([eachItem.indexPath isEqual:eachDynamicItem.indexPath]
-                    && eachItem.representedElementCategory == eachDynamicItem.representedElementCategory) {
-                    
-                    [attributesInRectCopy removeObject:eachItem];
-                    [attributesInRectCopy addObject:eachDynamicItem];
-                    continue;
+            //  avoid duplicate attributes
+            //  use dynamic animator attribute item instead of regular item, if it exists
+            for (eachItem in attributesInRect) {
+                for (eachDynamicItem in dynamicAttributes) {
+                    if (eachItem.indexPath.isEqual(eachDynamicItem.indexPath)
+                        && eachItem.representedElementCategory == eachDynamicItem.representedElementCategory) {
+                        attributesInRectCopy.removeObject(eachItem)
+                        attributesInRectCopy.addObject(eachDynamicItem)
+                        continue
+                    }
                 }
             }
+            
+            attributesInRect = attributesInRectCopy
         }
         
-        attributesInRect = attributesInRectCopy;
-    }
-    
-    [attributesInRect enumerateObjectsUsingBlock:^(MessagesCollectionViewLayoutAttributes *attributesItem, NSUInteger idx, BOOL *stop) {
-        if (attributesItem.representedElementCategory == UICollectionElementCategoryCell) {
-            [self gg_configureMessageCellLayoutAttributes:attributesItem];
-        }
-        else {
-            attributesItem.zIndex = -1;
-        }
-    }];
-    
-    return attributesInRect;
-}
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    MessagesCollectionViewLayoutAttributes *customAttributes = (MessagesCollectionViewLayoutAttributes *)[super layoutAttributesForItemAtIndexPath:indexPath];
-    
-    if (customAttributes.representedElementCategory == UICollectionElementCategoryCell) {
-        [self gg_configureMessageCellLayoutAttributes:customAttributes];
-    }
-    
-    return customAttributes;
-}
-
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
-{
-    if (self.springinessEnabled) {
-        UIScrollView *scrollView = self.collectionView;
-        CGFloat delta = newBounds.origin.y - scrollView.bounds.origin.y;
-        
-        self.latestDelta = delta;
-        
-        CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
-        
-        [self.dynamicAnimator.behaviors enumerateObjectsUsingBlock:^(UIAttachmentBehavior *springBehaviour, NSUInteger idx, BOOL *stop) {
-            [self gg_adjustSpringBehavior:springBehaviour forTouchLocation:touchLocation];
-            [self.dynamicAnimator updateItemUsingCurrentState:[springBehaviour.items firstObject]];
-        }];
-    }
-    
-    CGRect oldBounds = self.collectionView.bounds;
-    if (CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds)) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
-{
-    [super prepareForCollectionViewUpdates:updateItems];
-    
-    [updateItems enumerateObjectsUsingBlock:^(UICollectionViewUpdateItem *updateItem, NSUInteger index, BOOL *stop) {
-        if (updateItem.updateAction == UICollectionUpdateActionInsert) {
-            
-            if (self.springinessEnabled && [self.dynamicAnimator layoutAttributesForCellAtIndexPath:updateItem.indexPathAfterUpdate]) {
-                *stop = YES;
-            }
-            
-            CGFloat collectionViewHeight = CGRectGetHeight(self.collectionView.bounds);
-            
-            MessagesCollectionViewLayoutAttributes *attributes = [MessagesCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:updateItem.indexPathAfterUpdate];
-            
-            if (attributes.representedElementCategory == UICollectionElementCategoryCell) {
-                [self gg_configureMessageCellLayoutAttributes:attributes];
-            }
-            
-            attributes.frame = CGRectMake(0.0f,
-                                          collectionViewHeight + CGRectGetHeight(attributes.frame),
-                                          CGRectGetWidth(attributes.frame),
-                                          CGRectGetHeight(attributes.frame));
-            
-            if (self.springinessEnabled) {
-                UIAttachmentBehavior *springBehaviour = [self gg_springBehaviorWithLayoutAttributesItem:attributes];
-                [self.dynamicAnimator addBehavior:springBehaviour];
+        for index in 0...attributesInRect.count {
+            if (attributesInRect[index].representedElementCategory == UICollectionElementCategory.Cell) {
+                self.gg_configureMessageCellLayoutAttributes(attributesInRect[index])
+            } else {
+                attributesInRect[index].zIndex = -1;
             }
         }
-    }];
-}
+        
+        return attributesInRect
+    }
+
+    func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
+        let customAttributes: MessagesCollectionViewLayoutAttributes = super.layoutAttributesForItemAtIndexPath(indexPath) as MessagesCollectionViewLayoutAttributes
+        
+        if (customAttributes.representedElementCategory == UICollectionElementCategory.Cell) {
+            self.gg_configureMessageCellLayoutAttributes(customAttributes)
+        }
+        
+        return customAttributes
+    }
+
+    func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+        if (self.springinessEnabled) {
+            let scrollView: UIScrollView = self.collectionView
+            let delta: CGFloat = newBounds.origin.y - scrollView.bounds.origin.y
+            
+            self.latestDelta = delta
+            
+            let touchLocation: CGPoint = self.collectionView.panGestureRecognizer(locationInView: self.collectionView)
+            
+            self.dynamicAnimator.behaviors.enumerateObjectsUsingBlock({ springBehaviour, index, stop) in
+                self.gg_adjustSpringBehavior(springBehaviour, forTouchLocation:touchLocation)
+                self.dynamicAnimator.updateItemUsingCurrentState(springBehaviour.items.firstObject())
+            })
+        }
+        
+        let oldBounds: CGRect = self.collectionView.bounds
+        if (CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds)) {
+            return true
+        }
+        
+        return false
+    }
+
+    func prepareForCollectionViewUpdates(updateItems: NSArray) {
+        super.prepareForCollectionViewUpdates(updateItems)
+        
+        updateItems.enumerateObjectsUsingBlock({updateItem, index, stop) in
+            if (updateItem.updateAction == UICollectionUpdateAction.Insert) {
+                
+                if (self.springinessEnabled && self.dynamicAnimator.layoutAttributesForCellAtIndexPath(updateItem.indexPathAfterUpdate)) {
+                    stop = false
+                }
+                
+                let collectionViewHeight: CGFloat = CGRectGetHeight(self.collectionView.bounds)
+                
+                let attributes: MessagesCollectionViewLayoutAttributes = MessagesCollectionViewLayoutAttributes.layoutAttributesForCellWithIndexPath(updateItem.indexPathAfterUpdate)
+                
+                if (attributes.representedElementCategory == UICollectionElementCategory.Cell) {
+                    self.gg_configureMessageCellLayoutAttributes(attributes)
+                }
+                
+                attributes.frame = CGRectMake(0.0,
+                    collectionViewHeight + CGRectGetHeight(attributes.frame),
+                    CGRectGetWidth(attributes.frame),
+                    CGRectGetHeight(attributes.frame));
+                
+                if (self.springinessEnabled) {
+                    let springBehavior: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(attributes)
+                    self.dynamicAnimator.addBehavior(springBehaviour)
+                }
+            }
+        })
+    }
 
     // pragma mark - Invalidation utilities
 
@@ -370,131 +363,123 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // pragma mark - Message cell layout utilities
 
-- (CGSize)messageBubbleSizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    id<MessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView
-                                                      messageDataForItemAtIndexPath:indexPath];
+    func messageBubbleSizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
+        let messageItem: Message = self.collectionView?.dataSource.collectionView(
+            self.collectionView,
+            messageDataForItemAtIndexPath:indexPath)
 
-    return [self.bubbleSizeCalculator messageBubbleSizeForMessageData:messageItem
-                                                          atIndexPath:indexPath
-                                                           withLayout:self];
-}
-
-- (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGSize messageBubbleSize = [self messageBubbleSizeForItemAtIndexPath:indexPath];
-    MessagesCollectionViewLayoutAttributes *attributes = (MessagesCollectionViewLayoutAttributes *)[self layoutAttributesForItemAtIndexPath:indexPath];
-    
-    CGFloat finalHeight = messageBubbleSize.height;
-    finalHeight += attributes.cellTopLabelHeight;
-    finalHeight += attributes.messageBubbleTopLabelHeight;
-    finalHeight += attributes.cellBottomLabelHeight;
-    
-    return CGSizeMake(self.itemWidth, ceilf(finalHeight));
-}
-
-- (void)gg_configureMessageCellLayoutAttributes:(MessagesCollectionViewLayoutAttributes *)layoutAttributes
-{
-    NSIndexPath *indexPath = layoutAttributes.indexPath;
-    
-    CGSize messageBubbleSize = [self messageBubbleSizeForItemAtIndexPath:indexPath];
-    
-    layoutAttributes.messageBubbleContainerViewWidth = messageBubbleSize.width;
-    
-    layoutAttributes.textViewFrameInsets = self.messageBubbleTextViewFrameInsets;
-    
-    layoutAttributes.textViewTextContainerInsets = self.messageBubbleTextViewTextContainerInsets;
-    
-    layoutAttributes.messageBubbleFont = self.messageBubbleFont;
-    
-    layoutAttributes.incomingAvatarViewSize = self.incomingAvatarViewSize;
-    
-    layoutAttributes.outgoingAvatarViewSize = self.outgoingAvatarViewSize;
-    
-    layoutAttributes.cellTopLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
-                                                                                layout:self
-                                                      heightForCellTopLabelAtIndexPath:indexPath];
-    
-    layoutAttributes.messageBubbleTopLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
-                                                                                         layout:self
-                                                      heightForMessageBubbleTopLabelAtIndexPath:indexPath];
-    
-    layoutAttributes.cellBottomLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
-                                                                                   layout:self
-                                                      heightForCellBottomLabelAtIndexPath:indexPath];
-}
-
-#pragma mark - Spring behavior utilities
-
-- (UIAttachmentBehavior *)gg_springBehaviorWithLayoutAttributesItem:(UICollectionViewLayoutAttributes *)item
-{
-    if (CGSizeEqualToSize(item.frame.size, CGSizeZero)) {
-        // adding a spring behavior with zero size will fail in in -prepareForCollectionViewUpdates:
-        return nil;
+        return self.bubbleSizeCalculator.messageBubbleSizeForMessageData(
+            messageItem,
+            atIndexPath:indexPath,
+            withLayout:self)
     }
-    
-    UIAttachmentBehavior *springBehavior = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:item.center];
-    springBehavior.length = 1.0f;
-    springBehavior.damping = 1.0f;
-    springBehavior.frequency = 1.0f;
-    return springBehavior;
-}
 
-- (void)gg_addNewlyVisibleBehaviorsFromVisibleItems:(NSArray *)visibleItems
-{
-    //  a "newly visible" item is in `visibleItems` but not in `self.visibleIndexPaths`
-    NSIndexSet *indexSet = [visibleItems indexesOfObjectsPassingTest:^BOOL(UICollectionViewLayoutAttributes *item, NSUInteger index, BOOL *stop) {
-        return ![self.visibleIndexPaths containsObject:item.indexPath];
-    }];
-    
-    NSArray *newlyVisibleItems = [visibleItems objectsAtIndexes:indexSet];
-    
-    CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
-    
-    [newlyVisibleItems enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes *item, NSUInteger index, BOOL *stop) {
-        UIAttachmentBehavior *springBehaviour = [self gg_springBehaviorWithLayoutAttributesItem:item];
-        [self gg_adjustSpringBehavior:springBehaviour forTouchLocation:touchLocation];
-        [self.dynamicAnimator addBehavior:springBehaviour];
-        [self.visibleIndexPaths addObject:item.indexPath];
-    }];
-}
-
-- (void)gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths:(NSSet *)visibleItemsIndexPaths
-{
-    NSArray *behaviors = self.dynamicAnimator.behaviors;
-    
-    NSIndexSet *indexSet = [behaviors indexesOfObjectsPassingTest:^BOOL(UIAttachmentBehavior *springBehaviour, NSUInteger index, BOOL *stop) {
-        UICollectionViewLayoutAttributes *layoutAttributes = (UICollectionViewLayoutAttributes *)[springBehaviour.items firstObject];
-        return ![visibleItemsIndexPaths containsObject:layoutAttributes.indexPath];
-    }];
-    
-    NSArray *behaviorsToRemove = [self.dynamicAnimator.behaviors objectsAtIndexes:indexSet];
-    
-    [behaviorsToRemove enumerateObjectsUsingBlock:^(UIAttachmentBehavior *springBehaviour, NSUInteger index, BOOL *stop) {
-        UICollectionViewLayoutAttributes *layoutAttributes = (UICollectionViewLayoutAttributes *)[springBehaviour.items firstObject];
-        [self.dynamicAnimator removeBehavior:springBehaviour];
-        [self.visibleIndexPaths removeObject:layoutAttributes.indexPath];
-    }];
-}
-
-- (void)gg_adjustSpringBehavior:(UIAttachmentBehavior *)springBehavior forTouchLocation:(CGPoint)touchLocation
-{
-    UICollectionViewLayoutAttributes *item = (UICollectionViewLayoutAttributes *)[springBehavior.items firstObject];
-    CGPoint center = item.center;
-    
-    //  if touch is not (0,0) -- adjust item center "in flight"
-    if (!CGPointEqualToPoint(CGPointZero, touchLocation)) {
-        CGFloat distanceFromTouch = fabs(touchLocation.y - springBehavior.anchorPoint.y);
-        CGFloat scrollResistance = distanceFromTouch / self.springResistanceFactor;
+    func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
+        let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
+        let attributes: MessagesCollectionViewLayoutAttributes = self.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
         
-        if (self.latestDelta < 0.0f) {
-            center.y += MAX(self.latestDelta, self.latestDelta * scrollResistance);
-        }
-        else {
-            center.y += MIN(self.latestDelta, self.latestDelta * scrollResistance);
-        }
-        item.center = center;
+        var finalHeight: CGFloat = messageBubbleSize.height
+        finalHeight += attributes.cellTopLabelHeight
+        finalHeight += attributes.messageBubbleTopLabelHeight
+        finalHeight += attributes.cellBottomLabelHeight
+        
+        return CGSizeMake(self.itemWidth, ceil(finalHeight));
     }
-}
-*/
+
+    func gg_configureMessageCellLayoutAttributes(layoutAttributes: MessagesCollectionViewLayoutAttributes) {
+        let indexPath: NSIndexPath = layoutAttributes.indexPath
+        
+        let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
+        layoutAttributes.messageBubbleContainerViewWidth = messageBubbleSize.width
+        layoutAttributes.textViewFrameInsets = self.messageBubbleTextViewFrameInsets
+        layoutAttributes.textViewTextContainerInsets = self.messageBubbleTextViewTextContainerInsets
+        layoutAttributes.messageBubbleFont = self.messageBubbleFont
+        layoutAttributes.incomingAvatarViewSize = self.incomingAvatarViewSize
+        layoutAttributes.outgoingAvatarViewSize = self.outgoingAvatarViewSize
+        layoutAttributes.cellTopLabelHeight = self.collectionView!.delegate.collectionView(
+            self.collectionView!,
+            layout:self,
+            heightForCellTopLabelAtIndexPath:indexPath)
+        
+        layoutAttributes.messageBubbleTopLabelHeight = self.collectionView!.delegate.collectionView(
+            self.collectionView!,
+            layout: self,
+            heightForMessageBubbleTopLabelAtIndexPath:indexPath)
+        
+        layoutAttributes.cellBottomLabelHeight = self.collectionView!.delegate.collectionView(
+            self.collectionView!,
+            layout:self,
+            heightForCellBottomLabelAtIndexPath:indexPath)
+    }
+
+    // pragma mark - Spring behavior utilities
+
+    func gg_springBehaviorWithLayoutAttributesItem(item: UICollectionViewLayoutAttributes) -> UIAttachmentBehavior? {
+        if (CGSizeEqualToSize(item.frame.size, CGSizeZero)) {
+            // adding a spring behavior with zero size will fail in in -prepareForCollectionViewUpdates:
+            return nil
+        }
+        
+        let springBehavior: UIAttachmentBehavior = UIAttachmentBehavior(
+            item:item,
+            attachedToAnchor: item.center)
+        springBehavior.length = 1.0
+        springBehavior.damping = 1.0
+        springBehavior.frequency = 1.0
+        return springBehavior
+    }
+
+    func gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems: NSArray) {
+        //  a "newly visible" item is in `visibleItems` but not in `self.visibleIndexPaths`
+        let indexSet: NSIndexSet = visibleItems.indexesOfObjectsPassingTest({item: UICollectionViewLayoutAttributes, index, stop) in
+            return !self.visibleIndexPaths.containsObject(item.indexPath)
+        })
+        
+        let newlyVisibleItems: NSArray = visibleItems.objectsAtIndexes(indexSet)
+        
+        let touchLocation: CGPoint = self.collectionView.panGestureRecognizer.locationInViews(self.collectionView)
+        
+        newlyVisibleItems.enumerateObjectsUsingBlock({ item: UICollectionViewLayoutAttributes, index, stop) in
+            let springBehaviour: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(item)
+            self.gg_adjustSpringBehavior(springBehaviour, forTouchLocation:touchLocation)
+            self.dynamicAnimator.addBehavior(springBehaviour)
+            self.visibleIndexPaths.addObject(item.indexPath)
+        })
+    }
+
+    func gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths(visibleItemsIndexPaths: NSSet) {
+        let behaviors: NSArray = self.dynamicAnimator.behaviors
+        
+        let indexSet: NSIndexSet = behaviors.indexesOfObjectsPassingTest({springBehaviour: UIAttachmentBehavior, index, stop) in
+            let layoutAttributes: UICollectionViewLayoutAttributes = springBehaviour.items.first! as UICollectionViewLayoutAttributes
+            return !visibleItemsIndexPaths.containsObject(layoutAttributes.indexPath)
+        })
+        
+        let behaviorsToRemove: NSArray = self.dynamicAnimator.behaviors.objectsAtIndexes(indexSet)
+        
+        behaviorsToRemove.enumerateObjectsUsingBlock({ springBehaviour: UIAttachmentBehavior, index, stop) {
+            let layoutAttributes: UICollectionViewLayoutAttributes = springBehaviour.items.first! as! UICollectionViewLayoutAttributes
+            self.dynamicAnimator.removeBehavior(springBehaviour)
+            self.visibleIndexPaths.removeObject(layoutAttributes.indexPath)
+        })
+    }
+
+    func gg_adjustSpringBehavior(springBehavior: UIAttachmentBehavior, forTouchLocation touchLocation: CGPoint) {
+        let item: UICollectionViewLayoutAttributes = springBehavior.items.first! as! UICollectionViewLayoutAttributes
+        var center: CGPoint = item.center
+        
+        //  if touch is not (0,0) -- adjust item center "in flight"
+        if (!CGPointEqualToPoint(CGPointZero, touchLocation)) {
+            let distanceFromTouch: CGFloat = fabs(touchLocation.y - springBehavior.anchorPoint.y)
+            let scrollResistance: CGFloat = distanceFromTouch / self.springResistanceFactor
+            
+            if (self.latestDelta < 0.0) {
+                center.y += max(self.latestDelta, self.latestDelta * scrollResistance)
+            }
+            else {
+                center.y += min(self.latestDelta, self.latestDelta * scrollResistance)
+            }
+            item.center = center
+        }
+    }
 }

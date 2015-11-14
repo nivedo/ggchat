@@ -10,6 +10,9 @@ import UIKit
 
 class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
 
+    var textViewFrameInsets: UIEdgeInsets?
+    var textViewTextContainerInsets: UIEdgeInsets?
+    
     // pragma mark - Setters
     
     var messageBubbleFont: UIFont {
@@ -106,8 +109,8 @@ class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
             let layoutAttributes: MessagesCollectionViewLayoutAttributes = object as! MessagesCollectionViewLayoutAttributes
             
             if (!layoutAttributes.messageBubbleFont.isEqual(self.messageBubbleFont)
-                || !UIEdgeInsetsEqualToEdgeInsets(layoutAttributes.textViewFrameInsets, self.textViewFrameInsets)
-                || !UIEdgeInsetsEqualToEdgeInsets(layoutAttributes.textViewTextContainerInsets, self.textViewTextContainerInsets)
+                || !UIEdgeInsetsEqualToEdgeInsets(layoutAttributes.textViewFrameInsets!, self.textViewFrameInsets!)
+                || !UIEdgeInsetsEqualToEdgeInsets(layoutAttributes.textViewTextContainerInsets!, self.textViewTextContainerInsets!)
                 || !CGSizeEqualToSize(layoutAttributes.incomingAvatarViewSize, self.incomingAvatarViewSize)
                 || !CGSizeEqualToSize(layoutAttributes.outgoingAvatarViewSize, self.outgoingAvatarViewSize)
                 || Int(layoutAttributes.messageBubbleContainerViewWidth) != Int(self.messageBubbleContainerViewWidth)
