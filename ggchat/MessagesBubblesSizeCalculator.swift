@@ -105,7 +105,7 @@ class MessagesBubblesSizeCalculator {
         withLayout layout: MessagesCollectionViewFlowLayout) -> CGSize {
         let messageSender: String = messageData.senderId
         
-        if (messageSender == layout.collectionView.messagesDataSource!.senderId) {
+        if (messageSender == layout.collectionView.messageDataSource.senderId) {
             return layout.outgoingAvatarViewSize
         }
         

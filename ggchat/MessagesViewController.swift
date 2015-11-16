@@ -17,6 +17,10 @@ class MessagesViewController: UICollectionViewController {
     //////////////////////////////////////////////////////////////////////////////////////
     // Properties
     //////////////////////////////////////////////////////////////////////////////////////
+    
+    var messageCollectionView: MessagesCollectionView { return self.collectionView as! MessagesCollectionView }
+    
+    
     var automaticallyScrollsToMostRecentMessage: Bool = true
     var outgoingCellIdentifier: String = OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
     var outgoingMediaCellIdentifier: String = OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier()
@@ -38,8 +42,8 @@ class MessagesViewController: UICollectionViewController {
             }
 
             self.showTypingIndicator = newShowTypingIndicator
-            self.collectionView!.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-            self.collectionView!.collectionViewLayout.invalidateLayout()
+            self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+            self.messageCollectionView.collectionViewLayout.invalidateLayout()
         }
         get {
             return self.showTypingIndicator
@@ -53,9 +57,9 @@ class MessagesViewController: UICollectionViewController {
             }
 
             self.showLoadEarlierMessagesHeader = newShowLoadEarlierMessagesHeader
-            self.collectionView!.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-            self.collectionView!.collectionViewLayout.invalidateLayout()
-            self.collectionView!.reloadData()
+            self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+            self.messageCollectionView.collectionViewLayout.invalidateLayout()
+            self.messageCollectionView.reloadData()
         }
         get {
             return self.showLoadEarlierMessagesHeader
@@ -96,8 +100,8 @@ class MessagesViewController: UICollectionViewController {
         
         // self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
         
-        self.collectionView?.dataSource = self;
-        self.collectionView?.delegate = self;
+        self.messageCollectionView.dataSource = self;
+        self.messageCollectionView.delegate = self;
         
         // self.inputToolbar.delegate = self;
         // self.inputToolbar.contentView.textView.placeHolder = [NSBundle gg_localizedStringForKey:@"new_message"];
@@ -113,7 +117,7 @@ class MessagesViewController: UICollectionViewController {
         if (self.inputToolbar.contentView.textView != nil) {
         self.keyboardController = [[MessagesKeyboardController alloc] initWithTextView:self.inputToolbar.contentView.textView
         contextView:self.view
-        panGestureRecognizer:self.collectionView.panGestureRecognizer
+        panGestureRecognizer:self.messageCollectionView.panGestureRecognizer
         delegate:self];
         }
         */
@@ -129,14 +133,13 @@ class MessagesViewController: UICollectionViewController {
 
         // self.nib.instantiateWithOwner(self, options:nil)
 
-        self.gg_configureMessagesViewController()
         self.gg_registerForNotifications(true)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.messageCollectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
         self.setup()
@@ -173,14 +176,16 @@ class MessagesViewController: UICollectionViewController {
         return self.messages.count
     }
 
+    /*
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         print("MVC::cellForItemAtIndexPath")
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+        let cell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
     
         // Configure the cell
     
         return cell
     }
+    */
 
     // MARK: UICollectionViewDelegate
 
@@ -217,18 +222,21 @@ class MessagesViewController: UICollectionViewController {
     // MARK - Data Source
     //////////////////////////////////////////////////////////////////////////////////////
 
-    func collectionView(collectionView: MessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> Message! {
+    func collectionView(collectionView: MessagesCollectionView,
+        messageDataForItemAtIndexPath indexPath: NSIndexPath) -> Message {
         print("MVC::messageDataForItemAtIndexPath")
         let data = self.messages[indexPath.row]
         return data
     }
     
-    func collectionView(collectionView: MessagesCollectionView!, didDeleteMessageAtIndexPath indexPath: NSIndexPath!) {
+    func collectionView(collectionView: MessagesCollectionView,
+        didDeleteMessageAtIndexPath indexPath: NSIndexPath) {
         print("MVC::didDeleteMessageAtIndexPath")
         self.messages.removeAtIndex(indexPath.row)
     }
     
-    func collectionView(collectionView: MessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageBubbleImage! {
+    /*
+    func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
         print("MVC::messageBubbleImageDataForItemAtIndexPath")
         let data = messages[indexPath.row]
         switch(data.senderId) {
@@ -238,10 +246,11 @@ class MessagesViewController: UICollectionViewController {
             return self.incomingBubble
         }
     }
-    
+
     func collectionView(collectionView: MessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageAvatarImage! {
         return nil
     }
+    */
     
     //////////////////////////////////////////////////////////////////////////////////////
     
@@ -268,8 +277,8 @@ class MessagesViewController: UICollectionViewController {
         *  Return `nil` here if you do not want avatars.
         *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
         *
-        *  self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-        *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+        *  self.messageCollectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
+        *  self.messageCollectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
         *
         *  It is possible to have only outgoing avatars or only incoming avatars, too.
         */
@@ -279,8 +288,8 @@ class MessagesViewController: UICollectionViewController {
         *
         *  Note: these the avatars will be sized according to these values:
         *
-        *  self.collectionView.collectionViewLayout.incomingAvatarViewSize
-        *  self.collectionView.collectionViewLayout.outgoingAvatarViewSize
+        *  self.messageCollectionView.collectionViewLayout.incomingAvatarViewSize
+        *  self.messageCollectionView.collectionViewLayout.outgoingAvatarViewSize
         *
         *  Override the defaults in `viewDidLoad`
         */
@@ -318,7 +327,7 @@ class MessagesViewController: UICollectionViewController {
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
-        print("MVC::attributedTextForCellTopLabelAtIndexPath")
+        print("MVC::attributedTextForMessageBubbleTopLabelAtIndexPath")
         let message: Message = self.messages[indexPath.item]
         
         /**
@@ -352,12 +361,12 @@ class MessagesViewController: UICollectionViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.view.layoutIfNeeded()
-        self.collectionView!.collectionViewLayout.invalidateLayout()
+        self.messageCollectionView.collectionViewLayout.invalidateLayout()
 
         if (self.automaticallyScrollsToMostRecentMessage) {
             dispatch_async(dispatch_get_main_queue()) {
                 self.scrollToBottomAnimated(false)
-                self.collectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+                self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
             }
         }
 
@@ -377,7 +386,7 @@ class MessagesViewController: UICollectionViewController {
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.collectionView.messagesCollectionViewLayout.springinessEnabled = true
+        self.messageCollectionView.messageCollectionViewLayout.springinessEnabled = true
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -403,7 +412,7 @@ class MessagesViewController: UICollectionViewController {
         toInterfaceOrientation: UIInterfaceOrientation,
         duration: NSTimeInterval) {
         super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration:duration)
-        self.collectionView!.messagesCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
     }
 
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
@@ -411,7 +420,7 @@ class MessagesViewController: UICollectionViewController {
         if (self.showTypingIndicator) {
             self.showTypingIndicator = false
             self.showTypingIndicator = true
-            self.collectionView!.reloadData()
+            self.messageCollectionView.reloadData()
         }
     }
 
@@ -445,8 +454,8 @@ class MessagesViewController: UICollectionViewController {
         [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:textView];
         */
         
-        self.collectionView!.messagesCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-        self.collectionView!.reloadData()
+        self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        self.messageCollectionView.reloadData()
 
         if (self.automaticallyScrollsToMostRecentMessage) {
             self.scrollToBottomAnimated(animated)
@@ -460,8 +469,8 @@ class MessagesViewController: UICollectionViewController {
     func finishReceivingMessageAnimated(animated: Bool) {
         self.showTypingIndicator = false
 
-        self.collectionView!.messagesCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-        self.collectionView!.reloadData()
+        self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+        self.messageCollectionView.reloadData()
 
         if (self.automaticallyScrollsToMostRecentMessage && !self.gg_isMenuVisible()) {
             self.scrollToBottomAnimated(animated)
@@ -469,25 +478,25 @@ class MessagesViewController: UICollectionViewController {
     }
 
     func scrollToBottomAnimated(animated: Bool) {
-        if (self.collectionView!.numberOfSections() == 0) {
+        if (self.messageCollectionView.numberOfSections() == 0) {
             return
         }
 
-        let items = self.collectionView!.numberOfItemsInSection(0)
+        let items = self.messageCollectionView.numberOfItemsInSection(0)
 
         if (items == 0) {
             return;
         }
         
         /*
-        let collectionViewContentHeight: CGFloat = self.collectionView!.messagesCollectionViewLayout.collectionViewContentSize().height
-        let isContentTooSmall: Bool = (collectionViewContentHeight < CGRectGetHeight(self.collectionView!.bounds))
+        let collectionViewContentHeight: CGFloat = self.messageCollectionView.messageCollectionViewLayout.collectionViewContentSize().height
+        let isContentTooSmall: Bool = (collectionViewContentHeight < CGRectGetHeight(self.messageCollectionView.bounds))
 
         if (isContentTooSmall) {
             //  workaround for the first few messages not scrolling
             //  when the collection view content size is too small, `scrollToItemAtIndexPath:` doesn't work properly
             //  this seems to be a UIKit bug, see #256 on GitHub
-            self.collectionView!.scrollRectToVisible(
+            self.messageCollectionView.scrollRectToVisible(
                 CGRectMake(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0),
                 animated:animated)
             return
@@ -496,15 +505,15 @@ class MessagesViewController: UICollectionViewController {
         //  workaround for really long messages not scrolling
         //  if last message is too long, use scroll position bottom for better appearance, else use top
         //  possibly a UIKit bug, see #480 on GitHub
-        let finalRow: Int = max(0, self.collectionView!.numberOfItemsInSection(0) - 1)
+        let finalRow: Int = max(0, self.messageCollectionView.numberOfItemsInSection(0) - 1)
         let finalIndexPath: NSIndexPath = NSIndexPath(forItem: finalRow, inSection: 0)
-        let finalCellSize: CGSize = self.collectionView.messagesCollectionViewLayout!.sizeForItemAtIndexPath(finalIndexPath)
+        let finalCellSize: CGSize = self.messageCollectionView.messageCollectionViewLayout!.sizeForItemAtIndexPath(finalIndexPath)
 
-        let maxHeightForVisibleMessage: CGFloat = CGRectGetHeight(self.collectionView!.bounds) - self.collectionView!.contentInset.top - CGRectGetHeight(self.inputToolbar.bounds)
+        let maxHeightForVisibleMessage: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds) - self.messageCollectionView.contentInset.top - CGRectGetHeight(self.inputToolbar.bounds)
 
         let scrollPosition: UICollectionViewScrollPosition = (finalCellSize.height > maxHeightForVisibleMessage) ? UICollectionViewScrollPosition.Bottom : UICollectionViewScrollPosition.Top
 
-        self.collectionView!.scrollToItemAtIndexPath(finalIndexPath,
+        self.messageCollectionView.scrollToItemAtIndexPath(finalIndexPath,
             atScrollPosition: scrollPosition,
             animated: animated)
         */
@@ -512,10 +521,12 @@ class MessagesViewController: UICollectionViewController {
 
     // pragma mark - Collection view data source
 
-    func collectionView(
-        collectionView: MessagesCollectionView,
+    override func collectionView(
+        uiCollectionView: UICollectionView,
         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let messageItem: Message = self.collectionView!.dataSource!.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
+        print("MVC::cellForItemAtIndexPath")
+        let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
+        let messageItem: Message = self.messageCollectionView.messageDelegate.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
 
         let messageSenderId: String = messageItem.senderId
 
@@ -529,7 +540,7 @@ class MessagesViewController: UICollectionViewController {
             cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
         }
 
-        var cell: MessagesCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
+        let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
 
         if (!isMediaMessage) {
@@ -540,11 +551,11 @@ class MessagesViewController: UICollectionViewController {
                 cell.textView.text = nil
                 cell.textView.attributedText = NSAttributedString(
                     string: messageItem.text!,
-                    attributes: [ NSFontAttributeName : collectionView.messagesCollectionViewLayout!.messageBubbleFont ])
+                    attributes: [ NSFontAttributeName : messageCollectionView.messageCollectionViewLayout.messageBubbleFont ])
             }
 
 
-            let bubbleImageDataSource: MessageBubbleImage = collectionView.dataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath)
+            let bubbleImageDataSource: MessageBubbleImage = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath)
             cell.messageBubbleImageView.image = bubbleImageDataSource.messageBubbleImage
             cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
         } else {
@@ -553,15 +564,15 @@ class MessagesViewController: UICollectionViewController {
         }
 
         var needsAvatar: Bool = true
-        if (isOutgoingMessage && CGSizeEqualToSize(collectionView.messagesCollectionViewLayout!.outgoingAvatarViewSize, CGSizeZero)) {
+        if (isOutgoingMessage && CGSizeEqualToSize(messageCollectionView.messageCollectionViewLayout.outgoingAvatarViewSize, CGSizeZero)) {
             needsAvatar = false
-        } else if (!isOutgoingMessage && CGSizeEqualToSize(collectionView.messagesCollectionViewLayout!.incomingAvatarViewSize, CGSizeZero)) {
+        } else if (!isOutgoingMessage && CGSizeEqualToSize(messageCollectionView.messageCollectionViewLayout.incomingAvatarViewSize, CGSizeZero)) {
             needsAvatar = false
         }
 
         var avatarImageDataSource: MessageAvatarImage? = nil;
         if (needsAvatar) {
-            avatarImageDataSource = collectionView.dataSource.collectionView(
+            avatarImageDataSource = messageCollectionView.messageDataSource.collectionView(
                 collectionView,
                 avatarImageDataForItemAtIndexPath:indexPath)
             if (avatarImageDataSource != nil) {
@@ -576,9 +587,9 @@ class MessagesViewController: UICollectionViewController {
             }
         }
 
-        cell.cellTopLabel.attributedText = collectionView.dataSource.collectionView(collectionView, attributedTextForCellTopLabelAtIndexPath:indexPath)
-        cell.messageBubbleTopLabel.attributedText = collectionView.dataSource.collectionView(collectionView, attributedTextForMessageBubbleTopLabelAtIndexPath: indexPath)
-        cell.cellBottomLabel.attributedText = collectionView.dataSource.collectionView(collectionView, attributedTextForCellBottomLabelAtIndexPath:indexPath)
+        cell.cellTopLabel.attributedText = messageCollectionView.messageDataSource.collectionView(collectionView, attributedTextForCellTopLabelAtIndexPath: indexPath)
+        cell.messageBubbleTopLabel.attributedText = messageCollectionView.messageDataSource.collectionView(collectionView, attributedTextForMessageBubbleTopLabelAtIndexPath: indexPath)
+        cell.cellBottomLabel.attributedText = messageCollectionView.messageDataSource.collectionView(collectionView, attributedTextForCellBottomLabelAtIndexPath:indexPath)
 
         let bubbleTopLabelInset: CGFloat = (avatarImageDataSource != nil) ? 60.0 : 15.0
 
@@ -597,45 +608,52 @@ class MessagesViewController: UICollectionViewController {
         return cell
     }
 
+    /*
     func collectionView(
         collectionView: MessagesCollectionView,
         viewForSupplementaryElementOfKind kind: String,
         atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView? {
         if (self.showTypingIndicator && kind == UICollectionElementKindSectionFooter) {
-            return collectionView.dequeueTypingIndicatorFooterViewForIndexPath(indexPath)
+            return messageCollectionView.dequeueTypingIndicatorFooterViewForIndexPath(indexPath)
         } else if (self.showLoadEarlierMessagesHeader && kind == UICollectionElementKindSectionHeader) {
-            return collectionView.dequeueLoadEarlierMessagesViewHeaderForIndexPath(indexPath);
+            return messageCollectionView.dequeueLoadEarlierMessagesViewHeaderForIndexPath(indexPath);
         }
 
         return nil
     }
+    */
 
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
-        referenceSizeForFooterInSection aciton: NSInteger) -> CGSize {
+        referenceSizeForFooterInSection action: NSInteger) -> CGSize {
         if (!self.showTypingIndicator) {
             return CGSizeZero
         }
 
-        return CGSizeMake(collectionViewLayout.itemWidth, kMessagesTypingIndicatorFooterViewHeight)
+        // return CGSizeMake(collectionViewLayout.itemWidth, MessageLoadEarlierHeaderView.kMessagesTypingIndicatorFooterViewHeight)
+        return CGSizeMake(collectionViewLayout.itemWidth, 32.0)
     }
 
     func collectionView(collectionView: UICollectionView,
-        layout collecitonViewLayout: MessagesCollectionViewFlowLayout,
+        layout collectionViewLayout: MessagesCollectionViewFlowLayout,
         referenceSizeForHeaderInSection action: NSInteger) -> CGSize {
         if (!self.showLoadEarlierMessagesHeader) {
             return CGSizeZero
         }
 
-        return CGSizeMake(collectionViewLayout.itemWidth,
-            kMessagesLoadEarlierHeaderViewHeight)
+        // return CGSizeMake(collectionViewLayout.itemWidth,
+        //     kMessagesLoadEarlierHeaderViewHeight)
+        return CGSizeMake(collectionViewLayout.itemWidth, 32.0)
     }
 
     // pragma mark - Collection view delegate
 
-    func collectionView(collectionView: MessagesCollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func collectionView(
+        uiCollectionView: UICollectionView,
+        shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
         //  disable menu for media messages
-        let messageItem: Message = collectionView.dataSource.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
+        let messageItem: Message = messageCollectionView.messageDataSource.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
         if (messageItem.isMediaMessage) {
             return false
         }
@@ -646,13 +664,13 @@ class MessagesViewController: UICollectionViewController {
         //  however, this allows the 'copy, define, select' UIMenuController to show
         //  which conflicts with the collection view's UIMenuController
         //  temporarily disable 'selectable' to prevent this issue
-        let selectedCell: MessagesCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! MessagesCollectionViewCell
+        let selectedCell: MessagesCollectionViewCell = messageCollectionView.cellForItemAtIndexPath(indexPath) as! MessagesCollectionViewCell
         selectedCell.textView.selectable = false
 
         return true
     }
 
-    func collectionView(collectionView: UICollectionView,
+    override func collectionView(collectionView: UICollectionView,
         canPerformAction action: Selector,
         forItemAtIndexPath indexPath: NSIndexPath,
         withSender sender: AnyObject?) -> Bool {
@@ -663,21 +681,22 @@ class MessagesViewController: UICollectionViewController {
         return false
     }
 
-    func collectionView(collecitonView: MessagesCollectionView,
+    override func collectionView(uiCollectionView: UICollectionView,
         performAction action: Selector,
         forItemAtIndexPath indexPath: NSIndexPath,
-        withSender sender: AnyObject) {
+        withSender sender: AnyObject?) {
+        let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
         if (action == Selector("copy:")) {
-            let messageData: Message = collectionView.dataSource.collectionView(
+            let messageData: Message = messageCollectionView.messageDataSource.collectionView(
                 collectionView,
                 messageDataForItemAtIndexPath:indexPath)
-            UIPasteboard.generalPasteboard().setString(messageData.text)
+            UIPasteboard.generalPasteboard().string = messageData.text
         } else if (action == Selector("delete:")) {
-            collectionView.dataSource.collectionView(collectionView,
+            messageCollectionView.messageDataSource.collectionView(collectionView,
                 didDeleteMessageAtIndexPath:indexPath)
 
-            collectionView.deleteItemsAtIndexPaths(indexPath)
-            collectionView.collectionViewLayout.invalidateLayout()
+            messageCollectionView.deleteItemsAtIndexPaths([indexPath])
+            messageCollectionView.collectionViewLayout.invalidateLayout()
         }
     }
 
@@ -686,7 +705,8 @@ class MessagesViewController: UICollectionViewController {
     func collectionView(collectionView: MessagesCollectionView,
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return collectionViewLayout.sizeForItemAtIndexPath(indexPath)
+        // return collectionViewLayout.sizeForItemAtIndexPath(indexPath)
+        return CGSize(width: 32.0, height: 10.0)
     }
 
     func collectionView(collectionView: MessagesCollectionView,
@@ -820,7 +840,7 @@ class MessagesViewController: UICollectionViewController {
         let menu: UIMenuController = notification.object! as! UIMenuController
         menu.setMenuVisible(false, animated: false)
 
-        let selectedCell: MessagesCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(self.selectedIndexPathForMenu!) as! MessagesCollectionViewCell
+        let selectedCell: MessagesCollectionViewCell = self.messageCollectionView.cellForItemAtIndexPath(self.selectedIndexPathForMenu!) as! MessagesCollectionViewCell
         let selectedCellMessageBubbleFrame: CGRect = selectedCell.convertRect(selectedCell.messageBubbleContainerView.frame, toView:self.view)
 
         menu.setTargetRect(selectedCellMessageBubbleFrame, inView: self.view)
@@ -840,14 +860,15 @@ class MessagesViewController: UICollectionViewController {
 
         //  per comment above in 'shouldShowMenuForItemAtIndexPath:'
         //  re-enable 'selectable', thus re-enabling data detectors if present
-        let selectedCell: MessagesCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(self.selectedIndexPathForMenu!) as! MessagesCollectionViewCell
+        let selectedCell: MessagesCollectionViewCell = self.messageCollectionView.cellForItemAtIndexPath(self.selectedIndexPathForMenu!) as! MessagesCollectionViewCell
         selectedCell.textView.selectable = true
         self.selectedIndexPathForMenu = nil
     }
 
     // pragma mark - Key-value observing
 
-    func observeValueForKeyPath(keyPath: String,  ofObject: AnyObject, change: NSDictionary, context: AnyObject) {
+    private func observeValueForKeyPath(keyPath: String, ofObject: AnyObject, change: NSDictionary, context: AnyObject) {
+        /*
         if (context == MessagesViewController.kMessagesKeyValueObservingContext!) {
 
             if (object == self.inputToolbar.contentView.textView
@@ -865,6 +886,7 @@ class MessagesViewController: UICollectionViewController {
                 }
             }
         }
+        */
     }
 
     // pragma mark - Keyboard controller delegate
@@ -875,7 +897,7 @@ class MessagesViewController: UICollectionViewController {
             return
         }
 
-        var heightFromBottom: CGFloat = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(keyboardFrame)
+        var heightFromBottom: CGFloat = CGRectGetMaxY(self.messageCollectionView.frame) - CGRectGetMinY(keyboardFrame)
 
         heightFromBottom = max(0.0, heightFromBottom)
 
@@ -945,6 +967,7 @@ class MessagesViewController: UICollectionViewController {
 
     func gg_inputToolbarHasReachedMaximumHeight() -> Bool {
         // return CGRectGetMinY(self.inputToolbar.frame) == (self.topLayoutGuide.length + self.topContentAdditionalInset)
+        return true
     }
 
     func gg_adjustInputToolbarForComposerTextViewContentSizeChange(dy: CGFloat) {
@@ -1022,20 +1045,20 @@ class MessagesViewController: UICollectionViewController {
     func gg_updateCollectionViewInsets() {
         /*
         self.gg_setCollectionViewInsetsTopValue(self.topLayoutGuide.length + self.topContentAdditionalInset,
-            bottomValue: CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame))
+            bottomValue: CGRectGetMaxY(self.messageCollectionView.frame) - CGRectGetMinY(self.inputToolbar.frame))
         */
     }
 
     func gg_setCollectionViewInsetsTopValue(top: CGFloat, bottomValue bottom: CGFloat) {
         let insets: UIEdgeInsets = UIEdgeInsetsMake(top, 0.0, bottom, 0.0)
-        self.collectionView!.contentInset = insets
-        self.collectionView!.scrollIndicatorInsets = insets
+        self.messageCollectionView.contentInset = insets
+        self.messageCollectionView.scrollIndicatorInsets = insets
     }
 
     func gg_isMenuVisible() -> Bool {
         //  check if cell copy menu is showing
         //  it is only our menu if `selectedIndexPathForMenu` is not `nil`
-        return self.selectedIndexPathForMenu != nil && UIMenuController.sharedMenuController().isMenuVisible()
+        return self.selectedIndexPathForMenu != nil && UIMenuController.sharedMenuController().menuVisible
     }
 
     // pragma mark - Utilities

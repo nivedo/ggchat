@@ -17,7 +17,8 @@ class MessagesCollectionView: UICollectionView {
         // Drawing code
     }
     */
-    
-    var messagesDataSource: MessagesViewController?
-    var messagesCollectionViewLayout: MessagesCollectionViewFlowLayout?
+
+    var messageDelegate: MessagesViewController { return self.delegate as! MessagesViewController }
+    var messageDataSource: MessagesViewController { return self.dataSource as! MessagesViewController }
+    var messageCollectionViewLayout: MessagesCollectionViewFlowLayout { return self.collectionViewLayout as! MessagesCollectionViewFlowLayout }
 }
