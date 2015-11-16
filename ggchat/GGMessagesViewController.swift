@@ -1,5 +1,5 @@
 //
-//  GGMessagesViewController.swift
+//  GGMessageViewController.swift
 //  ggchat
 //
 //  Created by Gary Chang on 11/11/15.
@@ -10,13 +10,13 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class GGMessagesViewController: MessagesViewController {
+class GGMessageViewController: MessageViewController {
 
     
     //////////////////////////////////////////////////////////////////////////////////////    
     
     override func viewDidLoad() {
-        print("GGMessagesViewController::viewDidLoad()")
+        print("GGMessageViewController::viewDidLoad()")
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations

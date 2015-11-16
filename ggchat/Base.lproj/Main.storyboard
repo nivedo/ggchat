@@ -8,7 +8,7 @@
         <!--gg messages view controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="MessagesViewController" id="BYZ-38-t0r" userLabel="gg messages view controller" customClass="MessagesViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MessagesViewController" id="BYZ-38-t0r" userLabel="gg messages view controller" customClass="MessageViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>

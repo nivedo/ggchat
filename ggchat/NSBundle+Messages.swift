@@ -10,7 +10,7 @@ import Foundation
 
 extension NSBundle {
     class func gg_messagesBundle() -> NSBundle {
-        return NSBundle(forClass: MessagesViewController.self)
+        return NSBundle(forClass: MessageViewController.self)
     }
     
     class func gg_messagesAssetBundle() -> NSBundle {
