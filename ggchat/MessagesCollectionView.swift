@@ -32,4 +32,8 @@ class MessagesCollectionView: UICollectionView {
         super.init(coder: aDecoder)
         print("MessagesCollectionView:init(coder:)")
     }
+    
+    override func awakeFromNib() {
+        print("MessagesCollectionview:awakeFromNib()")
+    }
 }

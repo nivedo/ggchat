@@ -10,17 +10,14 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class MessageViewController: UIViewController,
-    UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout {
-    
+class MessageViewControllerTemp: UICollectionViewController {
+
     static var kMessagesKeyValueObservingContext: AnyObject?
     
     //////////////////////////////////////////////////////////////////////////////////////
     // Properties
     //////////////////////////////////////////////////////////////////////////////////////
     
-    // @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     
     var automaticallyScrollsToMostRecentMessage: Bool = true
@@ -171,14 +168,14 @@ class MessageViewController: UIViewController,
     // MARK: UICollectionViewDataSource
     //////////////////////////////////////////////////////////////////////////////////////
 
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         print("MVC::numberOfSectionsInCollectionView")
         return 1
     }
 
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("MVC::numberOfItemsInSection: \(self.messages.count)")
         return self.messages.count
     }
@@ -530,7 +527,7 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Collection view data source
 
-    func collectionView(
+    override func collectionView(
         uiCollectionView: UICollectionView,
         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         print("MVC::cellForItemAtIndexPath")
@@ -632,7 +629,7 @@ class MessageViewController: UIViewController,
     }
     */
 
-    func collectionView(
+    func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
         referenceSizeForFooterInSection action: NSInteger) -> CGSize {
         if (!self.showTypingIndicator) {
@@ -643,7 +640,7 @@ class MessageViewController: UIViewController,
         return CGSizeMake(collectionViewLayout.itemWidth, 32.0)
     }
 
-    func collectionView(
+    func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
         referenceSizeForHeaderInSection action: NSInteger) -> CGSize {
         if (!self.showLoadEarlierMessagesHeader) {
@@ -657,7 +654,7 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Collection view delegate
 
-    func collectionView(
+    override func collectionView(
         uiCollectionView: UICollectionView,
         shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
@@ -679,7 +676,7 @@ class MessageViewController: UIViewController,
         return true
     }
 
-    func collectionView(collectionView: UICollectionView,
+    override func collectionView(collectionView: UICollectionView,
         canPerformAction action: Selector,
         forItemAtIndexPath indexPath: NSIndexPath,
         withSender sender: AnyObject?) -> Bool {
@@ -690,7 +687,7 @@ class MessageViewController: UIViewController,
         return false
     }
 
-    func collectionView(uiCollectionView: UICollectionView,
+    override func collectionView(uiCollectionView: UICollectionView,
         performAction action: Selector,
         forItemAtIndexPath indexPath: NSIndexPath,
         withSender sender: AnyObject?) {
@@ -711,20 +708,20 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Collection view delegate flow layout
 
-    func collectionView(
+    func collectionView(collectionView: MessagesCollectionView,
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         // return collectionViewLayout.sizeForItemAtIndexPath(indexPath)
         return CGSize(width: 32.0, height: 10.0)
     }
 
-    func collectionView(
+    func collectionView(collectionView: MessagesCollectionView,
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
         heightForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 0.0
     }
 
-    func collectionView(
+    func collectionView(collectionView: MessagesCollectionView,
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
         heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 0.0

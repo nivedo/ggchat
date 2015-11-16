@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OK4-cD-i4G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rIh-Mj-hxI">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
-        <!--gg messages view controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Message View Controller-->
+        <scene sceneID="j9P-sH-5A8">
             <objects>
-                <viewController storyboardIdentifier="MessagesViewController" id="BYZ-38-t0r" userLabel="gg messages view controller" customClass="MessageViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="k3J-sf-ZBR" customClass="GGMessageViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="I44-Q5-ATj"/>
+                        <viewControllerLayoutGuide type="bottom" id="NBr-ZP-dDR"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="MessagesCollectionView" customModule="ggchat" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="2Ro-cT-8re">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="4Fc-MA-eM6"/>
-                    <connections>
-                        <outlet property="collectionView" destination="8bC-Xf-vdC" id="nx4-Rq-zci"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="WeA-Qj-JKv"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="anj-ry-DI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1030" y="267"/>
+            <point key="canvasLocation" x="1667" y="248"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="PmM-Dd-R9M">
+        <scene sceneID="ezY-qQ-XgU">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OK4-cD-i4G" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rIh-Mj-hxI" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JNy-UX-nfQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QES-4n-eNF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="oHp-nZ-oMY"/>
+                        <segue destination="k3J-sf-ZBR" kind="relationship" relationship="rootViewController" id="dLa-AA-4dD"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kBM-59-TIj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d1A-SN-hjt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="326" y="267"/>
+            <point key="canvasLocation" x="740" y="248"/>
         </scene>
     </scenes>
 </document>

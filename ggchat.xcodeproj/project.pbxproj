@@ -35,14 +35,14 @@
 		D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */; };
 		D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */; };
 		D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */; };
-		D4A9F4FE1BF330D800FA4444 /* GGMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */; };
 		D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5061BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift */; };
 		D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5081BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift */; };
 		D4A9F50B1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F50A1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		D4A9F50D1BF52A7C00FA4444 /* MessagesBubblesSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F50C1BF52A7C00FA4444 /* MessagesBubblesSizeCalculator.swift */; };
 		D4A9F5121BF9731300FA4444 /* MessageInputToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5111BF9731300FA4444 /* MessageInputToolbar.swift */; };
-		D4A9F5181BFA655E00FA4444 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5161BFA655E00FA4444 /* MessageViewController.swift */; };
-		D4A9F5191BFA655E00FA4444 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5171BFA655E00FA4444 /* MessageViewController.xib */; };
+		D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F51A1BFA95F500FA4444 /* MessageViewController.swift */; };
+		D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */; };
+		D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,14 +97,14 @@
 		D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Messages.swift"; sourceTree = "<group>"; };
 		D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGModelData.swift; sourceTree = "<group>"; };
 		D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImageFactory.swift; sourceTree = "<group>"; };
-		D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGMessagesViewController.swift; sourceTree = "<group>"; };
 		D4A9F5061BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		D4A9F5081BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayoutInvalidationContext.swift; sourceTree = "<group>"; };
 		D4A9F50A1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		D4A9F50C1BF52A7C00FA4444 /* MessagesBubblesSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesBubblesSizeCalculator.swift; sourceTree = "<group>"; };
 		D4A9F5111BF9731300FA4444 /* MessageInputToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputToolbar.swift; sourceTree = "<group>"; };
-		D4A9F5161BFA655E00FA4444 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
-		D4A9F5171BFA655E00FA4444 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
+		D4A9F51A1BFA95F500FA4444 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
+		D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGMessageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +165,7 @@
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */,
-				D4A9F4FD1BF330D800FA4444 /* GGMessagesViewController.swift */,
+				D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
 				D4683E5C1BF0486F00E02886 /* Assets.xcassets */,
 				D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */,
@@ -206,8 +206,8 @@
 		D4683E8B1BF04F2600E02886 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D4A9F5161BFA655E00FA4444 /* MessageViewController.swift */,
-				D4A9F5171BFA655E00FA4444 /* MessageViewController.xib */,
+				D4A9F51A1BFA95F500FA4444 /* MessageViewController.swift */,
+				D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -378,9 +378,9 @@
 				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
 				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
 				D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */,
-				D4A9F5191BFA655E00FA4444 /* MessageViewController.xib in Resources */,
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
 				D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */,
+				D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,8 +412,7 @@
 				D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
-				D4A9F5181BFA655E00FA4444 /* MessageViewController.swift in Sources */,
-				D4A9F4FE1BF330D800FA4444 /* GGMessagesViewController.swift in Sources */,
+				D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */,
 				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
 				D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
@@ -432,6 +431,7 @@
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,
 				D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
+				D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
