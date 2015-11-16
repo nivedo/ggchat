@@ -19,4 +19,5 @@ class MessagesCollectionView: UICollectionView {
     */
     
     var messagesDataSource: MessagesViewController?
+    var messagesCollectionViewLayout: MessagesCollectionViewFlowLayout?
 }

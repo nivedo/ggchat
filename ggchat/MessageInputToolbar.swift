@@ -1,14 +1,14 @@
 //
-//  MessageInputToolBar.swift
+//  MessageInputToolbar.swift
 //  ggchat
 //
-//  Created by Gary Chang on 11/11/15.
+//  Created by Gary Chang on 11/15/15.
 //  Copyright © 2015 Blub. All rights reserved.
 //
 
 import UIKit
 
-class MessageInputToolBar: UIToolbar {
+class MessageInputToolbar: UIToolbar {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -18,103 +18,81 @@ class MessageInputToolBar: UIToolbar {
     }
     */
 
-}
+    // static void * kMessagesInputToolbarKeyValueObservingContext = &kMessagesInputToolbarKeyValueObservingContext
 
+
+
+    // pragma mark - Initialization
 /*
-static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesInputToolbarKeyValueObservingContext;
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.gg_isObserving = false
+        self.sendButtonOnRight = true
 
+        self.preferredDefaultHeight = 44.0
+        self.maximumHeight = NSNotFound
 
-@interface JSQMessagesInputToolbar ()
+        MessagesToolbarContentView *toolbarContentView = [self loadToolbarContentView]
+        toolbarContentView.frame = self.frame
+        [self addSubview:toolbarContentView]
+        [self gg_pinAllEdgesOfSubview:toolbarContentView]
+        [self setNeedsUpdateConstraints]
+        _contentView = toolbarContentView
 
-@property (assign, nonatomic) BOOL jsq_isObserving;
+        [self gg_addObservers]
 
-- (void)jsq_leftBarButtonPressed:(UIButton *)sender;
-- (void)jsq_rightBarButtonPressed:(UIButton *)sender;
+        self.contentView.leftBarButtonItem = [MessagesToolbarButtonFactory defaultAccessoryButtonItem]
+        self.contentView.rightBarButtonItem = [MessagesToolbarButtonFactory defaultSendButtonItem]
 
-- (void)jsq_addObservers;
-- (void)jsq_removeObservers;
+        [self toggleSendButtonEnabled]
+    }
 
-@end
-
-
-
-@implementation JSQMessagesInputToolbar
-
-@dynamic delegate;
-
-#pragma mark - Initialization
-
-- (void)awakeFromNib
+- (MessagesToolbarContentView *)loadToolbarContentView
 {
-    [super awakeFromNib];
-    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-
-    self.jsq_isObserving = NO;
-    self.sendButtonOnRight = YES;
-
-    self.preferredDefaultHeight = 44.0f;
-    self.maximumHeight = NSNotFound;
-
-    JSQMessagesToolbarContentView *toolbarContentView = [self loadToolbarContentView];
-    toolbarContentView.frame = self.frame;
-    [self addSubview:toolbarContentView];
-    [self jsq_pinAllEdgesOfSubview:toolbarContentView];
-    [self setNeedsUpdateConstraints];
-    _contentView = toolbarContentView;
-
-    [self jsq_addObservers];
-
-    self.contentView.leftBarButtonItem = [JSQMessagesToolbarButtonFactory defaultAccessoryButtonItem];
-    self.contentView.rightBarButtonItem = [JSQMessagesToolbarButtonFactory defaultSendButtonItem];
-
-    [self toggleSendButtonEnabled];
-}
-
-- (JSQMessagesToolbarContentView *)loadToolbarContentView
-{
-    NSArray *nibViews = [[NSBundle bundleForClass:[JSQMessagesInputToolbar class]] loadNibNamed:NSStringFromClass([JSQMessagesToolbarContentView class])
+    NSArray *nibViews = [[NSBundle bundleForClass:[MessagesInputToolbar class]] loadNibNamed:NSStringFromClass([MessagesToolbarContentView class])
                                                                                           owner:nil
-                                                                                        options:nil];
-    return nibViews.firstObject;
+                                                                                        options:nil]
+    return nibViews.firstObject
 }
 
 - (void)dealloc
 {
-    [self jsq_removeObservers];
-    _contentView = nil;
+    [self gg_removeObservers]
+    _contentView = nil
 }
 
 #pragma mark - Setters
 
 - (void)setPreferredDefaultHeight:(CGFloat)preferredDefaultHeight
 {
-    NSParameterAssert(preferredDefaultHeight > 0.0f);
-    _preferredDefaultHeight = preferredDefaultHeight;
+    NSParameterAssert(preferredDefaultHeight > 0.0f)
+    _preferredDefaultHeight = preferredDefaultHeight
 }
 
 #pragma mark - Actions
 
-- (void)jsq_leftBarButtonPressed:(UIButton *)sender
+- (void)gg_leftBarButtonPressed:(UIButton *)sender
 {
-    [self.delegate messagesInputToolbar:self didPressLeftBarButton:sender];
+    [self.delegate messagesInputToolbar:self didPressLeftBarButton:sender]
 }
 
-- (void)jsq_rightBarButtonPressed:(UIButton *)sender
+- (void)gg_rightBarButtonPressed:(UIButton *)sender
 {
-    [self.delegate messagesInputToolbar:self didPressRightBarButton:sender];
+    [self.delegate messagesInputToolbar:self didPressRightBarButton:sender]
 }
 
 #pragma mark - Input toolbar
 
 - (void)toggleSendButtonEnabled
 {
-    BOOL hasText = [self.contentView.textView hasText];
+    BOOL hasText = [self.contentView.textView hasText]
 
     if (self.sendButtonOnRight) {
-        self.contentView.rightBarButtonItem.enabled = hasText;
+        self.contentView.rightBarButtonItem.enabled = hasText
     }
     else {
-        self.contentView.leftBarButtonItem.enabled = hasText;
+        self.contentView.leftBarButtonItem.enabled = hasText
     }
 }
 
@@ -122,74 +100,73 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (context == kJSQMessagesInputToolbarKeyValueObservingContext) {
+    if (context == kMessagesInputToolbarKeyValueObservingContext) {
         if (object == self.contentView) {
 
             if ([keyPath isEqualToString:NSStringFromSelector(@selector(leftBarButtonItem))]) {
 
                 [self.contentView.leftBarButtonItem removeTarget:self
                                                           action:NULL
-                                                forControlEvents:UIControlEventTouchUpInside];
+                                                forControlEvents:UIControlEventTouchUpInside]
 
                 [self.contentView.leftBarButtonItem addTarget:self
-                                                       action:@selector(jsq_leftBarButtonPressed:)
-                                             forControlEvents:UIControlEventTouchUpInside];
+                                                       action:@selector(gg_leftBarButtonPressed:)
+                                             forControlEvents:UIControlEventTouchUpInside]
             }
             else if ([keyPath isEqualToString:NSStringFromSelector(@selector(rightBarButtonItem))]) {
 
                 [self.contentView.rightBarButtonItem removeTarget:self
                                                            action:NULL
-                                                 forControlEvents:UIControlEventTouchUpInside];
+                                                 forControlEvents:UIControlEventTouchUpInside]
 
                 [self.contentView.rightBarButtonItem addTarget:self
-                                                        action:@selector(jsq_rightBarButtonPressed:)
-                                              forControlEvents:UIControlEventTouchUpInside];
+                                                        action:@selector(gg_rightBarButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside]
             }
 
-            [self toggleSendButtonEnabled];
+            [self toggleSendButtonEnabled]
         }
     }
 }
 
-- (void)jsq_addObservers
+- (void)gg_addObservers
 {
-    if (self.jsq_isObserving) {
-        return;
+    if (self.gg_isObserving) {
+        return
     }
 
     [self.contentView addObserver:self
                        forKeyPath:NSStringFromSelector(@selector(leftBarButtonItem))
                           options:0
-                          context:kJSQMessagesInputToolbarKeyValueObservingContext];
+                          context:kMessagesInputToolbarKeyValueObservingContext]
 
     [self.contentView addObserver:self
                        forKeyPath:NSStringFromSelector(@selector(rightBarButtonItem))
                           options:0
-                          context:kJSQMessagesInputToolbarKeyValueObservingContext];
+                          context:kMessagesInputToolbarKeyValueObservingContext]
 
-    self.jsq_isObserving = YES;
+    self.gg_isObserving = true
 }
 
-- (void)jsq_removeObservers
+- (void)gg_removeObservers
 {
-    if (!_jsq_isObserving) {
-        return;
+    if (!_gg_isObserving) {
+        return
     }
 
     @try {
         [_contentView removeObserver:self
                           forKeyPath:NSStringFromSelector(@selector(leftBarButtonItem))
-                             context:kJSQMessagesInputToolbarKeyValueObservingContext];
+                             context:kMessagesInputToolbarKeyValueObservingContext]
 
         [_contentView removeObserver:self
                           forKeyPath:NSStringFromSelector(@selector(rightBarButtonItem))
-                             context:kJSQMessagesInputToolbarKeyValueObservingContext];
+                             context:kMessagesInputToolbarKeyValueObservingContext]
     }
     @catch (NSException *__unused exception) { }
     
-    _jsq_isObserving = NO;
-}
-
-@end
+    _gg_isObserving = false
 }
 */
+    
+}

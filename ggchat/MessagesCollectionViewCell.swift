@@ -25,6 +25,8 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     var textViewFrameInsets: UIEdgeInsets?
     var tapGestureRecognizer: UITapGestureRecognizer?
     
+    var delegate: MessagesCollectionView?
+    
     static var ggMessagesCollectionViewCellActions = NSMutableSet()
     
     /*
