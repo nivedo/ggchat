@@ -21,4 +21,15 @@ class MessagesCollectionView: UICollectionView {
     var messageDelegate: MessageViewController { return self.delegate as! MessageViewController }
     var messageDataSource: MessageViewController { return self.dataSource as! MessageViewController }
     var messageCollectionViewLayout: MessagesCollectionViewFlowLayout { return self.collectionViewLayout as! MessagesCollectionViewFlowLayout }
+    
+    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
+        
+        print("MessagesCollectionView:init(frame:,layout:)")
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        print("MessagesCollectionView:init(coder:)")
+    }
 }

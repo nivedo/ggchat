@@ -359,6 +359,7 @@ class MessageViewController: UICollectionViewController {
 
     // pragma mark - View lifecycle
     override func viewWillAppear(animated: Bool) {
+        print("MessageViewController::viewWillAppear()")
         super.viewWillAppear(animated)
         self.view.layoutIfNeeded()
         self.messageCollectionView.collectionViewLayout.invalidateLayout()
@@ -374,6 +375,7 @@ class MessageViewController: UICollectionViewController {
     }
 
     override func viewDidAppear(animated: Bool) {
+        print("MessageViewController::viewDidAppear()")
         super.viewDidAppear(animated)
         self.gg_addObservers()
         self.gg_addActionToInteractivePopGestureRecognizer(true)
