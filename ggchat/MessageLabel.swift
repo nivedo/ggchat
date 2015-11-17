@@ -17,20 +17,16 @@ class MessageLabel: UILabel {
         // Drawing code
     }
     */
-    var textInsets: UIEdgeInsets
-    {
-        set (newTextInsets)
-        {
-            if (UIEdgeInsetsEqualToEdgeInsets(self.textInsets, newTextInsets)) {
+    var textInsets: UIEdgeInsets! {
+        didSet {
+            /*
+            if (UIEdgeInsetsEqualToEdgeInsets(self.textInsets, oldValue)) {
                 return
             }
+            */
             
-            self.textInsets = newTextInsets
+            // self.textInsets = newTextInsets
             self.setNeedsDisplay()    
-        }
-        get
-        {
-            return self.textInsets
         }
     }
     

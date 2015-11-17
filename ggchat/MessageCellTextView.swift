@@ -39,19 +39,9 @@ class MessageCellTextView: UITextView {
             NSUnderlineStyleAttributeName : (NSUnderlineStyle.StyleSingle.rawValue | NSUnderlineStyle.PatternSolid.rawValue)
         ]
         self.linkTextAttributes = attributes
+        self.selectedRange = NSMakeRange(NSNotFound, NSNotFound)
     }
 
-    override var selectedRange: NSRange {
-        set {
-            //  attempt to prevent selecting text
-            self.selectedRange = NSMakeRange(NSNotFound, 0)
-        }
-        get {
-            //  attempt to prevent selecting text
-            return NSMakeRange(NSNotFound, NSNotFound)
-        }
-    }
-    
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         //  ignore double-tap to prevent copy/define/etc. menu from showing
         if (gestureRecognizer.isKindOfClass(UITapGestureRecognizer)) {

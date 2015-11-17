@@ -187,17 +187,6 @@ class MessageViewController: UIViewController,
         return self.messages.count
     }
 
-    /*
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        print("MVC::cellForItemAtIndexPath")
-        let cell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    
-        // Configure the cell
-    
-        return cell
-    }
-    */
-
     // MARK: UICollectionViewDelegate
 
     /*
@@ -553,6 +542,7 @@ class MessageViewController: UIViewController,
             cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
         }
 
+        print(cellIdentifier)
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
 
