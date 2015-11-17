@@ -160,12 +160,11 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         self.gg_configureFlowLayout()
     }
     
-    /*
-    + (Class)layoutAttributesClass
-    {
-        return [MessagesCollectionViewLayoutAttributes class];
+    override class func layoutAttributesClass() -> AnyClass {
+        return MessagesCollectionViewLayoutAttributes.self
     }
 
+    /*
     override class func invalidationContextClass() -> AnyClass {
         return MessagesCollectionViewFlowLayoutInvalidationContext.self
     }
@@ -414,15 +413,12 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
         print("MVCFlowLayout::sizeForItemAtIndexPath()")
         let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
-        var finalHeight: CGFloat = messageBubbleSize.height
-        
-        /*
         let attributes: MessagesCollectionViewLayoutAttributes = self.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
-        
+        var finalHeight: CGFloat = messageBubbleSize.height
         finalHeight += attributes.cellTopLabelHeight
         finalHeight += attributes.messageBubbleTopLabelHeight
         finalHeight += attributes.cellBottomLabelHeight
-        */
+        
         return CGSizeMake(self.itemWidth, ceil(finalHeight));
         // return CGSizeMake(320.0, 154.0)
     }

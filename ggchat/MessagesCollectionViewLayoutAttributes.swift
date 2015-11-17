@@ -15,72 +15,44 @@ class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
     // pragma mark - Setters
     
-    var messageBubbleFont: UIFont {
-        set (newMessageBubbleFont) {
-            self.messageBubbleFont = newMessageBubbleFont
-        }
-        get {
-            return self.messageBubbleFont
+    var messageBubbleFont: UIFont!
+    var messageBubbleContainerViewWidth: CGFloat = 0 {
+        willSet {
+            assert(newValue >= 0.0)
         }
     }
     
-    var messageBubbleContainerViewWidth: CGFloat {
-        set (newMessageBubbleContainerViewWidth) {
-            assert(newMessageBubbleContainerViewWidth > 0.0)
-            self.messageBubbleContainerViewWidth = ceil(newMessageBubbleContainerViewWidth)
+    var incomingAvatarViewSize: CGSize = CGSizeMake(0, 0) {
+        willSet {
+            assert(newValue.width >= 0.0 && newValue.height >= 0.0)
+            self.incomingAvatarViewSize = self.gg_correctedAvatarSizeFromSize(newValue)
         }
-        get {
-            return self.messageBubbleContainerViewWidth
+    }
+    var outgoingAvatarViewSize: CGSize = CGSizeMake(0, 0) {
+        willSet {
+            assert(newValue.width >= 0.0 && newValue.height >= 0.0)
+            self.outgoingAvatarViewSize = self.gg_correctedAvatarSizeFromSize(newValue)
         }
     }
     
-    var incomingAvatarViewSize: CGSize {
-        set (newIncomingAvatarViewSize) {
-            assert(newIncomingAvatarViewSize.width >= 0.0 && newIncomingAvatarViewSize.height >= 0.0)
-            self.incomingAvatarViewSize = self.gg_correctedAvatarSizeFromSize(newIncomingAvatarViewSize)
-        }
-        get {
-            return self.incomingAvatarViewSize
+    var cellTopLabelHeight: CGFloat = 0 {
+        willSet {
+            assert(newValue >= 0.0)
+            self.cellTopLabelHeight = self.gg_correctedLabelHeightForHeight(newValue)
         }
     }
     
-    var outgoingAvatarViewSize: CGSize {
-        set (newOutgoingAvatarViewSize) {
-            assert(newOutgoingAvatarViewSize.width >= 0.0 && newOutgoingAvatarViewSize.height >= 0.0)
-            self.outgoingAvatarViewSize = self.gg_correctedAvatarSizeFromSize(newOutgoingAvatarViewSize)
-        }
-        get {
-            return self.outgoingAvatarViewSize
+    var messageBubbleTopLabelHeight: CGFloat = 0 {
+        willSet {
+            assert(newValue >= 0.0)
+            self.messageBubbleTopLabelHeight = self.gg_correctedLabelHeightForHeight(newValue)
         }
     }
     
-    var cellTopLabelHeight: CGFloat {
-        set (newCellTopLabelHeight) {
-            assert(newCellTopLabelHeight >= 0.0)
-            self.cellTopLabelHeight = self.gg_correctedLabelHeightForHeight(newCellTopLabelHeight)
-        }
-        get {
-            return self.cellTopLabelHeight
-        }
-    }
-    
-    var messageBubbleTopLabelHeight: CGFloat {
-        set (newMessageBubbleTopLabelHeight) {
-            assert(newMessageBubbleTopLabelHeight >= 0.0)
-            self.messageBubbleTopLabelHeight = self.gg_correctedLabelHeightForHeight(newMessageBubbleTopLabelHeight)
-        }
-        get {
-            return self.messageBubbleTopLabelHeight
-        }
-    }
-    
-    var cellBottomLabelHeight: CGFloat {
-        set(newCellBottomLabelHeight) {
-            assert(newCellBottomLabelHeight >= 0.0)
-            self.cellBottomLabelHeight = self.gg_correctedLabelHeightForHeight(newCellBottomLabelHeight)
-        }
-        get {
-            return self.cellBottomLabelHeight
+    var cellBottomLabelHeight: CGFloat = 0 {
+        willSet {
+            assert(newValue >= 0.0)
+            self.cellBottomLabelHeight = self.gg_correctedLabelHeightForHeight(newValue)
         }
     }
     
