@@ -16,47 +16,28 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var messageCollectionView: MessagesCollectionView!
     
     var bubbleSizeCalculator: MessageBubbleSizeCalculator = MessageBubbleSizeCalculator()
+    lazy var dynamicAnimator: UIDynamicAnimator = self.initDynamicAnimator()
     
-    /*
-    override var collectionView: MessagesCollectionView {
-        get {
-            return self.messagesCollectionView
-        }
-        set {
-            self.messagesCollectionView = newValue
-        }
+    func initDynamicAnimator() -> UIDynamicAnimator {
+        return UIDynamicAnimator(collectionViewLayout:self)
     }
-    */
     
+
     // pragma mark - Getters
-    /*
-    var dynamicAnimator: UIDynamicAnimator? {
-        get {
-            if (self.dynamicAnimator == nil) {
-                self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout:self)
-            }
-            return self.dynamicAnimator
-        }
-        set (newDynamicAnimator) {
-            self.dynamicAnimator = newDynamicAnimator
-        }
-    }
-    */
+    
     var visibleIndexPaths: NSMutableSet = NSMutableSet()
     
-    /*
     var itemWidth : CGFloat {
         get {
-            return CGRectGetWidth(self.collectionView.frame) - self.sectionInset.left - self.sectionInset.right;
+            return CGRectGetWidth(self.messageCollectionView.frame) - self.sectionInset.left - self.sectionInset.right
         }
     }
-    */
   
     var latestDelta: CGFloat = 0.0
     var messageBubbleTextViewFrameInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 6.0)
     var springResistanceFactor: CGFloat = 1000
 
-    var springinessEnabled: Bool! {
+    var springinessEnabled: Bool = false {
         willSet {
             /*
             if (self.springinessEnabled == newValue) {
@@ -180,35 +161,14 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     /*
-    /*
     + (Class)layoutAttributesClass
     {
         return [MessagesCollectionViewLayoutAttributes class];
     }
-    */
 
     override class func invalidationContextClass() -> AnyClass {
         return MessagesCollectionViewFlowLayoutInvalidationContext.self
     }
-
-    // pragma mark - Setters
-    /*
-    - (void)setBubbleSizeCalculator:(id<MessagesBubbleSizeCalculating>)bubbleSizeCalculator
-    {
-        NSParameterAssert(bubbleSizeCalculator != nil);
-        _bubbleSizeCalculator = bubbleSizeCalculator;
-    }
-    */
-/*
-- (id<MessagesBubbleSizeCalculating>)bubbleSizeCalculator
-{
-    if (_bubbleSizeCalculator == nil) {
-        _bubbleSizeCalculator = [MessagesBubblesSizeCalculator new];
-    }
-
-    return _bubbleSizeCalculator;
-}
-*/
 
     // pragma mark - Notifications
 
@@ -220,7 +180,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         self.gg_resetLayout()
         self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
     }
-
+    
     // pragma mark - Collection view flow layout
 
     func invalidateLayoutWithContext(context: MessagesCollectionViewFlowLayoutInvalidationContext) {
@@ -240,39 +200,42 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         super.invalidateLayoutWithContext(context)
     }
-
+    */
+    /*
     override func prepareLayout() {
         super.prepareLayout()
         
         if (self.springinessEnabled) {
             //  pad rect to avoid flickering
             let padding: CGFloat = -100.0
-            let visibleRect: CGRect = CGRectInset((self.collectionView?.bounds)!, padding, padding)
+            let visibleRect: CGRect = CGRectInset((self.messageCollectionView?.bounds)!, padding, padding)
+            /*
+            let visibleItems: NSArray = super.layoutAttributesForElementsInRect(visibleRect)!
+            let visibleItemsIndexPaths: NSSet = NSSet.setWithArray(visibleItems.valueForKey(NSStringFromSelector(Selector("indexPath:"))) as! [AnyObject])
+            // self.gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths(visibleItemsIndexPaths)
             
-            let visibleItems: NSArray = super.layoutAttributesForElementsInRect(visibleRect)
-            let visibleItemsIndexPaths: NSSet = NSSet.setWithArray(visibleItems.valueForKey(NSStringFromSelector(Selector(indexPath))))
-            
-            self.gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths(visibleItemsIndexPaths)
-            
-            self.gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems)
+            // self.gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems)
+            */
         }
     }
-
-    func layoutAttributesForElementsInRect(rect: CGRect) -> NSArray {
-        var attributesInRect: NSArray = super.layoutAttributesForElementsInRect(rect)
+    */
+    
+    /*
+    override func layoutAttributesForElementsInRect(_ rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var attributesInRect: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElementsInRect(rect)!
     
         if (self.springinessEnabled) {
-            let attributesInRectCopy: NSMutableArray = attributesInRect.mutableCopy()
-            let dynamicAttributes: NSArray = self.dynamicAnimator?.itemsInRect(rect)
+            var attributesInRectCopy = attributesInRect
+            let dynamicAttributes: NSArray = self.dynamicAnimator.itemsInRect(rect)
             
             //  avoid duplicate attributes
             //  use dynamic animator attribute item instead of regular item, if it exists
-            for (eachItem in attributesInRect) {
-                for (eachDynamicItem in dynamicAttributes) {
+            for (indexItem, eachItem) in attributesInRect.enumerate() {
+                for (_, eachDynamicItem) in dynamicAttributes.enumerate() {
                     if (eachItem.indexPath.isEqual(eachDynamicItem.indexPath)
                         && eachItem.representedElementCategory == eachDynamicItem.representedElementCategory) {
-                        attributesInRectCopy.removeObject(eachItem)
-                        attributesInRectCopy.addObject(eachDynamicItem)
+                        attributesInRectCopy.removeAtIndex(indexItem)
+                        attributesInRectCopy.insert(eachDynamicItem as! UICollectionViewLayoutAttributes, atIndex: indexItem)
                         continue
                     }
                 }
@@ -282,34 +245,27 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         
         for index in 0...attributesInRect.count {
+            let attributesElem = attributesInRect[index] as! MessagesCollectionViewLayoutAttributes
             if (attributesInRect[index].representedElementCategory == UICollectionElementCategory.Cell) {
-                self.gg_configureMessageCellLayoutAttributes(attributesInRect[index])
+                self.gg_configureMessageCellLayoutAttributes(attributesElem)
             } else {
-                attributesInRect[index].zIndex = -1;
+                attributesElem.zIndex = -1;
             }
         }
         
-        return attributesInRect
+        return attributesInRect as! [UICollectionViewLayoutAttributes]
     }
+    */
 
-    func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
-        let customAttributes: MessagesCollectionViewLayoutAttributes = super.layoutAttributesForItemAtIndexPath(indexPath) as MessagesCollectionViewLayoutAttributes
-        
-        if (customAttributes.representedElementCategory == UICollectionElementCategory.Cell) {
-            self.gg_configureMessageCellLayoutAttributes(customAttributes)
-        }
-        
-        return customAttributes
-    }
-
+    /*
     func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
         if (self.springinessEnabled) {
-            let scrollView: UIScrollView = self.collectionView
+            let scrollView: UIScrollView = self.messageCollectionView
             let delta: CGFloat = newBounds.origin.y - scrollView.bounds.origin.y
             
             self.latestDelta = delta
             
-            let touchLocation: CGPoint = self.collectionView.panGestureRecognizer(locationInView: self.collectionView)
+            let touchLocation: CGPoint = self.messageCollectionView.panGestureRecognizer(locationInView: self.messageCollectionView)
             
             self.dynamicAnimator.behaviors.enumerateObjectsUsingBlock({ springBehaviour, index, stop) in
                 self.gg_adjustSpringBehavior(springBehaviour, forTouchLocation:touchLocation)
@@ -317,27 +273,32 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             })
         }
         
-        let oldBounds: CGRect = self.collectionView.bounds
+        let oldBounds: CGRect = self.messageCollectionView.bounds
         if (CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds)) {
             return true
         }
         
         return false
     }
-
-    func prepareForCollectionViewUpdates(updateItems: NSArray) {
+    */
+    
+    override func prepareForCollectionViewUpdates(_ updateItems: [UICollectionViewUpdateItem]) {
         super.prepareForCollectionViewUpdates(updateItems)
         
-        updateItems.enumerateObjectsUsingBlock({updateItem, index, stop) in
+        // updateItems.enumerateObjectsUsingBlock({updateItem, index, stop) in
+        for (index, value) in updateItems.enumerate() {
+            let updateItem = value as UICollectionViewUpdateItem
             if (updateItem.updateAction == UICollectionUpdateAction.Insert) {
                 
-                if (self.springinessEnabled && self.dynamicAnimator.layoutAttributesForCellAtIndexPath(updateItem.indexPathAfterUpdate)) {
+                /*
+                if (self.springinessEnabled && self.dynamicAnimator.layoutAttributesForCellAtIndexPath(updateItem.indexPathAfterUpdate) != nil) {
                     stop = false
                 }
+                */
                 
-                let collectionViewHeight: CGFloat = CGRectGetHeight(self.collectionView.bounds)
+                let collectionViewHeight: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds)
                 
-                let attributes: MessagesCollectionViewLayoutAttributes = MessagesCollectionViewLayoutAttributes.layoutAttributesForCellWithIndexPath(updateItem.indexPathAfterUpdate)
+                let attributes: MessagesCollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: updateItem.indexPathAfterUpdate) as! MessagesCollectionViewLayoutAttributes
                 
                 if (attributes.representedElementCategory == UICollectionElementCategory.Cell) {
                     self.gg_configureMessageCellLayoutAttributes(attributes)
@@ -348,14 +309,17 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
                     CGRectGetWidth(attributes.frame),
                     CGRectGetHeight(attributes.frame));
                 
+                /*
                 if (self.springinessEnabled) {
                     let springBehavior: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(attributes)
                     self.dynamicAnimator.addBehavior(springBehaviour)
                 }
+                */
             }
-        })
+        }
     }
-
+   
+    /*
     // pragma mark - Invalidation utilities
 
     func gg_resetLayout() {
@@ -371,33 +335,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     // pragma mark - Message cell layout utilities
-    
-
-    func gg_configureMessageCellLayoutAttributes(layoutAttributes: MessagesCollectionViewLayoutAttributes) {
-        let indexPath: NSIndexPath = layoutAttributes.indexPath
-        
-        let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
-        layoutAttributes.messageBubbleContainerViewWidth = messageBubbleSize.width
-        layoutAttributes.textViewFrameInsets = self.messageBubbleTextViewFrameInsets
-        layoutAttributes.textViewTextContainerInsets = self.messageBubbleTextViewTextContainerInsets
-        layoutAttributes.messageBubbleFont = self.messageBubbleFont
-        layoutAttributes.incomingAvatarViewSize = self.incomingAvatarViewSize
-        layoutAttributes.outgoingAvatarViewSize = self.outgoingAvatarViewSize
-        layoutAttributes.cellTopLabelHeight = self.collectionView.delegate.collectionView(
-            self.collectionView,
-            layout:self,
-            heightForCellTopLabelAtIndexPath:indexPath)
-        
-        layoutAttributes.messageBubbleTopLabelHeight = self.collectionView.delegate.collectionView(
-            self.collectionView,
-            layout: self,
-            heightForMessageBubbleTopLabelAtIndexPath:indexPath)
-        
-        layoutAttributes.cellBottomLabelHeight = self.collectionView.delegate.collectionView(
-            self.collectionView,
-            layout:self,
-            heightForCellBottomLabelAtIndexPath:indexPath)
-    }
 
     // pragma mark - Spring behavior utilities
 
@@ -415,7 +352,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         springBehavior.frequency = 1.0
         return springBehavior
     }
-
+    */
+   
+    /*
     func gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems: NSArray) {
         //  a "newly visible" item is in `visibleItems` but not in `self.visibleIndexPaths`
         let indexSet: NSIndexSet = visibleItems.indexesOfObjectsPassingTest({item: UICollectionViewLayoutAttributes, index, stop) in
@@ -424,7 +363,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         let newlyVisibleItems: NSArray = visibleItems.objectsAtIndexes(indexSet)
         
-        let touchLocation: CGPoint = self.collectionView.panGestureRecognizer.locationInViews(self.collectionView)
+        let touchLocation: CGPoint = self.messageCollectionView.panGestureRecognizer.locationInViews(self.messageCollectionView)
         
         newlyVisibleItems.enumerateObjectsUsingBlock({ item: UICollectionViewLayoutAttributes, index, stop) in
             let springBehaviour: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(item)
@@ -450,7 +389,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             self.visibleIndexPaths.removeObject(layoutAttributes.indexPath)
         })
     }
-
+    */
+    
+    /*
     func gg_adjustSpringBehavior(springBehavior: UIAttachmentBehavior, forTouchLocation touchLocation: CGPoint) {
         let item: UICollectionViewLayoutAttributes = springBehavior.items.first! as! UICollectionViewLayoutAttributes
         var center: CGPoint = item.center
@@ -472,7 +413,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     */
     func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
         print("MVCFlowLayout::sizeForItemAtIndexPath()")
-        
         /*
         let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
         let attributes: MessagesCollectionViewLayoutAttributes = self.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
@@ -481,8 +421,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         finalHeight += attributes.cellTopLabelHeight
         finalHeight += attributes.messageBubbleTopLabelHeight
         finalHeight += attributes.cellBottomLabelHeight
+        
+        return CGSizeMake(self.itemWidth, ceil(finalHeight));
         */
-        // return CGSizeMake(self.itemWidth, ceil(finalHeight));
         return CGSizeMake(320.0, 154.0)
     }
     
@@ -497,5 +438,39 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             withLayout: self)
     }
 
-
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
+        let customAttributes: MessagesCollectionViewLayoutAttributes = super.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
+        
+        if (customAttributes.representedElementCategory == UICollectionElementCategory.Cell) {
+            self.gg_configureMessageCellLayoutAttributes(customAttributes)
+        }
+        
+        return customAttributes
+    }
+    
+    func gg_configureMessageCellLayoutAttributes(layoutAttributes: MessagesCollectionViewLayoutAttributes) {
+        let indexPath: NSIndexPath = layoutAttributes.indexPath
+        
+        let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
+        layoutAttributes.messageBubbleContainerViewWidth = messageBubbleSize.width
+        layoutAttributes.textViewFrameInsets = self.messageBubbleTextViewFrameInsets
+        layoutAttributes.textViewTextContainerInsets = self.messageBubbleTextViewTextContainerInsets
+        layoutAttributes.messageBubbleFont = self.messageBubbleFont
+        layoutAttributes.incomingAvatarViewSize = self.incomingAvatarViewSize
+        layoutAttributes.outgoingAvatarViewSize = self.outgoingAvatarViewSize
+        layoutAttributes.cellTopLabelHeight = self.messageCollectionView.messageDelegate.collectionView(
+            self.messageCollectionView,
+            layout:self,
+            heightForCellTopLabelAtIndexPath:indexPath)
+        
+        layoutAttributes.messageBubbleTopLabelHeight = self.messageCollectionView.messageDelegate.collectionView(
+            self.messageCollectionView,
+            layout: self,
+            heightForMessageBubbleTopLabelAtIndexPath:indexPath)
+        
+        layoutAttributes.cellBottomLabelHeight = self.messageCollectionView.messageDelegate.collectionView(
+            self.messageCollectionView,
+            layout:self,
+            heightForCellBottomLabelAtIndexPath:indexPath)
+    }
 }

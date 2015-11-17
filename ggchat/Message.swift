@@ -45,12 +45,12 @@ class Message {
         self.media = media
     }
     
-    func messageHash() -> UInt {
+    func messageHash() -> Int {
         return self.hash()
     }
     
-    func hash() -> UInt {
+    func hash() -> Int {
         let contentHash = self.text!.hash;
-        return UInt(self.senderId.hash ^ self.date.hash ^ contentHash)
+        return Int(self.senderId.hash ^ self.date.hash ^ contentHash)
     }
 }
