@@ -30,21 +30,6 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     static var ggMessagesCollectionViewCellActions = NSMutableSet()
     
     /*
-    static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
-    
-    
-    @interface JSQMessagesCollectionViewCell ()
-    
-    @property (weak, nonatomic) IBOutlet JSQMessagesLabel *cellTopLabel;
-    @property (weak, nonatomic) IBOutlet JSQMessagesLabel *messageBubbleTopLabel;
-    @property (weak, nonatomic) IBOutlet JSQMessagesLabel *cellBottomLabel;
-    
-    @property (weak, nonatomic) IBOutlet UIView *messageBubbleContainerView;
-    @property (weak, nonatomic) IBOutlet UIImageView *messageBubbleImageView;
-    @property (weak, nonatomic) IBOutlet JSQMessagesCellTextView *textView;
-    
-    @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-    @property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
     
     @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageBubbleContainerWidthConstraint;
     
@@ -75,21 +60,10 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     
     @implementation JSQMessagesCollectionViewCell
     
-    #pragma mark - Class methods
-    
-    + (void)initialize
-    {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-    jsqMessagesCollectionViewCellActions = [NSMutableSet new];
-    });
-    }
-    
-    + (UINib *)nib
-    {
-    return [UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle bundleForClass:[self class]]];
-    }
 */
+    class func nib() -> UINib {
+        return UINib(nibName: NSStringFromClass(self), bundle: NSBundle(forClass: self))
+    }
     
     class func cellReuseIdentifier() -> String {
         return NSStringFromClass(self);
@@ -99,12 +73,9 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         return "\(NSStringFromClass(self))_GGMedia"
     }
 
-    /*
-    + (void)registerMenuAction:(SEL)action
-    {
-    [jsqMessagesCollectionViewCellActions addObject:NSStringFromSelector(action)];
+    class func registerMenuAction(action: Selector) {
+        self.ggMessagesCollectionViewCellActions.addObject(NSStringFromSelector(action))
     }
-    */
 
     // pragma mark - Initialization
     
