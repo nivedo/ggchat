@@ -13,15 +13,20 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 20.0
     let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 30.0
     
-    var messagesCollectionView: MessagesCollectionView?
+    var messageCollectionView: MessagesCollectionView!
+    /*
     override var collectionView: MessagesCollectionView {
         get {
-            return self.messagesCollectionView!
+            return self.messagesCollectionView
+        }
+        set {
+            self.messagesCollectionView = newValue
         }
     }
+    */
     
     // pragma mark - Getters
-    
+    /*
     var dynamicAnimator: UIDynamicAnimator? {
         get {
             if (self.dynamicAnimator == nil) {
@@ -33,100 +38,89 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             self.dynamicAnimator = newDynamicAnimator
         }
     }
+    */
     var visibleIndexPaths: NSMutableSet = NSMutableSet()
-
+    
+    /*
     var itemWidth : CGFloat {
         get {
             return CGRectGetWidth(self.collectionView.frame) - self.sectionInset.left - self.sectionInset.right;
         }
     }
+    */
   
     var latestDelta: CGFloat = 0.0
     var messageBubbleTextViewFrameInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 6.0)
     var springResistanceFactor: CGFloat = 1000
 
-    var springinessEnabled: Bool {
-        get {
-            return self.springinessEnabled
-        }
-        set (newSpringinessEnabled) {
-            if (self.springinessEnabled == newSpringinessEnabled) {
+    var springinessEnabled: Bool! {
+        willSet {
+            /*
+            if (self.springinessEnabled == newValue) {
                 return
             }
-                
-            self.springinessEnabled = newSpringinessEnabled
+            */
             
-            if (!self.springinessEnabled) {
-                self.dynamicAnimator!.removeAllBehaviors()
+            if (!newValue) {
+                // self.dynamicAnimator!.removeAllBehaviors()
                 self.visibleIndexPaths.removeAllObjects()
             }
             self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
     }
 
-    var messageBubbleFont: UIFont {
-        set (newMessageBubbleFont) {
-            if (self.messageBubbleFont.isEqual(newMessageBubbleFont)) {
-                return;
+    var messageBubbleFont: UIFont! {
+        didSet {
+            if (self.messageBubbleFont.isEqual(oldValue)) {
+                return
             }
-            self.messageBubbleFont = newMessageBubbleFont
-        self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-        }
-        get {
-            return self.messageBubbleFont
-        }
-    }
-
-    var messageBubbleLeftRightMargin: CGFloat {
-        set (newMessageBubbleLeftRightMargin) {
-            assert(newMessageBubbleLeftRightMargin >= 0.0)
-            self.messageBubbleLeftRightMargin = CGFloat(ceilf(Float(newMessageBubbleLeftRightMargin)))
             self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
-        get {
-            return self.messageBubbleLeftRightMargin
+    }
+
+    var messageBubbleLeftRightMargin: CGFloat! {
+        willSet {
+            assert(newValue >= 0.0)
+            self.messageBubbleLeftRightMargin = ceil(newValue)
+        }
+        didSet {
+            self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
     }
 
-    var messageBubbleTextViewTextContainerInsets: UIEdgeInsets {
-        set (newMessageBubbleTextViewTextContainerInsets) {
-            if (UIEdgeInsetsEqualToEdgeInsets(self.messageBubbleTextViewTextContainerInsets, newMessageBubbleTextViewTextContainerInsets)) {
+    var messageBubbleTextViewTextContainerInsets: UIEdgeInsets! {
+        didSet {
+            /*
+            if (UIEdgeInsetsEqualToEdgeInsets(self.messageBubbleTextViewTextContainerInsets, oldValue)) {
                 return
             }
+            */
             
-            self.messageBubbleTextViewTextContainerInsets = newMessageBubbleTextViewTextContainerInsets
             self.invalidateLayoutWithContext (MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
-        get {
-            return self.messageBubbleTextViewTextContainerInsets
+    }
+    
+    var incomingAvatarViewSize: CGSize! {
+        didSet {
+            /*
+            if (CGSizeEqualToSize(self.incomingAvatarViewSize, oldValue)) {
+                return
+            }
+            */
+            
+            self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
     }
     
-    var incomingAvatarViewSize: CGSize {
-        set (newIncomingAvatarViewSize) {
-            if (CGSizeEqualToSize(self.incomingAvatarViewSize, newIncomingAvatarViewSize)) {
+    var outgoingAvatarViewSize: CGSize! {
+        didSet {
+            /*
+            if (CGSizeEqualToSize(self.outgoingAvatarViewSize, oldValue)) {
                 return
             }
+            */
             
-            self.incomingAvatarViewSize = newIncomingAvatarViewSize
-        self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-        }
-        get {
-            return self.incomingAvatarViewSize
-        }
-    }
-    
-    var outgoingAvatarViewSize: CGSize {
-        set (newOutgoingAvatarViewSize) {
-            if (CGSizeEqualToSize(self.outgoingAvatarViewSize, newOutgoingAvatarViewSize)) {
-                return
-            }
-            
-            self.outgoingAvatarViewSize = newOutgoingAvatarViewSize
-        self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-        }
-        get {
-            return self.outgoingAvatarViewSize
+            self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
     }
 

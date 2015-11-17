@@ -52,19 +52,17 @@ class MessageViewController: UIViewController,
         }
     }
 
-    var showLoadEarlierMessagesHeader: Bool {
-        set (newShowLoadEarlierMessagesHeader) {
+    var showLoadEarlierMessagesHeader: Bool! {
+        didSet {
+            /*
             if (self.showLoadEarlierMessagesHeader == newShowLoadEarlierMessagesHeader) {
                 return
             }
+            */
 
-            self.showLoadEarlierMessagesHeader = newShowLoadEarlierMessagesHeader
             self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
             self.messageCollectionView.collectionViewLayout.invalidateLayout()
             self.messageCollectionView.reloadData()
-        }
-        get {
-            return self.showLoadEarlierMessagesHeader
         }
     }
 
@@ -129,25 +127,31 @@ class MessageViewController: UIViewController,
     // UICollectionViewController methods
     //////////////////////////////////////////////////////////////////////////////////////
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        print("MessageViewController::awakeFromNib()")
+    }
+    
     override func viewDidLoad() {
         print("MessageViewController::viewDidLoad()")
         super.viewDidLoad()
-
-        // self.nib.instantiateWithOwner(self, options:nil)
+        
+        // Load outlets to self
+        let nib = UINib(nibName: "MessageViewController", bundle: NSBundle.mainBundle())
+        nib.instantiateWithOwner(self, options: nil)
 
         self.gg_registerForNotifications(true)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
         // Register cell classes
-        if (self.messageCollectionView == nil) {
-            print("view is nil")
-        }
-        print(self)
-        print(self.messageCollectionView)
-        self.messageCollectionView.registerClass(MessagesCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+        
+        /*
+        self.messageCollectionView.registerClass(
+            MessagesCollectionViewCell.self,
+            forCellWithReuseIdentifier: reuseIdentifier)
+        */
+        
         // Do any additional setup after loading the view.
         self.setup()
     }
@@ -640,7 +644,7 @@ class MessageViewController: UIViewController,
         }
 
         // return CGSizeMake(collectionViewLayout.itemWidth, MessageLoadEarlierHeaderView.kMessagesTypingIndicatorFooterViewHeight)
-        return CGSizeMake(collectionViewLayout.itemWidth, 32.0)
+        return CGSizeMake(320.0, 32.0)
     }
 
     func collectionView(
@@ -652,7 +656,7 @@ class MessageViewController: UIViewController,
 
         // return CGSizeMake(collectionViewLayout.itemWidth,
         //     kMessagesLoadEarlierHeaderViewHeight)
-        return CGSizeMake(collectionViewLayout.itemWidth, 32.0)
+        return CGSizeMake(320.0, 32.0)
     }
 
     // pragma mark - Collection view delegate

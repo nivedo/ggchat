@@ -105,7 +105,7 @@ class MessagesBubblesSizeCalculator {
         withLayout layout: MessagesCollectionViewFlowLayout) -> CGSize {
         let messageSender: String = messageData.senderId
         
-        if (messageSender == layout.collectionView.messageDataSource.senderId) {
+        if (messageSender == layout.messageCollectionView.messageDataSource.senderId) {
             return layout.outgoingAvatarViewSize
         }
         
@@ -117,7 +117,8 @@ class MessagesBubblesSizeCalculator {
             return self.widthForFixedWidthBubblesWithLayout(layout)
         }
         
-        return layout.itemWidth
+        // return layout.itemWidth
+        return 320.0
     }
     
     func widthForFixedWidthBubblesWithLayout(layout: MessagesCollectionViewFlowLayout) -> CGFloat {
@@ -127,8 +128,8 @@ class MessagesBubblesSizeCalculator {
         
         // also need to add `self.additionalInset` here, see comment above
         let horizontalInsets: CGFloat = layout.sectionInset.left + layout.sectionInset.right + self.additionalInset
-        let width: CGFloat = CGRectGetWidth(layout.collectionView.bounds) - horizontalInsets
-        let height: CGFloat = CGRectGetHeight(layout.collectionView.bounds) - horizontalInsets
+        let width: CGFloat = CGRectGetWidth(layout.messageCollectionView.bounds) - horizontalInsets
+        let height: CGFloat = CGRectGetHeight(layout.messageCollectionView.bounds) - horizontalInsets
         self.layoutWidthForFixedWidthBubbles = min(width, height)
         
         return self.layoutWidthForFixedWidthBubbles
