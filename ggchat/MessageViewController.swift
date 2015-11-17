@@ -320,8 +320,8 @@ class MessageViewController: UIViewController,
         */
         if (indexPath.item % 3 == 0) {
             let message: Message = self.messages[indexPath.item]
-            // return [[MessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
-            return NSAttributedString(string: message.senderId)
+            return MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(message.date)
+            // return NSAttributedString(string: message.senderId)
         }
         return nil;
     }

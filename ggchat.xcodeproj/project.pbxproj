@@ -43,6 +43,7 @@
 		D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F51A1BFA95F500FA4444 /* MessageViewController.swift */; };
 		D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */; };
 		D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */; };
+		D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		D4A9F51A1BFA95F500FA4444 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGMessageViewController.swift; sourceTree = "<group>"; };
+		D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTimestampFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 			children = (
 				D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */,
 				D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */,
+				D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */,
 				D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */,
 				D4A9F50B1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
+				D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */,
 				D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
