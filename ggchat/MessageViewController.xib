@@ -13,10 +13,10 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7Kj-z4-0me" customClass="MessagesCollectionView" customModule="ggchat" customModuleProvider="target">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7Kj-z4-0me" customClass="MessagesCollectionView" customModule="ggchat" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <animations/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bcb-gt-kxA" customClass="MessagesCollectionViewFlowLayout" customModule="ggchat" customModuleProvider="target">
@@ -26,8 +26,8 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xKi-4a-tRX" customClass="MessageInputToolbar" customModule="ggchat" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="556" width="320" height="44"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKi-4a-tRX" customClass="MessageInputToolbar" customModule="ggchat" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <animations/>
                     <items>
                         <barButtonItem title="Item" id="pv1-SH-Hi1"/>
@@ -38,7 +38,6 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="7Kj-z4-0me" secondAttribute="trailing" id="2jB-Sp-ceT"/>
-                <constraint firstAttribute="bottom" secondItem="7Kj-z4-0me" secondAttribute="bottom" constant="32" id="9EM-nW-iSG"/>
                 <constraint firstItem="7Kj-z4-0me" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Q5Y-nN-w7H"/>
                 <constraint firstAttribute="bottom" secondItem="xKi-4a-tRX" secondAttribute="bottom" id="Qdx-TD-K41"/>
                 <constraint firstAttribute="bottom" secondItem="7Kj-z4-0me" secondAttribute="bottom" id="gXl-Gq-jJU"/>
@@ -46,6 +45,8 @@
                 <constraint firstItem="xKi-4a-tRX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mw0-W7-L5Z"/>
                 <constraint firstItem="7Kj-z4-0me" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pLo-Xh-VRT"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
 </document>
