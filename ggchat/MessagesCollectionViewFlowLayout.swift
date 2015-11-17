@@ -243,16 +243,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             attributesInRect = attributesInRectCopy
         }
         */
-        /*
-        for index in 0...attributesInRect.count {
-            let attributesElem = attributesInRect[index] as! MessagesCollectionViewLayoutAttributes
-            if (attributesInRect[index].representedElementCategory == UICollectionElementCategory.Cell) {
-                self.gg_configureMessageCellLayoutAttributes(attributesElem)
-            } else {
-                attributesElem.zIndex = -1;
-            }
-        }
-        */
+        
         for (_, value) in attributesInRect.enumerate() {
             let attributesElem = value as! MessagesCollectionViewLayoutAttributes
             if (attributesElem.representedElementCategory == UICollectionElementCategory.Cell) {
@@ -293,7 +284,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     override func prepareForCollectionViewUpdates(_ updateItems: [UICollectionViewUpdateItem]) {
         super.prepareForCollectionViewUpdates(updateItems)
         
-        // updateItems.enumerateObjectsUsingBlock({updateItem, index, stop) in
         for (_, value) in updateItems.enumerate() {
             let updateItem = value as UICollectionViewUpdateItem
             if (updateItem.updateAction == UICollectionUpdateAction.Insert) {
