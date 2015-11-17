@@ -706,38 +706,41 @@ class MessageViewController: UIViewController,
     // pragma mark - Collection view delegate flow layout
 
     func collectionView(
-        layout collectionViewLayout: MessagesCollectionViewFlowLayout,
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        // return collectionViewLayout.sizeForItemAtIndexPath(indexPath)
-        return CGSize(width: 32.0, height: 10.0)
+        let messageCollectionViewLayout = collectionViewLayout as! MessagesCollectionViewFlowLayout
+        return messageCollectionViewLayout.sizeForItemAtIndexPath(indexPath)
     }
 
     func collectionView(
-        layout collectionViewLayout: MessagesCollectionViewFlowLayout,
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewFlowLayout,
         heightForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 0.0
     }
 
     func collectionView(
-        layout collectionViewLayout: MessagesCollectionViewFlowLayout,
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewFlowLayout,
         heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 0.0
     }
 
-    func collectionView(collectionView: MessagesCollectionView,
-        layout collectionViewLayout: MessagesCollectionViewFlowLayout,
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewFlowLayout,
         heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 0.0
     }
 
-    func collectionView(collectionView: MessagesCollectionView,
+    func collectionView(collectionView: UICollectionView,
         didTapAvatarImageView avatarImageView: UIImageView,
         atIndexPath indexPath: NSIndexPath) { }
 
-    func collectionView(collectionView: MessagesCollectionView,
+    func collectionView(collectionView: UICollectionView,
         didTapMessageBubbleAtIndexPath indexPath: NSIndexPath) { }
 
-    func collectionView(collectionView: MessagesCollectionView,
+    func collectionView(collectionView: UICollectionView,
         didTapCellAtIndexPath indexPath: NSIndexPath,
         touchLocation: CGPoint) { }
 

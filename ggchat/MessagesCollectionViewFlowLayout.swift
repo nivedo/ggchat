@@ -10,8 +10,8 @@ import UIKit
 
 class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
-    let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 20.0
-    let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 30.0
+    let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 154
+    let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 32.0
     
     var messageCollectionView: MessagesCollectionView!
     /*
@@ -380,17 +380,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             withLayout:self)
     }
 
-    func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
-        let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
-        let attributes: MessagesCollectionViewLayoutAttributes = self.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
-        
-        var finalHeight: CGFloat = messageBubbleSize.height
-        finalHeight += attributes.cellTopLabelHeight
-        finalHeight += attributes.messageBubbleTopLabelHeight
-        finalHeight += attributes.cellBottomLabelHeight
-        
-        return CGSizeMake(self.itemWidth, ceil(finalHeight));
-    }
+    
 
     func gg_configureMessageCellLayoutAttributes(layoutAttributes: MessagesCollectionViewLayoutAttributes) {
         let indexPath: NSIndexPath = layoutAttributes.indexPath
@@ -489,4 +479,19 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
     */
+    func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
+        print("MVCFlowLayout::sizeForItemAtIndexPath()")
+        
+        /*
+        let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
+        let attributes: MessagesCollectionViewLayoutAttributes = self.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
+        
+        var finalHeight: CGFloat = messageBubbleSize.height
+        finalHeight += attributes.cellTopLabelHeight
+        finalHeight += attributes.messageBubbleTopLabelHeight
+        finalHeight += attributes.cellBottomLabelHeight
+        */
+        // return CGSizeMake(self.itemWidth, ceil(finalHeight));
+        return CGSizeMake(320.0, 154.0)
+    }
 }
