@@ -14,7 +14,7 @@ class MessagesCollectionViewFlowLayoutInvalidationContext: UICollectionViewFlowL
     var invalidateFlowLayoutDelegateMetrics: Bool
     var invalidateFlowLayoutAttributes: Bool
     */
-    var invalidateFlowLayoutMessagesCache: Bool
+    var invalidateFlowLayoutMessagesCache: Bool = false
         
     // pragma mark - Initialization
     override init() {

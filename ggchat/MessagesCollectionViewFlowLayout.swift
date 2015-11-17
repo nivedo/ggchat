@@ -159,7 +159,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return MessagesCollectionViewLayoutAttributes.self
     }
 
-    /*
     override class func invalidationContextClass() -> AnyClass {
         return MessagesCollectionViewFlowLayoutInvalidationContext.self
     }
@@ -177,7 +176,8 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     // pragma mark - Collection view flow layout
 
-    func invalidateLayoutWithContext(context: MessagesCollectionViewFlowLayoutInvalidationContext) {
+    override func invalidateLayoutWithContext(_ uiContext: UICollectionViewLayoutInvalidationContext) {
+        let context: MessagesCollectionViewFlowLayoutInvalidationContext = uiContext as! MessagesCollectionViewFlowLayoutInvalidationContext
         if (context.invalidateDataSourceCounts) {
             context.invalidateFlowLayoutAttributes = true
             context.invalidateFlowLayoutDelegateMetrics = true
@@ -194,7 +194,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         super.invalidateLayoutWithContext(context)
     }
-    */
+    
     /*
     override func prepareLayout() {
         super.prepareLayout()
@@ -311,20 +311,21 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
    
-    /*
     // pragma mark - Invalidation utilities
 
     func gg_resetLayout() {
-        // self.bubbleSizeCalculator.prepareForResettingLayout(self)
+        self.bubbleSizeCalculator.prepareForResettingLayout(self)
         self.gg_resetDynamicAnimator()
     }
 
     func gg_resetDynamicAnimator() {
         if (self.springinessEnabled) {
-            self.dynamicAnimator!.removeAllBehaviors()
+            self.dynamicAnimator.removeAllBehaviors()
             self.visibleIndexPaths.removeAllObjects()
         }
     }
+    
+    /*
 
     // pragma mark - Message cell layout utilities
 
