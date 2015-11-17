@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MessagesBubblesSizeCalculator {
+class MessageBubbleSizeCalculator {
 
     var cache: NSCache
     var minimumBubbleWidth: CGFloat

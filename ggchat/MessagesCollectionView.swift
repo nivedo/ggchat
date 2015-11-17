@@ -52,6 +52,7 @@ class MessagesCollectionView: UICollectionView {
         self.keyboardDismissMode = UIScrollViewKeyboardDismissMode.None
         self.alwaysBounceVertical = true
         self.bounces = true
+        self.messageCollectionViewLayout.messageCollectionView = self
         
         self.registerNib(UINib(nibName: "IncomingMessagesCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: IncomingMessagesCollectionViewCell.cellReuseIdentifier())

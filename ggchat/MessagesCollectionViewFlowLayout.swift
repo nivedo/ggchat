@@ -14,6 +14,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 32.0
     
     var messageCollectionView: MessagesCollectionView!
+    
+    var bubbleSizeCalculator: MessageBubbleSizeCalculator = MessageBubbleSizeCalculator()
+    
     /*
     override var collectionView: MessagesCollectionView {
         get {
@@ -368,18 +371,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     // pragma mark - Message cell layout utilities
-
-    func messageBubbleSizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
-        let messageItem: Message = self.collectionView?.dataSource.collectionView(
-            self.collectionView,
-            messageDataForItemAtIndexPath:indexPath)
-
-        return self.bubbleSizeCalculator.messageBubbleSizeForMessageData(
-            messageItem,
-            atIndexPath:indexPath,
-            withLayout:self)
-    }
-
     
 
     func gg_configureMessageCellLayoutAttributes(layoutAttributes: MessagesCollectionViewLayoutAttributes) {
@@ -494,4 +485,17 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         // return CGSizeMake(self.itemWidth, ceil(finalHeight));
         return CGSizeMake(320.0, 154.0)
     }
+    
+    func messageBubbleSizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
+        let messageItem: Message = self.messageCollectionView.messageDataSource.collectionView(
+            self.messageCollectionView,
+            messageDataForItemAtIndexPath: indexPath)
+
+        return self.bubbleSizeCalculator.messageBubbleSizeForMessageData(
+            messageItem,
+            atIndexPath: indexPath,
+            withLayout: self)
+    }
+
+
 }
