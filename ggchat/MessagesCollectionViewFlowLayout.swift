@@ -109,6 +109,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     func gg_configureFlowLayout() {
+        print("gg_configureFlowLayout()")
         self.scrollDirection = UICollectionViewScrollDirection.Vertical
         self.sectionInset = UIEdgeInsetsMake(10.0, 4.0, 10.0, 4.0)
         self.minimumLineSpacing = 4.0
@@ -440,11 +441,11 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         if (customAttributes.representedElementCategory == UICollectionElementCategory.Cell) {
             self.gg_configureMessageCellLayoutAttributes(customAttributes)
         }
-        
         return customAttributes
     }
     
     func gg_configureMessageCellLayoutAttributes(layoutAttributes: MessagesCollectionViewLayoutAttributes) {
+        print("gg_configureMessageCellLayoutAttributes()")
         let indexPath: NSIndexPath = layoutAttributes.indexPath
         
         let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)

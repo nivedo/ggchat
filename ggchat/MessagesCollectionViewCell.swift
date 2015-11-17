@@ -138,44 +138,44 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     }
     
     // pragma mark - Collection view cell
-    /*
-    - (void)prepareForReuse
-    {
-        [super prepareForReuse];
+    override func prepareForReuse() {
+        super.prepareForReuse()
     
-        self.cellTopLabel.text = nil;
-        self.messageBubbleTopLabel.text = nil;
-        self.cellBottomLabel.text = nil;
+        self.cellTopLabel.text = nil
+        self.messageBubbleTopLabel.text = nil
+        self.cellBottomLabel.text = nil
         
-        self.textView.dataDetectorTypes = UIDataDetectorTypeNone;
-        self.textView.text = nil;
-        self.textView.attributedText = nil;
+        self.textView.dataDetectorTypes = UIDataDetectorTypes.None
+        self.textView.text = nil
+        self.textView.attributedText = nil
         
-        self.avatarImageView.image = nil;
-        self.avatarImageView.highlightedImage = nil;
+        self.avatarImageView.image = nil
+        self.avatarImageView.highlightedImage = nil
     }
 
-    - (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
-    {
-        return layoutAttributes;
+    override func preferredLayoutAttributesFittingAttributes(layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        return layoutAttributes
     }
     
-    - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
-    {
-        [super applyLayoutAttributes:layoutAttributes];
+    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+        print("applyLayoutAttributes()")
+        super.applyLayoutAttributes(layoutAttributes)
     
-        JSQMessagesCollectionViewLayoutAttributes *customAttributes = (JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes;
+        let customAttributes: MessagesCollectionViewLayoutAttributes = layoutAttributes as! MessagesCollectionViewLayoutAttributes
         
         if (self.textView.font != customAttributes.messageBubbleFont) {
-        self.textView.font = customAttributes.messageBubbleFont;
+            self.textView.font = customAttributes.messageBubbleFont
         }
         
-        if (!UIEdgeInsetsEqualToEdgeInsets(self.textView.textContainerInset, customAttributes.textViewTextContainerInsets)) {
-        self.textView.textContainerInset = customAttributes.textViewTextContainerInsets;
+        /*
+        if (!UIEdgeInsetsEqualToEdgeInsets(self.textView.textContainerInset, customAttributes.textViewTextContainerInsets!)) {
+            self.textView.textContainerInset = customAttributes.textViewTextContainerInsets!
         }
         
         self.textViewFrameInsets = customAttributes.textViewFrameInsets;
+        */
         
+        /*
         [self jsq_updateConstraint:self.messageBubbleContainerWidthConstraint
         withConstant:customAttributes.messageBubbleContainerViewWidth];
         
@@ -187,15 +187,14 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         
         [self jsq_updateConstraint:self.cellBottomLabelHeightConstraint
         withConstant:customAttributes.cellBottomLabelHeight];
+        */
         
-        if ([self isKindOfClass:[JSQMessagesCollectionViewCellIncoming class]]) {
-        self.avatarViewSize = customAttributes.incomingAvatarViewSize;
-        }
-        else if ([self isKindOfClass:[JSQMessagesCollectionViewCellOutgoing class]]) {
-        self.avatarViewSize = customAttributes.outgoingAvatarViewSize;
+        if (self.isKindOfClass(IncomingMessagesCollectionViewCell.self)) {
+            self.avatarViewSize = customAttributes.incomingAvatarViewSize
+        } else if (self.isKindOfClass(OutgoingMessagesCollectionViewCell.self)) {
+            self.avatarViewSize = customAttributes.outgoingAvatarViewSize
         }
     }
-    */
     
     override var highlighted: Bool {
         didSet {

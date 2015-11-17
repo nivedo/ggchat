@@ -529,7 +529,6 @@ class MessageViewController: UIViewController,
         print("MVC::cellForItemAtIndexPath")
         let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
         let messageItem: Message = self.messageCollectionView.messageDelegate.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
-
         let messageSenderId: String = messageItem.senderId
 
         let isOutgoingMessage: Bool = messageSenderId == self.senderId
@@ -545,6 +544,8 @@ class MessageViewController: UIViewController,
         print(cellIdentifier)
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
+
+        print("ASDF")
 
         if (!isMediaMessage) {
             cell.textView.text = messageItem.text
@@ -565,6 +566,7 @@ class MessageViewController: UIViewController,
             let messageMedia: MessageMediaData = messageItem.media!
             cell.mediaView = (messageMedia.mediaView != nil ? messageMedia.mediaView : messageMedia.mediaPlaceholderView)!
         }
+        print("ASDFASDF")
 
         var needsAvatar: Bool = true
         if (isOutgoingMessage && CGSizeEqualToSize(messageCollectionView.messageCollectionViewLayout.outgoingAvatarViewSize, CGSizeZero)) {
@@ -654,6 +656,7 @@ class MessageViewController: UIViewController,
     func collectionView(
         uiCollectionView: UICollectionView,
         shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        print("MVC::shouldShowMenuForItemIndexPath:")
         let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
         //  disable menu for media messages
         let messageItem: Message = messageCollectionView.messageDataSource.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
@@ -688,6 +691,7 @@ class MessageViewController: UIViewController,
         performAction action: Selector,
         forItemAtIndexPath indexPath: NSIndexPath,
         withSender sender: AnyObject?) {
+        print("MVC::performAction:")
         let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
         if (action == Selector("copy:")) {
             let messageData: Message = messageCollectionView.messageDataSource.collectionView(
