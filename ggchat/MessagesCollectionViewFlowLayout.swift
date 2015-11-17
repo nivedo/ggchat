@@ -195,7 +195,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         super.invalidateLayoutWithContext(context)
     }
     
-    /*
     override func prepareLayout() {
         super.prepareLayout()
         
@@ -203,16 +202,15 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             //  pad rect to avoid flickering
             let padding: CGFloat = -100.0
             let visibleRect: CGRect = CGRectInset((self.messageCollectionView?.bounds)!, padding, padding)
-            /*
-            let visibleItems: NSArray = super.layoutAttributesForElementsInRect(visibleRect)!
-            let visibleItemsIndexPaths: NSSet = NSSet.setWithArray(visibleItems.valueForKey(NSStringFromSelector(Selector("indexPath:"))) as! [AnyObject])
-            // self.gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths(visibleItemsIndexPaths)
             
-            // self.gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems)
-            */
+            let visibleItems: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElementsInRect(visibleRect)!
+            let visibleItemsIndexPaths: NSSet = NSSet(array: visibleItems.map{(v) -> NSIndexPath in
+                v.indexPath
+            })
+            self.gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths(visibleItemsIndexPaths)
+            self.gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems)
         }
     }
-    */
     
     override func layoutAttributesForElementsInRect(_ rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var attributesInRect: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElementsInRect(rect)!
@@ -331,6 +329,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // pragma mark - Spring behavior utilities
 
+    */
     func gg_springBehaviorWithLayoutAttributesItem(item: UICollectionViewLayoutAttributes) -> UIAttachmentBehavior? {
         if (CGSizeEqualToSize(item.frame.size, CGSizeZero)) {
             // adding a spring behavior with zero size will fail in in -prepareForCollectionViewUpdates:
@@ -345,46 +344,46 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         springBehavior.frequency = 1.0
         return springBehavior
     }
-    */
    
-    /*
     func gg_addNewlyVisibleBehaviorsFromVisibleItems(visibleItems: NSArray) {
         //  a "newly visible" item is in `visibleItems` but not in `self.visibleIndexPaths`
-        let indexSet: NSIndexSet = visibleItems.indexesOfObjectsPassingTest({item: UICollectionViewLayoutAttributes, index, stop) in
+        let indexSet: NSIndexSet = visibleItems.indexesOfObjectsPassingTest({ (object, index, stop) -> Bool in
+            let item = object as! UICollectionViewLayoutAttributes
             return !self.visibleIndexPaths.containsObject(item.indexPath)
         })
         
         let newlyVisibleItems: NSArray = visibleItems.objectsAtIndexes(indexSet)
         
-        let touchLocation: CGPoint = self.messageCollectionView.panGestureRecognizer.locationInViews(self.messageCollectionView)
+        let touchLocation: CGPoint = self.messageCollectionView.panGestureRecognizer.locationInView(self.messageCollectionView)
         
-        newlyVisibleItems.enumerateObjectsUsingBlock({ item: UICollectionViewLayoutAttributes, index, stop) in
-            let springBehaviour: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(item)
+        for (_, value) in newlyVisibleItems.enumerate() {
+            let item = value as! UICollectionViewLayoutAttributes
+            let springBehaviour: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(item)!
             self.gg_adjustSpringBehavior(springBehaviour, forTouchLocation:touchLocation)
             self.dynamicAnimator.addBehavior(springBehaviour)
             self.visibleIndexPaths.addObject(item.indexPath)
-        })
+        }
     }
 
     func gg_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths(visibleItemsIndexPaths: NSSet) {
         let behaviors: NSArray = self.dynamicAnimator.behaviors
         
-        let indexSet: NSIndexSet = behaviors.indexesOfObjectsPassingTest({springBehaviour: UIAttachmentBehavior, index, stop) in
-            let layoutAttributes: UICollectionViewLayoutAttributes = springBehaviour.items.first! as UICollectionViewLayoutAttributes
+        let indexSet: NSIndexSet = behaviors.indexesOfObjectsPassingTest({ (object, index, stop) -> Bool in
+            let springBehaviour = object as! UIAttachmentBehavior
+            let layoutAttributes: UICollectionViewLayoutAttributes = springBehaviour.items.first! as! UICollectionViewLayoutAttributes
             return !visibleItemsIndexPaths.containsObject(layoutAttributes.indexPath)
         })
         
-        let behaviorsToRemove: NSArray = self.dynamicAnimator.behaviors.objectsAtIndexes(indexSet)
+        let behaviorsToRemove: NSArray = behaviors.objectsAtIndexes(indexSet)
         
-        behaviorsToRemove.enumerateObjectsUsingBlock({ springBehaviour: UIAttachmentBehavior, index, stop) {
+        for (_, value) in behaviorsToRemove.enumerate() {
+            let springBehaviour = value as! UIAttachmentBehavior
             let layoutAttributes: UICollectionViewLayoutAttributes = springBehaviour.items.first! as! UICollectionViewLayoutAttributes
             self.dynamicAnimator.removeBehavior(springBehaviour)
             self.visibleIndexPaths.removeObject(layoutAttributes.indexPath)
-        })
+        }
     }
-    */
     
-    /*
     func gg_adjustSpringBehavior(springBehavior: UIAttachmentBehavior, forTouchLocation touchLocation: CGPoint) {
         let item: UICollectionViewLayoutAttributes = springBehavior.items.first! as! UICollectionViewLayoutAttributes
         var center: CGPoint = item.center
@@ -403,7 +402,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             item.center = center
         }
     }
-    */
+
     func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
         print("MVCFlowLayout::sizeForItemAtIndexPath()")
         let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
