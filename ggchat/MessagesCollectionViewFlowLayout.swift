@@ -248,20 +248,20 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return attributesInRect
     }
 
-    /*
-    func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
         if (self.springinessEnabled) {
             let scrollView: UIScrollView = self.messageCollectionView
             let delta: CGFloat = newBounds.origin.y - scrollView.bounds.origin.y
             
             self.latestDelta = delta
             
-            let touchLocation: CGPoint = self.messageCollectionView.panGestureRecognizer(locationInView: self.messageCollectionView)
+            let touchLocation: CGPoint = self.messageCollectionView.panGestureRecognizer.locationInView(self.messageCollectionView)
             
-            self.dynamicAnimator.behaviors.enumerateObjectsUsingBlock({ springBehaviour, index, stop) in
+            for (_, value) in self.dynamicAnimator.behaviors.enumerate() {
+                let springBehaviour = value as! UIAttachmentBehavior
                 self.gg_adjustSpringBehavior(springBehaviour, forTouchLocation:touchLocation)
-                self.dynamicAnimator.updateItemUsingCurrentState(springBehaviour.items.firstObject())
-            })
+                self.dynamicAnimator.updateItemUsingCurrentState(springBehaviour.items[0])
+            }
         }
         
         let oldBounds: CGRect = self.messageCollectionView.bounds
@@ -271,7 +271,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         return false
     }
-    */
     
     override func prepareForCollectionViewUpdates(_ updateItems: [UICollectionViewUpdateItem]) {
         super.prepareForCollectionViewUpdates(updateItems)
@@ -299,12 +298,10 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
                     CGRectGetWidth(attributes.frame),
                     CGRectGetHeight(attributes.frame));
                 
-                /*
                 if (self.springinessEnabled) {
-                    let springBehavior: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(attributes)
-                    self.dynamicAnimator.addBehavior(springBehaviour)
+                    let springBehavior: UIAttachmentBehavior = self.gg_springBehaviorWithLayoutAttributesItem(attributes)!
+                    self.dynamicAnimator.addBehavior(springBehavior)
                 }
-                */
             }
         }
     }
