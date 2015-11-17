@@ -286,7 +286,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         super.prepareForCollectionViewUpdates(updateItems)
         
         // updateItems.enumerateObjectsUsingBlock({updateItem, index, stop) in
-        for (index, value) in updateItems.enumerate() {
+        for (_, value) in updateItems.enumerate() {
             let updateItem = value as UICollectionViewUpdateItem
             if (updateItem.updateAction == UICollectionUpdateAction.Insert) {
                 
@@ -413,18 +413,18 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     */
     func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
         print("MVCFlowLayout::sizeForItemAtIndexPath()")
-        /*
         let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
+        var finalHeight: CGFloat = messageBubbleSize.height
+        
+        /*
         let attributes: MessagesCollectionViewLayoutAttributes = self.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
         
-        var finalHeight: CGFloat = messageBubbleSize.height
         finalHeight += attributes.cellTopLabelHeight
         finalHeight += attributes.messageBubbleTopLabelHeight
         finalHeight += attributes.cellBottomLabelHeight
-        
-        return CGSizeMake(self.itemWidth, ceil(finalHeight));
         */
-        return CGSizeMake(320.0, 154.0)
+        return CGSizeMake(self.itemWidth, ceil(finalHeight));
+        // return CGSizeMake(320.0, 154.0)
     }
     
     func messageBubbleSizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
