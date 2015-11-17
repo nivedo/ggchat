@@ -10,9 +10,12 @@ import UIKit
 
 class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
-    let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 154
-    let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 32.0
-    
+    static let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 154
+    static let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 32.0
+    static let kDefaultAvatarSize: CGSize = CGSizeMake(
+        MessagesCollectionViewFlowLayout.kMessagesCollectionViewAvatarSizeDefault,
+        MessagesCollectionViewFlowLayout.kMessagesCollectionViewAvatarSizeDefault)
+
     var messageCollectionView: MessagesCollectionView!
     
     var bubbleSizeCalculator: MessageBubbleSizeCalculator = MessageBubbleSizeCalculator()
@@ -39,14 +42,12 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     var springinessEnabled: Bool = false {
         willSet {
-            /*
             if (self.springinessEnabled == newValue) {
                 return
             }
-            */
             
             if (!newValue) {
-                // self.dynamicAnimator!.removeAllBehaviors()
+                self.dynamicAnimator.removeAllBehaviors()
                 self.visibleIndexPaths.removeAllObjects()
             }
             self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
@@ -72,37 +73,31 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 
-    var messageBubbleTextViewTextContainerInsets: UIEdgeInsets! {
+    var messageBubbleTextViewTextContainerInsets: UIEdgeInsets = UIEdgeInsetsMake(7.0, 14.0, 7.0, 14.0) {
         didSet {
-            /*
             if (UIEdgeInsetsEqualToEdgeInsets(self.messageBubbleTextViewTextContainerInsets, oldValue)) {
                 return
             }
-            */
             
             self.invalidateLayoutWithContext (MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
     }
     
-    var incomingAvatarViewSize: CGSize! {
+    var incomingAvatarViewSize: CGSize = MessagesCollectionViewFlowLayout.kDefaultAvatarSize {
         didSet {
-            /*
             if (CGSizeEqualToSize(self.incomingAvatarViewSize, oldValue)) {
                 return
             }
-            */
-            
+
             self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
     }
     
-    var outgoingAvatarViewSize: CGSize! {
+    var outgoingAvatarViewSize: CGSize = MessagesCollectionViewFlowLayout.kDefaultAvatarSize {
         didSet {
-            /*
             if (CGSizeEqualToSize(self.outgoingAvatarViewSize, oldValue)) {
                 return
             }
-            */
             
             self.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         }
@@ -125,9 +120,8 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         self.messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 6.0)
         self.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0, 14.0, 7.0, 14.0)
         
-        let defaultAvatarSize: CGSize = CGSizeMake(kMessagesCollectionViewAvatarSizeDefault, kMessagesCollectionViewAvatarSizeDefault)
-        self.incomingAvatarViewSize = defaultAvatarSize
-        self.outgoingAvatarViewSize = defaultAvatarSize
+        self.incomingAvatarViewSize = MessagesCollectionViewFlowLayout.kDefaultAvatarSize
+        self.outgoingAvatarViewSize = MessagesCollectionViewFlowLayout.kDefaultAvatarSize
         
         self.springinessEnabled = false
         self.springResistanceFactor = 1000
