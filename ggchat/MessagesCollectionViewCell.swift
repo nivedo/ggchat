@@ -167,13 +167,11 @@ class MessagesCollectionViewCell: UICollectionViewCell {
             self.textView.font = customAttributes.messageBubbleFont
         }
         
-        /*
         if (!UIEdgeInsetsEqualToEdgeInsets(self.textView.textContainerInset, customAttributes.textViewTextContainerInsets!)) {
             self.textView.textContainerInset = customAttributes.textViewTextContainerInsets!
         }
         
         self.textViewFrameInsets = customAttributes.textViewFrameInsets;
-        */
         
         /*
         [self jsq_updateConstraint:self.messageBubbleContainerWidthConstraint

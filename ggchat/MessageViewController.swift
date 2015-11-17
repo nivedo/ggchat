@@ -246,10 +246,6 @@ class MessageViewController: UIViewController,
             return self.incomingBubble
         }
     }
-
-    func collectionView(collectionView: MessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> MessageAvatarImage! {
-        return nil
-    }
     */
     
     //////////////////////////////////////////////////////////////////////////////////////
@@ -294,7 +290,7 @@ class MessageViewController: UIViewController,
         *  Override the defaults in `viewDidLoad`
         */
         let message: Message = self.messages[indexPath.item]
-    
+        /*
         let defaults = NSUserDefaults.standardUserDefaults()
         if (message.senderId == self.senderId) {
             if (!defaults.boolForKey("outgoingAvatarSetting")) {
@@ -306,7 +302,7 @@ class MessageViewController: UIViewController,
                 return nil;
             }
         }
-        
+        */
         return GGModelData.sharedInstance.avatars[message.senderId];
     }
     
@@ -575,11 +571,12 @@ class MessageViewController: UIViewController,
             needsAvatar = false
         }
 
-        var avatarImageDataSource: MessageAvatarImage? = nil;
+        var avatarImageDataSource: MessageAvatarImage? = nil
         if (needsAvatar) {
             avatarImageDataSource = messageCollectionView.messageDataSource.collectionView(
-                collectionView,
-                avatarImageDataForItemAtIndexPath:indexPath)
+                    collectionView,
+                    avatarImageDataForItemAtIndexPath: indexPath)
+            print("avatar: \(avatarImageDataSource)")
             if (avatarImageDataSource != nil) {
                 let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
                 if (avatarImage == nil) {

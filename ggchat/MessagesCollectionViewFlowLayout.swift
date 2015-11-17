@@ -220,10 +220,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     */
     
-    /*
     override func layoutAttributesForElementsInRect(_ rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var attributesInRect: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElementsInRect(rect)!
-    
+        /*
         if (self.springinessEnabled) {
             var attributesInRectCopy = attributesInRect
             let dynamicAttributes: NSArray = self.dynamicAnimator.itemsInRect(rect)
@@ -243,7 +242,8 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
             attributesInRect = attributesInRectCopy
         }
-        
+        */
+        /*
         for index in 0...attributesInRect.count {
             let attributesElem = attributesInRect[index] as! MessagesCollectionViewLayoutAttributes
             if (attributesInRect[index].representedElementCategory == UICollectionElementCategory.Cell) {
@@ -252,10 +252,18 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
                 attributesElem.zIndex = -1;
             }
         }
+        */
+        for (_, value) in attributesInRect.enumerate() {
+            let attributesElem = value as! MessagesCollectionViewLayoutAttributes
+            if (attributesElem.representedElementCategory == UICollectionElementCategory.Cell) {
+                self.gg_configureMessageCellLayoutAttributes(attributesElem)
+            } else {
+                attributesElem.zIndex = -1;
+            }
+        }
         
-        return attributesInRect as! [UICollectionViewLayoutAttributes]
+        return attributesInRect
     }
-    */
 
     /*
     func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
