@@ -13,31 +13,40 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="cell top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZf-LO-Mjz" userLabel="Cell top label" customClass="MessageLabel" customModule="ggchat" customModuleProvider="target">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cell top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZf-LO-Mjz" userLabel="Cell top label" customClass="MessageLabel" customModule="ggchat" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="q7T-vJ-xKW"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="cell bottom label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FyK-BI-YcW" userLabel="Cell bottom label" customClass="MessageLabel" customModule="ggchat" customModuleProvider="target">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cell bottom label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FyK-BI-YcW" userLabel="Cell bottom label" customClass="MessageLabel" customModule="ggchat" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="134" width="320" height="20"/>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="LXI-8J-Uie"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="bubble top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGD-qY-E0o" userLabel="Bubble top level" customClass="MessageLabel" customModule="ggchat" customModuleProvider="target">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bubble top label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGD-qY-E0o" userLabel="Bubble top level" customClass="MessageLabel" customModule="ggchat" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="320" height="20"/>
                         <animations/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Fgh-Nc-rsv"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WOk-3d-b4L" userLabel="Avatar container">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOk-3d-b4L" userLabel="Avatar container">
                         <rect key="frame" x="286" y="100" width="34" height="34"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ejy-0n-2DI" userLabel="Avatar image view">
@@ -56,10 +65,10 @@
                             <constraint firstAttribute="width" constant="34" id="vmp-dL-Dhl"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iYp-dz-DkR" userLabel="Bubble container">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYp-dz-DkR" userLabel="Bubble container">
                         <rect key="frame" x="40" y="40" width="244" height="94"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="va9-h1-Qlp" userLabel="Bubble image view">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="va9-h1-Qlp" userLabel="Bubble image view">
                                 <rect key="frame" x="0.0" y="0.0" width="244" height="94"/>
                                 <animations/>
                             </imageView>
@@ -113,11 +122,14 @@
                 <outlet property="avatarContainerViewWidthConstraint" destination="vmp-dL-Dhl" id="hr0-v9-sml"/>
                 <outlet property="avatarImageView" destination="Ejy-0n-2DI" id="cI4-r5-8Cm"/>
                 <outlet property="cellBottomLabel" destination="FyK-BI-YcW" id="wz3-rl-WOZ"/>
+                <outlet property="cellBottomLabelHeightConstraint" destination="LXI-8J-Uie" id="fQS-34-FGM"/>
                 <outlet property="cellTopLabel" destination="DZf-LO-Mjz" id="0p7-FZ-fXF"/>
+                <outlet property="cellTopLabelHeightConstraint" destination="q7T-vJ-xKW" id="v9z-z1-ILO"/>
                 <outlet property="messageBubbleContainerView" destination="iYp-dz-DkR" id="R3B-1O-JNI"/>
                 <outlet property="messageBubbleContainerWidthConstraint" destination="xOM-Po-gAb" id="tri-ti-gZY"/>
                 <outlet property="messageBubbleImageView" destination="va9-h1-Qlp" id="v7x-zL-DCQ"/>
                 <outlet property="messageBubbleTopLabel" destination="BGD-qY-E0o" id="nio-iC-lHG"/>
+                <outlet property="messageBubbleTopLabelHeightConstraint" destination="Fgh-Nc-rsv" id="xN4-fB-nCD"/>
                 <outlet property="textView" destination="60m-yv-GFf" id="j0I-aa-TrT"/>
                 <outlet property="textViewAvatarHorizontalSpaceConstraint" destination="0NA-nM-c14" id="kZQ-S1-Kux"/>
                 <outlet property="textViewBottomVerticalSpaceConstraint" destination="MC5-U2-wiz" id="a71-2G-fYT"/>

@@ -66,11 +66,9 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = UIColor.whiteColor()
    
-        /*
         self.cellTopLabelHeightConstraint.constant = 0.0
         self.messageBubbleTopLabelHeightConstraint.constant = 0.0
         self.cellBottomLabelHeightConstraint.constant = 0.0
-        */
         
         self.avatarViewSize = CGSizeZero
         
