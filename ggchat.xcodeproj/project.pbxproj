@@ -44,7 +44,6 @@
 		D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */; };
 		D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */; };
 		D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */; };
-		D4A9F56A1BFC04A800FA4444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5331BFC04A800FA4444 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +107,6 @@
 		D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGMessageViewController.swift; sourceTree = "<group>"; };
 		D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTimestampFormatter.swift; sourceTree = "<group>"; };
-		D4A9F5331BFC04A800FA4444 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ggchat/ggchat/Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +169,6 @@
 				D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */,
 				D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
-				D4A9F5331BFC04A800FA4444 /* Images.xcassets */,
 				D4683E5C1BF0486F00E02886 /* Assets.xcassets */,
 				D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */,
 				D4683E611BF0486F00E02886 /* Info.plist */,
@@ -387,7 +384,6 @@
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
 				D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */,
 				D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */,
-				D4A9F56A1BFC04A800FA4444 /* Images.xcassets in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
