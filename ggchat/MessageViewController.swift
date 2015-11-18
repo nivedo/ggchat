@@ -614,7 +614,6 @@ class MessageViewController: UIViewController,
             return CGSizeZero
         }
 
-        // return CGSizeMake(320.0, 32.0)
         return CGSizeMake(collectionViewLayout.itemWidth, MessageTypingIndicatorFooterView.kMessagesTypingIndicatorFooterViewHeight)
     }
 
@@ -625,7 +624,6 @@ class MessageViewController: UIViewController,
             return CGSizeZero
         }
 
-        // return CGSizeMake(320.0, 32.0)
         return CGSizeMake(collectionViewLayout.itemWidth,
             MessageLoadEarlierHeaderView.kMessagesLoadEarlierHeaderViewHeight)
     }
@@ -684,36 +682,6 @@ class MessageViewController: UIViewController,
             messageCollectionView.deleteItemsAtIndexPaths([indexPath])
             messageCollectionView.collectionViewLayout.invalidateLayout()
         }
-    }
-
-    // pragma mark - Collection view delegate flow layout
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let messageCollectionViewLayout = collectionViewLayout as! MessagesCollectionViewFlowLayout
-        return messageCollectionViewLayout.sizeForItemAtIndexPath(indexPath)
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewFlowLayout,
-        heightForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 0.0
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewFlowLayout,
-        heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 0.0
-    }
-
-    func collectionView(collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewFlowLayout,
-        heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 0.0
     }
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -1124,51 +1092,72 @@ class MessageViewController: UIViewController,
             self.currentInteractivePopGestureRecognizer = self.navigationController!.interactivePopGestureRecognizer
         }
     }
+    
+    ///////////////////////////////////////////////////////////////////////////////
+    // MessageCollectionFlowLayoutDelegate
+    ///////////////////////////////////////////////////////////////////////////////
 
-/*
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let messageCollectionViewLayout = collectionViewLayout as! MessagesCollectionViewFlowLayout
+        return messageCollectionViewLayout.sizeForItemAtIndexPath(indexPath)
+    }
+    
+    /**
+     *  Asks the delegate for the height of the `cellTopLabel` for the item at the specified indexPath.
+     *
+     *  @param collectionView       The collection view object displaying the flow layout.
+     *  @param collectionViewLayout The layout object requesting the information.
+     *  @param indexPath            The index path of the item.
+     *
+     *  @return The height of the `cellTopLabel` for the item at indexPath.
+     *
+     *  @see JSQMessagesCollectionViewCell.
+     */
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewFlowLayout,
+        heightForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 0.0
+    }
+    
+    /**
+     *  Asks the delegate for the height of the `messageBubbleTopLabel` for the item at the specified indexPath.
+     *
+     *  @param collectionView       The collection view object displaying the flow layout.
+     *  @param collectionViewLayout The layout object requesting the information.
+     *  @param indexPath            The index path of the item.
+     *
+     *  @return The height of the `messageBubbleTopLabel` for the item at indexPath.
+     *
+     *  @see JSQMessagesCollectionViewCell.
+     */
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewFlowLayout,
+        heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 0.0
+    }
+    
+    /**
+     *  Asks the delegate for the height of the `cellBottomLabel` for the item at the specified indexPath.
+     *
+     *  @param collectionView       The collection view object displaying the flow layout.
+     *  @param collectionViewLayout The layout object requesting the information.
+     *  @param indexPath            The index path of the item.
+     *
+     *  @return The height of the `cellBottomLabel` for the item at indexPath.
+     *
+     *  @see JSQMessagesCollectionViewCell.
+     */
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewFlowLayout,
+        heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 0.0
+    }
 
-/**
- *  Asks the delegate for the height of the `cellTopLabel` for the item at the specified indexPath.
- *
- *  @param collectionView       The collection view object displaying the flow layout.
- *  @param collectionViewLayout The layout object requesting the information.
- *  @param indexPath            The index path of the item.
- *
- *  @return The height of the `cellTopLabel` for the item at indexPath.
- *
- *  @see JSQMessagesCollectionViewCell.
- */
-- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath;
-
-/**
- *  Asks the delegate for the height of the `messageBubbleTopLabel` for the item at the specified indexPath.
- *
- *  @param collectionView       The collection view object displaying the flow layout.
- *  @param collectionViewLayout The layout object requesting the information.
- *  @param indexPath            The index path of the item.
- *
- *  @return The height of the `messageBubbleTopLabel` for the item at indexPath.
- *
- *  @see JSQMessagesCollectionViewCell.
- */
-- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath;
-
-/**
- *  Asks the delegate for the height of the `cellBottomLabel` for the item at the specified indexPath.
- *
- *  @param collectionView       The collection view object displaying the flow layout.
- *  @param collectionViewLayout The layout object requesting the information.
- *  @param indexPath            The index path of the item.
- *
- *  @return The height of the `cellBottomLabel` for the item at indexPath.
- *
- *  @see JSQMessagesCollectionViewCell.
- */
-- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath;
-*/
     //////////////////////////////////////////////////////////////////////////////////
     // MessageCollectionView delegate methods
     //////////////////////////////////////////////////////////////////////////////////
