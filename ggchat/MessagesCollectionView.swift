@@ -8,7 +8,10 @@
 
 import UIKit
 
-class MessagesCollectionView: UICollectionView, MessageLoadEarlierHeaderViewDelegate {
+class MessagesCollectionView:
+    UICollectionView,
+    MessageCollectionViewCellDelegate,
+    MessageLoadEarlierHeaderViewDelegate {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -113,57 +116,54 @@ class MessagesCollectionView: UICollectionView, MessageLoadEarlierHeaderViewDele
                 didTapLoadEarlierMessagesButton: sender)
         }
     }
+    
+    //////////////////////////////////////////////////////////////////////////////////
+    // MessageCollectionViewCellDelegate
+    //////////////////////////////////////////////////////////////////////////////////
 
-/*
-#pragma mark - Messages collection view cell delegate
+    func messagesCollectionViewCellDidTapAvatar(cell: MessagesCollectionViewCell) {
+        let indexPath: NSIndexPath? = self.indexPathForCell(cell)
+        if (indexPath == nil) {
+            return
+        }
 
-- (void)messagesCollectionViewCellDidTapAvatar:(JSQMessagesCollectionViewCell *)cell
-{
-    NSIndexPath *indexPath = [self indexPathForCell:cell];
-    if (indexPath == nil) {
-        return;
+        self.messageDelegate.collectionView(self,
+            didTapAvatarImageView: cell.avatarImageView,
+            atIndexPath: indexPath!)
     }
 
-    [self.delegate collectionView:self
-            didTapAvatarImageView:cell.avatarImageView
-                      atIndexPath:indexPath];
-}
+    func messagesCollectionViewCellDidTapMessageBubble(cell: MessagesCollectionViewCell) {
+        let indexPath: NSIndexPath? = self.indexPathForCell(cell)
+        if (indexPath == nil) {
+            return
+        }
 
-- (void)messagesCollectionViewCellDidTapMessageBubble:(JSQMessagesCollectionViewCell *)cell
-{
-    NSIndexPath *indexPath = [self indexPathForCell:cell];
-    if (indexPath == nil) {
-        return;
+        self.messageDelegate.collectionView(self, didTapMessageBubbleAtIndexPath:indexPath!)
     }
 
-    [self.delegate collectionView:self didTapMessageBubbleAtIndexPath:indexPath];
-}
+    func messagesCollectionViewCellDidTapCell(cell: MessagesCollectionViewCell,
+        atPosition position: CGPoint) {
+        let indexPath: NSIndexPath? = self.indexPathForCell(cell)
+        if (indexPath == nil) {
+            return
+        }
 
-- (void)messagesCollectionViewCellDidTapCell:(JSQMessagesCollectionViewCell *)cell atPosition:(CGPoint)position
-{
-    NSIndexPath *indexPath = [self indexPathForCell:cell];
-    if (indexPath == nil) {
-        return;
+        self.messageDelegate.collectionView(self,
+            didTapCellAtIndexPath: indexPath!,
+            touchLocation: position)
     }
 
-    [self.delegate collectionView:self
-            didTapCellAtIndexPath:indexPath
-                    touchLocation:position];
-}
+    func messagesCollectionViewCell(cell: MessagesCollectionViewCell,
+        didPerformAction action: Selector,
+        withSender sender: AnyObject?) {
+        let indexPath: NSIndexPath? = self.indexPathForCell(cell)
+        if (indexPath == nil) {
+            return
+        }
 
-- (void)messagesCollectionViewCell:(JSQMessagesCollectionViewCell *)cell didPerformAction:(SEL)action withSender:(id)sender
-{
-    NSIndexPath *indexPath = [self indexPathForCell:cell];
-    if (indexPath == nil) {
-        return;
+        self.messageDelegate.collectionView(self,
+            performAction: action,
+            forItemAtIndexPath: indexPath!,
+            withSender: sender)
     }
-
-    [self.delegate collectionView:self
-                    performAction:action
-               forItemAtIndexPath:indexPath
-                       withSender:sender];
-}
-
-@end
-*/
 }

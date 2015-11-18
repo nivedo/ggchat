@@ -8,6 +8,52 @@
 
 import UIKit
 
+protocol MessageCollectionViewCellDelegate {
+
+    /**
+     *  Tells the delegate that the avatarImageView of the cell has been tapped.
+     *
+     *  @param cell The cell that received the tap touch event.
+     */
+    func messagesCollectionViewCellDidTapAvatar(cell: MessagesCollectionViewCell)
+
+    /**
+     *  Tells the delegate that the message bubble of the cell has been tapped.
+     *
+     *  @param cell The cell that received the tap touch event.
+     */
+    func messagesCollectionViewCellDidTapMessageBubble(cell: MessagesCollectionViewCell)
+
+    /**
+     *  Tells the delegate that the cell has been tapped at the point specified by position.
+     *
+     *  @param cell The cell that received the tap touch event.
+     *  @param position The location of the received touch in the cell's coordinate system.
+     *
+     *  @discussion This method is *only* called if position is *not* within the bounds of the cell's
+     *  avatar image view or message bubble image view. In other words, this method is *not* called when the cell's
+     *  avatar or message bubble are tapped.
+     *
+     *  @see `messagesCollectionViewCellDidTapAvatar:`
+     *  @see `messagesCollectionViewCellDidTapMessageBubble:`
+     */
+    func messagesCollectionViewCellDidTapCell(cell: MessagesCollectionViewCell, atPosition position: CGPoint)
+
+    /**
+     *  Tells the delegate that an actions has been selected from the menu of this cell.
+     *  This method is automatically called for any registered actions.
+     *
+     *  @param cell The cell that displayed the menu.
+     *  @param action The action that has been performed.
+     *  @param sender The object that initiated the action.
+     *
+     *  @see `JSQMessagesCollectionViewCell`
+     */
+    func messagesCollectionViewCell(cell: MessagesCollectionViewCell,
+        didPerformAction action: Selector,
+        withSender sender: AnyObject?)
+}
+
 class MessagesCollectionViewCell: UICollectionViewCell {
    
     
@@ -25,7 +71,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     // var textViewFrameInsets: UIEdgeInsets?
     var tapGestureRecognizer: UITapGestureRecognizer?
     
-    var delegate: MessagesCollectionView?
+    var delegate: MessageCollectionViewCellDelegate!
     
     static var ggMessagesCollectionViewCellActions = NSMutableSet()
     
