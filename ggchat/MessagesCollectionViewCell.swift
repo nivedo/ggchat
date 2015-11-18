@@ -22,7 +22,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
    
     var avatarViewSize: CGSize?
-    var textViewFrameInsets: UIEdgeInsets?
+    // var textViewFrameInsets: UIEdgeInsets?
     var tapGestureRecognizer: UITapGestureRecognizer?
     
     var delegate: MessagesCollectionView?
@@ -121,7 +121,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
             self.textView.textContainerInset = customAttributes.textViewTextContainerInsets!
         }
         
-        self.textViewFrameInsets = customAttributes.textViewFrameInsets;
+        self.textViewFrameInsets = customAttributes.textViewFrameInsets!
         
         self.gg_updateConstraint(self.messageBubbleContainerWidthConstraint,
             withConstant: customAttributes.messageBubbleContainerViewWidth)
@@ -215,6 +215,29 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // pragma mark - Getters
+    var textViewFrameInsets: UIEdgeInsets {
+        get {
+            return UIEdgeInsetsMake(
+                self.textViewTopVerticalSpaceConstraint.constant,
+                self.textViewMarginHorizontalSpaceConstraint.constant,
+                self.textViewBottomVerticalSpaceConstraint.constant,
+                self.textViewAvatarHorizontalSpaceConstraint.constant)
+        }
+        set {
+            self.gg_updateConstraint(self.textViewTopVerticalSpaceConstraint, withConstant:textViewFrameInsets.top)
+            self.gg_updateConstraint(self.textViewBottomVerticalSpaceConstraint, withConstant:textViewFrameInsets.bottom)
+            self.gg_updateConstraint(self.textViewAvatarHorizontalSpaceConstraint, withConstant:textViewFrameInsets.right)
+            self.gg_updateConstraint(self.textViewMarginHorizontalSpaceConstraint, withConstant:textViewFrameInsets.left)
+        }
+    }
+    /*
+    func avatarViewSize() -> CGSize {
+        return CGSizeMake(
+            self.avatarContainerViewWidthConstraint.constant,
+            self.avatarContainerViewHeightConstraint.constant)
+    }
+    */
     /*
     func setAvatarViewSize(avatarViewSize: CGSize) {
         if (CGSizeEqualToSize(avatarViewSize, self.avatarViewSize)) {
@@ -265,22 +288,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // pragma mark - Getters
-    /*
-    func avatarViewSize() -> CGSize {
-        return CGSizeMake(
-            self.avatarContainerViewWidthConstraint.constant,
-            self.avatarContainerViewHeightConstraint.constant)
-    }
-    
-    func textViewFrameInsets() -> UIEdgeInsets {
-        return UIEdgeInsetsMake(
-            self.textViewTopVerticalSpaceConstraint.constant,
-            self.textViewMarginHorizontalSpaceConstraint.constant,
-            self.textViewBottomVerticalSpaceConstraint.constant,
-            self.textViewAvatarHorizontalSpaceConstraint.constant)
-    }
-    */
+
     
     // pragma mark - Utilities
     
