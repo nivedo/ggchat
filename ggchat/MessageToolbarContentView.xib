@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7y-DS-i8Y" userLabel="Left button container">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7y-DS-i8Y" userLabel="Left button container">
                     <rect key="frame" x="8" y="6" width="34" height="32"/>
                     <animations/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -20,7 +20,7 @@
                         <constraint firstAttribute="width" constant="34" id="6E4-5t-KMa"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ga3-AL-pKl" userLabel="Right button container">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ga3-AL-pKl" userLabel="Right button container">
                     <rect key="frame" x="262" y="6" width="50" height="32"/>
                     <animations/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -43,7 +43,9 @@
             <accessibility key="accessibilityConfiguration" label=""/>
             <constraints>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="leading" secondItem="F7y-DS-i8Y" secondAttribute="trailing" constant="8" id="07T-en-Wan"/>
+                <constraint firstAttribute="bottom" secondItem="F7y-DS-i8Y" secondAttribute="bottom" constant="6" id="3V9-iz-PGF"/>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="Cvc-cE-iIh"/>
+                <constraint firstAttribute="bottom" secondItem="ga3-AL-pKl" secondAttribute="bottom" constant="6" id="kqp-0X-dBA"/>
                 <constraint firstAttribute="bottom" secondItem="zbL-Zk-acd" secondAttribute="bottom" constant="7" id="pRN-Tu-STS"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="qiX-SD-Lq8"/>
                 <constraint firstAttribute="trailing" secondItem="ga3-AL-pKl" secondAttribute="trailing" constant="8" id="sGI-8Z-ES2"/>
