@@ -10,7 +10,7 @@ import UIKit
 
 class MessageTypingIndicatorFooterView: UICollectionReusableView {
 
-    static let kMessagesTypingIndicatorFooterViewHeight = 46.0
+    static let kMessagesTypingIndicatorFooterViewHeight: CGFloat = 46.0
     
     @IBOutlet weak var bubbleImageViewRightHorizontalConstraint: NSLayoutConstraint!
     @IBOutlet weak var typingIndicatorImageViewRightHorizontalConstraint: NSLayoutConstraint!

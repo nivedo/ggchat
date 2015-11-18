@@ -18,9 +18,9 @@ class MessageViewController: UIViewController,
     
     static var kMessagesKeyValueObservingContext: AnyObject?
     
-    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
     // Properties
-    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
     
     // @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var messageCollectionView: MessagesCollectionView!
@@ -81,8 +81,6 @@ class MessageViewController: UIViewController,
     // var toolbarHeightConstraint: NSLayoutConstraint
     // var toolbarBottomLayoutGuide: NSLayoutConstraint
     
-    //////////////////////////////////////////////////////////////////////////////////////
-    
     var senderId: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
     var senderDisplayName: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
     let incomingBubble = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(
@@ -95,7 +93,7 @@ class MessageViewController: UIViewController,
     
     var messages = [Message]()
     
-    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
     
     func setup() {
         self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
@@ -126,9 +124,9 @@ class MessageViewController: UIViewController,
         */
     }
     
-    //////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     // UICollectionViewController methods
-    //////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -174,9 +172,9 @@ class MessageViewController: UIViewController,
     }
     */
 
-    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
     // MARK: UICollectionViewDataSource
-    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -221,9 +219,9 @@ class MessageViewController: UIViewController,
     }
     */
 
-    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
     // MARK - Data Source
-    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
 
     func collectionView(collectionView: MessagesCollectionView,
         messageDataForItemAtIndexPath indexPath: NSIndexPath) -> Message {
@@ -238,7 +236,7 @@ class MessageViewController: UIViewController,
         self.messages.removeAtIndex(indexPath.row)
     }
     
-    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
     
     func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
         print("MVC::messageBubbleImageDataForItemAtIndexPath")
@@ -616,8 +614,8 @@ class MessageViewController: UIViewController,
             return CGSizeZero
         }
 
-        // return CGSizeMake(collectionViewLayout.itemWidth, MessageLoadEarlierHeaderView.kMessagesTypingIndicatorFooterViewHeight)
-        return CGSizeMake(320.0, 32.0)
+        // return CGSizeMake(320.0, 32.0)
+        return CGSizeMake(collectionViewLayout.itemWidth, MessageTypingIndicatorFooterView.kMessagesTypingIndicatorFooterViewHeight)
     }
 
     func collectionView(
@@ -627,9 +625,9 @@ class MessageViewController: UIViewController,
             return CGSizeZero
         }
 
-        // return CGSizeMake(collectionViewLayout.itemWidth,
-        //     kMessagesLoadEarlierHeaderViewHeight)
-        return CGSizeMake(320.0, 32.0)
+        // return CGSizeMake(320.0, 32.0)
+        return CGSizeMake(collectionViewLayout.itemWidth,
+            MessageLoadEarlierHeaderView.kMessagesLoadEarlierHeaderViewHeight)
     }
 
     // pragma mark - Collection view delegate
