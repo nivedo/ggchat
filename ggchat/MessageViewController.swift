@@ -543,8 +543,6 @@ class MessageViewController: UIViewController,
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
 
-        print("ASDF")
-
         if (!isMediaMessage) {
             cell.textView.text = messageItem.text
 
@@ -564,7 +562,6 @@ class MessageViewController: UIViewController,
             let messageMedia: MessageMediaData = messageItem.media!
             cell.mediaView = (messageMedia.mediaView != nil ? messageMedia.mediaView : messageMedia.mediaPlaceholderView)!
         }
-        print("ASDFASDF")
 
         var needsAvatar: Bool = true
         if (isOutgoingMessage && CGSizeEqualToSize(messageCollectionView.messageCollectionViewLayout.outgoingAvatarViewSize, CGSizeZero)) {

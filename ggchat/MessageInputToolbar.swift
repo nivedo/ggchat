@@ -52,7 +52,6 @@ class MessageInputToolbar: UIToolbar {
         self.translatesAutoresizingMaskIntoConstraints = false
 
         self.maximumHeight = NSNotFound
-
         /*
         let toolbarContentView: MessageToolbarContentView = self.loadToolbarContentView()
         toolbarContentView.frame = self.frame
@@ -63,21 +62,29 @@ class MessageInputToolbar: UIToolbar {
 
         self.gg_addObservers()
 
-        // self.contentView.leftBarButtonItem = MessageToolbarButtonFactory.defaultAccessoryButtonItem()
-        // self.contentView.rightBarButtonItem = MessagesToolbarButtonFactory.defaultSendButtonItem()
+        self.contentView.leftBarButtonItem = MessageToolbarButtonFactory.defaultAccessoryButtonItem()
+        self.contentView.rightBarButtonItem = MessageToolbarButtonFactory.defaultSendButtonItem()
 
         self.toggleSendButtonEnabled()
         */
     }
     
     func loadToolbarContentView() -> MessageToolbarContentView {
-        let nibViews: NSArray = NSBundle(forClass: MessageInputToolbar.self).loadNibNamed(
+        print("loadToolbarContentView()")
+        /*
+        let nibViews = NSBundle(forClass: MessageInputToolbar.self).loadNibNamed(
                 NSStringFromClass(MessageToolbarContentView.self),
                 owner: nil,
                 options: nil)
-        return nibViews.firstObject as! MessageToolbarContentView
+        return nibViews[0] as! MessageToolbarContentView
+        */
+        let bundle = NSBundle(forClass: self.dynamicType)
+        print("got bundle")
+        let nib = UINib(nibName: NSStringFromClass(MessageToolbarContentView.self), bundle: bundle)
+        print("got nib")
+        let view = nib.instantiateWithOwner(self, options: nil)[0] as! MessageToolbarContentView
+        return view
     }
-
 
     // pragma mark - Setters
 
