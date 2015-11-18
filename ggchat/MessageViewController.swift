@@ -718,18 +718,9 @@ class MessageViewController: UIViewController,
         return 0.0
     }
 
-    func collectionView(collectionView: UICollectionView,
-        didTapAvatarImageView avatarImageView: UIImageView,
-        atIndexPath indexPath: NSIndexPath) { }
-
-    func collectionView(collectionView: UICollectionView,
-        didTapMessageBubbleAtIndexPath indexPath: NSIndexPath) { }
-
-    func collectionView(collectionView: UICollectionView,
-        didTapCellAtIndexPath indexPath: NSIndexPath,
-        touchLocation: CGPoint) { }
-
-    // pragma mark - Input toolbar delegate
+    //////////////////////////////////////////////////////////////////////////////////
+    // MessageInputToolbarDelegate methods
+    //////////////////////////////////////////////////////////////////////////////////
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftBarButton sender: UIButton) {
@@ -1179,41 +1170,57 @@ class MessageViewController: UIViewController,
  */
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath;
-
-/**
- *  Notifies the delegate that the avatar image view at the specified indexPath did receive a tap event.
- *
- *  @param collectionView  The collection view object that is notifying the delegate of the tap event.
- *  @param avatarImageView The avatar image view that was tapped.
- *  @param indexPath       The index path of the item for which the avatar was tapped.
- */
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath;
-
-/**
- *  Notifies the delegate that the message bubble at the specified indexPath did receive a tap event.
- *
- *  @param collectionView The collection view object that is notifying the delegate of the tap event.
- *  @param indexPath      The index path of the item for which the message bubble was tapped.
- */
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath;
-
-/**
- *  Notifies the delegate that the cell at the specified indexPath did receive a tap event at the specified touchLocation.
- *
- *  @param collectionView The collection view object that is notifying the delegate of the tap event.
- *  @param indexPath      The index path of the item for which the message bubble was tapped.
- *  @param touchLocation  The location of the touch event in the cell's coordinate system.
- *
- *  @warning This method is *only* called if position is *not* within the bounds of the cell's
- *  avatar image view or message bubble image view. In other words, this method is *not* called when the cell's
- *  avatar or message bubble are tapped. There are separate delegate methods for these two cases.
- *
- *  @see `collectionView:didTapAvatarImageView:atIndexPath:`
- *  @see `collectionView:didTapMessageBubbleAtIndexPath:atIndexPath:`
- */
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation;
 */
+    //////////////////////////////////////////////////////////////////////////////////
+    // MessageCollectionView delegate methods
+    //////////////////////////////////////////////////////////////////////////////////
+    /**
+     *  Notifies the delegate that the avatar image view at the specified indexPath did receive a tap event.
+     *
+     *  @param collectionView  The collection view object that is notifying the delegate of the tap event.
+     *  @param avatarImageView The avatar image view that was tapped.
+     *  @param indexPath       The index path of the item for which the avatar was tapped.
+     */
+    func collectionView(collectionView: MessagesCollectionView,
+        didTapAvatarImageView avatarImageView: UIImageView,
+        atIndexPath indexPath: NSIndexPath) {
+        print("MVC::didTapAvatarImageView")
+    }
+
+    /**
+     *  Notifies the delegate that the message bubble at the specified indexPath did receive a tap event.
+     *
+     *  @param collectionView The collection view object that is notifying the delegate of the tap event.
+     *  @param indexPath      The index path of the item for which the message bubble was tapped.
+     */
+    func collectionView(collectionView: MessagesCollectionView,
+        didTapMessageBubbleAtIndexPath indexPath: NSIndexPath) {
+        print("MVC::didTapMessageBubbleAtIndexPath")
+    }
+
+    /**
+     *  Notifies the delegate that the cell at the specified indexPath did receive a tap event at the specified touchLocation.
+     *
+     *  @param collectionView The collection view object that is notifying the delegate of the tap event.
+     *  @param indexPath      The index path of the item for which the message bubble was tapped.
+     *  @param touchLocation  The location of the touch event in the cell's coordinate system.
+     *
+     *  @warning This method is *only* called if position is *not* within the bounds of the cell's
+     *  avatar image view or message bubble image view. In other words, this method is *not* called when the cell's
+     *  avatar or message bubble are tapped. There are separate delegate methods for these two cases.
+     *
+     *  @see `collectionView:didTapAvatarImageView:atIndexPath:`
+     *  @see `collectionView:didTapMessageBubbleAtIndexPath:atIndexPath:`
+     */
+    func collectionView(collectionView: MessagesCollectionView,
+        didTapCellAtIndexPath indexPath: NSIndexPath,
+        touchLocation: CGPoint) {
+        print("MVC::didTapCellAtIndexPath")
+    }
     
+    //////////////////////////////////////////////////////////////////////////////////
+    // MessageLoadEarlierHeaderView delegate methods
+    //////////////////////////////////////////////////////////////////////////////////
     /**
      *  Notifies the delegate that the collection view's header did receive a tap event.
      *
