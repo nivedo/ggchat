@@ -47,6 +47,7 @@ class MessageToolbarContentView: UIView {
         self.rightHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
         
         self.backgroundColor = UIColor.clearColor()
+        // self.userInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -71,7 +72,7 @@ class MessageToolbarContentView: UIView {
         }
     }
 
-    var leftBarButtonItem: UIButton? {
+    dynamic var leftBarButtonItem: UIButton? {
         willSet (leftBarButtonItem) {
             if (self.leftBarButtonItem != nil) {
                 self.leftBarButtonItem!.removeFromSuperview()
@@ -111,7 +112,7 @@ class MessageToolbarContentView: UIView {
         }
     }
     
-    var rightBarButtonItem: UIButton? {
+    dynamic var rightBarButtonItem: UIButton? {
         willSet (rightBarButtonItem) {
             if (self.rightBarButtonItem != nil) {
                 self.rightBarButtonItem!.removeFromSuperview()

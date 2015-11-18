@@ -690,6 +690,7 @@ class MessageViewController: UIViewController,
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftBarButton sender: UIButton) {
+        print("MVC::didPressLeftBarButton")
         if (toolbar.sendButtonOnRight) {
             self.didPressAccessoryButton(sender)
         } else {
@@ -703,6 +704,7 @@ class MessageViewController: UIViewController,
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressRightBarButton sender: UIButton) {
+        print("MVC::didPressRightBarButton")
         if (toolbar.sendButtonOnRight) {
             self.didPressSendButton(sender,
                 withMessageText: self.gg_currentlyComposedMessageText(),
