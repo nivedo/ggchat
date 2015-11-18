@@ -42,6 +42,7 @@ class MessagesCollectionView: UICollectionView {
     
     override func awakeFromNib() {
         print("MessagesCollectionView:awakeFromNib()")
+        super.awakeFromNib()
         self.gg_configureCollectionView()
     }
     
@@ -75,4 +76,95 @@ class MessagesCollectionView: UICollectionView {
         */
     }
 
+    // pragma mark - Typing indicator
+    func dequeueTypingIndicatorFooterViewForIndexPath(indexPath: NSIndexPath) -> MessageTypingIndicatorFooterView {
+        let footerView: MessageTypingIndicatorFooterView = super.dequeueReusableSupplementaryViewOfKind(
+                UICollectionElementKindSectionFooter,
+                withReuseIdentifier: MessageTypingIndicatorFooterView.footerReuseIdentifier(),
+                forIndexPath: indexPath) as! MessageTypingIndicatorFooterView
+
+        footerView.configureWithEllipsisColor(
+            self.typingIndicatorEllipsisColor,
+            messageBubbleColor: self.typingIndicatorMessageBubbleColor,
+            shouldDisplayOnLeft: self.typingIndicatorDisplaysOnLeft,
+            forCollectionView: self)
+
+        return footerView
+    }
+
+/*
+#pragma mark - Load earlier messages header
+
+- (JSQMessagesLoadEarlierHeaderView *)dequeueLoadEarlierMessagesViewHeaderForIndexPath:(NSIndexPath *)indexPath
+{
+    JSQMessagesLoadEarlierHeaderView *headerView = [super dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                                                                             withReuseIdentifier:[JSQMessagesLoadEarlierHeaderView headerReuseIdentifier]
+                                                                                    forIndexPath:indexPath];
+
+    headerView.loadButton.tintColor = self.loadEarlierMessagesHeaderTextColor;
+    headerView.delegate = self;
+
+    return headerView;
+}
+
+#pragma mark - Load earlier messages header delegate
+
+- (void)headerView:(JSQMessagesLoadEarlierHeaderView *)headerView didPressLoadButton:(UIButton *)sender
+{
+    if ([self.delegate respondsToSelector:@selector(collectionView:header:didTapLoadEarlierMessagesButton:)]) {
+        [self.delegate collectionView:self header:headerView didTapLoadEarlierMessagesButton:sender];
+    }
+}
+
+#pragma mark - Messages collection view cell delegate
+
+- (void)messagesCollectionViewCellDidTapAvatar:(JSQMessagesCollectionViewCell *)cell
+{
+    NSIndexPath *indexPath = [self indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+
+    [self.delegate collectionView:self
+            didTapAvatarImageView:cell.avatarImageView
+                      atIndexPath:indexPath];
+}
+
+- (void)messagesCollectionViewCellDidTapMessageBubble:(JSQMessagesCollectionViewCell *)cell
+{
+    NSIndexPath *indexPath = [self indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+
+    [self.delegate collectionView:self didTapMessageBubbleAtIndexPath:indexPath];
+}
+
+- (void)messagesCollectionViewCellDidTapCell:(JSQMessagesCollectionViewCell *)cell atPosition:(CGPoint)position
+{
+    NSIndexPath *indexPath = [self indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+
+    [self.delegate collectionView:self
+            didTapCellAtIndexPath:indexPath
+                    touchLocation:position];
+}
+
+- (void)messagesCollectionViewCell:(JSQMessagesCollectionViewCell *)cell didPerformAction:(SEL)action withSender:(id)sender
+{
+    NSIndexPath *indexPath = [self indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+
+    [self.delegate collectionView:self
+                    performAction:action
+               forItemAtIndexPath:indexPath
+                       withSender:sender];
+}
+
+@end
+*/
 }

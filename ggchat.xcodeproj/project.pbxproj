@@ -44,6 +44,8 @@
 		D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */; };
 		D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */; };
 		D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */; };
+		D4A9F59F1BFC182600FA4444 /* MessageTypingIndicatorFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F59D1BFC182600FA4444 /* MessageTypingIndicatorFooterView.swift */; };
+		D4A9F5A01BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F59E1BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +109,8 @@
 		D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGMessageViewController.swift; sourceTree = "<group>"; };
 		D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTimestampFormatter.swift; sourceTree = "<group>"; };
+		D4A9F59D1BFC182600FA4444 /* MessageTypingIndicatorFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTypingIndicatorFooterView.swift; sourceTree = "<group>"; };
+		D4A9F59E1BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +230,8 @@
 				D4A9F4EE1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib */,
 				D4A9F4F11BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift */,
 				D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */,
+				D4A9F59D1BFC182600FA4444 /* MessageTypingIndicatorFooterView.swift */,
+				D4A9F59E1BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
 				D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */,
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
+				D4A9F5A01BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib in Resources */,
 				D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */,
 				D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
@@ -431,6 +438,7 @@
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
 				D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */,
+				D4A9F59F1BFC182600FA4444 /* MessageTypingIndicatorFooterView.swift in Sources */,
 				D4A9F50D1BF52A7C00FA4444 /* MessageBubbleSizeCalculator.swift in Sources */,
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,
 				D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */,
