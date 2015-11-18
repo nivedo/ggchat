@@ -8,6 +8,27 @@
 
 import UIKit
 
+protocol MessageInputToolbarDelegate: UIToolbarDelegate {
+
+    /**
+     *  Tells the delegate that the toolbar's `rightBarButtonItem` has been pressed.
+     *
+     *  @param toolbar The object representing the toolbar sending this information.
+     *  @param sender  The button that received the touch event.
+     */
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+          didPressRightBarButton sender: UIButton)
+
+    /**
+     *  Tells the delegate that the toolbar's `leftBarButtonItem` has been pressed.
+     *
+     *  @param toolbar The object representing the toolbar sending this information.
+     *  @param sender  The button that received the touch event.
+     */
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+           didPressLeftBarButton sender: UIButton)
+}
+
 class MessageInputToolbar: UIToolbar {
 
     /*
@@ -20,7 +41,7 @@ class MessageInputToolbar: UIToolbar {
 
     // static void * kMessagesInputToolbarKeyValueObservingContext = &kMessagesInputToolbarKeyValueObservingContext
 
-
+    var messageDelegate: MessageInputToolbarDelegate { return self.delegate as! MessageInputToolbarDelegate }
     var gg_isObserving: Bool = false
     var sendButtonOnRight: Bool = true
     var preferredDefaultHeight: CGFloat = 44.0

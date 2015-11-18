@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageViewController" customModule="ggchat" customModuleProvider="target">
             <connections>
+                <outlet property="inputToolbar" destination="xKi-4a-tRX" id="AKf-Ja-M3I"/>
                 <outlet property="messageCollectionView" destination="7Kj-z4-0me" id="Buu-ef-6Bc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -29,9 +30,7 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKi-4a-tRX" customClass="MessageInputToolbar" customModule="ggchat" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <animations/>
-                    <items>
-                        <barButtonItem title="Item" id="pv1-SH-Hi1"/>
-                    </items>
+                    <items/>
                 </toolbar>
             </subviews>
             <animations/>

@@ -12,7 +12,8 @@ private let reuseIdentifier = "Cell"
 
 class MessageViewController: UIViewController,
     UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout {
+    UICollectionViewDelegateFlowLayout,
+    MessageInputToolbarDelegate {
     
     static var kMessagesKeyValueObservingContext: AnyObject?
     
@@ -22,6 +23,7 @@ class MessageViewController: UIViewController,
     
     // @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var messageCollectionView: MessagesCollectionView!
+    @IBOutlet weak var inputToolbar: MessageInputToolbar!
     
     var automaticallyScrollsToMostRecentMessage: Bool = true
     var outgoingCellIdentifier: String = OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
@@ -103,7 +105,7 @@ class MessageViewController: UIViewController,
         self.messageCollectionView.dataSource = self;
         self.messageCollectionView.delegate = self;
         
-        // self.inputToolbar.delegate = self;
+        self.inputToolbar.delegate = self
         // self.inputToolbar.contentView.textView.placeHolder = [NSBundle gg_localizedStringForKey:@"new_message"];
         // self.inputToolbar.contentView.textView.delegate = self;
         
@@ -1246,5 +1248,4 @@ class MessageViewController: UIViewController,
         didTapLoadEarlierMessagesButton sender: UIButton) {
         print("didTapLoadEarlierMessagesButton")
     }
-
 }
