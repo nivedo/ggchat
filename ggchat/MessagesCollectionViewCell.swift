@@ -21,7 +21,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var avatarContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
    
-    var avatarViewSize: CGSize?
+    // var avatarViewSize: CGSize?
     // var textViewFrameInsets: UIEdgeInsets?
     var tapGestureRecognizer: UITapGestureRecognizer?
     
@@ -231,34 +231,18 @@ class MessagesCollectionViewCell: UICollectionViewCell {
             self.gg_updateConstraint(self.textViewMarginHorizontalSpaceConstraint, withConstant:textViewFrameInsets.left)
         }
     }
-    /*
-    func avatarViewSize() -> CGSize {
-        return CGSizeMake(
-            self.avatarContainerViewWidthConstraint.constant,
-            self.avatarContainerViewHeightConstraint.constant)
-    }
-    */
-    /*
-    func setAvatarViewSize(avatarViewSize: CGSize) {
-        if (CGSizeEqualToSize(avatarViewSize, self.avatarViewSize)) {
-            return;
+    
+    var avatarViewSize: CGSize {
+        get {
+            return CGSizeMake(
+                self.avatarContainerViewWidthConstraint.constant,
+                self.avatarContainerViewHeightConstraint.constant)
         }
-        
-        self.gg_updateConstraint(self.avatarContainerViewWidthConstraint, withConstant:avatarViewSize.width)
-        self.gg_updateConstraint(self.avatarContainerViewHeightConstraint, withConstant:avatarViewSize.height)
-    }
-   
-    func setTextViewFrameInsets(textViewFrameInsets: UIEdgeInsets) {
-        if (UIEdgeInsetsEqualToEdgeInsets(textViewFrameInsets, self.textViewFrameInsets)) {
-            return
+        set {
+            self.gg_updateConstraint(self.avatarContainerViewWidthConstraint, withConstant:avatarViewSize.width)
+            self.gg_updateConstraint(self.avatarContainerViewHeightConstraint, withConstant:avatarViewSize.height)
         }
-        
-        self.gg_updateConstraint(self.textViewTopVerticalSpaceConstraint, withConstant:textViewFrameInsets.top)
-        self.gg_updateConstraint(self.textViewBottomVerticalSpaceConstraint, withConstant:textViewFrameInsets.bottom)
-        self.gg_updateConstraint(self.textViewAvatarHorizontalSpaceConstraint, withConstant:textViewFrameInsets.right)
-        self.gg_updateConstraint(self.textViewMarginHorizontalSpaceConstraint, withConstant:textViewFrameInsets.left)
     }
-    */
     
     var mediaView: UIView {
         set (mediaView) {
