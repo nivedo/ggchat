@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MessagesCollectionView: UICollectionView {
+class MessagesCollectionView: UICollectionView, MessageLoadEarlierHeaderViewDelegate {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -92,30 +92,31 @@ class MessagesCollectionView: UICollectionView {
         return footerView
     }
 
-/*
-#pragma mark - Load earlier messages header
+    // pragma mark - Load earlier messages header
 
-- (JSQMessagesLoadEarlierHeaderView *)dequeueLoadEarlierMessagesViewHeaderForIndexPath:(NSIndexPath *)indexPath
-{
-    JSQMessagesLoadEarlierHeaderView *headerView = [super dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                             withReuseIdentifier:[JSQMessagesLoadEarlierHeaderView headerReuseIdentifier]
-                                                                                    forIndexPath:indexPath];
+    func dequeueLoadEarlierMessagesViewHeaderForIndexPath(indexPath: NSIndexPath) -> MessageLoadEarlierHeaderView {
+        let headerView: MessageLoadEarlierHeaderView = super.dequeueReusableSupplementaryViewOfKind(
+            UICollectionElementKindSectionHeader,
+            withReuseIdentifier: MessageLoadEarlierHeaderView.headerReuseIdentifier(),
+            forIndexPath: indexPath) as! MessageLoadEarlierHeaderView
 
-    headerView.loadButton.tintColor = self.loadEarlierMessagesHeaderTextColor;
-    headerView.delegate = self;
+        headerView.loadButton.tintColor = self.loadEarlierMessagesHeaderTextColor
+        headerView.delegate = self
 
-    return headerView;
-}
-
-#pragma mark - Load earlier messages header delegate
-
-- (void)headerView:(JSQMessagesLoadEarlierHeaderView *)headerView didPressLoadButton:(UIButton *)sender
-{
-    if ([self.delegate respondsToSelector:@selector(collectionView:header:didTapLoadEarlierMessagesButton:)]) {
-        [self.delegate collectionView:self header:headerView didTapLoadEarlierMessagesButton:sender];
+        return headerView
     }
-}
+    
+    // pragma mark - Load earlier messages header delegate
 
+    func headerView(headerView: MessageLoadEarlierHeaderView, didPressLoadButton sender:UIButton) {
+        if (self.messageDelegate.respondsToSelector(Selector("collectionView:header:didTapLoadEarlierMessagesButton:"))) {
+            self.messageDelegate.collectionView(self,
+                header: headerView,
+                didTapLoadEarlierMessagesButton: sender)
+        }
+    }
+
+/*
 #pragma mark - Messages collection view cell delegate
 
 - (void)messagesCollectionViewCellDidTapAvatar:(JSQMessagesCollectionViewCell *)cell
