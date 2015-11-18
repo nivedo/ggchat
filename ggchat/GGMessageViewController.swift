@@ -18,7 +18,7 @@ class GGMessageViewController: MessageViewController {
         // Do any additional setup after loading the view.
         self.senderId = Demo.id_chang
         self.senderDisplayName = Demo.displayName_chang
-        self.messages = GGModelData.sharedInstance.messages
+        // self.messages = GGModelData.sharedInstance.messages
         self.showLoadEarlierMessagesHeader = true
     }
 

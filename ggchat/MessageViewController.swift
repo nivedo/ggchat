@@ -91,12 +91,12 @@ class MessageViewController: UIViewController,
     var incomingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
     var selectedIndexPathForMenu: NSIndexPath?
     
-    var messages = [Message]()
+    // var messages = [Message]()
     
     ///////////////////////////////////////////////////////////////////////////////
     
     func setup() {
-        self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
+        // self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
         self.view.backgroundColor = UIColor.whiteColor()
         
         // self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
@@ -184,8 +184,10 @@ class MessageViewController: UIViewController,
 
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("MVC::numberOfItemsInSection: \(self.messages.count)")
-        return self.messages.count
+        // print("MVC::numberOfItemsInSection: \(self.messages.count)")
+        // return self.messages.count
+        print("MVC::numberOfItemsInSection: \(GGModelData.sharedInstance.messages.count)")
+        return GGModelData.sharedInstance.messages.count
     }
 
     // MARK: UICollectionViewDelegate
@@ -226,14 +228,16 @@ class MessageViewController: UIViewController,
     func collectionView(collectionView: MessagesCollectionView,
         messageDataForItemAtIndexPath indexPath: NSIndexPath) -> Message {
         // print("MVC::messageDataForItemAtIndexPath")
-        let data = self.messages[indexPath.row]
+        // let data = self.messages[indexPath.row]
+        let data = GGModelData.sharedInstance.messages[indexPath.row]
         return data
     }
     
     func collectionView(collectionView: MessagesCollectionView,
         didDeleteMessageAtIndexPath indexPath: NSIndexPath) {
         print("MVC::didDeleteMessageAtIndexPath")
-        self.messages.removeAtIndex(indexPath.row)
+        // self.messages.removeAtIndex(indexPath.row)
+        GGModelData.sharedInstance.messages.removeAtIndex(indexPath.row)
     }
     
     ///////////////////////////////////////////////////////////////////////////////
@@ -246,7 +250,8 @@ class MessageViewController: UIViewController,
         *
         *  Otherwise, return your previously created bubble image data objects.
         */
-        let message: Message = self.messages[indexPath.item]
+        // let message: Message = self.messages[indexPath.item]
+        let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
     
         if (message.senderId == self.senderId) {
             return self.outgoingBubbleImage
@@ -277,7 +282,8 @@ class MessageViewController: UIViewController,
         *
         *  Override the defaults in `viewDidLoad`
         */
-        let message: Message = self.messages[indexPath.item]
+        // let message: Message = self.messages[indexPath.item]
+        let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
         /*
         let defaults = NSUserDefaults.standardUserDefaults()
         if (message.senderId == self.senderId) {
@@ -303,7 +309,8 @@ class MessageViewController: UIViewController,
         *  Show a timestamp for every 3rd message
         */
         if (indexPath.item % 3 == 0) {
-            let message: Message = self.messages[indexPath.item]
+            // let message: Message = self.messages[indexPath.item]
+            let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
             return MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(message.date)
         }
         return nil;
@@ -311,7 +318,8 @@ class MessageViewController: UIViewController,
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
         print("MVC::attributedTextForMessageBubbleTopLabelAtIndexPath")
-        let message: Message = self.messages[indexPath.item]
+        // let message: Message = self.messages[indexPath.item]
+        let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
         
         /**
         *  iOS7-style sender name labels
@@ -321,7 +329,8 @@ class MessageViewController: UIViewController,
         }
         
         if (indexPath.item - 1 > 0) {
-            let previousMessage: Message = self.messages[indexPath.item - 1]
+            // let previousMessage: Message = self.messages[indexPath.item - 1]
+            let previousMessage: Message = GGModelData.sharedInstance.messages[indexPath.item - 1]
             if (previousMessage.senderId == message.senderId) {
                 return nil
             }
@@ -337,8 +346,6 @@ class MessageViewController: UIViewController,
         print("MVC::attributedTextForCellBottomLabelAtIndexPath")
         return nil;
     }
-    
-
 
     // pragma mark - View lifecycle
     override func viewWillAppear(animated: Bool) {
