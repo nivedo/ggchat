@@ -30,13 +30,15 @@ class MessageToolbarContentView: UIView {
 
     // pragma mark - Class methods
     class func nib() -> UINib {
-        return UINib(nibName: NSStringFromClass(self),
+        let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
+        return UINib(nibName: nibName,
             bundle: NSBundle(forClass: self))
     }
-
+    
     // pragma mark - Initialization
 
     override func awakeFromNib() {
+        print("ToolbarContentView::awakeFromNib()")
         super.awakeFromNib()
 
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -46,13 +48,26 @@ class MessageToolbarContentView: UIView {
         
         self.backgroundColor = UIColor.clearColor()
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        print("MessageToolbarContentView::init(coder:)")
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        print("MessageToolbarContentView::init(rect:)")
+    }
 
     // pragma mark - Setters
-
     override var backgroundColor: UIColor? {
         didSet {
-            self.leftBarButtonContainerView.backgroundColor = backgroundColor
-            self.rightBarButtonContainerView.backgroundColor = backgroundColor
+            if (self.leftBarButtonContainerView != nil) {
+                self.leftBarButtonContainerView.backgroundColor = backgroundColor
+            }
+            if (self.rightBarButtonContainerView != nil) {
+                self.rightBarButtonContainerView.backgroundColor = backgroundColor
+            }
         }
     }
 
@@ -155,9 +170,10 @@ class MessageToolbarContentView: UIView {
             return self.leftHorizontalSpacingConstraint.constant
         }
     }
-
     override func setNeedsDisplay() {
         super.setNeedsDisplay()
-        self.textView.setNeedsDisplay()
+        if (self.textView != nil) {
+            self.textView.setNeedsDisplay()
+        }
     }
 }

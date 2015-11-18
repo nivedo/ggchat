@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -48,7 +49,6 @@
 		D4A9F5A01BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F59E1BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib */; };
 		D4A9F5A31BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5A11BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.swift */; };
 		D4A9F5A41BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A21BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib */; };
-		D4A9F5AA1BFC48BC00FA4444 /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */; };
 		D4A9F5AC1BFC48CD00FA4444 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AB1BFC48CD00FA4444 /* MessageToolbarContentView.swift */; };
 		D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */; };
 		D4A9F5B01BFC59BD00FA4444 /* String+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AF1BFC59BD00FA4444 /* String+Messages.swift */; };
@@ -405,6 +405,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */,
 				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
 				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
 				D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */,
@@ -413,7 +414,6 @@
 				D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */,
 				D4A9F5A41BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib in Resources */,
 				D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */,
-				D4A9F5AA1BFC48BC00FA4444 /* MessageToolbarContentView.xib in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
