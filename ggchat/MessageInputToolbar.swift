@@ -115,40 +115,39 @@ class MessageInputToolbar: UIToolbar {
         }
     }
 
-/*
-#pragma mark - Key-value observing
+    // pragma mark - Key-value observing
+    override func observeValueForKeyPath(
+        keyPath: String?,
+        ofObject object: AnyObject?,
+        change: [String : AnyObject]?,
+        context: UnsafeMutablePointer<Void>) {
+        if (context == MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext) {
+            if (object === self.contentView) {
+                if (keyPath! == NSStringFromSelector(Selector("leftBarButtonItem"))) {
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == kMessagesInputToolbarKeyValueObservingContext) {
-        if (object == self.contentView) {
+                    self.contentView.leftBarButtonItem!.removeTarget(self,
+                        action: nil,
+                        forControlEvents: UIControlEvents.TouchUpInside)
 
-            if ([keyPath isEqualToString:NSStringFromSelector(@selector(leftBarButtonItem))]) {
+                    self.contentView.leftBarButtonItem!.addTarget(self,
+                        action: Selector("gg_leftBarButtonPressed:"),
+                        forControlEvents: UIControlEvents.TouchUpInside)
+                }
+                else if (keyPath! == NSStringFromSelector(Selector("rightBarButtonItem"))) {
+                    self.contentView.rightBarButtonItem!.removeTarget(self,
+                        action: nil,
+                        forControlEvents: UIControlEvents.TouchUpInside)
 
-                [self.contentView.leftBarButtonItem removeTarget:self
-                                                          action:NULL
-                                                forControlEvents:UIControlEventTouchUpInside]
+                    self.contentView.rightBarButtonItem!.addTarget(self,
+                        action: Selector("gg_rightBarButtonPressed:"),
+                        forControlEvents: UIControlEvents.TouchUpInside)
+                }
 
-                [self.contentView.leftBarButtonItem addTarget:self
-                                                       action:@selector(gg_leftBarButtonPressed:)
-                                             forControlEvents:UIControlEventTouchUpInside]
+                self.toggleSendButtonEnabled()
             }
-            else if ([keyPath isEqualToString:NSStringFromSelector(@selector(rightBarButtonItem))]) {
-
-                [self.contentView.rightBarButtonItem removeTarget:self
-                                                           action:NULL
-                                                 forControlEvents:UIControlEventTouchUpInside]
-
-                [self.contentView.rightBarButtonItem addTarget:self
-                                                        action:@selector(gg_rightBarButtonPressed:)
-                                              forControlEvents:UIControlEventTouchUpInside]
-            }
-
-            [self toggleSendButtonEnabled]
         }
     }
-}
-*/
+    
     func gg_addObservers() {
         if (self.gg_isObserving) {
             return
