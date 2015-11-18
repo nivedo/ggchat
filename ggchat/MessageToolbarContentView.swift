@@ -18,27 +18,15 @@ class MessageToolbarContentView: UIView {
     }
     */
 
-    static let kMessagesToolbarContentViewHorizontalSpacingDefault = 8.0
+    static let kMessagesToolbarContentViewHorizontalSpacingDefault: CGFloat = 8.0
     @IBOutlet weak var leftBarButtonContainerView: UIView!
     @IBOutlet weak var rightBarButtonContainerView: UIView!
     @IBOutlet weak var textView: MessageComposerTextView!
     
-
-/*
-@property (weak, nonatomic) IBOutlet MessagesComposerTextView *textView;
-
-@property (weak, nonatomic) IBOutlet UIView *leftBarButtonContainerView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftBarButtonContainerViewWidthConstraint;
-
-@property (weak, nonatomic) IBOutlet UIView *rightBarButtonContainerView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightBarButtonContainerViewWidthConstraint;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftHorizontalSpacingConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightHorizontalSpacingConstraint;
-
-@end
-*/
-
+    @IBOutlet weak var leftBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftHorizontalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightHorizontalSpacingConstraint: NSLayoutConstraint!
 
     // pragma mark - Class methods
     class func nib() -> UINib {
@@ -53,10 +41,9 @@ class MessageToolbarContentView: UIView {
 
         self.translatesAutoresizingMaskIntoConstraints = false
         
-        /*
-        self.leftHorizontalSpacingConstraint.constant = kMessagesToolbarContentViewHorizontalSpacingDefault
-        self.rightHorizontalSpacingConstraint.constant = kMessagesToolbarContentViewHorizontalSpacingDefault
-        */
+        self.leftHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
+        self.rightHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
+        
         self.backgroundColor = UIColor.clearColor()
     }
 
@@ -77,7 +64,7 @@ class MessageToolbarContentView: UIView {
 
             if (leftBarButtonItem == nil) {
                 self.leftBarButtonItem = nil
-                // self.leftHorizontalSpacingConstraint.constant = 0.0
+                self.leftHorizontalSpacingConstraint.constant = 0.0
                 self.leftBarButtonItemWidth = 0.0
                 self.leftBarButtonContainerView.hidden = true
                 return
@@ -88,7 +75,7 @@ class MessageToolbarContentView: UIView {
             }
 
             self.leftBarButtonContainerView.hidden = false
-            // self.leftHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
+            self.leftHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
             self.leftBarButtonItemWidth = CGRectGetWidth(leftBarButtonItem!.frame)
 
             leftBarButtonItem!.translatesAutoresizingMaskIntoConstraints = false
@@ -101,12 +88,11 @@ class MessageToolbarContentView: UIView {
     
     var leftBarButtonItemWidth: CGFloat {
         set {
-            // self.leftBarButtonContainerViewWidthConstraint.constant = leftBarButtonItemWidth
+            self.leftBarButtonContainerViewWidthConstraint.constant = leftBarButtonItemWidth
             self.setNeedsUpdateConstraints()
         }
         get {
-            // return self.leftBarButtonContainerViewWidthConstraint.constant
-            return 0.0
+            return self.leftBarButtonContainerViewWidthConstraint.constant
         }
     }
     
@@ -118,7 +104,7 @@ class MessageToolbarContentView: UIView {
 
             if (rightBarButtonItem == nil) {
                 self.rightBarButtonItem = nil
-                // self.rightHorizontalSpacingConstraint.constant = 0.0
+                self.rightHorizontalSpacingConstraint.constant = 0.0
                 self.rightBarButtonItemWidth = 0.0
                 self.rightBarButtonContainerView.hidden = true
                 return
@@ -129,7 +115,7 @@ class MessageToolbarContentView: UIView {
             }
 
             self.rightBarButtonContainerView.hidden = false
-            // self.rightHorizontalSpacingConstraint.constant = kMessagesToolbarContentViewHorizontalSpacingDefault
+            self.rightHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
             self.rightBarButtonItemWidth = CGRectGetWidth(rightBarButtonItem!.frame)
 
             rightBarButtonItem!.translatesAutoresizingMaskIntoConstraints = false
@@ -142,34 +128,31 @@ class MessageToolbarContentView: UIView {
 
     var rightBarButtonItemWidth: CGFloat {
         set {
-            // self.rightBarButtonContainerViewWidthConstraint.constant = rightBarButtonItemWidth
+            self.rightBarButtonContainerViewWidthConstraint.constant = rightBarButtonItemWidth
             self.setNeedsUpdateConstraints()
         }
         get {
-            // return self.leftBarButtonContainerViewWidthConstraint.constant;
-            return 0.0
+            return self.leftBarButtonContainerViewWidthConstraint.constant;
         }
     }
     
     var rightContentPadding: CGFloat {
         set {
-            // self.rightHorizontalSpacingConstraint.constant = rightContentPadding
+            self.rightHorizontalSpacingConstraint.constant = rightContentPadding
             self.setNeedsUpdateConstraints()
         }
         get {
-            // return self.rightHorizontalSpacingConstraint.constant
-            return 0.0
+            return self.rightHorizontalSpacingConstraint.constant
         }
     }
     
     var leftContentPadding: CGFloat {
         set {
-            // self.leftHorizontalSpacingConstraint.constant = leftContentPadding
+            self.leftHorizontalSpacingConstraint.constant = leftContentPadding
             self.setNeedsUpdateConstraints()
         }
         get {
-            // return self.leftHorizontalSpacingConstraint.constant
-            return 0.0
+            return self.leftHorizontalSpacingConstraint.constant
         }
     }
 

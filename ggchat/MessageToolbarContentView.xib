@@ -55,7 +55,11 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="leftBarButtonContainerView" destination="F7y-DS-i8Y" id="FQs-3e-sEZ"/>
+                <outlet property="leftBarButtonContainerViewWidthConstraint" destination="6E4-5t-KMa" id="x9r-lE-y3s"/>
+                <outlet property="leftHorizontalSpacingConstraint" destination="qiX-SD-Lq8" id="r8D-u1-lWC"/>
                 <outlet property="rightBarButtonContainerView" destination="ga3-AL-pKl" id="jAX-cK-KCa"/>
+                <outlet property="rightBarButtonContainerViewWidthConstraint" destination="1NA-Dk-W5Y" id="QFS-7u-b7M"/>
+                <outlet property="rightHorizontalSpacingConstraint" destination="sGI-8Z-ES2" id="dVc-jW-XX1"/>
                 <outlet property="textView" destination="zbL-Zk-acd" id="alL-Ev-Zmt"/>
             </connections>
         </view>
