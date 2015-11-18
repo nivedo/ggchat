@@ -21,16 +21,15 @@ class MessageInputToolbar: UIToolbar {
     // static void * kMessagesInputToolbarKeyValueObservingContext = &kMessagesInputToolbarKeyValueObservingContext
 
 
-
-    // pragma mark - Initialization
+    var gg_isObserving: Bool = false
+    var sendButtonOnRight: Bool = true
+    var preferredDefaultHeight: CGFloat = 44.0
 /*
+    // pragma mark - Initialization
     override func awakeFromNib() {
         super.awakeFromNib()
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.gg_isObserving = false
-        self.sendButtonOnRight = true
 
-        self.preferredDefaultHeight = 44.0
         self.maximumHeight = NSNotFound
 
         MessagesToolbarContentView *toolbarContentView = [self loadToolbarContentView]
@@ -47,7 +46,7 @@ class MessageInputToolbar: UIToolbar {
 
         [self toggleSendButtonEnabled]
     }
-
+    
 - (MessagesToolbarContentView *)loadToolbarContentView
 {
     NSArray *nibViews = [[NSBundle bundleForClass:[MessagesInputToolbar class]] loadNibNamed:NSStringFromClass([MessagesToolbarContentView class])
