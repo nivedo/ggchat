@@ -50,6 +50,8 @@
 		D4A9F5A41BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A21BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib */; };
 		D4A9F5AA1BFC48BC00FA4444 /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */; };
 		D4A9F5AC1BFC48CD00FA4444 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AB1BFC48CD00FA4444 /* MessageToolbarContentView.swift */; };
+		D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */; };
+		D4A9F5B01BFC59BD00FA4444 /* String+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AF1BFC59BD00FA4444 /* String+Messages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		D4A9F5A21BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageLoadEarlierHeaderView.xib; sourceTree = "<group>"; };
 		D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageToolbarContentView.xib; sourceTree = "<group>"; };
 		D4A9F5AB1BFC48CD00FA4444 /* MessageToolbarContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageToolbarContentView.swift; sourceTree = "<group>"; };
+		D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageComposerTextView.swift; sourceTree = "<group>"; };
+		D4A9F5AF1BFC59BD00FA4444 /* String+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Messages.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +248,7 @@
 				D4A9F5A21BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib */,
 				D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */,
 				D4A9F5AB1BFC48CD00FA4444 /* MessageToolbarContentView.swift */,
+				D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 				D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */,
 				D4A9F4F51BF2ED2A00FA4444 /* UIDevice+Messages.swift */,
 				D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */,
+				D4A9F5AF1BFC59BD00FA4444 /* String+Messages.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -435,6 +441,7 @@
 				D4A9F50B1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
 				D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */,
 				D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */,
+				D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
 				D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */,
@@ -460,6 +467,7 @@
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
 				D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
+				D4A9F5B01BFC59BD00FA4444 /* String+Messages.swift in Sources */,
 				D4A9F5AC1BFC48CD00FA4444 /* MessageToolbarContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
