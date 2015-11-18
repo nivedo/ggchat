@@ -128,7 +128,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         self.cellBottomLabel.font = UIFont.systemFontOfSize(11.0)
         self.cellBottomLabel.textColor = UIColor.lightGrayColor()
         
-        let tap = UITapGestureRecognizer(target: self, action: ":gg_handleTapGesture")
+        let tap = UITapGestureRecognizer(target: self, action: Selector("gg_handleTapGesture:"))
         self.addGestureRecognizer(tap)
         self.tapGestureRecognizer = tap;
     }
@@ -331,8 +331,8 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     }
     
     // pragma mark - Gesture recognizers
-    /*
     func gg_handleTapGesture(tap: UITapGestureRecognizer) {
+        print("ViewCell::gg_handleTapGesture()")
         let touchPt: CGPoint = tap.locationInView(self)
         
         if (CGRectContainsPoint(self.avatarContainerView.frame, touchPt)) {
@@ -345,8 +345,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
             self.delegate.messagesCollectionViewCellDidTapCell(self, atPosition:touchPt)
         }
     }
-    */
-    
+
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         let touchPt: CGPoint = touch.locationInView(self)
     
