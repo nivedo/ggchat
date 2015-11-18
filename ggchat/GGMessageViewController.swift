@@ -34,6 +34,7 @@ class GGMessageViewController: MessageViewController {
         senderDisplayName: String,
         date: NSDate) {
         // GGSystemSoundPlayer.gg_playMessageSentSound()
+        print("***********************************")
     
         let message: Message = Message(
             senderId: senderId,

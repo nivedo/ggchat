@@ -401,7 +401,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     func sizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
-        print("MVCFlowLayout::sizeForItemAtIndexPath()")
+        // print("MVCFlowLayout::sizeForItemAtIndexPath()")
         let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)
         let attributes: MessagesCollectionViewLayoutAttributes = self.layoutAttributesForItemAtIndexPath(indexPath) as! MessagesCollectionViewLayoutAttributes
         var finalHeight: CGFloat = messageBubbleSize.height
@@ -434,7 +434,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     func gg_configureMessageCellLayoutAttributes(layoutAttributes: MessagesCollectionViewLayoutAttributes) {
-        print("gg_configureMessageCellLayoutAttributes()")
+        // print("gg_configureMessageCellLayoutAttributes()")
         let indexPath: NSIndexPath = layoutAttributes.indexPath
         
         let messageBubbleSize: CGSize = self.messageBubbleSizeForItemAtIndexPath(indexPath)

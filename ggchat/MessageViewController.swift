@@ -225,7 +225,7 @@ class MessageViewController: UIViewController,
 
     func collectionView(collectionView: MessagesCollectionView,
         messageDataForItemAtIndexPath indexPath: NSIndexPath) -> Message {
-        print("MVC::messageDataForItemAtIndexPath")
+        // print("MVC::messageDataForItemAtIndexPath")
         let data = self.messages[indexPath.row]
         return data
     }
