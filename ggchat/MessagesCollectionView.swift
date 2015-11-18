@@ -65,15 +65,13 @@ class MessagesCollectionView: UICollectionView, MessageLoadEarlierHeaderViewDele
         self.registerNib(UINib(nibName: "OutgoingMessagesCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier())
         
-        /*
-        [self registerNib:[JSQMessagesTypingIndicatorFooterView nib]
-              forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-              withReuseIdentifier:[JSQMessagesTypingIndicatorFooterView footerReuseIdentifier]];
+        self.registerNib(MessageTypingIndicatorFooterView.nib(),
+            forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+            withReuseIdentifier: MessageTypingIndicatorFooterView.footerReuseIdentifier())
         
-        [self registerNib:[JSQMessagesLoadEarlierHeaderView nib]
-              forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-              withReuseIdentifier:[JSQMessagesLoadEarlierHeaderView headerReuseIdentifier]];
-        */
+        self.registerNib(MessageLoadEarlierHeaderView.nib(),
+            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+            withReuseIdentifier: MessageLoadEarlierHeaderView.headerReuseIdentifier())
     }
 
     // pragma mark - Typing indicator

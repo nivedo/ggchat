@@ -431,15 +431,13 @@ class MessageViewController: UIViewController,
     }
 
     func finishSendingMessageAnimated(animated: Bool) {
-        /*
         let textView: UITextView = self.inputToolbar.contentView.textView
         textView.text = nil
-        textView.undoManager.removeAllActions()
+        textView.undoManager!.removeAllActions()
 
-        [self.inputToolbar toggleSendButtonEnabled];
+        self.inputToolbar.toggleSendButtonEnabled()
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:textView];
-        */
+        NSNotificationCenter.defaultCenter().postNotificationName(UITextViewTextDidChangeNotification, object:textView)
         
         self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
         self.messageCollectionView.reloadData()
