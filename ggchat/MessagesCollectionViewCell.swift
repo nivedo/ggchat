@@ -123,19 +123,17 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         
         self.textViewFrameInsets = customAttributes.textViewFrameInsets;
         
-        /*
-        [self jsq_updateConstraint:self.messageBubbleContainerWidthConstraint
-        withConstant:customAttributes.messageBubbleContainerViewWidth];
+        self.gg_updateConstraint(self.messageBubbleContainerWidthConstraint,
+            withConstant: customAttributes.messageBubbleContainerViewWidth)
         
-        [self jsq_updateConstraint:self.cellTopLabelHeightConstraint
-        withConstant:customAttributes.cellTopLabelHeight];
+        self.gg_updateConstraint(self.cellTopLabelHeightConstraint,
+            withConstant: customAttributes.cellTopLabelHeight)
         
-        [self jsq_updateConstraint:self.messageBubbleTopLabelHeightConstraint
-        withConstant:customAttributes.messageBubbleTopLabelHeight];
+        self.gg_updateConstraint(self.messageBubbleTopLabelHeightConstraint,
+            withConstant: customAttributes.messageBubbleTopLabelHeight)
         
-        [self jsq_updateConstraint:self.cellBottomLabelHeightConstraint
-        withConstant:customAttributes.cellBottomLabelHeight];
-        */
+        self.gg_updateConstraint(self.cellBottomLabelHeightConstraint,
+            withConstant: customAttributes.cellBottomLabelHeight)
         
         if (self.isKindOfClass(IncomingMessagesCollectionViewCell.self)) {
             self.avatarViewSize = customAttributes.incomingAvatarViewSize
