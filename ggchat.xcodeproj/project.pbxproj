@@ -52,6 +52,7 @@
 		D4A9F5AC1BFC48CD00FA4444 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AB1BFC48CD00FA4444 /* MessageToolbarContentView.swift */; };
 		D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */; };
 		D4A9F5B01BFC59BD00FA4444 /* String+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5AF1BFC59BD00FA4444 /* String+Messages.swift */; };
+		D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5B11BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		D4A9F5AB1BFC48CD00FA4444 /* MessageToolbarContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageToolbarContentView.swift; sourceTree = "<group>"; };
 		D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageComposerTextView.swift; sourceTree = "<group>"; };
 		D4A9F5AF1BFC59BD00FA4444 /* String+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Messages.swift"; sourceTree = "<group>"; };
+		D4A9F5B11BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageToolbarButtonFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 				D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */,
 				D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */,
 				D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */,
+				D4A9F5B11BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */,
 				D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */,
+				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
 				D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */,
