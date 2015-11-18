@@ -13,7 +13,8 @@ private let reuseIdentifier = "Cell"
 class MessageViewController: UIViewController,
     UICollectionViewDataSource,
     UICollectionViewDelegateFlowLayout,
-    MessageInputToolbarDelegate {
+    MessageInputToolbarDelegate,
+    UITextViewDelegate {
     
     static var kMessagesKeyValueObservingContext: AnyObject?
     
@@ -106,8 +107,8 @@ class MessageViewController: UIViewController,
         self.messageCollectionView.delegate = self;
         
         self.inputToolbar.delegate = self
-        // self.inputToolbar.contentView.textView.placeHolder = [NSBundle gg_localizedStringForKey:@"new_message"];
-        // self.inputToolbar.contentView.textView.delegate = self;
+        self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")
+        self.inputToolbar.contentView.textView.delegate = self
         
         // NOTE: let this behavior be opt-in for now
         // [MessagesCollectionViewCell registerMenuAction:@selector(delete:)];
@@ -237,19 +238,6 @@ class MessageViewController: UIViewController,
         self.messages.removeAtIndex(indexPath.row)
     }
     
-    /*
-    func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
-        print("MVC::messageBubbleImageDataForItemAtIndexPath")
-        let data = messages[indexPath.row]
-        switch(data.senderId) {
-        case self.senderId:
-            return self.outgoingBubble
-        default:
-            return self.incomingBubble
-        }
-    }
-    */
-    
     //////////////////////////////////////////////////////////////////////////////////////
     
     func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
@@ -319,7 +307,6 @@ class MessageViewController: UIViewController,
         if (indexPath.item % 3 == 0) {
             let message: Message = self.messages[indexPath.item]
             return MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(message.date)
-            // return NSAttributedString(string: message.senderId)
         }
         return nil;
     }
@@ -787,14 +774,14 @@ class MessageViewController: UIViewController,
         return "Currently composed message text"
     }
 
-    // pragma mark - Text view delegate
+    //////////////////////////////////////////////////////////////////////////////////
+    // UITextViewDelegate methods
+    //////////////////////////////////////////////////////////////////////////////////
 
     func textViewDidBeginEditing(textView: UITextView) {
-        /*
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
-        */
 
         textView.becomeFirstResponder()
 
@@ -804,23 +791,19 @@ class MessageViewController: UIViewController,
     }
 
     func textViewDidChange(textView: UITextView) {
-        /*
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
 
         self.inputToolbar.toggleSendButtonEnabled()
-        */
     }
 
     func textViewDidEndEditing(textView: UITextView) {
-        /*
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
 
         textView.resignFirstResponder()
-        */
     }
 
     // pragma mark - Notifications
