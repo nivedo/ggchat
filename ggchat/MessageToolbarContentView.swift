@@ -21,6 +21,7 @@ class MessageToolbarContentView: UIView {
     static let kMessagesToolbarContentViewHorizontalSpacingDefault = 8.0
     @IBOutlet weak var leftBarButtonContainerView: UIView!
     @IBOutlet weak var rightBarButtonContainerView: UIView!
+    @IBOutlet weak var textView: MessageComposerTextView!
     
 
 /*
@@ -174,6 +175,6 @@ class MessageToolbarContentView: UIView {
 
     override func setNeedsDisplay() {
         super.setNeedsDisplay()
-        // self.textView.setNeedsDisplay()
+        self.textView.setNeedsDisplay()
     }
 }
