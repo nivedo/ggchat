@@ -26,4 +26,27 @@ class GGMessageViewController: MessageViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func didPressSendButton(
+        button: UIButton,
+        withMessageText text: String,
+        senderId: String,
+        senderDisplayName: String,
+        date: NSDate) {
+        // GGSystemSoundPlayer.gg_playMessageSentSound()
+    
+        let message: Message = Message(
+            senderId: senderId,
+            senderDisplayName: senderDisplayName,
+            date: date,
+            text: text)
+    
+        GGModelData.sharedInstance.messages.append(message)
+    
+        self.finishSendingMessageAnimated(true)
+    }
+
+    override func didPressAccessoryButton(sender: UIButton) {
+        assert(false, "Error! required method not implemented in subclass. Need to implement didPressAccessoryButton")
+    }
 }

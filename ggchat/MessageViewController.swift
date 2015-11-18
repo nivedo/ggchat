@@ -690,32 +690,28 @@ class MessageViewController: UIViewController,
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftBarButton sender: UIButton) {
-        /*
         if (toolbar.sendButtonOnRight) {
             self.didPressAccessoryButton(sender)
         } else {
-            self.didPressSendButton(sender
+            self.didPressSendButton(sender,
                 withMessageText: self.gg_currentlyComposedMessageText(),
                 senderId: self.senderId,
                 senderDisplayName: self.senderDisplayName,
-                date: NSDate.date)
+                date: NSDate())
         }
-        */
     }
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressRightBarButton sender: UIButton) {
-        /*
         if (toolbar.sendButtonOnRight) {
-            self.didPressSendButton(sender
+            self.didPressSendButton(sender,
                 withMessageText: self.gg_currentlyComposedMessageText(),
                 senderId: self.senderId,
                 senderDisplayName: self.senderDisplayName,
-                date: NSDate.date)
+                date: NSDate())
         } else {
             self.didPressAccessoryButton(sender)
         }
-        */
     }
 
     func gg_currentlyComposedMessageText() -> String {
