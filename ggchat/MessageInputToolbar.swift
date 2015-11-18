@@ -38,14 +38,14 @@ class MessageInputToolbar: UIToolbar {
         // Drawing code
     }
     */
-
-    // static void * kMessagesInputToolbarKeyValueObservingContext = &kMessagesInputToolbarKeyValueObservingContext
+    static let kMessagesInputToolbarKeyValueObservingContext = UnsafeMutablePointer<()>()
 
     var messageDelegate: MessageInputToolbarDelegate { return self.delegate as! MessageInputToolbarDelegate }
     var gg_isObserving: Bool = false
     var sendButtonOnRight: Bool = true
-    var preferredDefaultHeight: CGFloat = 44.0
-/*
+    var maximumHeight: Int = NSNotFound
+    var contentView: MessageToolbarContentView!
+    
     // pragma mark - Initialization
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,69 +53,63 @@ class MessageInputToolbar: UIToolbar {
 
         self.maximumHeight = NSNotFound
 
-        MessagesToolbarContentView *toolbarContentView = [self loadToolbarContentView]
+        /*
+        let toolbarContentView: MessageToolbarContentView = self.loadToolbarContentView()
         toolbarContentView.frame = self.frame
-        [self addSubview:toolbarContentView]
-        [self gg_pinAllEdgesOfSubview:toolbarContentView]
-        [self setNeedsUpdateConstraints]
-        _contentView = toolbarContentView
+        self.addSubview(toolbarContentView)
+        self.gg_pinAllEdgesOfSubview(toolbarContentView)
+        self.setNeedsUpdateConstraints()
+        self.contentView = toolbarContentView
 
-        [self gg_addObservers]
+        self.gg_addObservers()
 
-        self.contentView.leftBarButtonItem = [MessagesToolbarButtonFactory defaultAccessoryButtonItem]
-        self.contentView.rightBarButtonItem = [MessagesToolbarButtonFactory defaultSendButtonItem]
+        // self.contentView.leftBarButtonItem = MessageToolbarButtonFactory.defaultAccessoryButtonItem()
+        // self.contentView.rightBarButtonItem = MessagesToolbarButtonFactory.defaultSendButtonItem()
 
-        [self toggleSendButtonEnabled]
+        self.toggleSendButtonEnabled()
+        */
     }
     
-- (MessagesToolbarContentView *)loadToolbarContentView
-{
-    NSArray *nibViews = [[NSBundle bundleForClass:[MessagesInputToolbar class]] loadNibNamed:NSStringFromClass([MessagesToolbarContentView class])
-                                                                                          owner:nil
-                                                                                        options:nil]
-    return nibViews.firstObject
-}
-
-- (void)dealloc
-{
-    [self gg_removeObservers]
-    _contentView = nil
-}
-
-#pragma mark - Setters
-
-- (void)setPreferredDefaultHeight:(CGFloat)preferredDefaultHeight
-{
-    NSParameterAssert(preferredDefaultHeight > 0.0f)
-    _preferredDefaultHeight = preferredDefaultHeight
-}
-
-#pragma mark - Actions
-
-- (void)gg_leftBarButtonPressed:(UIButton *)sender
-{
-    [self.delegate messagesInputToolbar:self didPressLeftBarButton:sender]
-}
-
-- (void)gg_rightBarButtonPressed:(UIButton *)sender
-{
-    [self.delegate messagesInputToolbar:self didPressRightBarButton:sender]
-}
-
-#pragma mark - Input toolbar
-
-- (void)toggleSendButtonEnabled
-{
-    BOOL hasText = [self.contentView.textView hasText]
-
-    if (self.sendButtonOnRight) {
-        self.contentView.rightBarButtonItem.enabled = hasText
+    func loadToolbarContentView() -> MessageToolbarContentView {
+        let nibViews: NSArray = NSBundle(forClass: MessageInputToolbar.self).loadNibNamed(
+                NSStringFromClass(MessageToolbarContentView.self),
+                owner: nil,
+                options: nil)
+        return nibViews.firstObject as! MessageToolbarContentView
     }
-    else {
-        self.contentView.leftBarButtonItem.enabled = hasText
-    }
-}
 
+
+    // pragma mark - Setters
+
+    var preferredDefaultHeight: CGFloat = 44.0 {
+        willSet {
+            assert(preferredDefaultHeight > 0.0)
+        }
+    }
+
+    // pragma mark - Actions
+
+    func gg_leftBarButtonPressed(sender: UIButton) {
+        self.messageDelegate.messagesInputToolbar(self, didPressLeftBarButton: sender)
+    }
+
+    func gg_rightBarButtonPressed(sender: UIButton) {
+        self.messageDelegate.messagesInputToolbar(self, didPressRightBarButton: sender)
+    }
+
+    // pragma mark - Input toolbar
+
+    func toggleSendButtonEnabled() {
+        let hasText: Bool = self.contentView.textView.hasText()
+
+        if (self.sendButtonOnRight) {
+            self.contentView.rightBarButtonItem!.enabled = hasText
+        } else {
+            self.contentView.leftBarButtonItem!.enabled = hasText
+        }
+    }
+
+/*
 #pragma mark - Key-value observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -148,45 +142,42 @@ class MessageInputToolbar: UIToolbar {
         }
     }
 }
-
-- (void)gg_addObservers
-{
-    if (self.gg_isObserving) {
-        return
-    }
-
-    [self.contentView addObserver:self
-                       forKeyPath:NSStringFromSelector(@selector(leftBarButtonItem))
-                          options:0
-                          context:kMessagesInputToolbarKeyValueObservingContext]
-
-    [self.contentView addObserver:self
-                       forKeyPath:NSStringFromSelector(@selector(rightBarButtonItem))
-                          options:0
-                          context:kMessagesInputToolbarKeyValueObservingContext]
-
-    self.gg_isObserving = true
-}
-
-- (void)gg_removeObservers
-{
-    if (!_gg_isObserving) {
-        return
-    }
-
-    @try {
-        [_contentView removeObserver:self
-                          forKeyPath:NSStringFromSelector(@selector(leftBarButtonItem))
-                             context:kMessagesInputToolbarKeyValueObservingContext]
-
-        [_contentView removeObserver:self
-                          forKeyPath:NSStringFromSelector(@selector(rightBarButtonItem))
-                             context:kMessagesInputToolbarKeyValueObservingContext]
-    }
-    @catch (NSException *__unused exception) { }
-    
-    _gg_isObserving = false
-}
 */
+    func gg_addObservers() {
+        if (self.gg_isObserving) {
+            return
+        }
+
+        self.contentView.addObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("leftBarButtonItem")),
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.addObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("rightBarButtonItem")),
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.gg_isObserving = true
+    }
+
+    func gg_removeObservers() {
+        if (!self.gg_isObserving) {
+            return
+        }
+
+        self.contentView.removeObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("leftBarButtonItem")),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.removeObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("rightBarButtonItem")),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
     
+        self.gg_isObserving = false
+    }
 }
