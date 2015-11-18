@@ -76,17 +76,13 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="60m-yv-GFf" secondAttribute="trailing" id="0NA-nM-c14"/>
                             <constraint firstItem="60m-yv-GFf" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" constant="6" id="0nz-Zp-IS3"/>
-                            <constraint firstAttribute="trailing" secondItem="60m-yv-GFf" secondAttribute="trailing" id="5fR-sQ-Rvp"/>
                             <constraint firstAttribute="bottom" secondItem="va9-h1-Qlp" secondAttribute="bottom" id="6Ih-oH-Dlj"/>
                             <constraint firstAttribute="trailing" secondItem="va9-h1-Qlp" secondAttribute="trailing" id="7yn-Vn-d9p"/>
                             <constraint firstItem="va9-h1-Qlp" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" id="EPq-ge-wgZ"/>
                             <constraint firstItem="60m-yv-GFf" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="top" id="GBY-h7-PhD"/>
                             <constraint firstAttribute="bottom" secondItem="60m-yv-GFf" secondAttribute="bottom" id="MC5-U2-wiz"/>
                             <constraint firstItem="va9-h1-Qlp" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="top" id="lqS-3x-Ykj"/>
-                            <constraint firstItem="60m-yv-GFf" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="top" id="ohZ-N0-eHs"/>
-                            <constraint firstAttribute="bottom" secondItem="60m-yv-GFf" secondAttribute="bottom" id="vYR-X1-gX7"/>
                             <constraint firstAttribute="width" constant="244" id="xOM-Po-gAb"/>
-                            <constraint firstItem="60m-yv-GFf" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" constant="6" id="zg6-MX-FkX"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -113,13 +109,20 @@
             </constraints>
             <connections>
                 <outlet property="avatarContainerView" destination="WOk-3d-b4L" id="3Mq-yW-AlE"/>
+                <outlet property="avatarContainerViewHeightConstraint" destination="8EI-1C-Lf5" id="UVZ-PJ-VYC"/>
+                <outlet property="avatarContainerViewWidthConstraint" destination="vmp-dL-Dhl" id="hr0-v9-sml"/>
                 <outlet property="avatarImageView" destination="Ejy-0n-2DI" id="cI4-r5-8Cm"/>
                 <outlet property="cellBottomLabel" destination="FyK-BI-YcW" id="wz3-rl-WOZ"/>
                 <outlet property="cellTopLabel" destination="DZf-LO-Mjz" id="0p7-FZ-fXF"/>
                 <outlet property="messageBubbleContainerView" destination="iYp-dz-DkR" id="R3B-1O-JNI"/>
+                <outlet property="messageBubbleContainerWidthConstraint" destination="xOM-Po-gAb" id="tri-ti-gZY"/>
                 <outlet property="messageBubbleImageView" destination="va9-h1-Qlp" id="v7x-zL-DCQ"/>
                 <outlet property="messageBubbleTopLabel" destination="BGD-qY-E0o" id="nio-iC-lHG"/>
                 <outlet property="textView" destination="60m-yv-GFf" id="j0I-aa-TrT"/>
+                <outlet property="textViewAvatarHorizontalSpaceConstraint" destination="0NA-nM-c14" id="kZQ-S1-Kux"/>
+                <outlet property="textViewBottomVerticalSpaceConstraint" destination="MC5-U2-wiz" id="a71-2G-fYT"/>
+                <outlet property="textViewMarginHorizontalSpaceConstraint" destination="0nz-Zp-IS3" id="pWw-gg-9BD"/>
+                <outlet property="textViewTopVerticalSpaceConstraint" destination="GBY-h7-PhD" id="rH1-iC-fvA"/>
             </connections>
             <point key="canvasLocation" x="138" y="515"/>
         </collectionViewCell>
