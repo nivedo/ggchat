@@ -8,9 +8,24 @@
 
 import UIKit
 
+protocol MessageComposerTextViewPasteDelegate {
+
+    /**
+     *  Asks the delegate whether or not the `textView` should use the original implementation of `-[UITextView paste]`.
+     *
+     *  @discussion Use this delegate method to implement custom pasting behavior. 
+     *  You should return `NO` when you want to handle pasting. 
+     *  Return `YES` to defer functionality to the `textView`.
+     */
+    func composerTextView(textView: MessageComposerTextView,
+        shouldPasteWithSender sender: AnyObject?) -> Bool
+
+}
+
 class MessageComposerTextView: UITextView {
 
     // pragma mark - Initialization
+    var pasteDelegate: MessageComposerTextViewPasteDelegate?
 
     func gg_configureTextView() {
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -112,14 +127,15 @@ class MessageComposerTextView: UITextView {
             self.setNeedsDisplay()
         }
     }
-/*
-- (void)paste:(id)sender
-{
-    if (!self.pasteDelegate || [self.pasteDelegate composerTextView:self shouldPasteWithSender:sender]) {
-        [super paste:sender];
+    
+    override func paste(sender: AnyObject?) {
+        if (self.pasteDelegate == nil ||
+            self.pasteDelegate!.composerTextView(
+            self,
+            shouldPasteWithSender: sender)) {
+            super.paste(sender)
+        }
     }
-}
-*/
 
     // pragma mark - Drawing
     // Only override drawRect: if you perform custom drawing.
