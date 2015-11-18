@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="IncomingMessagesCollectionViewCell" customModule="ggchat" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MessagesCollectionViewCell" customModule="ggchat" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -122,13 +122,23 @@
             <size key="customSize" width="240" height="175"/>
             <connections>
                 <outlet property="avatarContainerView" destination="jxR-jy-U2S" id="rWN-vW-Dg4"/>
+                <outlet property="avatarContainerViewHeightConstraint" destination="dEr-L3-Nk4" id="xGm-db-opq"/>
+                <outlet property="avatarContainerViewWidthConstraint" destination="Xdt-Ns-TmP" id="lGf-aG-9qA"/>
                 <outlet property="avatarImageView" destination="eYd-Db-U2e" id="Huw-nP-ngG"/>
                 <outlet property="cellBottomLabel" destination="h36-eA-i5B" id="5jj-53-P90"/>
+                <outlet property="cellBottomLabelHeightConstraint" destination="Db6-2l-e21" id="oKj-ue-73X"/>
                 <outlet property="cellTopLabel" destination="YJb-gP-pVg" id="bBZ-sc-IV1"/>
+                <outlet property="cellTopLabelHeightConstraint" destination="W4a-eu-4zo" id="NcG-se-SDu"/>
                 <outlet property="messageBubbleContainerView" destination="GZ0-1y-QjP" id="4Td-Bx-xBZ"/>
+                <outlet property="messageBubbleContainerWidthConstraint" destination="9az-c5-bew" id="sLj-jZ-Lzs"/>
                 <outlet property="messageBubbleImageView" destination="UMy-wY-2ol" id="Tve-df-hY1"/>
                 <outlet property="messageBubbleTopLabel" destination="XdS-3H-25R" id="JNL-hn-wRb"/>
+                <outlet property="messageBubbleTopLabelHeightConstraint" destination="2We-g5-5Zz" id="Ywp-Mg-hN5"/>
                 <outlet property="textView" destination="PcV-sU-TcX" id="PbL-t5-gkk"/>
+                <outlet property="textViewAvatarHorizontalSpaceConstraint" destination="XzL-g9-G99" id="Jun-eY-c7b"/>
+                <outlet property="textViewBottomVerticalSpaceConstraint" destination="0fP-Lq-Vlt" id="hkv-fR-EXd"/>
+                <outlet property="textViewMarginHorizontalSpaceConstraint" destination="vh5-vq-GuW" id="Ced-mt-BSe"/>
+                <outlet property="textViewTopVerticalSpaceConstraint" destination="3aB-Zi-8nV" id="ZDX-Sk-v0e"/>
             </connections>
             <point key="canvasLocation" x="755" y="672.5"/>
         </collectionViewCell>

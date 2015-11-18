@@ -29,38 +29,19 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     
     static var ggMessagesCollectionViewCellActions = NSMutableSet()
     
-    /*
+    @IBOutlet weak var messageBubbleContainerWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewTopVerticalSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewBottomVerticalSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewMarginHorizontalSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewAvatarHorizontalSpaceConstraint: NSLayoutConstraint!
     
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageBubbleContainerWidthConstraint;
+    @IBOutlet weak var cellTopLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var messageBubbleTopLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var cellBottomLabelHeightConstraint: NSLayoutConstraint!
     
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewTopVerticalSpaceConstraint;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewBottomVerticalSpaceConstraint;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewAvatarHorizontalSpaceConstraint;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewMarginHorizontalSpaceConstraint;
-    
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellTopLabelHeightConstraint;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageBubbleTopLabelHeightConstraint;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellBottomLabelHeightConstraint;
-    
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarContainerViewWidthConstraint;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarContainerViewHeightConstraint;
-    
-    @property (assign, nonatomic) UIEdgeInsets textViewFrameInsets;
-    
-    @property (assign, nonatomic) CGSize avatarViewSize;
-    
-    @property (weak, nonatomic, readwrite) UITapGestureRecognizer *tapGestureRecognizer;
-    
-    - (void)jsq_handleTapGesture:(UITapGestureRecognizer *)tap;
-    
-    - (void)jsq_updateConstraint:(NSLayoutConstraint *)constraint withConstant:(CGFloat)constant;
-    
-    @end
-    
-    
-    @implementation JSQMessagesCollectionViewCell
-    
-*/
+    @IBOutlet weak var avatarContainerViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var avatarContainerViewHeightConstraint: NSLayoutConstraint!
+
     class func nib() -> UINib {
         return UINib(nibName: NSStringFromClass(self), bundle: NSBundle(forClass: self))
     }
