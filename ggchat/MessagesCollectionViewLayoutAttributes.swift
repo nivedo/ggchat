@@ -36,23 +36,23 @@ class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     }
     
     var cellTopLabelHeight: CGFloat = 0 {
-        willSet {
-            assert(newValue >= 0.0)
-            self.cellTopLabelHeight = self.gg_correctedLabelHeightForHeight(newValue)
+        didSet {
+            assert(self.cellTopLabelHeight >= 0.0)
+            self.cellTopLabelHeight = self.gg_correctedLabelHeightForHeight(self.cellTopLabelHeight)
         }
     }
     
     var messageBubbleTopLabelHeight: CGFloat = 0 {
-        willSet {
-            assert(newValue >= 0.0)
-            self.messageBubbleTopLabelHeight = self.gg_correctedLabelHeightForHeight(newValue)
+        didSet {
+            assert(self.messageBubbleTopLabelHeight >= 0.0)
+            self.messageBubbleTopLabelHeight = self.gg_correctedLabelHeightForHeight(self.messageBubbleTopLabelHeight)
         }
     }
     
     var cellBottomLabelHeight: CGFloat = 0 {
-        willSet {
-            assert(newValue >= 0.0)
-            self.cellBottomLabelHeight = self.gg_correctedLabelHeightForHeight(newValue)
+        didSet {
+            assert(self.cellBottomLabelHeight >= 0.0)
+            self.cellBottomLabelHeight = self.gg_correctedLabelHeightForHeight(self.cellBottomLabelHeight)
         }
     }
     
