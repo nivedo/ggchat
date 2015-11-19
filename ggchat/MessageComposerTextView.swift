@@ -105,7 +105,7 @@ class MessageComposerTextView: UITextView {
 
     // pragma mark - UITextView overrides
 
-    override var text: String! {
+    override dynamic var text: String! {
         didSet {
             self.setNeedsDisplay()
         }

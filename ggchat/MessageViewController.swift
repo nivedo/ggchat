@@ -809,9 +809,10 @@ class MessageViewController: UIViewController,
         change: [String : AnyObject]?,
         context: UnsafeMutablePointer<Void>) {
         if (context == MessageViewController.kMessagesKeyValueObservingContext) {
+            print("======================================== 1")
             if (object === self.inputToolbar.contentView.textView
                 && keyPath! == NSStringFromSelector(Selector("contentSize"))) {
-                print("========================================")
+                print("======================================== 2")
                 let oldContentSize: CGSize = change![NSKeyValueChangeOldKey]!.CGSizeValue()
                 let newContentSize: CGSize = change![NSKeyValueChangeNewKey]!.CGSizeValue()
 
@@ -998,7 +999,7 @@ class MessageViewController: UIViewController,
         }
         self.inputToolbar.contentView.textView.addObserver(
             self,
-            forKeyPath: NSStringFromSelector(Selector("contentSize:")),
+            forKeyPath: NSStringFromSelector(Selector("contentSize")),
             options: NSKeyValueObservingOptions(rawValue: NSKeyValueObservingOptions.Old.rawValue | NSKeyValueObservingOptions.New.rawValue),
             context: MessageViewController.kMessagesKeyValueObservingContext)
         
@@ -1012,7 +1013,7 @@ class MessageViewController: UIViewController,
 
         self.inputToolbar.contentView.textView.removeObserver(
             self,
-            forKeyPath: NSStringFromSelector(Selector("contentSize:")),
+            forKeyPath: NSStringFromSelector(Selector("contentSize")),
             context: MessageViewController.kMessagesKeyValueObservingContext)
 
         self.gg_isObserving = false
