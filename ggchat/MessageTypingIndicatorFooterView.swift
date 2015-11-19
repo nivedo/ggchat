@@ -30,7 +30,8 @@ class MessageTypingIndicatorFooterView: UICollectionReusableView {
     // pragma mark - Class methods
 
     class func nib() -> UINib {
-        return UINib(nibName: NSStringFromClass(self),
+        let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
+        return UINib(nibName: nibName,
             bundle: NSBundle(forClass: self))
     }
 
