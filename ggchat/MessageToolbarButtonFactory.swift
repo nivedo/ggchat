@@ -51,7 +51,6 @@ class MessageToolbarButtonFactory {
             attributes: [ NSFontAttributeName : sendButton.titleLabel!.font ],
             context:nil)
 
-        print(CGRectGetWidth(CGRectIntegral(sendTitleRect)))
         sendButton.frame = CGRectMake(
             0.0,
             0.0,

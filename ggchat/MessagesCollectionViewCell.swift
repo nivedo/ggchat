@@ -121,13 +121,13 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         
         self.cellTopLabel.textAlignment = NSTextAlignment.Center
         self.cellTopLabel.font = UIFont.boldSystemFontOfSize(12.0)
-        self.cellTopLabel.textColor = UIColor.lightGrayColor()
+        self.cellTopLabel.textColor = GGConfig.cellTopLabelTextColor
         
         self.messageBubbleTopLabel.font = UIFont.systemFontOfSize(12.0)
-        self.messageBubbleTopLabel.textColor = UIColor.lightGrayColor()
+        self.messageBubbleTopLabel.textColor = GGConfig.bubbleTopLabelTextColor
         
         self.cellBottomLabel.font = UIFont.systemFontOfSize(11.0)
-        self.cellBottomLabel.textColor = UIColor.lightGrayColor()
+        self.cellBottomLabel.textColor = GGConfig.cellBottomLabelTextColor
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("gg_handleTapGesture:"))
         self.addGestureRecognizer(tap)
