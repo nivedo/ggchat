@@ -14,6 +14,7 @@ class MessageViewController: UIViewController,
     UICollectionViewDataSource,
     UICollectionViewDelegateFlowLayout,
     MessageInputToolbarDelegate,
+    MessageKeyboardControllerDelegate,
     UITextViewDelegate {
     
     static let kMessagesKeyValueObservingContext = UnsafeMutablePointer<Void>()
@@ -25,6 +26,7 @@ class MessageViewController: UIViewController,
     // @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var inputToolbar: MessageInputToolbar!
+    var keyboardController: MessageKeyboardController?
     
     var automaticallyScrollsToMostRecentMessage: Bool = true
     var outgoingCellIdentifier: String = OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
@@ -100,10 +102,11 @@ class MessageViewController: UIViewController,
         // Don't set keyboardController if client creates custom content view via -loadToolbarContentView
         /*
         if (self.inputToolbar.contentView.textView != nil) {
-        self.keyboardController = [[MessagesKeyboardController alloc] initWithTextView:self.inputToolbar.contentView.textView
-        contextView:self.view
-        panGestureRecognizer:self.messageCollectionView.panGestureRecognizer
-        delegate:self];
+            self.keyboardController = MessageKeyboardController(
+                textView: self.inputToolbar.contentView.textView,
+                contextView: self.view,
+                panGestureRecognizer: self.messageCollectionView.panGestureRecognizer,
+                delegate: self)
         }
         */
     }
@@ -832,8 +835,8 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Keyboard controller delegate
     
-    /*
-    func keyboardController(keyboardController: MessagesKeyboardController,  keyboardDidChangeFrame keyboardFrame: CGRect) {
+    func keyboardController(keyboardController: MessageKeyboardController,
+        keyboardDidChangeFrame keyboardFrame: CGRect) {
         if (!self.inputToolbar.contentView.textView.isFirstResponder() && self.toolbarBottomLayoutGuide.constant == 0.0) {
             return
         }
@@ -844,7 +847,6 @@ class MessageViewController: UIViewController,
 
         self.gg_setToolbarBottomLayoutGuideConstant(heightFromBottom)
     }
-    */
 
     func gg_setToolbarBottomLayoutGuideConstant(constant: CGFloat) {
         self.toolbarBottomLayoutGuide.constant = constant

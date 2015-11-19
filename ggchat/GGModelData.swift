@@ -27,8 +27,6 @@ class GGModelData {
     var messages = [Message]()
     var avatars = [String:MessageAvatarImage]()
     var users = [String:String]()
-    var outgoingBubbleImage: MessageBubbleImage
-    var incomingBubbleImage: MessageBubbleImage
    
     class var sharedInstance: GGModelData {
         struct Singleton {
@@ -38,10 +36,6 @@ class GGModelData {
     }
     
     init() {
-        let bubbleFactory = MessageBubbleImageFactory()
-        
-        self.outgoingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(GGConfig.outgoingBubbleColor)
-        self.incomingBubbleImage = bubbleFactory.incomingMessagesBubbleImageWithColor(GGConfig.incomingBubbleColor)
         self.loadMessages()
         self.loadAvatars()
         self.loadUsers()

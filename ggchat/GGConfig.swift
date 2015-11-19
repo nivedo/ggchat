@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct GGConfig_iMessage {
+struct GGConfig {
     static let backgroundColor = UIColor.whiteColor()
     static let cellTopLabelTextColor = UIColor.lightGrayColor()
     static let cellBottomLabelTextColor = UIColor.lightGrayColor()
@@ -20,7 +20,7 @@ struct GGConfig_iMessage {
     static let outgoingTextColor = UIColor.whiteColor()
 }
 
-struct GGConfig {
+struct GGConfig_Dark {
     static let backgroundColor = UIColor.darkGrayColor()
     static let cellTopLabelTextColor = UIColor.whiteColor()
     static let cellBottomLabelTextColor = UIColor.whiteColor()
