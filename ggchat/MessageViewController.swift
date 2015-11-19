@@ -109,6 +109,33 @@ class MessageViewController: UIViewController,
                 panGestureRecognizer: self.messageCollectionView.panGestureRecognizer,
                 delegate: self)
         }
+        
+        // Additional configuration (from DemoMVC)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage.gg_defaultTypingIndicatorImage(),
+            style: UIBarButtonItemStyle.Bordered,
+            target: self,
+            action: Selector("receiveMessagePressed:"))
+
+        /**
+         *  Register custom menu actions for cells.
+         */
+        MessagesCollectionViewCell.registerMenuAction(Selector("customAction:"))
+        UIMenuController.sharedMenuController().menuItems = [
+            UIMenuItem(
+                title: "Custom Action",
+                action: Selector("customAction:")) ]
+
+        /**
+         *  OPT-IN: allow cells to be deleted
+         */
+        MessagesCollectionViewCell.registerMenuAction(Selector("delete:"))
+
+        /**
+         *  Set a maximum height for the input toolbar
+         *
+         */
+        self.inputToolbar.maximumHeight = 150
     }
     
     /////////////////////////////////////////////////////////////////////////////
