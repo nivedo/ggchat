@@ -52,7 +52,7 @@ class MessagesCollectionView:
     func gg_configureCollectionView() {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = GGConfig.backgroundColor // UIColor.whiteColor()
         self.keyboardDismissMode = UIScrollViewKeyboardDismissMode.None
         self.alwaysBounceVertical = true
         self.bounces = true

@@ -111,7 +111,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = GGConfig.backgroundColor // UIColor.whiteColor()
    
         self.cellTopLabelHeightConstraint.constant = 0.0
         self.messageBubbleTopLabelHeightConstraint.constant = 0.0

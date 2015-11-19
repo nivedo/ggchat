@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */; };
 		D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */; };
+		D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD421BFDB1B300E79B4E /* GGConfig.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -75,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKeyboardController.swift; sourceTree = "<group>"; };
+		D45FBD421BFDB1B300E79B4E /* GGConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGConfig.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				D4683E831BF048CC00E02886 /* Models */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
+				D45FBD421BFDB1B300E79B4E /* GGConfig.swift */,
 				D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */,
 				D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
@@ -443,6 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */,
+				D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */,
 				D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */,
 				D4A9F50B1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
 				D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */,
