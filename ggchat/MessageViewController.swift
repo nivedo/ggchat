@@ -31,31 +31,21 @@ class MessageViewController: UIViewController,
     var outgoingMediaCellIdentifier: String = OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier()
     var incomingCellIdentifier: String = IncomingMessagesCollectionViewCell.cellReuseIdentifier()
     var incomingMediaCellIdentifier: String = IncomingMessagesCollectionViewCell.mediaCellReuseIdentifier()
-    // var showTypingIndicator: Bool = false
-    // var showLoadEarlierMessagesHeader: Bool = false
-    // var topContentAdditionalInset: CGFloat = 0.0
+    
     var gg_isObserving: Bool = false
     var currentInteractivePopGestureRecognizer: UIGestureRecognizer?
     var snapshotView: UIView?
     
     // pragma mark - Setters
     
-    var showTypingIndicator: Bool {
-        set(newShowTypingIndicator) {
-            if (self.showTypingIndicator == newShowTypingIndicator) {
-                return
-            }
-
-            self.showTypingIndicator = newShowTypingIndicator
+    var showTypingIndicator: Bool = false {
+        didSet {
             self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
             self.messageCollectionView.collectionViewLayout.invalidateLayout()
         }
-        get {
-            return self.showTypingIndicator
-        }
     }
 
-    var showLoadEarlierMessagesHeader: Bool! {
+    var showLoadEarlierMessagesHeader: Bool = false {
         didSet {
             /*
             if (self.showLoadEarlierMessagesHeader == newShowLoadEarlierMessagesHeader) {
@@ -69,15 +59,12 @@ class MessageViewController: UIViewController,
         }
     }
 
-    var topContentAdditionalInset: CGFloat {
-        set (newTopContentAdditionalInset) {
-            self.topContentAdditionalInset = newTopContentAdditionalInset;
+    var topContentAdditionalInset: CGFloat = 0.0 {
+        didSet {
             self.gg_updateCollectionViewInsets()
         }
-        get {
-            return self.topContentAdditionalInset
-        }
     }
+    
     // var toolbarHeightConstraint: NSLayoutConstraint
     // var toolbarBottomLayoutGuide: NSLayoutConstraint
     
