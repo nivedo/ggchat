@@ -590,19 +590,17 @@ class MessageViewController: UIViewController,
     // UICollectionViewDataSource
     ///////////////////////////////////////////////////////////////////////////////
    
-    /*
     func collectionView(_ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        print("MVC::viewForSupplementaryElementOfKind, kind: \(kind)")
         if (self.showTypingIndicator && kind == UICollectionElementKindSectionFooter) {
             return messageCollectionView.dequeueTypingIndicatorFooterViewForIndexPath(indexPath)
-        } else if (self.showLoadEarlierMessagesHeader! && kind == UICollectionElementKindSectionHeader) {
+        } else if (self.showLoadEarlierMessagesHeader && kind == UICollectionElementKindSectionHeader) {
             return messageCollectionView.dequeueLoadEarlierMessagesViewHeaderForIndexPath(indexPath)
         }
-
-        return nil
+        return messageCollectionView.dequeueReusableCellWithReuseIdentifier(kind, forIndexPath: indexPath)
     }
-    */
 
     func collectionView(
         layout collectionViewLayout: MessagesCollectionViewFlowLayout,
