@@ -74,8 +74,8 @@ class MessageViewController: UIViewController,
         UIColor(red: 10/255, green: 180/255, blue: 230/255, alpha: 1.0))
     let outgoingBubble = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(
         UIColor.lightGrayColor())
-    var outgoingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleLightGrayColor())
-    var incomingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
+    var outgoingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(GGConfig.outgoingBubbleColor)
+    var incomingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(GGConfig.incomingBubbleColor)
     var selectedIndexPathForMenu: NSIndexPath?
     
     ///////////////////////////////////////////////////////////////////////////////
@@ -535,9 +535,11 @@ class MessageViewController: UIViewController,
         if (isOutgoingMessage) {
             cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Right
             cell.cellBottomLabel.textAlignment = NSTextAlignment.Right
+            cell.textView.textColor = GGConfig.outgoingTextColor
         } else {
             cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Left
             cell.cellBottomLabel.textAlignment = NSTextAlignment.Left
+            cell.textView.textColor = GGConfig.incomingTextColor
         }
 
         var needsAvatar: Bool = true
