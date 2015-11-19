@@ -1126,6 +1126,10 @@ class MessageViewController: UIViewController,
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewFlowLayout,
         heightForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.item % 3 == 0) {
+            return MessagesCollectionViewFlowLayout.kMessagesCollectionViewCellLabelHeightDefault
+        }
+        
         return 0.0
     }
     

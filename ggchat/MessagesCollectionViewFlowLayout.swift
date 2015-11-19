@@ -10,7 +10,7 @@ import UIKit
 
 class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
-    static let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 154
+    static let kMessagesCollectionViewCellLabelHeightDefault: CGFloat = 20.0
     static let kMessagesCollectionViewAvatarSizeDefault: CGFloat = 32.0
     static let kDefaultAvatarSize: CGSize = CGSizeMake(
         MessagesCollectionViewFlowLayout.kMessagesCollectionViewAvatarSizeDefault,
