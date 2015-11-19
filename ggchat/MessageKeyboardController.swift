@@ -31,7 +31,7 @@ class MessageKeyboardController: NSObject {
     typealias AnimationCompletionBlock = (Bool) -> Void
 
     var gg_isObserving: Bool = true
-    var textView: UIView!
+    var textView: UITextView!
     var contextView: UIView!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var delegate: MessageKeyboardControllerDelegate!
@@ -88,13 +88,11 @@ class MessageKeyboardController: NSObject {
     }
 
     // pragma mark - Keyboard controller
-
+    
     func beginListeningForKeyboard() {
-        /*
         if (self.textView.inputAccessoryView == nil) {
             self.textView.inputAccessoryView = UIView()
         }
-        */
 
         self.gg_registerForNotifications()
     }
@@ -137,6 +135,7 @@ class MessageKeyboardController: NSObject {
     }
 
     func gg_didReceiveKeyboardDidShowNotification(notification: NSNotification) {
+        print("keyboard::didReceiveKeyboardDidShow")
         self.keyboardView = self.textView.inputAccessoryView!.superview
         self.gg_setKeyboardViewHidden(false)
 
@@ -147,16 +146,19 @@ class MessageKeyboardController: NSObject {
     }
 
     func gg_didReceiveKeyboardWillChangeFrameNotification(notification: NSNotification) {
+        print("keyboard::didReceiveKeyboardWillChangeFrame")
         self.gg_handleKeyboardNotification(notification, completion:nil)
     }
 
     func gg_didReceiveKeyboardDidChangeFrameNotification(notification: NSNotification) {
+        print("keyboard::didReceiveKeyboardDidChangeFrame")
         self.gg_setKeyboardViewHidden(false)
 
         self.gg_handleKeyboardNotification(notification, completion: nil)
     }
 
     func gg_didReceiveKeyboardDidHideNotification(notification: NSNotification) {
+        print("keyboard::didReceiveKeyboardDidHide")
         self.keyboardView = nil
 
         self.gg_handleKeyboardNotification(notification, completion: { (finished: Bool) in
@@ -198,8 +200,10 @@ class MessageKeyboardController: NSObject {
     // pragma mark - Utilities
 
     func gg_setKeyboardViewHidden(hidden: Bool) {
-        self.keyboardView!.hidden = hidden
-        self.keyboardView!.userInteractionEnabled = !hidden
+        if (self.keyboardView != nil) {
+            self.keyboardView!.hidden = hidden
+            self.keyboardView!.userInteractionEnabled = !hidden
+        }
     }
 
     func gg_notifyKeyboardFrameNotificationForFrame(frame: CGRect) {
