@@ -552,6 +552,15 @@ class MessageViewController: UIViewController,
             let messageMedia: MessageMediaData = messageItem.media!
             cell.mediaView = (messageMedia.mediaView != nil ? messageMedia.mediaView : messageMedia.mediaPlaceholderView)!
         }
+        
+        // This is a HACK, should be in init of cell
+        if (isOutgoingMessage) {
+            cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Right
+            cell.cellBottomLabel.textAlignment = NSTextAlignment.Right
+        } else {
+            cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Left
+            cell.cellBottomLabel.textAlignment = NSTextAlignment.Left
+        }
 
         var needsAvatar: Bool = true
         if (isOutgoingMessage && CGSizeEqualToSize(messageCollectionView.messageCollectionViewLayout.outgoingAvatarViewSize, CGSizeZero)) {
