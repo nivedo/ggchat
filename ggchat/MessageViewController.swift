@@ -15,6 +15,7 @@ class MessageViewController: UIViewController,
     UICollectionViewDelegateFlowLayout,
     MessageInputToolbarDelegate,
     MessageKeyboardControllerDelegate,
+    MessageComposerTextViewPasteDelegate,
     UITextViewDelegate {
     
     static let kMessagesKeyValueObservingContext = UnsafeMutablePointer<Void>()
@@ -1237,5 +1238,24 @@ class MessageViewController: UIViewController,
         header headerView: MessageLoadEarlierHeaderView,
         didTapLoadEarlierMessagesButton sender: UIButton) {
         print("didTapLoadEarlierMessagesButton")
+    }
+    
+    
+    func composerTextView(textView: MessageComposerTextView,
+        shouldPasteWithSender sender: AnyObject?) -> Bool {
+        /*
+        if (UIPasteboard.generalPasteboard().image) {
+            // If there's an image in the pasteboard, construct a media item with that image and `send` it.
+            PhotoMediaItem *item = [[JSQPhotoMediaItem alloc] initWithImage:[UIPasteboard generalPasteboard].image];
+            JSQMessage *message = [[JSQMessage alloc] initWithSenderId:self.senderId
+                                                     senderDisplayName:self.senderDisplayName
+                                                                  date:[NSDate date]
+                                                                 media:item];
+            [self.demoData.messages addObject:message];
+            [self finishSendingMessage];
+            return NO;
+        }
+        */
+        return true
     }
 }
