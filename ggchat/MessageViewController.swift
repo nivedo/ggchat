@@ -458,7 +458,6 @@ class MessageViewController: UIViewController,
             return;
         }
         
-        /*
         let collectionViewContentHeight: CGFloat = self.messageCollectionView.messageCollectionViewLayout.collectionViewContentSize().height
         let isContentTooSmall: Bool = (collectionViewContentHeight < CGRectGetHeight(self.messageCollectionView.bounds))
 
@@ -477,7 +476,7 @@ class MessageViewController: UIViewController,
         //  possibly a UIKit bug, see #480 on GitHub
         let finalRow: Int = max(0, self.messageCollectionView.numberOfItemsInSection(0) - 1)
         let finalIndexPath: NSIndexPath = NSIndexPath(forItem: finalRow, inSection: 0)
-        let finalCellSize: CGSize = self.messageCollectionView.messageCollectionViewLayout!.sizeForItemAtIndexPath(finalIndexPath)
+        let finalCellSize: CGSize = self.messageCollectionView.messageCollectionViewLayout.sizeForItemAtIndexPath(finalIndexPath)
 
         let maxHeightForVisibleMessage: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds) - self.messageCollectionView.contentInset.top - CGRectGetHeight(self.inputToolbar.bounds)
 
@@ -486,7 +485,6 @@ class MessageViewController: UIViewController,
         self.messageCollectionView.scrollToItemAtIndexPath(finalIndexPath,
             atScrollPosition: scrollPosition,
             animated: animated)
-        */
     }
 
     // pragma mark - Collection view data source
