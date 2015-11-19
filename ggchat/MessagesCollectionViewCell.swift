@@ -89,7 +89,8 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var avatarContainerViewHeightConstraint: NSLayoutConstraint!
 
     class func nib() -> UINib {
-        return UINib(nibName: NSStringFromClass(self), bundle: NSBundle(forClass: self))
+        let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
+        return UINib(nibName: nibName, bundle: NSBundle(forClass: self))
     }
     
     class func cellReuseIdentifier() -> String {

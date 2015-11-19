@@ -1148,7 +1148,22 @@ class MessageViewController: UIViewController,
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewFlowLayout,
         heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 0.0
+        /**
+        *  iOS7-style sender name labels
+        */
+        let currentMessage: Message = GGModelData.sharedInstance.messages[indexPath.item]
+        if (currentMessage.senderId == self.senderId) {
+            return 0.0
+        }
+        
+        if (indexPath.item - 1 > 0) {
+            let previousMessage: Message = GGModelData.sharedInstance.messages[indexPath.item - 1]
+            if (previousMessage.senderId == currentMessage.senderId) {
+                return 0.0
+            }
+        }
+        
+        return MessagesCollectionViewFlowLayout.kMessagesCollectionViewCellLabelHeightDefault
     }
     
     /**

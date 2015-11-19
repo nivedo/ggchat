@@ -58,9 +58,9 @@ class MessagesCollectionView:
         self.bounces = true
         self.messageCollectionViewLayout.messageCollectionView = self
         
-        self.registerNib(UINib(nibName: "IncomingMessagesCollectionViewCell", bundle: nil),
+        self.registerNib(IncomingMessagesCollectionViewCell.nib(),
             forCellWithReuseIdentifier: IncomingMessagesCollectionViewCell.cellReuseIdentifier())
-        self.registerNib(UINib(nibName: "OutgoingMessagesCollectionViewCell", bundle: nil),
+        self.registerNib(OutgoingMessagesCollectionViewCell.nib(),
             forCellWithReuseIdentifier: OutgoingMessagesCollectionViewCell.cellReuseIdentifier())
         
         self.registerNib(UINib(nibName: "IncomingMessagesCollectionViewCell", bundle: nil),
