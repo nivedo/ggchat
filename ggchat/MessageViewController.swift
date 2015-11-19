@@ -16,7 +16,7 @@ class MessageViewController: UIViewController,
     MessageInputToolbarDelegate,
     UITextViewDelegate {
     
-    static var kMessagesKeyValueObservingContext = UnsafeMutablePointer<Void>()
+    static let kMessagesKeyValueObservingContext = UnsafeMutablePointer<Void>()
     
     //////////////////////////////////////////////////////////////////////////////////
     // Properties
@@ -808,6 +808,7 @@ class MessageViewController: UIViewController,
         ofObject object: AnyObject?,
         change: [String : AnyObject]?,
         context: UnsafeMutablePointer<Void>) {
+        print("======================================== 0")
         if (context == MessageViewController.kMessagesKeyValueObservingContext) {
             print("======================================== 1")
             if (object === self.inputToolbar.contentView.textView

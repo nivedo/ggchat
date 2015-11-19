@@ -21,7 +21,7 @@ class MessageToolbarContentView: UIView {
     static let kMessagesToolbarContentViewHorizontalSpacingDefault: CGFloat = 8.0
     @IBOutlet weak var leftBarButtonContainerView: UIView!
     @IBOutlet weak var rightBarButtonContainerView: UIView!
-    @IBOutlet weak dynamic var textView: MessageComposerTextView!
+    @IBOutlet weak var textView: MessageComposerTextView!
     
     @IBOutlet weak var leftBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
