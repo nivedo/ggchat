@@ -598,16 +598,19 @@ class MessageViewController: UIViewController,
 
         return cell
     }
-
+   
+    ///////////////////////////////////////////////////////////////////////////////
+    // UICollectionViewDataSource
+    ///////////////////////////////////////////////////////////////////////////////
+   
     /*
-    func collectionView(
-        collectionView: MessagesCollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
-        atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView? {
+        atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         if (self.showTypingIndicator && kind == UICollectionElementKindSectionFooter) {
             return messageCollectionView.dequeueTypingIndicatorFooterViewForIndexPath(indexPath)
-        } else if (self.showLoadEarlierMessagesHeader && kind == UICollectionElementKindSectionHeader) {
-            return messageCollectionView.dequeueLoadEarlierMessagesViewHeaderForIndexPath(indexPath);
+        } else if (self.showLoadEarlierMessagesHeader! && kind == UICollectionElementKindSectionHeader) {
+            return messageCollectionView.dequeueLoadEarlierMessagesViewHeaderForIndexPath(indexPath)
         }
 
         return nil
@@ -725,13 +728,11 @@ class MessageViewController: UIViewController,
 
     func gg_currentlyComposedMessageText() -> String {
         //  auto-accept any auto-correct suggestions
-        /*
-        self.inputToolbar.contentView.textView.inputDelegate.selectionWillChange(self.inputToolbar.contentView.textView)
-        self.inputToolbar.contentView.textView.inputDelegate.selectionDidChange(self.inputToolbar.contentView.textView)
+        self.inputToolbar.contentView.textView.inputDelegate!.selectionWillChange(self.inputToolbar.contentView.textView)
+        
+        self.inputToolbar.contentView.textView.inputDelegate!.selectionDidChange(self.inputToolbar.contentView.textView)
 
         return self.inputToolbar.contentView.textView.text.gg_stringByTrimingWhitespace()
-        */
-        return "Currently composed message text"
     }
 
     //////////////////////////////////////////////////////////////////////////////////
