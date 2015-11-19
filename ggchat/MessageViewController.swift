@@ -83,7 +83,7 @@ class MessageViewController: UIViewController,
     func setup() {
         self.view.backgroundColor = UIColor.whiteColor()
         
-        // self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
+        self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight
         
         self.messageCollectionView.dataSource = self;
         self.messageCollectionView.delegate = self;
@@ -93,7 +93,7 @@ class MessageViewController: UIViewController,
         self.inputToolbar.contentView.textView.delegate = self
         
         // NOTE: let this behavior be opt-in for now
-        // [MessagesCollectionViewCell registerMenuAction:@selector(delete:)];
+        MessagesCollectionViewCell.registerMenuAction(Selector("delete:"))
         
         self.gg_updateCollectionViewInsets()
         
@@ -168,8 +168,6 @@ class MessageViewController: UIViewController,
 
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // print("MVC::numberOfItemsInSection: \(self.messages.count)")
-        // return self.messages.count
         print("MVC::numberOfItemsInSection: \(GGModelData.sharedInstance.messages.count)")
         return GGModelData.sharedInstance.messages.count
     }
@@ -212,7 +210,6 @@ class MessageViewController: UIViewController,
     func collectionView(collectionView: MessagesCollectionView,
         messageDataForItemAtIndexPath indexPath: NSIndexPath) -> Message {
         // print("MVC::messageDataForItemAtIndexPath")
-        // let data = self.messages[indexPath.row]
         let data = GGModelData.sharedInstance.messages[indexPath.row]
         return data
     }
@@ -220,7 +217,6 @@ class MessageViewController: UIViewController,
     func collectionView(collectionView: MessagesCollectionView,
         didDeleteMessageAtIndexPath indexPath: NSIndexPath) {
         print("MVC::didDeleteMessageAtIndexPath")
-        // self.messages.removeAtIndex(indexPath.row)
         GGModelData.sharedInstance.messages.removeAtIndex(indexPath.row)
     }
     
