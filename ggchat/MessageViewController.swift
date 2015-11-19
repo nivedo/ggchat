@@ -38,14 +38,14 @@ class MessageViewController: UIViewController,
     
     // pragma mark - Setters
     
-    var showTypingIndicator: Bool = false {
+    var showTypingIndicator: Bool = true {
         didSet {
             self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
             self.messageCollectionView.collectionViewLayout.invalidateLayout()
         }
     }
 
-    var showLoadEarlierMessagesHeader: Bool = false {
+    var showLoadEarlierMessagesHeader: Bool = true {
         didSet {
             /*
             if (self.showLoadEarlierMessagesHeader == newShowLoadEarlierMessagesHeader) {
@@ -601,25 +601,27 @@ class MessageViewController: UIViewController,
         }
         return messageCollectionView.dequeueReusableCellWithReuseIdentifier(kind, forIndexPath: indexPath)
     }
-
-    func collectionView(
-        layout collectionViewLayout: MessagesCollectionViewFlowLayout,
-        referenceSizeForFooterInSection action: NSInteger) -> CGSize {
+    
+    func collectionView(_ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int) -> CGSize {
         if (!self.showTypingIndicator) {
             return CGSizeZero
         }
 
-        return CGSizeMake(collectionViewLayout.itemWidth, MessageTypingIndicatorFooterView.kMessagesTypingIndicatorFooterViewHeight)
+        let messageCollectionViewLayout = collectionViewLayout as! MessagesCollectionViewFlowLayout
+        return CGSizeMake(messageCollectionViewLayout.itemWidth, MessageTypingIndicatorFooterView.kMessagesTypingIndicatorFooterViewHeight)
     }
-
-    func collectionView(
-        layout collectionViewLayout: MessagesCollectionViewFlowLayout,
-        referenceSizeForHeaderInSection action: NSInteger) -> CGSize {
+    
+    func collectionView(_ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int) -> CGSize {
         if (!self.showLoadEarlierMessagesHeader) {
             return CGSizeZero
         }
-
-        return CGSizeMake(collectionViewLayout.itemWidth,
+        
+        let messageCollectionViewLayout = collectionViewLayout as! MessagesCollectionViewFlowLayout
+        return CGSizeMake(messageCollectionViewLayout.itemWidth,
             MessageLoadEarlierHeaderView.kMessagesLoadEarlierHeaderViewHeight)
     }
 
