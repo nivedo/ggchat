@@ -88,8 +88,9 @@ class MessageViewController: UIViewController,
         
         self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight
         
-        self.messageCollectionView.dataSource = self;
-        self.messageCollectionView.delegate = self;
+        self.messageCollectionView.dataSource = self
+        self.messageCollectionView.delegate = self
+        self.inputToolbar.contentView.textView.delegate = self
         
         self.inputToolbar.delegate = self
         self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")

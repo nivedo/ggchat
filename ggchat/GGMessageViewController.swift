@@ -18,7 +18,6 @@ class GGMessageViewController: MessageViewController {
         // Do any additional setup after loading the view.
         self.senderId = Demo.id_chang
         self.senderDisplayName = Demo.displayName_chang
-        // self.messages = GGModelData.sharedInstance.messages
         self.showLoadEarlierMessagesHeader = true
     }
 
@@ -34,7 +33,7 @@ class GGMessageViewController: MessageViewController {
         senderDisplayName: String,
         date: NSDate) {
         // GGSystemSoundPlayer.gg_playMessageSentSound()
-        print("***********************************")
+        print("*******************************************************************")
     
         let message: Message = Message(
             senderId: senderId,
