@@ -103,6 +103,7 @@ class MessageViewController: UIViewController,
         self.gg_updateCollectionViewInsets()
         
         // Don't set keyboardController if client creates custom content view via -loadToolbarContentView
+        /*
         if (self.inputToolbar.contentView.textView != nil) {
             self.keyboardController = MessageKeyboardController(
                 textView: self.inputToolbar.contentView.textView,
@@ -110,6 +111,7 @@ class MessageViewController: UIViewController,
                 panGestureRecognizer: self.messageCollectionView.panGestureRecognizer,
                 delegate: self)
         }
+        */
         
         // Additional configuration (from DemoMVC)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -374,7 +376,7 @@ class MessageViewController: UIViewController,
         super.viewDidAppear(animated)
         self.gg_addObservers()
         self.gg_addActionToInteractivePopGestureRecognizer(true)
-        self.keyboardController!.beginListeningForKeyboard()
+        // self.keyboardController!.beginListeningForKeyboard()
 
         if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
             self.snapshotView!.removeFromSuperview()
@@ -390,7 +392,7 @@ class MessageViewController: UIViewController,
         super.viewDidDisappear(animated)
         self.gg_addActionToInteractivePopGestureRecognizer(false)
         self.gg_removeObservers()
-        self.keyboardController!.endListeningForKeyboard()
+        // self.keyboardController!.endListeningForKeyboard()
     }
 
     // pragma mark - View rotation
@@ -784,9 +786,11 @@ class MessageViewController: UIViewController,
     // pragma mark - Notifications
 
     func gg_handleDidChangeStatusBarFrameNotification(notification: NSNotification) {
+        /*
         if (self.keyboardController!.keyboardIsVisible) {
             self.gg_setToolbarBottomLayoutGuideConstant(CGRectGetHeight(self.keyboardController!.currentKeyboardFrame()))
         }
+        */
     }
 
     func gg_didReceiveMenuWillShowNotification(notification: NSNotification) {
@@ -877,22 +881,21 @@ class MessageViewController: UIViewController,
     }
 
     func gg_updateKeyboardTriggerPoint() {
-        self.keyboardController!.keyboardTriggerPoint = CGPointMake(0.0, CGRectGetHeight(self.inputToolbar.bounds))
+        // self.keyboardController!.keyboardTriggerPoint = CGPointMake(0.0, CGRectGetHeight(self.inputToolbar.bounds))
     }
 
     // pragma mark - Gesture recognizers
-
+    /*
     func gg_handleInteractivePopGestureRecognizer(gestureRecognizer: UIGestureRecognizer) {
         switch (gestureRecognizer.state) {
             case UIGestureRecognizerState.Began:
-                print("----> UIGesture::Began")
                 if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
                     self.snapshotView!.removeFromSuperview()
                 }
 
                 self.textViewWasFirstResponderDuringInteractivePop = self.inputToolbar.contentView.textView.isFirstResponder()
 
-                self.keyboardController!.endListeningForKeyboard()
+                // self.keyboardController!.endListeningForKeyboard()
 
                 if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
                     self.inputToolbar.contentView.textView.resignFirstResponder()
@@ -922,6 +925,7 @@ class MessageViewController: UIViewController,
                 break
         }
     }
+    */
 
     // pragma mark - Input toolbar utilities
 
