@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="inputToolbar" destination="xKi-4a-tRX" id="AKf-Ja-M3I"/>
                 <outlet property="messageCollectionView" destination="7Kj-z4-0me" id="Buu-ef-6Bc"/>
+                <outlet property="toolbarBottomLayoutGuide" destination="Qdx-TD-K41" id="QEF-Fr-VhV"/>
+                <outlet property="toolbarHeightConstraint" destination="Lbo-Fw-wox" id="XQP-0g-A9L"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,6 +32,9 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKi-4a-tRX" customClass="MessageInputToolbar" customModule="ggchat" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Lbo-Fw-wox"/>
+                    </constraints>
                     <items/>
                 </toolbar>
             </subviews>

@@ -65,8 +65,8 @@ class MessageViewController: UIViewController,
         }
     }
     
-    // var toolbarHeightConstraint: NSLayoutConstraint
-    // var toolbarBottomLayoutGuide: NSLayoutConstraint
+    @IBOutlet weak var toolbarHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var toolbarBottomLayoutGuide: NSLayoutConstraint!
     
     var senderId: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
     var senderDisplayName: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
@@ -78,12 +78,9 @@ class MessageViewController: UIViewController,
     var incomingBubbleImage: MessageBubbleImage = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
     var selectedIndexPathForMenu: NSIndexPath?
     
-    // var messages = [Message]()
-    
     ///////////////////////////////////////////////////////////////////////////////
     
     func setup() {
-        // self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
         self.view.backgroundColor = UIColor.whiteColor()
         
         // self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
