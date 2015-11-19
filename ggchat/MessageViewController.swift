@@ -843,7 +843,7 @@ class MessageViewController: UIViewController,
     */
 
     func gg_setToolbarBottomLayoutGuideConstant(constant: CGFloat) {
-        // self.toolbarBottomLayoutGuide.constant = constant
+        self.toolbarBottomLayoutGuide.constant = constant
         self.view.setNeedsUpdateConstraints()
         self.view.layoutIfNeeded()
 
@@ -907,8 +907,7 @@ class MessageViewController: UIViewController,
         return true
     }
 
-    func gg_adjustInputToolbarForComposerTextViewContentSizeChange(dy: CGFloat) {
-        /*
+    func gg_adjustInputToolbarForComposerTextViewContentSizeChange(var dy: CGFloat) {
         let contentSizeIsIncreasing: Bool = (dy > 0)
 
         if (self.gg_inputToolbarHasReachedMaximumHeight()) {
@@ -936,17 +935,15 @@ class MessageViewController: UIViewController,
         if (dy < 0) {
             self.gg_scrollComposerTextViewToBottomAnimated(false)
         }
-        */
     }
 
     func gg_adjustInputToolbarHeightConstraintByDelta(dy: CGFloat) {
-        /*
         let proposedHeight: CGFloat = self.toolbarHeightConstraint.constant + dy
 
-        let finalHeight: CGFloat = max(proposedHeight, self.inputToolbar.preferredDefaultHeight)
+        var finalHeight: CGFloat = max(proposedHeight, self.inputToolbar.preferredDefaultHeight)
 
         if (self.inputToolbar.maximumHeight != NSNotFound) {
-            finalHeight = min(finalHeight, self.inputToolbar.maximumHeight)
+            finalHeight = min(finalHeight, CGFloat(self.inputToolbar.maximumHeight))
         }
 
         if (self.toolbarHeightConstraint.constant != finalHeight) {
@@ -954,13 +951,11 @@ class MessageViewController: UIViewController,
             self.view.setNeedsUpdateConstraints()
             self.view.layoutIfNeeded()
         }
-        */
     }
 
     func gg_scrollComposerTextViewToBottomAnimated(animated: Bool) {
-        /*
         let textView: UITextView = self.inputToolbar.contentView.textView
-        let contentOffsetToShowLastLine: GFloat = CGPointMake(0.0, textView.contentSize.height - CGRectGetHeight(textView.bounds))
+        let contentOffsetToShowLastLine: CGPoint = CGPointMake(0.0, textView.contentSize.height - CGRectGetHeight(textView.bounds))
 
         if (!animated) {
             textView.contentOffset = contentOffsetToShowLastLine
@@ -969,21 +964,18 @@ class MessageViewController: UIViewController,
 
         UIView.animateWithDuration(0.01,
             delay: 0.01,
-            options: UIViewAnimationOptionCurveLinear,
+            options: UIViewAnimationOptions.CurveLinear,
             animations: {
                 textView.contentOffset = contentOffsetToShowLastLine
             },
             completion:nil)
-        */
     }
 
     // pragma mark - Collection view utilities
 
     func gg_updateCollectionViewInsets() {
-        /*
         self.gg_setCollectionViewInsetsTopValue(self.topLayoutGuide.length + self.topContentAdditionalInset,
             bottomValue: CGRectGetMaxY(self.messageCollectionView.frame) - CGRectGetMinY(self.inputToolbar.frame))
-        */
     }
 
     func gg_setCollectionViewInsetsTopValue(top: CGFloat, bottomValue bottom: CGFloat) {
