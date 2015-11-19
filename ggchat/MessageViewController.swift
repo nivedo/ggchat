@@ -162,13 +162,13 @@ class MessageViewController: UIViewController,
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        print("MVC::numberOfSectionsInCollectionView")
+        // print("MVC::numberOfSectionsInCollectionView")
         return 1
     }
 
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("MVC::numberOfItemsInSection: \(GGModelData.sharedInstance.messages.count)")
+        // print("MVC::numberOfItemsInSection: \(GGModelData.sharedInstance.messages.count)")
         return GGModelData.sharedInstance.messages.count
     }
 
@@ -223,7 +223,7 @@ class MessageViewController: UIViewController,
     ///////////////////////////////////////////////////////////////////////////////
     
     func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
-        print("MVC::messageBubbleImageDataForItemAtIndexPath")
+        // print("MVC::messageBubbleImageDataForItemAtIndexPath")
         /**
         *  You may return nil here if you do not want bubbles.
         *  In this case, you should set the background color of your collection view cell's textView.
@@ -241,7 +241,7 @@ class MessageViewController: UIViewController,
     }
     
     func collectionView(collectionView: MessagesCollectionView, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        print("MVC::avatarImageDataForItemAtIndexPath")
+        // print("MVC::avatarImageDataForItemAtIndexPath")
         /**
         *  Return `nil` here if you do not want avatars.
         *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
@@ -281,7 +281,7 @@ class MessageViewController: UIViewController,
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
-        print("MVC::attributedTextForCellTopLabelAtIndexPath")
+        // print("MVC::attributedTextForCellTopLabelAtIndexPath")
         /**
         *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
         *  The other label text delegate methods should follow a similar pattern.
@@ -297,7 +297,7 @@ class MessageViewController: UIViewController,
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
-        print("MVC::attributedTextForMessageBubbleTopLabelAtIndexPath")
+        // print("MVC::attributedTextForMessageBubbleTopLabelAtIndexPath")
         // let message: Message = self.messages[indexPath.item]
         let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
         
@@ -323,7 +323,7 @@ class MessageViewController: UIViewController,
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
-        print("MVC::attributedTextForCellBottomLabelAtIndexPath")
+        // print("MVC::attributedTextForCellBottomLabelAtIndexPath")
         return nil;
     }
 
@@ -492,7 +492,7 @@ class MessageViewController: UIViewController,
     func collectionView(
         uiCollectionView: UICollectionView,
         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        print("MVC::cellForItemAtIndexPath")
+        // print("MVC::cellForItemAtIndexPath")
         let collectionView: MessagesCollectionView = uiCollectionView as! MessagesCollectionView
         let messageItem: Message = self.messageCollectionView.messageDelegate.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
         let messageSenderId: String = messageItem.senderId
@@ -507,7 +507,7 @@ class MessageViewController: UIViewController,
             cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
         }
 
-        print(cellIdentifier)
+        // print(cellIdentifier)
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
 
@@ -552,7 +552,7 @@ class MessageViewController: UIViewController,
             avatarImageDataSource = messageCollectionView.messageDataSource.collectionView(
                     collectionView,
                     avatarImageDataForItemAtIndexPath: indexPath)
-            print("avatar: \(avatarImageDataSource)")
+            // print("avatar: \(avatarImageDataSource)")
             if (avatarImageDataSource != nil) {
                 let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
                 if (avatarImage == nil) {

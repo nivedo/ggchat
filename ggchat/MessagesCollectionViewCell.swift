@@ -155,7 +155,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     }
     
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
-        print("applyLayoutAttributes()")
+        // print("applyLayoutAttributes()")
         super.applyLayoutAttributes(layoutAttributes)
     
         let customAttributes: MessagesCollectionViewLayoutAttributes = layoutAttributes as! MessagesCollectionViewLayoutAttributes
