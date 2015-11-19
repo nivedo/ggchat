@@ -25,7 +25,7 @@ extension NSBundle {
     class func gg_localizedStringForKey(key: String) -> String {
         return NSLocalizedString(
             key,
-            tableName:"GGMessages",
+            tableName:"JSQMessages",
             bundle: NSBundle.gg_messagesAssetBundle(),
             value: "",
             comment: "")

@@ -36,9 +36,9 @@ class MessageToolbarButtonFactory {
         sendButton.setTitleColor(UIColor.gg_messageBubbleBlueColor().gg_colorByDarkeningColorWithValue(0.1), forState: UIControlState.Highlighted)
         sendButton.setTitleColor(UIColor.lightGrayColor(), forState:UIControlState.Disabled)
 
-        sendButton.titleLabel!.font = UIFont.boldSystemFontOfSize(17.0)
+        sendButton.titleLabel!.font = UIFont.boldSystemFontOfSize(16.0)
         sendButton.titleLabel!.adjustsFontSizeToFitWidth = true
-        sendButton.titleLabel!.minimumScaleFactor = 0.85
+        sendButton.titleLabel!.minimumScaleFactor = 0.7
         sendButton.contentMode = UIViewContentMode.Center
         sendButton.backgroundColor = UIColor.clearColor()
         sendButton.tintColor = UIColor.gg_messageBubbleBlueColor()
@@ -51,6 +51,7 @@ class MessageToolbarButtonFactory {
             attributes: [ NSFontAttributeName : sendButton.titleLabel!.font ],
             context:nil)
 
+        print(CGRectGetWidth(CGRectIntegral(sendTitleRect)))
         sendButton.frame = CGRectMake(
             0.0,
             0.0,

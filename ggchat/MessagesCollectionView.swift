@@ -109,7 +109,9 @@ class MessagesCollectionView:
     
     // pragma mark - Load earlier messages header delegate
 
-    func headerView(headerView: MessageLoadEarlierHeaderView, didPressLoadButton sender:UIButton) {
+    func headerView(
+        headerView: MessageLoadEarlierHeaderView,
+        didPressLoadButton sender:UIButton) {
         if (self.messageDelegate.respondsToSelector(Selector("collectionView:header:didTapLoadEarlierMessagesButton:"))) {
             self.messageDelegate.collectionView(self,
                 header: headerView,
