@@ -41,7 +41,7 @@ class GGModelData {
         let bubbleFactory = MessageBubbleImageFactory()
         
         self.outgoingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleLightGrayColor())
-        self.incomingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
+        self.incomingBubbleImage = bubbleFactory.incomingMessagesBubbleImageWithColor(UIColor.gg_messageBubbleGreenColor())
         self.loadMessages()
         self.loadAvatars()
         self.loadUsers()
