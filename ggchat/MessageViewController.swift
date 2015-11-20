@@ -24,7 +24,6 @@ class MessageViewController: UIViewController,
     // Properties
     //////////////////////////////////////////////////////////////////////////////////
     
-    // @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var inputToolbar: MessageInputToolbar!
     var keyboardController: MessageKeyboardController?
@@ -103,7 +102,6 @@ class MessageViewController: UIViewController,
         self.gg_updateCollectionViewInsets()
         
         // Don't set keyboardController if client creates custom content view via -loadToolbarContentView
-        /*
         if (self.inputToolbar.contentView.textView != nil) {
             self.keyboardController = MessageKeyboardController(
                 textView: self.inputToolbar.contentView.textView,
@@ -111,7 +109,6 @@ class MessageViewController: UIViewController,
                 panGestureRecognizer: self.messageCollectionView.panGestureRecognizer,
                 delegate: self)
         }
-        */
         
         // Additional configuration (from DemoMVC)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -862,6 +859,8 @@ class MessageViewController: UIViewController,
     
     func keyboardController(keyboardController: MessageKeyboardController,
         keyboardDidChangeFrame keyboardFrame: CGRect) {
+        print("****************************************************")
+        print("MVC::keyboardDidChangeFrame")
         if (!self.inputToolbar.contentView.textView.isFirstResponder() && self.toolbarBottomLayoutGuide.constant == 0.0) {
             return
         }
@@ -869,6 +868,7 @@ class MessageViewController: UIViewController,
         var heightFromBottom: CGFloat = CGRectGetMaxY(self.messageCollectionView.frame) - CGRectGetMinY(keyboardFrame)
 
         heightFromBottom = max(0.0, heightFromBottom)
+        print(heightFromBottom)
 
         self.gg_setToolbarBottomLayoutGuideConstant(heightFromBottom)
     }
