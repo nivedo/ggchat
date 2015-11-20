@@ -106,7 +106,7 @@ class MessageKeyboardController: NSObject {
 
     // pragma mark - Notifications
 
-    func gg_registerForNotifications() {
+    private func gg_registerForNotifications() {
         self.gg_unregisterForNotifications()
 
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -130,11 +130,11 @@ class MessageKeyboardController: NSObject {
             object:nil)
     }
 
-    func gg_unregisterForNotifications() {
+    private func gg_unregisterForNotifications() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    func gg_didReceiveKeyboardDidShowNotification(notification: NSNotification) {
+    private func gg_didReceiveKeyboardDidShowNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardDidShow")
         self.keyboardView = self.textView.inputAccessoryView!.superview
         self.gg_setKeyboardViewHidden(false)
@@ -145,19 +145,19 @@ class MessageKeyboardController: NSObject {
         })
     }
 
-    func gg_didReceiveKeyboardWillChangeFrameNotification(notification: NSNotification) {
+    private func gg_didReceiveKeyboardWillChangeFrameNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardWillChangeFrame")
         self.gg_handleKeyboardNotification(notification, completion:nil)
     }
 
-    func gg_didReceiveKeyboardDidChangeFrameNotification(notification: NSNotification) {
+    private func gg_didReceiveKeyboardDidChangeFrameNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardDidChangeFrame")
         self.gg_setKeyboardViewHidden(false)
 
         self.gg_handleKeyboardNotification(notification, completion: nil)
     }
 
-    func gg_didReceiveKeyboardDidHideNotification(notification: NSNotification) {
+    private func gg_didReceiveKeyboardDidHideNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardDidHide")
         self.keyboardView = nil
 
@@ -166,7 +166,7 @@ class MessageKeyboardController: NSObject {
         })
     }
 
-    func gg_handleKeyboardNotification(notification: NSNotification,
+    private func gg_handleKeyboardNotification(notification: NSNotification,
         completion: AnimationCompletionBlock?) {
         let userInfo: NSDictionary = notification.userInfo!
 
@@ -199,14 +199,14 @@ class MessageKeyboardController: NSObject {
 
     // pragma mark - Utilities
 
-    func gg_setKeyboardViewHidden(hidden: Bool) {
+    private func gg_setKeyboardViewHidden(hidden: Bool) {
         if (self.keyboardView != nil) {
             self.keyboardView!.hidden = hidden
             self.keyboardView!.userInteractionEnabled = !hidden
         }
     }
 
-    func gg_notifyKeyboardFrameNotificationForFrame(frame: CGRect) {
+    private func gg_notifyKeyboardFrameNotificationForFrame(frame: CGRect) {
         self.delegate.keyboardController(self, keyboardDidChangeFrame:frame)
 
         NSNotificationCenter.defaultCenter().postNotificationName(MessageKeyboardController.kMessageKeyboardControllerNotificationKeyboardDidChangeFrame,
@@ -214,7 +214,7 @@ class MessageKeyboardController: NSObject {
             userInfo: [ MessageKeyboardController.kMessageKeyboardControllerUserInfoKeyKeyboardDidChangeFrame : NSValue(CGRect: frame)])
     }
 
-    func gg_resetKeyboardAndTextView() {
+    private func gg_resetKeyboardAndTextView() {
         self.gg_setKeyboardViewHidden(true)
         self.gg_removeKeyboardFrameObserver()
         self.textView.resignFirstResponder()
