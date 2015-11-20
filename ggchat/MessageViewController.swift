@@ -783,15 +783,14 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Notifications
 
-    func gg_handleDidChangeStatusBarFrameNotification(notification: NSNotification) {
-        /*
+    private func gg_handleDidChangeStatusBarFrameNotification(notification: NSNotification) {
+        print("MVC::gg_handleDidChangeStatusBarFrame")
         if (self.keyboardController!.keyboardIsVisible) {
             self.gg_setToolbarBottomLayoutGuideConstant(CGRectGetHeight(self.keyboardController!.currentKeyboardFrame()))
         }
-        */
     }
 
-    func gg_didReceiveMenuWillShowNotification(notification: NSNotification) {
+    private func gg_didReceiveMenuWillShowNotification(notification: NSNotification) {
         if (self.selectedIndexPathForMenu == nil) {
             return
         }
@@ -817,7 +816,7 @@ class MessageViewController: UIViewController,
             object: nil)
     }
 
-    func gg_didReceiveMenuWillHideNotification(notification: NSNotification) {
+    private func gg_didReceiveMenuWillHideNotification(notification: NSNotification) {
         if (self.selectedIndexPathForMenu == nil) {
             return
         }
@@ -1032,7 +1031,7 @@ class MessageViewController: UIViewController,
         self.gg_isObserving = true
     }
 
-    func gg_removeObservers() {
+    private func gg_removeObservers() {
         if (!self.gg_isObserving) {
             return
         }
@@ -1045,7 +1044,7 @@ class MessageViewController: UIViewController,
         self.gg_isObserving = false
     }
 
-    func gg_registerForNotifications(registerForNotifications: Bool) {
+    private func gg_registerForNotifications(registerForNotifications: Bool) {
         if (registerForNotifications) {
             NSNotificationCenter.defaultCenter().addObserver(
                 self,
