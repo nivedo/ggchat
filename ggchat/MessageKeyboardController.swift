@@ -38,6 +38,15 @@ class MessageKeyboardController: NSObject {
     var keyboardTriggerPoint: CGPoint
     
     // pragma mark - Initialization
+    /**
+     *  Creates a new keyboard controller object with the specified textView, contextView, panGestureRecognizer, and delegate.
+     *
+     *  @param textView             The text view in which the user is editing with the system keyboard. This value must not be `nil`.
+     *  @param contextView          The view in which the keyboard will be shown. This should be the parent or a sibling of `textView`. This value must not be `nil`.
+     *  @param panGestureRecognizer The pan gesture recognizer responsible for handling user interaction with the system keyboard. This value must not be `nil`.
+     *  @param delegate             The object that acts as the delegate of the keyboard controller.
+     */
+    
     init(
         textView: UITextView,
         contextView: UIView,
