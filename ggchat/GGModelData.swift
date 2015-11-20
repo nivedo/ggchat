@@ -98,4 +98,43 @@ class GGModelData {
             Demo.id_woz : Demo.displayName_woz,
         ]
     }
+    
+    func addPhotoMediaMessage() {
+        /*
+        JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:[UIImage imageNamed:@"goldengate"]];
+        JSQMessage *photoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
+                                                       displayName:kJSQDemoAvatarDisplayNameSquires
+                                                             media:photoItem];
+        [self.messages addObject:photoMessage];
+        */
+    }
+
+    func addLocationMediaMessageCompletion(completion: LocationMediaItemCompletionBlock) {
+        /*
+        CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
+        
+        JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
+        [locationItem setLocation:ferryBuildingInSF withCompletionHandler:completion];
+        
+        JSQMessage *locationMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
+                                                          displayName:kJSQDemoAvatarDisplayNameSquires
+                                                                media:locationItem];
+        [self.messages addObject:locationMessage];
+        */
+    }
+
+    func addVideoMediaMessage() {
+        /*
+        // don't have a real video, just pretending
+        NSURL *videoURL = [NSURL URLWithString:@"file://"];
+        
+        JSQVideoMediaItem *videoItem = [[JSQVideoMediaItem alloc] initWithFileURL:videoURL isReadyToPlay:YES];
+        JSQMessage *videoMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdSquires
+                                                       displayName:kJSQDemoAvatarDisplayNameSquires
+                                                             media:videoItem];
+        [self.messages addObject:videoMessage];
+        */
+    }
+
+
 }

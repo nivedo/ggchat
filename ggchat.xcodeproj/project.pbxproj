@@ -14,6 +14,7 @@
 		D45FBD471BFE910D00E79B4E /* PhotoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */; };
 		D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD481BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift */; };
 		D45FBD4D1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD4C1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift */; };
+		D45FBD4F1BFEB4A600E79B4E /* LocationMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -85,6 +86,7 @@
 		D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMediaItem.swift; sourceTree = "<group>"; };
 		D45FBD481BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaViewBubbleImageMasker.swift; sourceTree = "<group>"; };
 		D45FBD4C1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaPlaceholderView.swift; sourceTree = "<group>"; };
+		D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMediaItem.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				D478409E1BF067D300441A2D /* MessageBubbleImage.swift */,
 				D47840A01BF0684200441A2D /* MessageAvatarImage.swift */,
 				D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */,
+				D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				D4A9F5121BF9731300FA4444 /* MessageInputToolbar.swift in Sources */,
 				D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */,
 				D47840A71BF1AD8100441A2D /* UIColor+Messages.swift in Sources */,
+				D45FBD4F1BFEB4A600E79B4E /* LocationMediaItem.swift in Sources */,
 				D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */,
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
 				D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */,
