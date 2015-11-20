@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-class MediaItem: NSObject, MessageMediaData {
-
+class MediaItem: NSObject, NSCoding, NSCopying, MessageMediaData {
 
     var cachedPlaceholderView: UIView?
     var appliesMediaViewMaskAsOutgoing: Bool = true {
@@ -21,8 +20,12 @@ class MediaItem: NSObject, MessageMediaData {
 
     // pragma mark - Initialization
 
-    override init() {
+    required override init() {
         super.init()
+        self.initWithMaskAsOutgoing(true)
+    }
+    
+    func initWithMaskAsOutgoing(maskAsOutgoing: Bool) {
         self.appliesMediaViewMaskAsOutgoing = true
         self.cachedPlaceholderView = nil
         NSNotificationCenter.defaultCenter().addObserver(
@@ -97,10 +100,25 @@ class MediaItem: NSObject, MessageMediaData {
         return "<\(self.dynamicType): appliesMediaViewMaskAsOutgoing=\(self.appliesMediaViewMaskAsOutgoing)>"
     }
     
-    /*
-    - (id)debugQuickLookObject
-    {
-        return [self mediaView] ?: [self mediaPlaceholderView]
+    // pragma mark - NSCoding
+
+    required init(coder aDecoder: NSCoder) {
+        super.init()
+        self.initWithMaskAsOutgoing(true)
+        self.appliesMediaViewMaskAsOutgoing = aDecoder.decodeBoolForKey(NSStringFromSelector(Selector("appliesMediaViewMaskAsOutgoing")))
     }
-    */
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeBool(self.appliesMediaViewMaskAsOutgoing,
+            forKey: NSStringFromSelector(Selector("appliesMediaViewMaskAsOutgoing")))
+    }
+
+    // pragma mark - NSCopying
+
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy = self.dynamicType.init()
+        copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing
+        return copy
+    }
+
 }

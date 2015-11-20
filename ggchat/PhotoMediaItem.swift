@@ -75,4 +75,29 @@ class PhotoMediaItem: MediaItem {
     override var description: String {
         return "<\(self.dynamicType): image=\(self.image), appliesMediaViewMaskAsOutgoing=\(self.appliesMediaViewMaskAsOutgoing)>"
     }
+    
+    // pragma mark - NSCoding
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.image = aDecoder.decodeObjectForKey(NSStringFromSelector(Selector("image"))) as? UIImage
+    }
+
+    required override init() {
+        super.init()
+    }
+
+    override func encodeWithCoder(aCoder: NSCoder) {
+        super.encodeWithCoder(aCoder)
+        aCoder.encodeObject(self.image,
+            forKey: NSStringFromSelector(Selector("image")))
+    }
+
+    // pragma mark - NSCopying
+
+    override func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy: PhotoMediaItem = PhotoMediaItem(image: self.image!)
+        copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing
+        return copy
+    }
 }
