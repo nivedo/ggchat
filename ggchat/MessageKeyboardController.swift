@@ -179,16 +179,16 @@ class MessageKeyboardController: NSObject {
         completion: AnimationCompletionBlock?) {
         let userInfo: NSDictionary = notification.userInfo!
 
-        let keyboardEndFrame: CGRect = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue
+        let keyboardEndFrame: CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey]! as! NSValue).CGRectValue()
 
         if (CGRectIsNull(keyboardEndFrame)) {
             return
         }
 
-        let animationCurve: Int = userInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue
+        let animationCurve: Int = (userInfo[UIKeyboardAnimationCurveUserInfoKey]! as! NSNumber).integerValue
         let animationCurveOption = UIViewAnimationOptions(rawValue: UInt(animationCurve) << 16)
 
-        let animationDuration: Double = userInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
+        let animationDuration: Double = (userInfo[UIKeyboardAnimationDurationUserInfoKey]! as! NSNumber).doubleValue
 
         let keyboardEndFrameConverted: CGRect = self.contextView.convertRect(keyboardEndFrame, fromView:nil)
 
