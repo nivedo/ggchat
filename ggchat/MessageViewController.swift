@@ -885,8 +885,8 @@ class MessageViewController: UIViewController,
     }
 
     // pragma mark - Gesture recognizers
-    /*
     private func gg_handleInteractivePopGestureRecognizer(gestureRecognizer: UIGestureRecognizer) {
+        print("gg_handleInteractivePopGestrureRecognizer")
         switch (gestureRecognizer.state) {
             case UIGestureRecognizerState.Began:
                 if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
@@ -895,7 +895,7 @@ class MessageViewController: UIViewController,
 
                 self.textViewWasFirstResponderDuringInteractivePop = self.inputToolbar.contentView.textView.isFirstResponder()
 
-                // self.keyboardController!.endListeningForKeyboard()
+                self.keyboardController!.endListeningForKeyboard()
 
                 if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
                     self.inputToolbar.contentView.textView.resignFirstResponder()
@@ -925,7 +925,6 @@ class MessageViewController: UIViewController,
                 break
         }
     }
-    */
 
     // pragma mark - Input toolbar utilities
 
