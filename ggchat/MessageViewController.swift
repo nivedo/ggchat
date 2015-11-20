@@ -1247,19 +1247,19 @@ class MessageViewController: UIViewController,
     
     func composerTextView(textView: MessageComposerTextView,
         shouldPasteWithSender sender: AnyObject?) -> Bool {
-        /*
-        if (UIPasteboard.generalPasteboard().image) {
+        if ((UIPasteboard.generalPasteboard().image) != nil) {
             // If there's an image in the pasteboard, construct a media item with that image and `send` it.
-            PhotoMediaItem *item = [[JSQPhotoMediaItem alloc] initWithImage:[UIPasteboard generalPasteboard].image];
-            JSQMessage *message = [[JSQMessage alloc] initWithSenderId:self.senderId
-                                                     senderDisplayName:self.senderDisplayName
-                                                                  date:[NSDate date]
-                                                                 media:item];
-            [self.demoData.messages addObject:message];
-            [self finishSendingMessage];
-            return NO;
+            let item: PhotoMediaItem = PhotoMediaItem(
+                image: UIPasteboard.generalPasteboard().image!)
+            let message: Message = Message(
+                senderId: self.senderId,
+                senderDisplayName: self.senderDisplayName,
+                date: NSDate(),
+                media:item)
+            GGModelData.sharedInstance.messages.append(message)
+            self.finishSendingMessage()
+            return false
         }
-        */
         return true
     }
 }
