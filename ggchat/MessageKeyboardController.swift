@@ -115,7 +115,8 @@ class MessageKeyboardController: NSObject {
 
     // pragma mark - Notifications
 
-     private func gg_registerForNotifications() {
+     func gg_registerForNotifications() {
+        print("keyboardController::gg_registerForNotification()")
         self.gg_unregisterForNotifications()
 
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -139,11 +140,11 @@ class MessageKeyboardController: NSObject {
             object:nil)
     }
 
-     private func gg_unregisterForNotifications() {
+    func gg_unregisterForNotifications() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-     private func gg_didReceiveKeyboardDidShowNotification(notification: NSNotification) {
+    func gg_didReceiveKeyboardDidShowNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardDidShow")
         self.keyboardView = self.textView.inputAccessoryView!.superview
         self.gg_setKeyboardViewHidden(false)
@@ -154,19 +155,19 @@ class MessageKeyboardController: NSObject {
         })
     }
 
-     private func gg_didReceiveKeyboardWillChangeFrameNotification(notification: NSNotification) {
+     func gg_didReceiveKeyboardWillChangeFrameNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardWillChangeFrame")
         self.gg_handleKeyboardNotification(notification, completion:nil)
     }
 
-     private func gg_didReceiveKeyboardDidChangeFrameNotification(notification: NSNotification) {
+     func gg_didReceiveKeyboardDidChangeFrameNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardDidChangeFrame")
         self.gg_setKeyboardViewHidden(false)
 
         self.gg_handleKeyboardNotification(notification, completion: nil)
     }
 
-     private func gg_didReceiveKeyboardDidHideNotification(notification: NSNotification) {
+     func gg_didReceiveKeyboardDidHideNotification(notification: NSNotification) {
         print("keyboard::didReceiveKeyboardDidHide")
         self.keyboardView = nil
 
@@ -175,7 +176,7 @@ class MessageKeyboardController: NSObject {
         })
     }
 
-     private func gg_handleKeyboardNotification(notification: NSNotification,
+     func gg_handleKeyboardNotification(notification: NSNotification,
         completion: AnimationCompletionBlock?) {
         let userInfo: NSDictionary = notification.userInfo!
 
@@ -208,22 +209,22 @@ class MessageKeyboardController: NSObject {
 
     // pragma mark - Utilities
 
-     private func gg_setKeyboardViewHidden(hidden: Bool) {
+     func gg_setKeyboardViewHidden(hidden: Bool) {
         if (self.keyboardView != nil) {
             self.keyboardView!.hidden = hidden
             self.keyboardView!.userInteractionEnabled = !hidden
         }
     }
 
-     private func gg_notifyKeyboardFrameNotificationForFrame(frame: CGRect) {
+     func gg_notifyKeyboardFrameNotificationForFrame(frame: CGRect) {
         self.delegate.keyboardController(self, keyboardDidChangeFrame:frame)
-
+        
         NSNotificationCenter.defaultCenter().postNotificationName(MessageKeyboardController.kMessageKeyboardControllerNotificationKeyboardDidChangeFrame,
             object: self,
             userInfo: [ MessageKeyboardController.kMessageKeyboardControllerUserInfoKeyKeyboardDidChangeFrame : NSValue(CGRect: frame)])
     }
 
-     private func gg_resetKeyboardAndTextView() {
+     func gg_resetKeyboardAndTextView() {
         self.gg_setKeyboardViewHidden(true)
         self.gg_removeKeyboardFrameObserver()
         self.textView.resignFirstResponder()
@@ -255,7 +256,7 @@ class MessageKeyboardController: NSObject {
         }
     }
 
-     private func gg_removeKeyboardFrameObserver() {
+     func gg_removeKeyboardFrameObserver() {
         if (!self.gg_isObserving) {
             return
         }
@@ -269,7 +270,7 @@ class MessageKeyboardController: NSObject {
 
     // pragma mark - Pan gesture recognizer
 
-     private func gg_handlePanGestureRecognizer(pan: UIPanGestureRecognizer) {
+    func gg_handlePanGestureRecognizer(pan: UIPanGestureRecognizer) {
         let touch: CGPoint = pan.locationInView(self.contextView.window)
 
         //  system keyboard is added to a new UIWindow, need to operate in window coordinates

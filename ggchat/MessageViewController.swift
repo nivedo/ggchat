@@ -373,7 +373,7 @@ class MessageViewController: UIViewController,
         super.viewDidAppear(animated)
         self.gg_addObservers()
         self.gg_addActionToInteractivePopGestureRecognizer(true)
-        // self.keyboardController!.beginListeningForKeyboard()
+        self.keyboardController!.beginListeningForKeyboard()
 
         if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
             self.snapshotView!.removeFromSuperview()
@@ -390,7 +390,7 @@ class MessageViewController: UIViewController,
         super.viewDidDisappear(animated)
         self.gg_addActionToInteractivePopGestureRecognizer(false)
         self.gg_removeObservers()
-        // self.keyboardController!.endListeningForKeyboard()
+        self.keyboardController!.endListeningForKeyboard()
     }
 
     // pragma mark - View rotation
@@ -740,7 +740,7 @@ class MessageViewController: UIViewController,
         }
     }
 
-    private func gg_currentlyComposedMessageText() -> String {
+    func gg_currentlyComposedMessageText() -> String {
         //  auto-accept any auto-correct suggestions
         self.inputToolbar.contentView.textView.inputDelegate!.selectionWillChange(self.inputToolbar.contentView.textView)
         
@@ -783,14 +783,14 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Notifications
 
-     private func gg_handleDidChangeStatusBarFrameNotification(notification: NSNotification) {
+     func gg_handleDidChangeStatusBarFrameNotification(notification: NSNotification) {
         print("MVC::gg_handleDidChangeStatusBarFrame")
         if (self.keyboardController!.keyboardIsVisible) {
             self.gg_setToolbarBottomLayoutGuideConstant(CGRectGetHeight(self.keyboardController!.currentKeyboardFrame()))
         }
     }
 
-     private func gg_didReceiveMenuWillShowNotification(notification: NSNotification) {
+     func gg_didReceiveMenuWillShowNotification(notification: NSNotification) {
         if (self.selectedIndexPathForMenu == nil) {
             return
         }
@@ -816,7 +816,7 @@ class MessageViewController: UIViewController,
             object: nil)
     }
 
-     private func gg_didReceiveMenuWillHideNotification(notification: NSNotification) {
+     func gg_didReceiveMenuWillHideNotification(notification: NSNotification) {
         if (self.selectedIndexPathForMenu == nil) {
             return
         }
@@ -867,12 +867,12 @@ class MessageViewController: UIViewController,
         var heightFromBottom: CGFloat = CGRectGetMaxY(self.messageCollectionView.frame) - CGRectGetMinY(keyboardFrame)
 
         heightFromBottom = max(0.0, heightFromBottom)
-        print(heightFromBottom)
+        // print(heightFromBottom)
 
         self.gg_setToolbarBottomLayoutGuideConstant(heightFromBottom)
     }
 
-    private func gg_setToolbarBottomLayoutGuideConstant(constant: CGFloat) {
+    func gg_setToolbarBottomLayoutGuideConstant(constant: CGFloat) {
         self.toolbarBottomLayoutGuide.constant = constant
         self.view.setNeedsUpdateConstraints()
         self.view.layoutIfNeeded()
@@ -880,12 +880,12 @@ class MessageViewController: UIViewController,
         self.gg_updateCollectionViewInsets()
     }
 
-    private func gg_updateKeyboardTriggerPoint() {
+    func gg_updateKeyboardTriggerPoint() {
         self.keyboardController!.keyboardTriggerPoint = CGPointMake(0.0, CGRectGetHeight(self.inputToolbar.bounds))
     }
 
     // pragma mark - Gesture recognizers
-    private func gg_handleInteractivePopGestureRecognizer(gestureRecognizer: UIGestureRecognizer) {
+    func gg_handleInteractivePopGestureRecognizer(gestureRecognizer: UIGestureRecognizer) {
         print("gg_handleInteractivePopGestrureRecognizer")
         switch (gestureRecognizer.state) {
             case UIGestureRecognizerState.Began:
@@ -928,11 +928,11 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Input toolbar utilities
 
-    private func gg_inputToolbarHasReachedMaximumHeight() -> Bool {
+    func gg_inputToolbarHasReachedMaximumHeight() -> Bool {
         return CGRectGetMinY(self.inputToolbar.frame) == (self.topLayoutGuide.length + self.topContentAdditionalInset)
     }
 
-    private func gg_adjustInputToolbarForComposerTextViewContentSizeChange(var dy: CGFloat) {
+    func gg_adjustInputToolbarForComposerTextViewContentSizeChange(var dy: CGFloat) {
         let contentSizeIsIncreasing: Bool = (dy > 0)
 
         if (self.gg_inputToolbarHasReachedMaximumHeight()) {
@@ -962,7 +962,7 @@ class MessageViewController: UIViewController,
         }
     }
 
-    private func gg_adjustInputToolbarHeightConstraintByDelta(dy: CGFloat) {
+    func gg_adjustInputToolbarHeightConstraintByDelta(dy: CGFloat) {
         let proposedHeight: CGFloat = self.toolbarHeightConstraint.constant + dy
 
         var finalHeight: CGFloat = max(proposedHeight, self.inputToolbar.preferredDefaultHeight)
@@ -978,7 +978,7 @@ class MessageViewController: UIViewController,
         }
     }
 
-    private func gg_scrollComposerTextViewToBottomAnimated(animated: Bool) {
+    func gg_scrollComposerTextViewToBottomAnimated(animated: Bool) {
         let textView: UITextView = self.inputToolbar.contentView.textView
         let contentOffsetToShowLastLine: CGPoint = CGPointMake(0.0, textView.contentSize.height - CGRectGetHeight(textView.bounds))
 
@@ -998,18 +998,18 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Collection view utilities
 
-    private func gg_updateCollectionViewInsets() {
+    func gg_updateCollectionViewInsets() {
         self.gg_setCollectionViewInsetsTopValue(self.topLayoutGuide.length + self.topContentAdditionalInset,
             bottomValue: CGRectGetMaxY(self.messageCollectionView.frame) - CGRectGetMinY(self.inputToolbar.frame))
     }
 
-    private func gg_setCollectionViewInsetsTopValue(top: CGFloat, bottomValue bottom: CGFloat) {
+    func gg_setCollectionViewInsetsTopValue(top: CGFloat, bottomValue bottom: CGFloat) {
         let insets: UIEdgeInsets = UIEdgeInsetsMake(top, 0.0, bottom, 0.0)
         self.messageCollectionView.contentInset = insets
         self.messageCollectionView.scrollIndicatorInsets = insets
     }
 
-    private func gg_isMenuVisible() -> Bool {
+    func gg_isMenuVisible() -> Bool {
         //  check if cell copy menu is showing
         //  it is only our menu if `selectedIndexPathForMenu` is not `nil`
         return self.selectedIndexPathForMenu != nil && UIMenuController.sharedMenuController().menuVisible
@@ -1017,7 +1017,7 @@ class MessageViewController: UIViewController,
 
     // pragma mark - Utilities
 
-    private func gg_addObservers() {
+    func gg_addObservers() {
         if (self.gg_isObserving) {
             return
         }
@@ -1030,7 +1030,7 @@ class MessageViewController: UIViewController,
         self.gg_isObserving = true
     }
 
-     private func gg_removeObservers() {
+     func gg_removeObservers() {
         if (!self.gg_isObserving) {
             return
         }
@@ -1043,7 +1043,7 @@ class MessageViewController: UIViewController,
         self.gg_isObserving = false
     }
 
-     private func gg_registerForNotifications(registerForNotifications: Bool) {
+     func gg_registerForNotifications(registerForNotifications: Bool) {
         if (registerForNotifications) {
             NSNotificationCenter.defaultCenter().addObserver(
                 self,
@@ -1080,7 +1080,7 @@ class MessageViewController: UIViewController,
         }
     }
     
-    private func gg_addActionToInteractivePopGestureRecognizer(addAction: Bool) {
+    func gg_addActionToInteractivePopGestureRecognizer(addAction: Bool) {
         if (self.currentInteractivePopGestureRecognizer != nil) {
             self.currentInteractivePopGestureRecognizer!.removeTarget(
                 nil,
