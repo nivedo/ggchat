@@ -58,7 +58,6 @@ class MediaItem: NSObject, MessageMediaData {
     }
 
     func mediaPlaceholderView() -> UIView? {
-        /*
         if (self.cachedPlaceholderView == nil) {
             let size: CGSize = self.mediaViewDisplaySize()
             let view: UIView = MessageMediaPlaceholderView.viewWithActivityIndicator()
@@ -67,8 +66,7 @@ class MediaItem: NSObject, MessageMediaData {
                 isOutgoing: self.appliesMediaViewMaskAsOutgoing)
             self.cachedPlaceholderView = view
         }
-        */
-        
+
         return self.cachedPlaceholderView
     }
 
