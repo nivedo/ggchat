@@ -246,7 +246,7 @@ class MessageKeyboardController: NSObject {
         }
     }
 
-    func gg_removeKeyboardFrameObserver() {
+    private func gg_removeKeyboardFrameObserver() {
         if (!self.gg_isObserving) {
             return
         }
@@ -260,7 +260,7 @@ class MessageKeyboardController: NSObject {
 
     // pragma mark - Pan gesture recognizer
 
-    func gg_handlePanGestureRecognizer(pan: UIPanGestureRecognizer) {
+    private func gg_handlePanGestureRecognizer(pan: UIPanGestureRecognizer) {
         let touch: CGPoint = pan.locationInView(self.contextView.window)
 
         //  system keyboard is added to a new UIWindow, need to operate in window coordinates
