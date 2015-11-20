@@ -381,6 +381,7 @@ class MessageViewController: UIViewController,
         if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
             self.snapshotView!.removeFromSuperview()
         }
+        self.messageCollectionView.messageCollectionViewLayout.springinessEnabled = GGConfig.springinessEnabled
     }
 
     override func viewWillDisappear(animated: Bool) {

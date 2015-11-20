@@ -214,7 +214,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     override func layoutAttributesForElementsInRect(_ rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var attributesInRect: [UICollectionViewLayoutAttributes] = super.layoutAttributesForElementsInRect(rect)!
-        /*
+        
         if (self.springinessEnabled) {
             var attributesInRectCopy = attributesInRect
             let dynamicAttributes: NSArray = self.dynamicAnimator.itemsInRect(rect)
@@ -234,7 +234,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
             attributesInRect = attributesInRectCopy
         }
-        */
         
         for (_, value) in attributesInRect.enumerate() {
             let attributesElem = value as! MessagesCollectionViewLayoutAttributes
@@ -279,11 +278,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             let updateItem = value as UICollectionViewUpdateItem
             if (updateItem.updateAction == UICollectionUpdateAction.Insert) {
                 
-                /*
                 if (self.springinessEnabled && self.dynamicAnimator.layoutAttributesForCellAtIndexPath(updateItem.indexPathAfterUpdate) != nil) {
-                    stop = false
+                    // stop = false
                 }
-                */
                 
                 let collectionViewHeight: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds)
                 
@@ -410,7 +407,6 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         finalHeight += attributes.cellBottomLabelHeight
         
         return CGSizeMake(self.itemWidth, ceil(finalHeight));
-        // return CGSizeMake(320.0, 154.0)
     }
     
     func messageBubbleSizeForItemAtIndexPath(indexPath: NSIndexPath) -> CGSize {
