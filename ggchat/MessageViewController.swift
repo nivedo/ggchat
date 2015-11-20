@@ -881,7 +881,7 @@ class MessageViewController: UIViewController,
     }
 
     private func gg_updateKeyboardTriggerPoint() {
-        // self.keyboardController!.keyboardTriggerPoint = CGPointMake(0.0, CGRectGetHeight(self.inputToolbar.bounds))
+        self.keyboardController!.keyboardTriggerPoint = CGPointMake(0.0, CGRectGetHeight(self.inputToolbar.bounds))
     }
 
     // pragma mark - Gesture recognizers
