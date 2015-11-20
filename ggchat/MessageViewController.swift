@@ -555,7 +555,7 @@ class MessageViewController: UIViewController,
             cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
         } else {
             let messageMedia: MessageMediaData = messageItem.media!
-            cell.mediaView = (messageMedia.mediaView != nil ? messageMedia.mediaView : messageMedia.mediaPlaceholderView)!
+            cell.mediaView = (messageMedia.mediaView() != nil ? messageMedia.mediaView() : messageMedia.mediaPlaceholderView())!
         }
         
         // This is a HACK, should be in init of cell

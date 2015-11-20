@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-class MessageMediaData {
+protocol MessageMediaData {
     
-    var mediaView: UIView?
-    var mediaViewDisplaySize: CGSize?
-    var mediaPlaceholderView: UIView?
-    var mediaHash: UInt?
+    func mediaView() -> UIView?
+    func mediaViewDisplaySize() -> CGSize
+    func mediaPlaceholderView() -> UIView?
+    func mediaHash() -> Int
     
 }

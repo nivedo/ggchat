@@ -63,7 +63,7 @@ class MessageBubbleSizeCalculator {
         
         var finalSize: CGSize = CGSizeZero
         if (messageData.isMediaMessage) {
-            finalSize = (messageData.media?.mediaViewDisplaySize)!
+            finalSize = messageData.media!.mediaViewDisplaySize()
         } else {
             let avatarSize: CGSize = self.gg_avatarSizeForMessageData(messageData, withLayout:layout)
             

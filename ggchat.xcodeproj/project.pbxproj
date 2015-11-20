@@ -10,6 +10,9 @@
 		D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */; };
 		D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */; };
 		D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD421BFDB1B300E79B4E /* GGConfig.swift */; };
+		D45FBD451BFE894F00E79B4E /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD441BFE894F00E79B4E /* MediaItem.swift */; };
+		D45FBD471BFE910D00E79B4E /* PhotoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */; };
+		D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD481BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -77,6 +80,9 @@
 /* Begin PBXFileReference section */
 		D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKeyboardController.swift; sourceTree = "<group>"; };
 		D45FBD421BFDB1B300E79B4E /* GGConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGConfig.swift; sourceTree = "<group>"; };
+		D45FBD441BFE894F00E79B4E /* MediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMediaItem.swift; sourceTree = "<group>"; };
+		D45FBD481BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaViewBubbleImageMasker.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -222,8 +228,10 @@
 			children = (
 				D4683E851BF0494B00E02886 /* Message.swift */,
 				D4683E891BF04C6C00E02886 /* MessageMediaData.swift */,
+				D45FBD441BFE894F00E79B4E /* MediaItem.swift */,
 				D478409E1BF067D300441A2D /* MessageBubbleImage.swift */,
 				D47840A01BF0684200441A2D /* MessageAvatarImage.swift */,
+				D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -268,6 +276,7 @@
 				D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */,
 				D4A9F5221BFBC22700FA4444 /* MessageTimestampFormatter.swift */,
 				D4A9F5B11BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift */,
+				D45FBD481BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -465,6 +474,7 @@
 				D47840A71BF1AD8100441A2D /* UIColor+Messages.swift in Sources */,
 				D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */,
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
+				D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */,
 				D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */,
 				D4A9F4F31BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift in Sources */,
 				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
@@ -477,9 +487,11 @@
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,
 				D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
+				D45FBD451BFE894F00E79B4E /* MediaItem.swift in Sources */,
 				D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
 				D4A9F5B01BFC59BD00FA4444 /* String+Messages.swift in Sources */,
+				D45FBD471BFE910D00E79B4E /* PhotoMediaItem.swift in Sources */,
 				D4A9F5AC1BFC48CD00FA4444 /* MessageToolbarContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
