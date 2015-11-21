@@ -47,8 +47,30 @@ class RoomTableViewController: UITableViewController {
             forIndexPath: indexPath) as! RoomTableViewCell
         
         // Configure the cell
-        let room = tabeView(self.tableView, roomAtIndexPath: indexPath)
-
+        let room = self.tabeView(self.tableView, roomAtIndexPath: indexPath)
+        
+        let needsAvatar: Bool = true
+        if (needsAvatar) {
+            let avatarImageDataSource = self.tableView(
+                self.tableView,
+                avatarImageDataForItemAtIndexPath: indexPath)
+            if (avatarImageDataSource != nil) {
+                let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
+                if (avatarImage == nil) {
+                    cell.avatarImageView.image = avatarImageDataSource!.avatarPlaceholderImage
+                    cell.avatarImageView.highlightedImage = nil
+                } else {
+                    cell.avatarImageView.image = avatarImage
+                    cell.avatarImageView.highlightedImage = avatarImageDataSource!.avatarHighlightedImage
+                }
+            }
+        }
+        
+        cell.cellTopLabel.attributedText = self.tableView(self.tableView, attributedTextForCellTopLabelAtIndexPath: indexPath)
+        cell.cellBottomLabel.attributedText = self.tableView(self.tableView, attributedTextForCellBottomLabelAtIndexPath: indexPath)
+        cell.cellCornerLabel.attributedText = self.tableView(self.tableView, attributedTextForCellCornerLabelAtIndexPath: indexPath)
+       
+        
         return cell
     }
 
@@ -106,4 +128,23 @@ class RoomTableViewController: UITableViewController {
             return Room(roomId: "test_room")
     }
     
+    func tableView(tableView: UITableView,
+        avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
+        return GGModelData.sharedInstance.avatars[Demo.id_jobs]
+    }
+    
+    func tableView(tableView: UITableView,
+        attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        return NSAttributedString(string: "Gary Chang")
+    }
+
+    func tableView(tableView: UITableView,
+        attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        return NSAttributedString(string: "This is the last message.")
+    }
+
+    func tableView(tableView: UITableView,
+        attributedTextForCellCornerLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
+        return NSAttributedString(string: "April 25")
+    }
 }
