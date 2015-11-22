@@ -13,8 +13,12 @@ class RoomTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.registerClass(
-            RoomTableViewCell.self,
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.allowsSelection = true
+        
+        self.tableView.registerNib(
+            RoomTableViewCell.nib(),
             forCellReuseIdentifier: RoomTableViewCell.cellReuseIdentifier())
         
         // Uncomment the following line to preserve selection between presentations
@@ -22,6 +26,10 @@ class RoomTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSFontAttributeName: UIFont.systemFontOfSize(20.0)]
+        appearance.setTitleTextAttributes(attributes, forState: .Normal)
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,10 +46,13 @@ class RoomTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        print("numberOfRowsInSection")
+        return 2
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("cellForRowAtIndexPath: \(indexPath)")
+        
         let cell = tableView.dequeueReusableCellWithIdentifier(
             RoomTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! RoomTableViewCell
@@ -69,11 +80,24 @@ class RoomTableViewController: UITableViewController {
         cell.cellTopLabel.attributedText = self.tableView(self.tableView, attributedTextForCellTopLabelAtIndexPath: indexPath)
         cell.cellBottomLabel.attributedText = self.tableView(self.tableView, attributedTextForCellBottomLabelAtIndexPath: indexPath)
         cell.cellCornerLabel.attributedText = self.tableView(self.tableView, attributedTextForCellCornerLabelAtIndexPath: indexPath)
-       
         
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath:NSIndexPath) -> CGFloat {
+        return 60.0
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        print("willSelectRowAtIndexPath")
+        return indexPath
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("didSelectRowAtIndexPath")
+        self.performSegueWithIdentifier("showMessageView", sender: indexPath)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
