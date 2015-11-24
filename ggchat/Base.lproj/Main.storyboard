@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cn7-VU-f7U">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="S31-Hi-fhB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -23,7 +23,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="anj-ry-DI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3492" y="272"/>
+            <point key="canvasLocation" x="4304" y="272"/>
         </scene>
         <!--Chat Table View Controller-->
         <scene sceneID="TBS-Mv-znz">
@@ -99,7 +99,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8k-0O-5FS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2672" y="641"/>
+            <point key="canvasLocation" x="3484" y="641"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ezY-qQ-XgU">
@@ -120,12 +120,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d1A-SN-hjt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3096" y="272"/>
+            <point key="canvasLocation" x="3908" y="272"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Chats-->
         <scene sceneID="BbW-23-qYx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cn7-VU-f7U" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Chats" id="1n7-AF-oFr"/>
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
@@ -141,7 +142,27 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="seN-vB-ixD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2170" y="641"/>
+            <point key="canvasLocation" x="2982" y="641"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="QPw-Ws-fEj">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="S31-Hi-fhB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="IH3-dK-ZL9">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="cn7-VU-f7U" kind="relationship" relationship="viewControllers" id="cBd-3b-4hN"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XRp-LC-8bm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2566" y="641"/>
         </scene>
     </scenes>
 </document>
