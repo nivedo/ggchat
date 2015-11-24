@@ -112,6 +112,7 @@ class MessageViewController: UIViewController,
         
         // Navigation bar
         self.navigationItem.title = "Steve Jobs"
+        self.tabBarController?.tabBar.hidden = true
         /*
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage.gg_defaultTypingIndicatorImage(),
@@ -127,12 +128,14 @@ class MessageViewController: UIViewController,
         barButton.title = "Back"
         self.navigationController!.navigationBar.topItem!.backBarButtonItem = barButton
         */
+        /*
         let barButton: UIBarButtonItem = UIBarButtonItem(
             title: "Back",
             style: UIBarButtonItemStyle.Bordered,
             target: self,
             action: Selector("receivedBackPressed:"))
         self.navigationItem.leftBarButtonItem = barButton
+        */
         
         /**
          *  Register custom menu actions for cells.
@@ -157,7 +160,8 @@ class MessageViewController: UIViewController,
     }
     
     func receivedBackPressed(button: UIBarButtonItem) {
-        self.performSegueWithIdentifier("showChatView", sender: self)
+        // self.performSegueWithIdentifier("showChatView", sender: self)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     /////////////////////////////////////////////////////////////////////////////

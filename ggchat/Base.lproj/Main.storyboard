@@ -23,7 +23,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="anj-ry-DI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4304" y="272"/>
+            <point key="canvasLocation" x="4039" y="641"/>
         </scene>
         <!--Chat Table View Controller-->
         <scene sceneID="TBS-Mv-znz">
@@ -84,7 +84,7 @@
                                     <outlet property="cellBottomLabel" destination="44r-ER-T7S" id="1b2-sb-sJt"/>
                                     <outlet property="cellCornerLabel" destination="ziM-Es-CrP" id="ams-P3-dHV"/>
                                     <outlet property="cellTopLabel" destination="QmM-0d-thf" id="7k2-hb-GkM"/>
-                                    <segue destination="rIh-Mj-hxI" kind="show" identifier="showMessageView" id="heX-DC-fq9"/>
+                                    <segue destination="k3J-sf-ZBR" kind="show" id="yg5-08-h6K"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -100,27 +100,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8k-0O-5FS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3484" y="641"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ezY-qQ-XgU">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rIh-Mj-hxI" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="568"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QES-4n-eNF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="k3J-sf-ZBR" kind="relationship" relationship="rootViewController" id="dLa-AA-4dD"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d1A-SN-hjt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3908" y="272"/>
         </scene>
         <!--Chats-->
         <scene sceneID="BbW-23-qYx">
