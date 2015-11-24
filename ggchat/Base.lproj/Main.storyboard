@@ -42,14 +42,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmM-0d-thf" userLabel="Cell top label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmM-0d-thf" userLabel="Cell top label">
                                             <rect key="frame" x="60" y="0.0" width="160" height="30"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R3F-nn-JfU" userLabel="Avatar container">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R3F-nn-JfU" userLabel="Avatar container">
                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DW2-PH-t9z" userLabel="Avatar image view">
@@ -59,15 +59,19 @@
                                             </subviews>
                                             <animations/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="Y77-m8-EvO"/>
+                                                <constraint firstAttribute="width" constant="60" id="p0j-L0-gfT"/>
+                                            </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44r-ER-T7S" userLabel="Cell bottom label">
-                                            <rect key="frame" x="60" y="30" width="160" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44r-ER-T7S" userLabel="Cell bottom label">
+                                            <rect key="frame" x="60" y="30" width="260" height="30"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Corner label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziM-Es-CrP" userLabel="Cell corner label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Corner label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziM-Es-CrP" userLabel="Cell corner label">
                                             <rect key="frame" x="220" y="0.0" width="100" height="30"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -76,6 +80,16 @@
                                         </label>
                                     </subviews>
                                     <animations/>
+                                    <constraints>
+                                        <constraint firstItem="QmM-0d-thf" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="04b-g8-ORc"/>
+                                        <constraint firstItem="44r-ER-T7S" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="8sE-2K-xgb"/>
+                                        <constraint firstItem="44r-ER-T7S" firstAttribute="top" secondItem="QmM-0d-thf" secondAttribute="bottom" id="bGa-42-lW1"/>
+                                        <constraint firstAttribute="trailing" secondItem="ziM-Es-CrP" secondAttribute="trailing" id="fM9-Ie-XiS"/>
+                                        <constraint firstItem="ziM-Es-CrP" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" id="iwT-wf-ENA"/>
+                                        <constraint firstItem="QmM-0d-thf" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" id="wdF-tb-zGu"/>
+                                        <constraint firstItem="R3F-nn-JfU" firstAttribute="leading" secondItem="37J-Dd-wNn" secondAttribute="leading" id="x2Z-hc-Kpt"/>
+                                        <constraint firstItem="R3F-nn-JfU" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" id="z2o-0N-gSk"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
@@ -260,7 +274,7 @@
     </scenes>
     <resources>
         <image name="Chat-Bubble" width="40" height="40"/>
-        <image name="Settings" width="512" height="512"/>
+        <image name="Settings" width="25" height="25"/>
         <image name="User" width="40" height="40"/>
     </resources>
 </document>
