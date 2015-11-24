@@ -110,13 +110,30 @@ class MessageViewController: UIViewController,
                 delegate: self)
         }
         
-        // Additional configuration (from DemoMVC)
+        // Navigation bar
+        self.navigationItem.title = "Steve Jobs"
+        /*
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage.gg_defaultTypingIndicatorImage(),
             style: UIBarButtonItemStyle.Bordered,
             target: self,
             action: Selector("receiveMessagePressed:"))
-
+        */
+        // self.navigationItem.leftItemsSupplementBackButton = true
+        // self.navigationItem.hidesBackButton = false
+        // self.navigationController!.navigationBar.topItem!.title = "Back"
+        /*
+        let barButton: UIBarButtonItem = UIBarButtonItem()
+        barButton.title = "Back"
+        self.navigationController!.navigationBar.topItem!.backBarButtonItem = barButton
+        */
+        let barButton: UIBarButtonItem = UIBarButtonItem(
+            title: "Back",
+            style: UIBarButtonItemStyle.Bordered,
+            target: self,
+            action: Selector("receivedBackPressed:"))
+        self.navigationItem.leftBarButtonItem = barButton
+        
         /**
          *  Register custom menu actions for cells.
          */
@@ -136,6 +153,11 @@ class MessageViewController: UIViewController,
          *
          */
         self.inputToolbar.maximumHeight = 150
+        
+    }
+    
+    func receivedBackPressed(button: UIBarButtonItem) {
+        self.performSegueWithIdentifier("showChatView", sender: self)
     }
     
     /////////////////////////////////////////////////////////////////////////////
@@ -170,15 +192,14 @@ class MessageViewController: UIViewController,
         // Dispose of any resources that can be recreated.
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        // self.navigationItem.title = nil
     }
-    */
 
     ///////////////////////////////////////////////////////////////////////////////
     // MARK: UICollectionViewDataSource
