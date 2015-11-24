@@ -409,6 +409,7 @@ class MessageViewController: UIViewController,
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.messageCollectionView.messageCollectionViewLayout.springinessEnabled = true
+        self.tabBarController?.tabBar.hidden = false
     }
 
     override func viewDidDisappear(animated: Bool) {
