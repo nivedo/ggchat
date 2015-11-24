@@ -139,7 +139,7 @@
         <scene sceneID="BbW-23-qYx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cn7-VU-f7U" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chats" id="1n7-AF-oFr"/>
+                    <tabBarItem key="tabBarItem" title="Chats" image="Chat-Bubble" id="1n7-AF-oFr"/>
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
@@ -217,7 +217,7 @@
         <scene sceneID="2Ss-Jf-au6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IkF-9D-uLl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" id="1uX-x7-VQF"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="1uX-x7-VQF"/>
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
@@ -239,7 +239,7 @@
         <scene sceneID="YvF-uv-u8f">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Owg-sR-5ZA" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" id="VgD-PI-fuw"/>
+                    <tabBarItem key="tabBarItem" title="Contacts" image="User" id="VgD-PI-fuw"/>
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
@@ -258,4 +258,9 @@
             <point key="canvasLocation" x="3469" y="1517"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Chat-Bubble" width="40" height="40"/>
+        <image name="Settings" width="512" height="512"/>
+        <image name="User" width="40" height="40"/>
+    </resources>
 </document>
