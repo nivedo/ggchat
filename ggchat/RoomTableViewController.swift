@@ -46,8 +46,8 @@ class RoomTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        print("numberOfRowsInSection")
-        return 2
+        // print("numberOfRowsInSection")
+        return GGModelData.sharedInstance.rooms.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -56,6 +56,7 @@ class RoomTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(
             RoomTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! RoomTableViewCell
+        print(cell)
         
         // Configure the cell
         let room = self.tabeView(self.tableView, roomAtIndexPath: indexPath)
@@ -77,15 +78,18 @@ class RoomTableViewController: UITableViewController {
             }
         }
         
-        cell.cellTopLabel.attributedText = self.tableView(self.tableView, attributedTextForCellTopLabelAtIndexPath: indexPath)
-        cell.cellBottomLabel.attributedText = self.tableView(self.tableView, attributedTextForCellBottomLabelAtIndexPath: indexPath)
-        cell.cellCornerLabel.attributedText = self.tableView(self.tableView, attributedTextForCellCornerLabelAtIndexPath: indexPath)
+        cell.cellTopLabel.attributedText = NSAttributedString(string: room.roomDisplayName)
+        cell.cellBottomLabel.attributedText = NSAttributedString(string: room.recentMessage)
+        cell.cellCornerLabel.attributedText = NSAttributedString(string: room.recentUpdateTime)
+        
+        cell.contentView.backgroundColor = UIColor.greenColor()
         
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath:NSIndexPath) -> CGFloat {
-        return 60.0
+        // print("heightForRowAtIndexPath: \(indexPath)")
+        return CGFloat(60.0)
     }
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
@@ -149,26 +153,11 @@ class RoomTableViewController: UITableViewController {
     
     func tabeView(tableView: UITableView,
         roomAtIndexPath indexPath: NSIndexPath) -> Room {
-            return Room(roomId: "test_room")
+            return GGModelData.sharedInstance.rooms[indexPath.row]
     }
     
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
         return GGModelData.sharedInstance.avatars[Demo.id_jobs]
-    }
-    
-    func tableView(tableView: UITableView,
-        attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
-        return NSAttributedString(string: "Gary Chang")
-    }
-
-    func tableView(tableView: UITableView,
-        attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
-        return NSAttributedString(string: "This is the last message.")
-    }
-
-    func tableView(tableView: UITableView,
-        attributedTextForCellCornerLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
-        return NSAttributedString(string: "April 25")
     }
 }

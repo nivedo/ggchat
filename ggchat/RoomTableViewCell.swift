@@ -36,6 +36,7 @@ class RoomTableViewCell: UITableViewCell {
     }
     
     override func awakeFromNib() {
+        print("awakeFromNib()")
         super.awakeFromNib()
         
         // Initialization code

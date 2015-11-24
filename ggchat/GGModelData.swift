@@ -25,6 +25,7 @@ class Demo {
 
 class GGModelData {
     var messages = [Message]()
+    var rooms = [Room]()
     var avatars = [String:MessageAvatarImage]()
     var users = [String:String]()
    
@@ -37,6 +38,7 @@ class GGModelData {
     
     init() {
         self.loadMessages()
+        self.loadRooms()
         self.loadAvatars()
         self.loadUsers()
     }
@@ -68,6 +70,26 @@ class GGModelData {
                 senderDisplayName: Demo.displayName_jobs,
                 date: NSDate.distantPast(),
                 text: "This is the world's most beautiful chat app in the world."),
+        ]
+    }
+    
+    func loadRooms() {
+        self.rooms = [
+            Room(
+                roomId: "Gary Chang",
+                roomDisplayName: "Gary Chang",
+                recentMessage: "This is the most recent message.",
+                recentUpdateTime: "April 25"),
+            Room(
+                roomId: "Jay Ni",
+                roomDisplayName: "Jay Ni",
+                recentMessage: "Yo!",
+                recentUpdateTime: "Nov 7"),
+            Room(
+                roomId: "Group Chat",
+                roomDisplayName: "Group Chat",
+                recentMessage: "Hi everyone!!!",
+                recentUpdateTime: "Dec 1"),
         ]
     }
     
