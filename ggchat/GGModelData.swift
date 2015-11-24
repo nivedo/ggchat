@@ -25,7 +25,7 @@ class Demo {
 
 class GGModelData {
     var messages = [Message]()
-    var rooms = [Room]()
+    var chats = [Chat]()
     var avatars = [String:MessageAvatarImage]()
     var users = [String:String]()
    
@@ -38,7 +38,7 @@ class GGModelData {
     
     init() {
         self.loadMessages()
-        self.loadRooms()
+        self.loadChats()
         self.loadAvatars()
         self.loadUsers()
     }
@@ -73,21 +73,21 @@ class GGModelData {
         ]
     }
     
-    func loadRooms() {
-        self.rooms = [
-            Room(
-                roomId: "Gary Chang",
-                roomDisplayName: "Gary Chang",
+    func loadChats() {
+        self.chats = [
+            Chat(
+                chatId: "Gary Chang",
+                chatDisplayName: "Gary Chang",
                 recentMessage: "This is the most recent message.",
                 recentUpdateTime: "April 25"),
-            Room(
-                roomId: "Jay Ni",
-                roomDisplayName: "Jay Ni",
+            Chat(
+                chatId: "Jay Ni",
+                chatDisplayName: "Jay Ni",
                 recentMessage: "Yo!",
                 recentUpdateTime: "Nov 7"),
-            Room(
-                roomId: "Group Chat",
-                roomDisplayName: "Group Chat",
+            Chat(
+                chatId: "Group Chat",
+                chatDisplayName: "Group Chat",
                 recentMessage: "Hi everyone!!!",
                 recentUpdateTime: "Dec 1"),
         ]

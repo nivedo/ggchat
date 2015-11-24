@@ -1,5 +1,5 @@
 //
-//  Room.swift
+//  Chat.swift
 //  ggchat
 //
 //  Created by Gary Chang on 11/20/15.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-class Room {
-    var roomId: String
-    var roomDisplayName: String
+class Chat {
+    var chatId: String
+    var chatDisplayName: String
     var recentMessage: String
     var recentUpdateTime: String
     
-    init(roomId: String, roomDisplayName: String, recentMessage: String, recentUpdateTime: String) {
-        self.roomId = roomId
-        self.roomDisplayName = roomDisplayName
+    init(chatId: String, chatDisplayName: String, recentMessage: String, recentUpdateTime: String) {
+        self.chatId = chatId
+        self.chatDisplayName = chatDisplayName
         self.recentMessage = recentMessage
         self.recentUpdateTime = recentUpdateTime
     }

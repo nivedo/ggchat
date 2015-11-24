@@ -1,44 +1,23 @@
 //
-//  RoomTableViewController.swift
+//  ChatTableViewController.swift
 //  ggchat
 //
-//  Created by Gary Chang on 11/20/15.
+//  Created by Gary Chang on 11/24/15.
 //  Copyright © 2015 Blub. All rights reserved.
 //
 
 import UIKit
 
-class RoomTableViewController: UITableViewController {
-        
+class ChatTableViewController: UITableViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        /*
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.allowsSelection = true
-        */
-        
-        /*
-        self.tableView.registerNib(
-            RoomTableViewCell.nib(),
-            forCellReuseIdentifier: RoomTableViewCell.cellReuseIdentifier())
-        self.tableView.registerClass(
-            RoomTableViewCell.self,
-            forCellReuseIdentifier: RoomTableViewCell.cellReuseIdentifier())
-        */
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-      
-        /*
-        let appearance = UITabBarItem.appearance()
-        let attributes = [NSFontAttributeName: UIFont.systemFontOfSize(20.0)]
-        appearance.setTitleTextAttributes(attributes, forState: .Normal)
-        */
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,20 +34,20 @@ class RoomTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        // print("numberOfRowsInSection")
-        return GGModelData.sharedInstance.rooms.count
+        return GGModelData.sharedInstance.chats.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("cellForRowAtIndexPath: \(indexPath)")
-        
         let cell = tableView.dequeueReusableCellWithIdentifier(
-            RoomTableViewCell.cellReuseIdentifier(),
-            forIndexPath: indexPath) as! RoomTableViewCell
-        print(cell)
-        
-        // Configure the cell
-        let room = self.tabeView(self.tableView, roomAtIndexPath: indexPath)
+            ChatTableViewCell.cellReuseIdentifier(),
+            forIndexPath: indexPath) as! ChatTableViewCell
+
+        // Configure the cell...
+        let chat = GGModelData.sharedInstance.chats[indexPath.row]
+
+        cell.cellTopLabel.attributedText = NSAttributedString(string: chat.chatDisplayName)
+        cell.cellBottomLabel.attributedText = NSAttributedString(string: chat.recentMessage)
+        cell.cellCornerLabel.attributedText = NSAttributedString(string: chat.recentUpdateTime)
         
         let needsAvatar: Bool = true
         if (needsAvatar) {
@@ -87,30 +66,9 @@ class RoomTableViewController: UITableViewController {
             }
         }
         
-        cell.cellTopLabel.attributedText = NSAttributedString(string: room.roomDisplayName)
-        cell.cellBottomLabel.attributedText = NSAttributedString(string: room.recentMessage)
-        cell.cellCornerLabel.attributedText = NSAttributedString(string: room.recentUpdateTime)
-        
-        // cell.contentView.backgroundColor = UIColor.greenColor()
-        
         return cell
     }
-   
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath:NSIndexPath) -> CGFloat {
-        // print("heightForRowAtIndexPath: \(indexPath)")
-        return CGFloat(60.0)
-    }
-    
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        print("willSelectRowAtIndexPath")
-        return indexPath
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("didSelectRowAtIndexPath")
-        self.performSegueWithIdentifier("showMessageView", sender: indexPath)
-    }
-    
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -155,16 +113,7 @@ class RoomTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    ////////////////////////////////////////////////////////////////////////////////
-    // Data Source
-    ////////////////////////////////////////////////////////////////////////////////
-    
-    func tabeView(tableView: UITableView,
-        roomAtIndexPath indexPath: NSIndexPath) -> Room {
-            return GGModelData.sharedInstance.rooms[indexPath.row]
-    }
-    
+
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
         return GGModelData.sharedInstance.avatars[Demo.id_jobs]

@@ -16,11 +16,9 @@
 		D45FBD4D1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD4C1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift */; };
 		D45FBD4F1BFEB4A600E79B4E /* LocationMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */; };
 		D45FBD511BFED00500E79B4E /* VideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD501BFED00500E79B4E /* VideoMediaItem.swift */; };
-		D45FBD541BFFC44300E79B4E /* RoomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD521BFFC44300E79B4E /* RoomTableViewCell.swift */; };
-		D45FBD551BFFC44300E79B4E /* RoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45FBD531BFFC44300E79B4E /* RoomTableViewCell.xib */; };
-		D45FBD581BFFC4CB00E79B4E /* RoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD561BFFC4CB00E79B4E /* RoomTableViewController.swift */; };
-		D45FBD591BFFC4CB00E79B4E /* RoomTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45FBD571BFFC4CB00E79B4E /* RoomTableViewController.xib */; };
-		D45FBD5C1BFFC9B100E79B4E /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD5B1BFFC9B100E79B4E /* Room.swift */; };
+		D45FBD5C1BFFC9B100E79B4E /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD5B1BFFC9B100E79B4E /* Chat.swift */; };
+		D45FBD5E1C04432900E79B4E /* ChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD5D1C04432900E79B4E /* ChatTableViewController.swift */; };
+		D45FBD601C0443E000E79B4E /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD5F1C0443E000E79B4E /* ChatTableViewCell.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -94,11 +92,9 @@
 		D45FBD4C1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaPlaceholderView.swift; sourceTree = "<group>"; };
 		D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMediaItem.swift; sourceTree = "<group>"; };
 		D45FBD501BFED00500E79B4E /* VideoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMediaItem.swift; sourceTree = "<group>"; };
-		D45FBD521BFFC44300E79B4E /* RoomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewCell.swift; sourceTree = "<group>"; };
-		D45FBD531BFFC44300E79B4E /* RoomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoomTableViewCell.xib; sourceTree = "<group>"; };
-		D45FBD561BFFC4CB00E79B4E /* RoomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewController.swift; sourceTree = "<group>"; };
-		D45FBD571BFFC4CB00E79B4E /* RoomTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoomTableViewController.xib; sourceTree = "<group>"; };
-		D45FBD5B1BFFC9B100E79B4E /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		D45FBD5B1BFFC9B100E79B4E /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		D45FBD5D1C04432900E79B4E /* ChatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewController.swift; sourceTree = "<group>"; };
+		D45FBD5F1C0443E000E79B4E /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -250,7 +246,7 @@
 				D45FBD501BFED00500E79B4E /* VideoMediaItem.swift */,
 				D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */,
 				D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */,
-				D45FBD5B1BFFC9B100E79B4E /* Room.swift */,
+				D45FBD5B1BFFC9B100E79B4E /* Chat.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -261,8 +257,7 @@
 				D4A9F51A1BFA95F500FA4444 /* MessageViewController.swift */,
 				D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */,
 				D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */,
-				D45FBD561BFFC4CB00E79B4E /* RoomTableViewController.swift */,
-				D45FBD571BFFC4CB00E79B4E /* RoomTableViewController.xib */,
+				D45FBD5D1C04432900E79B4E /* ChatTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -287,8 +282,7 @@
 				D4A9F5AB1BFC48CD00FA4444 /* MessageToolbarContentView.swift */,
 				D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */,
 				D45FBD4C1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift */,
-				D45FBD521BFFC44300E79B4E /* RoomTableViewCell.swift */,
-				D45FBD531BFFC44300E79B4E /* RoomTableViewCell.xib */,
+				D45FBD5F1C0443E000E79B4E /* ChatTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -452,9 +446,7 @@
 				D4A9F5A01BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib in Resources */,
 				D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */,
 				D4A9F5A41BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib in Resources */,
-				D45FBD591BFFC4CB00E79B4E /* RoomTableViewController.xib in Resources */,
 				D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */,
-				D45FBD551BFFC44300E79B4E /* RoomTableViewCell.xib in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,10 +483,9 @@
 				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
-				D45FBD541BFFC44300E79B4E /* RoomTableViewCell.swift in Sources */,
 				D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */,
 				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
-				D45FBD5C1BFFC9B100E79B4E /* Room.swift in Sources */,
+				D45FBD5C1BFFC9B100E79B4E /* Chat.swift in Sources */,
 				D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
 				D4A9F5121BF9731300FA4444 /* MessageInputToolbar.swift in Sources */,
@@ -505,7 +496,6 @@
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
 				D45FBD511BFED00500E79B4E /* VideoMediaItem.swift in Sources */,
 				D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */,
-				D45FBD581BFFC4CB00E79B4E /* RoomTableViewController.swift in Sources */,
 				D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */,
 				D4A9F4F31BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift in Sources */,
 				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
@@ -519,10 +509,12 @@
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,
 				D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */,
 				D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */,
+				D45FBD5E1C04432900E79B4E /* ChatTableViewController.swift in Sources */,
 				D45FBD451BFE894F00E79B4E /* MediaItem.swift in Sources */,
 				D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */,
 				D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */,
 				D4A9F5B01BFC59BD00FA4444 /* String+Messages.swift in Sources */,
+				D45FBD601C0443E000E79B4E /* ChatTableViewCell.swift in Sources */,
 				D45FBD471BFE910D00E79B4E /* PhotoMediaItem.swift in Sources */,
 				D4A9F5AC1BFC48CD00FA4444 /* MessageToolbarContentView.swift in Sources */,
 			);
