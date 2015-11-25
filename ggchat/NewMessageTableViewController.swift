@@ -30,6 +30,15 @@ class NewMessageTableViewController: UITableViewController {
         self.navigationItem.title = "New Message"
         self.contactSearchBar.placeholder = "Search for contacts or usernames"
         self.contactSearchBar.searchBarStyle = UISearchBarStyle.Minimal
+        
+        /*
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "",
+            style: .Plain ,
+            target: self,
+            action: Selector("backButtonPressed:"))
+        */
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,6 +89,11 @@ class NewMessageTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         self.performSegueWithIdentifier("showNewMessageView", sender: self)
+    }
+    
+    func backButtonPressed(button: UIBarButtonItem) {
+        print("back button pressed")
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     /*
