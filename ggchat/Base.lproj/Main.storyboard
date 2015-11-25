@@ -25,6 +25,61 @@
             </objects>
             <point key="canvasLocation" x="3920" y="203"/>
         </scene>
+        <!--New Message Table View Controller-->
+        <scene sceneID="vpb-jV-zoG">
+            <objects>
+                <tableViewController id="1UG-IY-ugd" customClass="NewMessageTableViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xGd-1F-cmt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="TnE-dT-gsF">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="1UG-IY-ugd" id="z62-Wg-Rq4"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Geq-DR-zZx">
+                                <rect key="frame" x="0.0" y="136" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Geq-DR-zZx" id="Cvp-PV-gfd">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="1UG-IY-ugd" id="Vgs-lY-L4w"/>
+                            <outlet property="delegate" destination="1UG-IY-ugd" id="jF9-Cc-xT9"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="contactSearchBar" destination="TnE-dT-gsF" id="NuE-y1-tdE"/>
+                        <outlet property="searchDisplayController" destination="u5b-jf-ZXP" id="zOd-zr-2ZI"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SYd-YP-ixK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="u5b-jf-ZXP">
+                    <connections>
+                        <outlet property="delegate" destination="1UG-IY-ugd" id="0pM-MF-OPO"/>
+                        <outlet property="searchBar" destination="TnE-dT-gsF" id="evj-yt-lEX"/>
+                        <outlet property="searchContentsController" destination="1UG-IY-ugd" id="5B5-Ms-Wyi"/>
+                        <outlet property="searchResultsDataSource" destination="1UG-IY-ugd" id="7LO-lf-AOM"/>
+                        <outlet property="searchResultsDelegate" destination="1UG-IY-ugd" id="wvR-eB-yWg"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="3920" y="-437"/>
+        </scene>
         <!--Chat Table View Controller-->
         <scene sceneID="TBS-Mv-znz">
             <objects>
@@ -116,7 +171,13 @@
                             <outlet property="delegate" destination="Leb-Ju-9Gi" id="OSF-JH-KsW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="apt-Ou-3bO"/>
+                    <navigationItem key="navigationItem" id="apt-Ou-3bO">
+                        <barButtonItem key="rightBarButtonItem" image="Edit" id="5qp-zJ-79U">
+                            <connections>
+                                <segue destination="1UG-IY-ugd" kind="show" id="Xru-vI-vWo"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
@@ -296,6 +357,7 @@
     </scenes>
     <resources>
         <image name="Chat-Bubble" width="40" height="40"/>
+        <image name="Edit" width="25" height="25"/>
         <image name="Settings" width="25" height="25"/>
         <image name="User" width="40" height="40"/>
     </resources>
