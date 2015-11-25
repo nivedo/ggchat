@@ -18,7 +18,7 @@ struct GGConfig {
     static let incomingTextColor = UIColor.whiteColor()
     static let outgoingBubbleColor = UIColor.gg_messageBubbleLightGrayColor()
     static let outgoingTextColor = UIColor.whiteColor()
-    static let springinessEnabled = false // true
+    static let springinessEnabled = false
 }
 
 struct GGConfig_Dark {
@@ -30,5 +30,5 @@ struct GGConfig_Dark {
     static let incomingTextColor = UIColor.darkGrayColor()
     static let outgoingBubbleColor = UIColor.gg_messageBubbleGreenColor()
     static let outgoingTextColor = UIColor.whiteColor()
-    static let springinessEnabled = true
+    static let springinessEnabled = false
 }
