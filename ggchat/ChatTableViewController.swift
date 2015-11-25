@@ -8,8 +8,11 @@
 
 import UIKit
 
-class ChatTableViewController: UITableViewController {
+class ChatTableViewController: UITableViewController, UISearchBarDelegate, UISearchDisplayDelegate {
 
+    @IBOutlet weak var chatSearchBar: UISearchBar!
+    var filteredChatArray: NSMutableArray?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +23,10 @@ class ChatTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.title = "Chats"
+        self.filteredChatArray = NSMutableArray(capacity: GGModelData.sharedInstance.chats.count)
+        
+        self.chatSearchBar.placeholder = "Search for messages or users"
+        self.chatSearchBar.searchBarStyle = UISearchBarStyle.Minimal
     }
 
     override func didReceiveMemoryWarning() {
