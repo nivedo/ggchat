@@ -312,7 +312,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="W4T-ls-NsA">
-                        <barButtonItem key="rightBarButtonItem" image="Plus" id="ZrV-YL-sjM"/>
+                        <barButtonItem key="rightBarButtonItem" image="Plus" id="ZrV-YL-sjM">
+                            <connections>
+                                <action selector="addContactAction:" destination="6CV-o6-Siq" id="1DN-xW-Anp"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>

@@ -11,6 +11,32 @@ import UIKit
 class ContactTableViewController: UITableViewController {
 
     @IBOutlet weak var contactSearchBar: UISearchBar!
+    @IBAction func addContactAction(sender: AnyObject) {
+        let alert: UIAlertController = UIAlertController(
+            title: "Add people to chat with",
+            // message: "Choose options",
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionCancel = UIAlertAction(
+            title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
+        let actionPickFromContacts = UIAlertAction(
+            title: "Pick from Your Contacts",
+            style: UIAlertActionStyle.Default) { action -> Void in
+            // GGModelData.sharedInstance.addPhotoMediaMessage()
+        }
+        let actionEnterPhoneNumber = UIAlertAction(
+            title: "Enter Phone Number",
+            style: UIAlertActionStyle.Default) { action -> Void in
+            // GGModelData.sharedInstance.addVideoMediaMessage()
+        }
+        alert.addAction(actionPickFromContacts)
+        alert.addAction(actionEnterPhoneNumber)
+        alert.addAction(actionCancel)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
