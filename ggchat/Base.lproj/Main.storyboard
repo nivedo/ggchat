@@ -23,7 +23,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="anj-ry-DI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3920" y="203"/>
+            <point key="canvasLocation" x="4184" y="227"/>
         </scene>
         <!--New Message Table View Controller-->
         <scene sceneID="vpb-jV-zoG">
@@ -53,6 +53,9 @@
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <segue destination="k3J-sf-ZBR" kind="show" identifier="showNewMessageView" id="aIy-Q7-IZA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -469,4 +472,7 @@
         <image name="Settings" width="25" height="25"/>
         <image name="User" width="40" height="40"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="aIy-Q7-IZA"/>
+    </inferredMetricsTieBreakers>
 </document>
