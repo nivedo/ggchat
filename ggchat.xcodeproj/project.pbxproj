@@ -22,6 +22,9 @@
 		D45FBD631C04972200E79B4E /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD621C04972200E79B4E /* SettingTableViewController.swift */; };
 		D45FBD651C0497B300E79B4E /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD641C0497B300E79B4E /* ContactTableViewController.swift */; };
 		D45FBD671C05478400E79B4E /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD661C05478400E79B4E /* NewMessageTableViewController.swift */; };
+		D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */; };
+		D45FBD6C1C054EE200E79B4E /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */; };
+		D45FBD6E1C05525200E79B4E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD6D1C05525200E79B4E /* Contact.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -101,6 +104,9 @@
 		D45FBD621C04972200E79B4E /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		D45FBD641C0497B300E79B4E /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewController.swift; sourceTree = "<group>"; };
 		D45FBD661C05478400E79B4E /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
+		D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
+		D45FBD6D1C05525200E79B4E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +259,7 @@
 				D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */,
 				D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */,
 				D45FBD5B1BFFC9B100E79B4E /* Chat.swift */,
+				D45FBD6D1C05525200E79B4E /* Contact.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -292,6 +299,8 @@
 				D4A9F5AD1BFC51C000FA4444 /* MessageComposerTextView.swift */,
 				D45FBD4C1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift */,
 				D45FBD5F1C0443E000E79B4E /* ChatTableViewCell.swift */,
+				D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */,
+				D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -447,6 +456,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D45FBD6C1C054EE200E79B4E /* ContactTableViewCell.xib in Resources */,
 				D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */,
 				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
 				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
@@ -483,6 +493,7 @@
 			files = (
 				D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */,
 				D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */,
+				D45FBD6E1C05525200E79B4E /* Contact.swift in Sources */,
 				D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */,
 				D4A9F50B1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
 				D45FBD671C05478400E79B4E /* NewMessageTableViewController.swift in Sources */,
@@ -492,6 +503,7 @@
 				D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */,
 				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
+				D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
 				D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */,
 				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,

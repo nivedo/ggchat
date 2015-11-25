@@ -11,9 +11,16 @@ import UIKit
 class NewMessageTableViewController: UITableViewController {
 
     @IBOutlet weak var contactSearchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.registerNib(ContactTableViewCell.nib(),
+            forCellReuseIdentifier: ContactTableViewCell.cellReuseIdentifier())
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -34,23 +41,25 @@ class NewMessageTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return GGModelData.sharedInstance.contacts.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
+            forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
-
+        let contact = GGModelData.sharedInstance.contacts[indexPath.row]
+        
+        cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
+        
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

@@ -28,6 +28,7 @@ class GGModelData {
     var chats = [Chat]()
     var avatars = [String:MessageAvatarImage]()
     var users = [String:String]()
+    var contacts = [Contact]()
    
     class var sharedInstance: GGModelData {
         struct Singleton {
@@ -41,6 +42,24 @@ class GGModelData {
         self.loadChats()
         self.loadAvatars()
         self.loadUsers()
+        self.loadContacts()
+    }
+    
+    func loadContacts() {
+        self.contacts = [
+            Contact(
+                id: Demo.id_chang,
+                displayName: Demo.displayName_chang),
+            Contact(
+                id: Demo.id_cook,
+                displayName: Demo.displayName_cook),
+            Contact(
+                id: Demo.id_woz,
+                displayName: Demo.displayName_woz),
+            Contact(
+                id: Demo.id_jobs,
+                displayName: Demo.displayName_jobs),
+        ]
     }
     
     func loadMessages() {
