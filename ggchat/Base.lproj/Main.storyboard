@@ -254,6 +254,17 @@
                                     <outlet property="iconImageView" destination="fRc-Sn-Vyx" id="E7u-9z-iSM"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingTableHeaderCell" rowHeight="32" id="mUX-KF-ue6" customClass="SettingTableHeaderCell" customModule="ggchat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="320" height="32"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mUX-KF-ue6" id="nHs-Gm-lfx">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="9tp-dU-HzM" id="FE8-u5-ccd"/>

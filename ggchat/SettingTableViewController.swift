@@ -49,7 +49,13 @@ class SettingTableViewController: UITableViewController {
         
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableHeaderCell.cellReuseIdentifier()) as! SettingTableHeaderCell
+        
+        return cell
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

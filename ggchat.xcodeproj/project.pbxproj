@@ -28,6 +28,7 @@
 		D45FBD721C0561D500E79B4E /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */; };
 		D45FBD741C056A3F00E79B4E /* GGSettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD731C056A3F00E79B4E /* GGSettingData.swift */; };
 		D45FBD761C05721D00E79B4E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD751C05721D00E79B4E /* Setting.swift */; };
+		D45FBD781C05754400E79B4E /* SettingTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -113,6 +114,7 @@
 		D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		D45FBD731C056A3F00E79B4E /* GGSettingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGSettingData.swift; sourceTree = "<group>"; };
 		D45FBD751C05721D00E79B4E /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableHeaderCell.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */,
 				D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */,
 				D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */,
+				D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 				D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
 				D4A9F51C1BFA95F500FA4444 /* MessageViewController.swift in Sources */,
+				D45FBD781C05754400E79B4E /* SettingTableHeaderCell.swift in Sources */,
 				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
 				D45FBD5C1BFFC9B100E79B4E /* Chat.swift in Sources */,
 				D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */,
