@@ -25,6 +25,9 @@
 		D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */; };
 		D45FBD6C1C054EE200E79B4E /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */; };
 		D45FBD6E1C05525200E79B4E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD6D1C05525200E79B4E /* Contact.swift */; };
+		D45FBD721C0561D500E79B4E /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */; };
+		D45FBD741C056A3F00E79B4E /* GGSettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD731C056A3F00E79B4E /* GGSettingData.swift */; };
+		D45FBD761C05721D00E79B4E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD751C05721D00E79B4E /* Setting.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
@@ -107,6 +110,9 @@
 		D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		D45FBD6D1C05525200E79B4E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		D45FBD731C056A3F00E79B4E /* GGSettingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGSettingData.swift; sourceTree = "<group>"; };
+		D45FBD751C05721D00E79B4E /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D45FBD421BFDB1B300E79B4E /* GGConfig.swift */,
 				D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */,
+				D45FBD731C056A3F00E79B4E /* GGSettingData.swift */,
 				D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
 				D4683E5C1BF0486F00E02886 /* Assets.xcassets */,
@@ -260,6 +267,7 @@
 				D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */,
 				D45FBD5B1BFFC9B100E79B4E /* Chat.swift */,
 				D45FBD6D1C05525200E79B4E /* Contact.swift */,
+				D45FBD751C05721D00E79B4E /* Setting.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -301,6 +309,7 @@
 				D45FBD5F1C0443E000E79B4E /* ChatTableViewCell.swift */,
 				D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */,
 				D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */,
+				D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -495,6 +504,7 @@
 				D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */,
 				D45FBD6E1C05525200E79B4E /* Contact.swift in Sources */,
 				D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */,
+				D45FBD741C056A3F00E79B4E /* GGSettingData.swift in Sources */,
 				D4A9F50B1BF52A1600FA4444 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
 				D45FBD671C05478400E79B4E /* NewMessageTableViewController.swift in Sources */,
 				D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */,
@@ -518,6 +528,7 @@
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
 				D45FBD511BFED00500E79B4E /* VideoMediaItem.swift in Sources */,
 				D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */,
+				D45FBD721C0561D500E79B4E /* SettingTableViewCell.swift in Sources */,
 				D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */,
 				D4A9F4F31BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift in Sources */,
 				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
@@ -526,6 +537,7 @@
 				D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */,
 				D4A9F59F1BFC182600FA4444 /* MessageTypingIndicatorFooterView.swift in Sources */,
 				D4A9F5A31BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.swift in Sources */,
+				D45FBD761C05721D00E79B4E /* Setting.swift in Sources */,
 				D45FBD4D1BFE9E3400E79B4E /* MessageMediaPlaceholderView.swift in Sources */,
 				D4A9F50D1BF52A7C00FA4444 /* MessageBubbleSizeCalculator.swift in Sources */,
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,

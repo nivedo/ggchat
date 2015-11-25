@@ -208,15 +208,51 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="3sV-6d-P46">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingTableViewCell" id="3sV-6d-P46" customClass="SettingTableViewCell" customModule="ggchat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3sV-6d-P46" id="Fyh-Wh-gpW">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fi5-n9-mMe" userLabel="Icon container">
+                                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRc-Sn-Vyx" userLabel="Icon image view">
+                                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                                    <animations/>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zdO-s6-unM" userLabel="Arrow container">
+                                            <rect key="frame" x="278" y="0.0" width="44" height="44"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ArrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="8IX-o4-DZv" userLabel="Arrow image view">
+                                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                                    <animations/>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cell main label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPE-I4-xLP" userLabel="Cell main label">
+                                            <rect key="frame" x="44" y="0.0" width="200" height="30"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <outlet property="cellMainLabel" destination="SPE-I4-xLP" id="umb-NQ-lKb"/>
+                                    <outlet property="iconContainer" destination="Fi5-n9-mMe" id="U9p-53-nrD"/>
+                                    <outlet property="iconImageView" destination="fRc-Sn-Vyx" id="E7u-9z-iSM"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -384,6 +420,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ArrowRight" width="25" height="25"/>
         <image name="Chat-Bubble" width="40" height="40"/>
         <image name="Edit" width="25" height="25"/>
         <image name="Plus" width="25" height="25"/>
