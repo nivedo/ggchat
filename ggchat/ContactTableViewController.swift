@@ -10,9 +10,16 @@ import UIKit
 
 class ContactTableViewController: UITableViewController {
 
+    @IBOutlet weak var contactSearchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.registerNib(ContactTableViewCell.nib(),
+            forCellReuseIdentifier: ContactTableViewCell.cellReuseIdentifier())
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -20,6 +27,8 @@ class ContactTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.title = "Contacts"
+        self.contactSearchBar.placeholder = "Search for contacts or usernames"
+        self.contactSearchBar.searchBarStyle = UISearchBarStyle.Minimal
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,23 +40,41 @@ class ContactTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return GGModelData.sharedInstance.contacts.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
+            forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
-
+        let contact = GGModelData.sharedInstance.contacts[indexPath.row]
+        
+        let needsAvatar: Bool = true
+        if (needsAvatar) {
+            let avatarImageDataSource = self.tableView(
+                self.tableView,
+                avatarImageDataForItemAtIndexPath: indexPath)
+            if (avatarImageDataSource != nil) {
+                let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
+                if (avatarImage == nil) {
+                    cell.avatarImageView.image = avatarImageDataSource!.avatarPlaceholderImage
+                    cell.avatarImageView.highlightedImage = nil
+                } else {
+                    cell.avatarImageView.image = avatarImage
+                    cell.avatarImageView.highlightedImage = avatarImageDataSource!.avatarHighlightedImage
+                }
+            }
+        }
+        cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
+        
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -94,4 +121,9 @@ class ContactTableViewController: UITableViewController {
     }
     */
 
+    func tableView(tableView: UITableView,
+        avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
+        let id = GGModelData.sharedInstance.contacts[indexPath.row].id
+        return GGModelData.sharedInstance.avatars[id]
+    }
 }
