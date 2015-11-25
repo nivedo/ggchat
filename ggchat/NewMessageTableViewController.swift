@@ -56,6 +56,22 @@ class NewMessageTableViewController: UITableViewController {
         // Configure the cell...
         let contact = GGModelData.sharedInstance.contacts[indexPath.row]
         
+        let needsAvatar: Bool = true
+        if (needsAvatar) {
+            let avatarImageDataSource = self.tableView(
+                self.tableView,
+                avatarImageDataForItemAtIndexPath: indexPath)
+            if (avatarImageDataSource != nil) {
+                let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
+                if (avatarImage == nil) {
+                    cell.avatarImageView.image = avatarImageDataSource!.avatarPlaceholderImage
+                    cell.avatarImageView.highlightedImage = nil
+                } else {
+                    cell.avatarImageView.image = avatarImage
+                    cell.avatarImageView.highlightedImage = avatarImageDataSource!.avatarHighlightedImage
+                }
+            }
+        }
         cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
         
         return cell
@@ -106,4 +122,9 @@ class NewMessageTableViewController: UITableViewController {
     }
     */
 
+    func tableView(tableView: UITableView,
+        avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
+        let id = GGModelData.sharedInstance.contacts[indexPath.row].id
+        return GGModelData.sharedInstance.avatars[id]
+    }
 }

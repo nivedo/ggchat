@@ -11,14 +11,14 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="31k-lW-meT" userLabel="Avatar container">
-                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="31k-lW-meT" userLabel="Avatar container">
+                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gr3-qZ-q5F" userLabel="Avatar image view">
-                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                 <animations/>
                             </imageView>
                         </subviews>
@@ -28,9 +28,9 @@
                             <constraint firstItem="Gr3-qZ-q5F" firstAttribute="leading" secondItem="31k-lW-meT" secondAttribute="leading" id="1Yh-5j-5eC"/>
                             <constraint firstAttribute="bottom" secondItem="Gr3-qZ-q5F" secondAttribute="bottom" id="40R-Kz-2di"/>
                             <constraint firstItem="Gr3-qZ-q5F" firstAttribute="top" secondItem="31k-lW-meT" secondAttribute="top" id="Jd2-bW-Rrj"/>
-                            <constraint firstAttribute="width" constant="44" id="LUk-At-Lwk"/>
+                            <constraint firstAttribute="width" constant="32" id="LUk-At-Lwk"/>
                             <constraint firstAttribute="trailing" secondItem="Gr3-qZ-q5F" secondAttribute="trailing" id="YPY-sX-Nfv"/>
-                            <constraint firstAttribute="height" constant="44" id="Zvc-5U-Qax"/>
+                            <constraint firstAttribute="height" constant="32" id="Zvc-5U-Qax"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell main label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1A-AK-jyx" userLabel="Cell main label">
@@ -48,8 +48,8 @@
                 <constraints>
                     <constraint firstItem="s1A-AK-jyx" firstAttribute="leading" secondItem="31k-lW-meT" secondAttribute="trailing" constant="6" id="38w-yO-q6v"/>
                     <constraint firstItem="s1A-AK-jyx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="AnE-eM-a47"/>
-                    <constraint firstItem="31k-lW-meT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Zrz-fy-crX"/>
-                    <constraint firstItem="31k-lW-meT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="h91-hq-73q"/>
+                    <constraint firstItem="31k-lW-meT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="iR8-mM-Y4w"/>
+                    <constraint firstItem="31k-lW-meT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="svN-mI-Ald"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
