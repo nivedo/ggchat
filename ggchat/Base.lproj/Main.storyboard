@@ -39,11 +39,11 @@
                                 <rect key="frame" x="0.0" y="92" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pEe-Yx-1UK" id="37J-Dd-wNn">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmM-0d-thf" userLabel="Cell top label">
-                                            <rect key="frame" x="60" y="0.0" width="160" height="30"/>
+                                            <rect key="frame" x="60" y="0.0" width="150" height="30"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -64,15 +64,15 @@
                                                 <constraint firstAttribute="width" constant="60" id="p0j-L0-gfT"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44r-ER-T7S" userLabel="Cell bottom label">
-                                            <rect key="frame" x="60" y="30" width="260" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Corner label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziM-Es-CrP" userLabel="Cell corner label">
+                                            <rect key="frame" x="220" y="0.0" width="100" height="30"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Corner label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziM-Es-CrP" userLabel="Cell corner label">
-                                            <rect key="frame" x="220" y="0.0" width="100" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44r-ER-T7S" userLabel="Cell bottom label">
+                                            <rect key="frame" x="60" y="30" width="260" height="30"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -84,9 +84,9 @@
                                         <constraint firstItem="QmM-0d-thf" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="04b-g8-ORc"/>
                                         <constraint firstItem="44r-ER-T7S" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="8sE-2K-xgb"/>
                                         <constraint firstItem="44r-ER-T7S" firstAttribute="top" secondItem="QmM-0d-thf" secondAttribute="bottom" id="bGa-42-lW1"/>
-                                        <constraint firstAttribute="trailing" secondItem="ziM-Es-CrP" secondAttribute="trailing" id="fM9-Ie-XiS"/>
-                                        <constraint firstItem="ziM-Es-CrP" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" id="iwT-wf-ENA"/>
-                                        <constraint firstItem="QmM-0d-thf" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" id="wdF-tb-zGu"/>
+                                        <constraint firstAttribute="trailing" secondItem="ziM-Es-CrP" secondAttribute="trailing" constant="8" id="fM9-Ie-XiS"/>
+                                        <constraint firstItem="ziM-Es-CrP" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" constant="8" id="iwT-wf-ENA"/>
+                                        <constraint firstItem="QmM-0d-thf" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" constant="8" id="wdF-tb-zGu"/>
                                         <constraint firstItem="R3F-nn-JfU" firstAttribute="leading" secondItem="37J-Dd-wNn" secondAttribute="leading" id="x2Z-hc-Kpt"/>
                                         <constraint firstItem="R3F-nn-JfU" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" id="z2o-0N-gSk"/>
                                     </constraints>
