@@ -20,6 +20,9 @@ class SettingTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.title = "Settings"
+        self.tableView.tableFooterView = UIView()
+        self.tableView.tableFooterView?.hidden = true
+        self.tableView.backgroundColor = self.tableView.separatorColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,6 +55,7 @@ class SettingTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableHeaderCell.cellReuseIdentifier()) as! SettingTableHeaderCell
+        cell.backgroundColor = UIColor.clearColor()
         
         return cell
     }

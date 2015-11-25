@@ -24,7 +24,7 @@ class SettingTableHeaderCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.backgroundColor = UIColor.lightGrayColor()
+        // self.backgroundColor = UIColor.lightGrayColor()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
