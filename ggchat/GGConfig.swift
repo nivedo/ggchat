@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 
-struct GGConfig {
+struct GGConfig_iMessage {
     static let backgroundColor = UIColor.whiteColor()
+    static let loadButtonColorNormal = UIColor.lightGrayColor()
     static let cellTopLabelTextColor = UIColor.lightGrayColor()
     static let cellBottomLabelTextColor = UIColor.lightGrayColor()
     static let bubbleTopLabelTextColor = UIColor.lightGrayColor()
@@ -21,8 +22,22 @@ struct GGConfig {
     static let springinessEnabled = false
 }
 
+struct GGConfig {
+    static let backgroundColor = UIColor.grayColor()
+    static let loadButtonColorNormal = UIColor.lightGrayColor()
+    static let cellTopLabelTextColor = UIColor.whiteColor()
+    static let cellBottomLabelTextColor = UIColor.whiteColor()
+    static let bubbleTopLabelTextColor = UIColor.whiteColor()
+    static let incomingBubbleColor = UIColor.whiteColor()
+    static let incomingTextColor = UIColor.darkGrayColor()
+    static let outgoingBubbleColor = UIColor.gg_messageBubbleGreenColor()
+    static let outgoingTextColor = UIColor.whiteColor()
+    static let springinessEnabled = false
+}
+
 struct GGConfig_Dark {
     static let backgroundColor = UIColor.darkGrayColor()
+    static let loadButtonColorNormal = UIColor.lightGrayColor()
     static let cellTopLabelTextColor = UIColor.whiteColor()
     static let cellBottomLabelTextColor = UIColor.whiteColor()
     static let bubbleTopLabelTextColor = UIColor.whiteColor()

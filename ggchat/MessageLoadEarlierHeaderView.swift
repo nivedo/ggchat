@@ -39,6 +39,7 @@ class MessageLoadEarlierHeaderView: UICollectionReusableView {
             NSBundle.gg_localizedStringForKey("load_earlier_messages"),
             forState: UIControlState.Normal)
         self.loadButton.titleLabel!.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        self.loadButton.setTitleColor(GGConfig.loadButtonColorNormal, forState: UIControlState.Normal)
     }
 
     // pragma mark - Class methods
