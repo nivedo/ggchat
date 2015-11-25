@@ -311,7 +311,9 @@
                             <outlet property="delegate" destination="6CV-o6-Siq" id="007-Ka-9M7"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="W4T-ls-NsA"/>
+                    <navigationItem key="navigationItem" id="W4T-ls-NsA">
+                        <barButtonItem key="rightBarButtonItem" image="Plus" id="ZrV-YL-sjM"/>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
@@ -380,6 +382,7 @@
     <resources>
         <image name="Chat-Bubble" width="40" height="40"/>
         <image name="Edit" width="25" height="25"/>
+        <image name="Plus" width="25" height="25"/>
         <image name="Settings" width="25" height="25"/>
         <image name="User" width="40" height="40"/>
     </resources>
