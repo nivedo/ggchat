@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="S31-Hi-fhB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UL9-IJ-cUh">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -480,12 +480,12 @@
                         <outlet property="passwordTextField" destination="j4Q-L6-UzW" id="d3a-A5-9Ez"/>
                         <outlet property="usernameTextField" destination="Cjv-HM-0X7" id="Qnx-oM-VSV"/>
                         <outlet property="welcomeLabel" destination="L3j-Oo-Wsb" id="l15-kn-kV2"/>
-                        <segue destination="cn7-VU-f7U" kind="show" identifier="showChatViewAfterLogin" id="Rbg-r3-fSu"/>
+                        <segue destination="S31-Hi-fhB" kind="show" identifier="showChatViewAfterLogin" id="td0-iI-Ota"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQ4-zU-o9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2590" y="1219"/>
+            <point key="canvasLocation" x="2109" y="815"/>
         </scene>
         <!--Settings-->
         <scene sceneID="2Ss-Jf-au6">
@@ -541,7 +541,6 @@
         <image name="User" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Rbg-r3-fSu"/>
         <segue reference="Aln-Pk-2fu"/>
     </inferredMetricsTieBreakers>
 </document>

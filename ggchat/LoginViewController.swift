@@ -66,6 +66,9 @@ class LoginViewController: UIViewController {
             password: passwordTextField.text!,
             callback: loginCallback)
         */
+        
+        // TEMP
+        self.loginCallback(true, status: 0)
     }
    
     func loginCallback(success: Bool, status: Int?) {
