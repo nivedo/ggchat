@@ -21,19 +21,30 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+      
+        self.welcomeLabel.text = "gg chat"
+        self.welcomeLabel.textColor = UIColor.darkGrayColor()
+        self.welcomeLabel.font = UIFont.boldSystemFontOfSize(CGFloat(30))
         
+        // Initialize username and password
         if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey("username") {
             self.usernameTextField.placeholder = previousUsername
         } else {
             self.usernameTextField.placeholder = "Username";
         }
         
-        self.usernameTextField.autocorrectionType = UITextAutocorrectionType.No;
+        self.usernameTextField.autocorrectionType = UITextAutocorrectionType.No
         self.usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
+        self.usernameTextField.layer.borderColor = UIColor.darkGrayColor().CGColor
+        self.usernameTextField.layer.borderWidth = 1
+        self.usernameTextField.layer.cornerRadius = CGFloat(5.0)
         
-        self.passwordTextField.placeholder = "Password";
+        self.passwordTextField.placeholder = "Password"
         self.passwordTextField.autocorrectionType = UITextAutocorrectionType.No;
         self.passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
+        self.passwordTextField.layer.borderColor = UIColor.darkGrayColor().CGColor
+        self.passwordTextField.layer.borderWidth = 1
+        self.passwordTextField.layer.cornerRadius = CGFloat(5.0)
         
         // Initialize buttons
         self.loginButton.setTitle("Login", forState: .Normal);
@@ -41,8 +52,8 @@ class LoginViewController: UIViewController {
         self.loginButton.backgroundColor = UIColor.clearColor();
         self.loginButton.layer.cornerRadius = 5
         self.loginButton.layer.borderWidth = 1
-        // loginButton.layer.borderColor = AppStyle.menuTextColor.CGColor
-        // loginButton.setTitleColor(AppStyle.menuTextColor, forState: .Normal);
+        self.loginButton.layer.borderColor = UIColor.darkGrayColor().CGColor
+        self.loginButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal);
     }
 
     @IBAction func loginAction(sender: AnyObject) {
