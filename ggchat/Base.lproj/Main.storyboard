@@ -23,7 +23,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="anj-ry-DI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4184" y="227"/>
+            <point key="canvasLocation" x="4490" y="381"/>
         </scene>
         <!--New Message Table View Controller-->
         <scene sceneID="vpb-jV-zoG">
@@ -376,7 +376,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SiN-7o-eIL">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactTableViewCell" id="SiN-7o-eIL" customClass="ContactTableViewCell" customModule="ggchat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="136" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SiN-7o-eIL" id="7B5-nP-oKD">
@@ -385,6 +385,9 @@
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <segue destination="k3J-sf-ZBR" kind="show" identifier="showContactMessageView" id="Aln-Pk-2fu"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -473,6 +476,6 @@
         <image name="User" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aIy-Q7-IZA"/>
+        <segue reference="Aln-Pk-2fu"/>
     </inferredMetricsTieBreakers>
 </document>
