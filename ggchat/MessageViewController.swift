@@ -128,14 +128,12 @@ class MessageViewController: UIViewController,
         barButton.title = "Back"
         self.navigationController!.navigationBar.topItem!.backBarButtonItem = barButton
         */
-        /*
         let barButton: UIBarButtonItem = UIBarButtonItem(
-            title: "Back",
-            style: UIBarButtonItemStyle.Bordered,
+            title: "Chats",
+            style: UIBarButtonItemStyle.Plain,
             target: self,
             action: Selector("receivedBackPressed:"))
         self.navigationItem.leftBarButtonItem = barButton
-        */
         
         /**
          *  Register custom menu actions for cells.
