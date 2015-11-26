@@ -8,12 +8,16 @@
 
 import Foundation
 
-class XMPPManager: NSObject, XMPPStreamDelegate {
-   
+class XMPPManager: NSObject,
+    XMPPStreamDelegate,
+    XMPPRosterDelegate {
+
     var username: String!
     var password: String!
     var domain: String!
-    var stream: XMPPStream
+    var stream: XMPPStream = XMPPStream()
+    var roster: XMPPRoster!
+    var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
     
     class var sharedInstance: XMPPManager {
         struct Singleton {
@@ -23,8 +27,9 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
     }
     
     override init() {
+        self.roster = XMPPRoster(rosterStorage: self.rosterStorage)
+        
         // Initialize stream
-        self.stream = XMPPStream()
         super.init()
        
         // Configure connection
@@ -57,13 +62,11 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
     }
     
     func connect() {
-        /*
         self.stream.myJID = XMPPJID.jidWithUser(
             self.username,
             domain: self.domain,
-            resource: "ggchat")
-        */
-        self.stream.myJID = XMPPJID.jidWithString("gchang@chat.blub.io")
+            resource: "ios")
+        // self.stream.myJID = XMPPJID.jidWithString("gchang@chat.blub.io")
         // self.stream.hostName = "45.33.39.21"
         
         if (self.stream.isConnected()) {
@@ -136,6 +139,53 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
         
         // delegate?.didLogin?()
     }
+    
+    //////////////////////////////////////////////////////////////////////////////
+    // XMPPRosterDelegate
+    //////////////////////////////////////////////////////////////////////////////
+    
+    func xmppRoster(sender: XMPPRoster, didReceivePresenceSubscriptionRequest presence: XMPPPresence) {
+        
+    }
+    
+    /**
+    * Sent when a Roster Push is received as specified in Section 2.1.6 of RFC 6121.
+    **/
+    func xmppRoster(sender: XMPPRoster, didReceiveRosterPush iq: XMPPIQ) {
+        
+    }
+    
+    /**
+    * Sent when the initial roster is received.
+    **/
+    func xmppRosterDidBeginPopulating(sender: XMPPRoster, withVersion version: String) {
+        
+    }
+    
+    /**
+    * Sent when the initial roster has been populated into storage.
+    **/
+    func xmppRosterDidEndPopulating(sender: XMPPRoster) {
+        
+    }
+    
+    /**
+    * Sent when the roster receives a roster item.
+    *
+    * Example:
+    *
+    * <item jid='romeo@example.net' name='Romeo' subscription='both'>
+    *   <group>Friends</group>
+    * </item>
+    **/
+    func xmppRoster(sender: XMPPRoster,
+        didReceiveRosterItem item: DDXMLElement!) {
+            
+    }
+
+    //////////////////////////////////////////////////////////////////////////////
+    // XMPPStreamDelegate
+    //////////////////////////////////////////////////////////////////////////////
     
     func xmppStream(sender: XMPPStream!, didFailToSendMessage message: XMPPMessage!, error: NSError!) {
         /*

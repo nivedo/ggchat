@@ -16,7 +16,12 @@
 
 #import "XMPP.h"
 #import "XMPPReconnect.h"
+#import "XMPPRoster.h"
+#import "XMPPRosterCoreDataStorage.h"
 #import "XMPPLogging.h"
+#import "XMPPUser.h"
+#import "XMPPResource.h"
+#import "NSXMLElement+XMPP.h"
 #import "DDLog.h"
 #import "DDASLLogger.h"
 #import "DDTTYLogger.h"
