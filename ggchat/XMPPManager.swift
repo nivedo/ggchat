@@ -17,7 +17,8 @@ class XMPPManager: NSObject,
     var domain: String!
     var stream: XMPPStream = XMPPStream()
     var roster: XMPPRoster!
-    var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
+    // var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
+    var rosterStorage: XMPPRosterMemoryStorage = XMPPRosterMemoryStorage()
     
     class var sharedInstance: XMPPManager {
         struct Singleton {
@@ -35,12 +36,13 @@ class XMPPManager: NSObject,
         // Configure connection
         
         // Initialize delegates
-        // self.stream.addDelegate(self,
-        //     delegateQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
         self.stream.addDelegate(self,
             delegateQueue: dispatch_get_main_queue())
+        self.roster.autoFetchRoster = true
+        self.roster.addDelegate(self, delegateQueue: dispatch_get_main_queue())
+        self.roster.activate(self.stream)
         
-        let reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
+        let reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_main_queue())
         reconnecter.usesOldSchoolSecureConnect = true
         reconnecter.activate(self.stream)
         
@@ -159,14 +161,16 @@ class XMPPManager: NSObject,
     * Sent when the initial roster is received.
     **/
     func xmppRosterDidBeginPopulating(sender: XMPPRoster, withVersion version: String) {
-        
+        print("roster::didBeginPopulating")
     }
     
     /**
     * Sent when the initial roster has been populated into storage.
     **/
     func xmppRosterDidEndPopulating(sender: XMPPRoster) {
+        print("roster::didEndPopulating")
         
+        // let population = self.rosterStorage.
     }
     
     /**
@@ -180,7 +184,7 @@ class XMPPManager: NSObject,
     **/
     func xmppRoster(sender: XMPPRoster,
         didReceiveRosterItem item: DDXMLElement!) {
-            
+        print("roster::didReceiveRosterItem")
     }
 
     //////////////////////////////////////////////////////////////////////////////
