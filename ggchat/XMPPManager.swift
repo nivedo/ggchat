@@ -17,8 +17,44 @@ class XMPPManager: NSObject,
     var domain: String!
     var stream: XMPPStream = XMPPStream()
     var roster: XMPPRoster!
-    // var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
-    var rosterStorage: XMPPRosterMemoryStorage = XMPPRosterMemoryStorage()
+    var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
+    // var rosterStorage: XMPPRosterMemoryStorage = XMPPRosterMemoryStorage()
+   
+    var managedObjectContextForRoster: NSManagedObjectContext {
+        get {
+            return self.rosterStorage.mainThreadManagedObjectContext
+        }
+    }
+    
+    func fetchResultsControllerForRoster(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
+        let moc: NSManagedObjectContext = self.managedObjectContextForRoster
+        
+        let entity: NSEntityDescription = NSEntityDescription.entityForName("XMPPUserCoreDataStorageObject", inManagedObjectContext: moc)!
+        
+        let sd1: NSSortDescriptor = NSSortDescriptor(key: "sectionNum", ascending: true)
+        let sd2: NSSortDescriptor = NSSortDescriptor(key: "displayName", ascending: true)
+        
+        let sortDescriptors: [NSSortDescriptor] = [sd1, sd2]
+        
+        let fetchRequest: NSFetchRequest = NSFetchRequest()
+        fetchRequest.entity = entity
+        fetchRequest.sortDescriptors = sortDescriptors
+        fetchRequest.fetchBatchSize = 10
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest:fetchRequest,
+            managedObjectContext: moc,
+            sectionNameKeyPath: "sectionNum",
+            cacheName:nil)
+        fetchedResultsController.delegate = delegate
+        
+       
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("Error performing fetch: \(error)")
+        }
+        return fetchedResultsController
+    }
     
     class var sharedInstance: XMPPManager {
         struct Singleton {
@@ -142,19 +178,24 @@ class XMPPManager: NSObject,
         // delegate?.didLogin?()
     }
     
+    func xmppStream(sender: XMPPStream!, didReceiveIQ iq: XMPPIQ!) -> Bool {
+        print("stream::didReceiveIQ")
+        return false
+    }
+    
     //////////////////////////////////////////////////////////////////////////////
     // XMPPRosterDelegate
     //////////////////////////////////////////////////////////////////////////////
     
     func xmppRoster(sender: XMPPRoster, didReceivePresenceSubscriptionRequest presence: XMPPPresence) {
-        
+        print("roster::didReceivePresenceSubscriptionRequest")
     }
     
     /**
     * Sent when a Roster Push is received as specified in Section 2.1.6 of RFC 6121.
     **/
     func xmppRoster(sender: XMPPRoster, didReceiveRosterPush iq: XMPPIQ) {
-        
+        print("roster::didReceiveRosterPush")
     }
     
     /**
@@ -186,7 +227,7 @@ class XMPPManager: NSObject,
         didReceiveRosterItem item: DDXMLElement!) {
         print("roster::didReceiveRosterItem")
     }
-
+    
     //////////////////////////////////////////////////////////////////////////////
     // XMPPStreamDelegate
     //////////////////////////////////////////////////////////////////////////////
