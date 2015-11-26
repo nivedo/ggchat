@@ -22,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLog.addLogger(DDASLLogger.sharedInstance(), withLogLevel: logLevel)
         DDLog.addLogger(DDTTYLogger.sharedInstance(), withLogLevel: logLevel)
         
-        let xmpp = XMPPManager()
+        let xmppConnected = XMPPManager.sharedInstance.isConnected()
+        print("xmpp is connected: \(xmppConnected)")
         
         return true
     }

@@ -15,9 +15,9 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
     var domain: String!
     var stream: XMPPStream
     
-    class var sharedInstance: GGModelData {
+    class var sharedInstance: XMPPManager {
         struct Singleton {
-            static let instance = GGModelData()
+            static let instance = XMPPManager()
         }
         return Singleton.instance
     }
@@ -35,11 +35,9 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
         self.stream.addDelegate(self,
             delegateQueue: dispatch_get_main_queue())
         
-        /*
         let reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
         reconnecter.usesOldSchoolSecureConnect = true
         reconnecter.activate(self.stream)
-        */
         
         self.login("gchang",
             password: "asdf",
@@ -53,7 +51,11 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
         
         self.connect()
     }
-   
+  
+    func isConnected() -> Bool {
+        return self.stream.isConnected()
+    }
+    
     func connect() {
         /*
         self.stream.myJID = XMPPJID.jidWithUser(
@@ -89,12 +91,10 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
        self.stream.disconnect()
     }
    
-    /*
     func xmppStream(sender: XMPPStream, willSecureWithSettings settings:NSMutableDictionary) {
         print("willSecureWithSettings")
         settings[GCDAsyncSocketManuallyEvaluateTrust] = true
     }
-    */
     
     func xmppStreamDidConnect(sender: XMPPStream!) {
         print("SUCCESS: Connect to \(self.username)@\(self.domain)")
@@ -122,7 +122,7 @@ class XMPPManager: NSObject, XMPPStreamDelegate {
     }
     
     func xmppStreamDidDisconnect(sender: XMPPStream!, withError error: NSError!) {
-        print("Disconnected")
+        print("didDisconnect error: \(error)")
         
         self.stream.myJID = nil
         // delegate?.didLogout?()
