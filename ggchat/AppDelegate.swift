@@ -16,6 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        print("application::didFinishLaunchingWithOptions")
+        let logLevel = XMPP_LOG_FLAG_SEND | XMPP_LOG_FLAG_TRACE | XMPP_LOG_FLAG_VERBOSE
+        DDLog.addLogger(DDASLLogger.sharedInstance(), withLogLevel: logLevel)
+        DDLog.addLogger(DDTTYLogger.sharedInstance(), withLogLevel: logLevel)
+        
+        let xmpp = XMPPManager()
+        
         return true
     }
 
