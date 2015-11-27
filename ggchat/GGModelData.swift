@@ -26,7 +26,7 @@ class Demo {
 class GGModelData {
     var messages = [Message]()
     var chats = [Chat]()
-    var avatars = [String:MessageAvatarImage]()
+    private var avatars = [String:MessageAvatarImage]()
     var users = [String:String]()
     var contacts = [Contact]()
    
@@ -129,6 +129,24 @@ class GGModelData {
                 UIImage(named: "demo_avatar_woz")!,
                 diameter: Demo.avatarSize),
         ]
+    }
+    
+    func getAvatar(id: String) -> MessageAvatarImage {
+        if let val = self.avatars[id] {
+            return val
+        } else {
+            let first = id[id.startIndex]
+            let last = id[id.endIndex]
+            let initials = "\(first)\(last)".uppercaseString
+            
+            self.avatars[id] = MessageAvatarImageFactory.avatarImageWithUserInitials(
+                initials,
+                backgroundColor: UIColor(white: 0.85, alpha: 1.0),
+                textColor: UIColor(white: 0.60, alpha: 1.0),
+                font: UIFont.systemFontOfSize(14.0),
+                diameter: Demo.avatarSize)
+            return self.avatars[id]!
+        }
     }
     
     func loadUsers() {

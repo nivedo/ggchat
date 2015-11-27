@@ -162,7 +162,7 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
         let id = GGModelData.sharedInstance.contacts[indexPath.row].id
-        return GGModelData.sharedInstance.avatars[id]
+        return GGModelData.sharedInstance.getAvatar(id)
     }
     
     //////////////////////////////////////////////////////////////////////////

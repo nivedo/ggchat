@@ -125,6 +125,6 @@ class ChatTableViewController: UITableViewController, UISearchBarDelegate, UISea
 
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        return GGModelData.sharedInstance.avatars[Demo.id_jobs]
+        return GGModelData.sharedInstance.getAvatar(Demo.id_jobs)
     }
 }
