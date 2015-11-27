@@ -17,6 +17,7 @@
 #import "XMPP.h"
 #import "XMPPReconnect.h"
 #import "XMPPRoster.h"
+#import "XMPPMessageDeliveryReceipts.h"
 #import "XMPPRosterCoreDataStorage.h"
 #import "XMPPRosterMemoryStorage.h"
 #import "XMPPLogging.h"
