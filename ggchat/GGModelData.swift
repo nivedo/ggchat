@@ -15,7 +15,7 @@ class Demo {
     static var displayName_jobs = "Jobs"
     static var displayName_woz = "Steve Wozniak"
     
-    static var id_chang = "053496-4509-289"
+    static var id_chang = "gchang@chat.blub.io"
     static var id_cook = "468-768355-23123"
     static var id_jobs = "707-8956784-57"
     static var id_woz = "309-41802-93823"

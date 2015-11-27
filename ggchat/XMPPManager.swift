@@ -40,6 +40,38 @@ class XMPPManager: NSObject,
     var authenticateCompletionHandler: StreamCompletionHandler?
    
     //////////////////////////////////////////////////////////////////////////////
+    // Class helper methods
+    //////////////////////////////////////////////////////////////////////////////
+
+    class var senderId: String {
+        get {
+            if (sharedInstance.isConnected()) {
+                return sharedInstance.stream.myJID.bare()
+            } else {
+                if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.jid) {
+                    return previousJID
+                } else {
+                    return GGKey.jid
+                }
+            }
+        }
+    }
+    
+    class var senderDisplayName: String {
+        get {
+            if (sharedInstance.isConnected()) {
+                return sharedInstance.stream.myJID.bare()
+            } else {
+                if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.displayName) {
+                    return previousJID
+                } else {
+                    return GGKey.displayName
+                }
+            }
+        }
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////
     // Initialization
     //////////////////////////////////////////////////////////////////////////////
     
@@ -154,7 +186,7 @@ class XMPPManager: NSObject,
     }
     
     func xmppStreamDidConnect(sender: XMPPStream!) {
-        print("SUCCESS: Connect to \(self.username)@\(self.domain)")
+        // print("SUCCESS: Connect to \(self.username)@\(self.domain)")
         print("Attempting to Login")
         do {
             try self.stream.authenticateWithPassword(self.password)
@@ -191,8 +223,14 @@ class XMPPManager: NSObject,
         print("Logged In Successfully\n")
         
         sender.sendElement(XMPPPresence())
-        
-        // delegate?.didLogin?()
+       
+        // Save jid and displayName
+        NSUserDefaults.standardUserDefaults().setValue(self.stream.myJID.bare(),
+            forKey: GGKey.jid)
+        NSUserDefaults.standardUserDefaults().setValue(self.stream.myJID.bare(),
+            forKey: GGKey.displayName)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    
         self.authenticateCompletionHandler?(stream: sender, error: nil)
     }
     

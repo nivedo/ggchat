@@ -51,6 +51,8 @@ struct GGConfig_Dark {
 struct GGKey {
     static let username = "username"
     static let password = "password"
+    static let jid = "jid"
+    static let displayName = "displayName"
 }
 
 struct GGSetting {

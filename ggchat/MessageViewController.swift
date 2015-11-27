@@ -111,7 +111,7 @@ class MessageViewController: UIViewController,
         }
         
         // Navigation bar
-        self.navigationItem.title = "Steve Jobs"
+        // self.navigationItem.title = "Steve Jobs"
         self.tabBarController?.tabBar.hidden = true
         /*
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(

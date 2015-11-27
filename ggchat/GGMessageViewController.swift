@@ -12,17 +12,52 @@ class GGMessageViewController:
     MessageViewController,
     UIActionSheetDelegate {
 
+    var recipient: XMPPUserCoreDataStorageObject?
+   
+    // Initialization
+    
     override func viewDidLoad() {
         // Do any additional setup after loading the view.
-                print("GGMessageViewController::viewDidLoad()")
+        print("GGMessageViewController::viewDidLoad()")
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.senderId = Demo.id_chang
-        self.senderDisplayName = Demo.displayName_chang
+        // self.senderId = Demo.id_chang
+        // self.senderDisplayName = Demo.displayName_chang
+        self.senderId = XMPPManager.senderId
+        self.senderDisplayName = XMPPManager.senderDisplayName
+        
         self.showLoadEarlierMessagesHeader = true
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let recipient = self.recipient {
+            self.navigationItem.title = recipient.displayName
+        } else {
+            // self.navigationItem.title = "New Message"
+            self.navigationItem.title = self.senderDisplayName
+        }
+    }
+   
+    func didSelectContact(recipient: XMPPUserCoreDataStorageObject) {
+        self.recipient = recipient
+        
+        self.navigationItem.title = recipient.displayName
+       
+        /*
+        if !OneChats.knownUserForJid(jidStr: recipient.jidStr) {
+            OneChats.addUserToChatList(jidStr: recipient.jidStr)
+        } else {
+            messages = OneMessage.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr)
+            finishReceivingMessageAnimated(true)
+        }
+        */
+    }
+    
+    // Action delegates
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
