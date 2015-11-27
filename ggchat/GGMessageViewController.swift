@@ -11,6 +11,7 @@ import UIKit
 class GGMessageViewController:
     MessageViewController,
     ContactPickerDelegate,
+    XMPPMessageManagerDelegate,
     UIActionSheetDelegate {
 
     var recipient: XMPPUserCoreDataStorageObject?
@@ -29,7 +30,9 @@ class GGMessageViewController:
         self.senderDisplayName = XMPPManager.senderDisplayName
         
         self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
+        
         self.showLoadEarlierMessagesHeader = true
+        XMPPMessageManager.sharedInstance.delegate = self
         
         self.messageCollectionView.reloadData()
     }
@@ -42,7 +45,7 @@ class GGMessageViewController:
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 // let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
-                self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
+                // self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
                 // self.messages.appendContentsOf(archiveMessages)
             })
         } else {
@@ -146,5 +149,33 @@ class GGMessageViewController:
         // [JSQSystemSoundPlayer jsq_playMessageSentSound];
         
         self.finishSendingMessageAnimated(true)
+    }
+    
+	func onMessage(
+        sender: XMPPStream,
+        didReceiveMessage message: XMPPMessage,
+        from user: XMPPUserCoreDataStorageObject) {
+        if let msg: String = message.elementForName("body")?.stringValue() {
+            if let from: String = message.attributeForName("from")?.stringValue() {
+                let tokens = from.componentsSeparatedByString("/")
+                // print("\(tokens[0]) ? \(self.recipient!.jidStr)")
+                if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
+                    let message = Message(
+                        senderId: from,
+                        senderDisplayName: from,
+                        date: NSDate(),
+                        text: msg)
+                    self.messages.append(message)
+                    
+                    self.finishReceivingMessageAnimated(true)
+                }
+            }
+        }
+    }
+    
+	func onMessage(
+        sender: XMPPStream,
+        userIsComposing user: XMPPUserCoreDataStorageObject) {
+            
     }
 }

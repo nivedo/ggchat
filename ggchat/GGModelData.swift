@@ -136,7 +136,7 @@ class GGModelData {
             return val
         } else {
             let first = id[id.startIndex]
-            let last = id[id.endIndex]
+            let last = id[id.endIndex.advancedBy(-1)]
             let initials = "\(first)\(last)".uppercaseString
             
             self.avatars[id] = MessageAvatarImageFactory.avatarImageWithUserInitials(
