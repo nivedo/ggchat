@@ -56,17 +56,12 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        // return 1
-        // return self.fetchedResultsController.sections!.count
+        
         return XMPPRosterManager.buddyList.sections!.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        // return GGModelData.sharedInstance.contacts.count
         
-        // let sections: NSArray = self.fetchedResultsController.sections!
         let sections: NSArray = XMPPRosterManager.buddyList.sections!
         
         if (section < sections.count) {
@@ -82,7 +77,6 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
 
         // Configure the cell...
        
-        // let contact = GGModelData.sharedInstance.contacts[indexPath.row]
         let needsAvatar: Bool = true
         if (needsAvatar) {
             let avatarImageDataSource = self.tableView(
@@ -99,11 +93,7 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
                 }
             }
         }
-        /*
-        cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
-        */
         
-        // let user: XMPPUserCoreDataStorageObject = self.fetchedResultsController.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
         let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
         cell.cellMainLabel.attributedText = NSAttributedString(string: user.jidStr)
         
