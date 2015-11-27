@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLog.addLogger(DDASLLogger.sharedInstance(), withLogLevel: logLevel)
         DDLog.addLogger(DDTTYLogger.sharedInstance(), withLogLevel: logLevel)
         
-        StreamManager.start()
+        XMPPManager.start()
         
         return true
     }

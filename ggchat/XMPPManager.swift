@@ -1,5 +1,5 @@
 //
-//  StreamManager.swift
+//  XMPPManager.swift
 //  ggchat
 //
 //  Created by Gary Chang on 11/26/15.
@@ -10,7 +10,7 @@ import Foundation
 
 public typealias StreamCompletionHandler = (stream: XMPPStream, error: DDXMLElement?) -> Void
 
-public protocol StreamManagerDelegate {
+public protocol XMPPManagerDelegate {
     func onStream(sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?)
     func onStreamDidConnect(sender: XMPPStream)
     func onStreamDidAuthenticate(sender: XMPPStream)
@@ -18,7 +18,7 @@ public protocol StreamManagerDelegate {
     func onStreamDidDisconnect(sender: XMPPStream, withError error: NSError)
 }
 
-class StreamManager: NSObject,
+class XMPPManager: NSObject,
     XMPPStreamDelegate,
     XMPPRosterDelegate {
 
@@ -35,7 +35,7 @@ class StreamManager: NSObject,
     var capabilitiesStorage: XMPPCapabilitiesCoreDataStorage!
     
     // Delegates and completion handlers
-    var delegate: StreamManagerDelegate?
+    var delegate: XMPPManagerDelegate?
     var connectCompletionHandler: StreamCompletionHandler?
     var authenticateCompletionHandler: StreamCompletionHandler?
    
@@ -43,9 +43,9 @@ class StreamManager: NSObject,
     // Initialization
     //////////////////////////////////////////////////////////////////////////////
     
-    class var sharedInstance: StreamManager {
+    class var sharedInstance: XMPPManager {
         struct Singleton {
-            static let instance = StreamManager()
+            static let instance = XMPPManager()
         }
         return Singleton.instance
     }
@@ -313,7 +313,7 @@ class StreamManager: NSObject,
     }
     
     //////////////////////////////////////////////////////////////////////////////
-    // StreamManager public interface
+    // XMPPManager public interface
     //////////////////////////////////////////////////////////////////////////////
    
     var managedObjectContextForRoster: NSManagedObjectContext {

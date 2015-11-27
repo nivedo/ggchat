@@ -30,22 +30,28 @@ class LoginViewController: UIViewController {
         if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
             self.usernameTextField.placeholder = previousUsername
         } else {
-            self.usernameTextField.placeholder = "Username";
         }
         if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
             self.passwordTextField.placeholder = previousPassword
         } else {
-            self.passwordTextField.placeholder = "Password";
         }
         
         
+        if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
+            self.usernameTextField.text = previousUsername
+        }
+        self.usernameTextField.placeholder = "Username"
         self.usernameTextField.autocorrectionType = UITextAutocorrectionType.No
         self.usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         self.usernameTextField.layer.borderColor = UIColor.darkGrayColor().CGColor
         self.usernameTextField.layer.borderWidth = 1
         self.usernameTextField.layer.cornerRadius = CGFloat(5.0)
         
-        // self.passwordTextField.placeholder = "Password"
+        if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
+            self.passwordTextField.text = previousPassword
+        }
+        self.passwordTextField.placeholder = "Password"
+        self.passwordTextField.secureTextEntry = true
         self.passwordTextField.autocorrectionType = UITextAutocorrectionType.No;
         self.passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         self.passwordTextField.layer.borderColor = UIColor.darkGrayColor().CGColor
@@ -79,7 +85,7 @@ class LoginViewController: UIViewController {
         
         print("Logging in with \(self.usernameTextField.text!):\(self.passwordTextField.text!)")
         
-        StreamManager.sharedInstance.login(
+        XMPPManager.sharedInstance.login(
             self.usernameTextField.text!,
             password: self.passwordTextField.text!,
             domain: GGSetting.xmppDomain,
@@ -91,6 +97,7 @@ class LoginViewController: UIViewController {
         if (error == nil) {
             // Save usernmae
             NSUserDefaults.standardUserDefaults().setValue(self.usernameTextField.text, forKey: GGKey.username)
+            NSUserDefaults.standardUserDefaults().setValue(self.passwordTextField.text, forKey: GGKey.password)
             NSUserDefaults.standardUserDefaults().synchronize()
             
             // Send notification

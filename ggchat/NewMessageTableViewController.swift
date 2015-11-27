@@ -166,7 +166,7 @@ class NewMessageTableViewController: UITableViewController, NSFetchedResultsCont
     //////////////////////////////////////////////////////////////////////////
    
     lazy var fetchedResultsController: NSFetchedResultsController = {
-        let frc = StreamManager.sharedInstance.fetchResultsControllerForRoster(self)
+        let frc = XMPPManager.sharedInstance.fetchResultsControllerForRoster(self)
         return frc
     }()
     
