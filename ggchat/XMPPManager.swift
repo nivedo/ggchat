@@ -351,22 +351,6 @@ class XMPPManager: NSObject,
         }
         return fetchedResultsController
     }
-
-    func sendMessage(jidStr: String, message: String) {
-        if (message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
-            let messageId = self.stream.generateUUID()
-            let messageText = DDXMLElement(name: "body", stringValue: message)
-            let messageElement = DDXMLElement(name: "message")
-            messageElement.addAttributeWithName("to", stringValue: jidStr)
-            messageElement.addAttributeWithName("from", stringValue: self.stream.myJID.bare())
-            messageElement.addAttributeWithName("type", stringValue: "chat")
-            messageElement.addAttributeWithName("id", stringValue: messageId)
-            messageElement.addChild(messageText)
-            self.stream.sendElement(messageElement)
-        } else {
-            print("ERROR: Empty message not sent.")
-        }
-    }
     
     func sendSubscriptionRequestForRoster(jidStr: String) {
         let jid = XMPPJID.jidWithString(jidStr)
