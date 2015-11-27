@@ -27,7 +27,11 @@ class GGMessageViewController:
         self.senderId = XMPPManager.senderId
         self.senderDisplayName = XMPPManager.senderDisplayName
         
+        self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
+        
         self.showLoadEarlierMessagesHeader = true
+        
+        self.messageCollectionView.reloadData()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -77,7 +81,7 @@ class GGMessageViewController:
             date: date,
             text: text)
     
-        GGModelData.sharedInstance.messages.append(message)
+        self.messages.append(message)
             
         // TEMP: Test xmpp
         let test_jid = "sjobs@chat.blub.io"

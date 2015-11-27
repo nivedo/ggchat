@@ -39,6 +39,8 @@ class MessageViewController: UIViewController,
     var textViewWasFirstResponderDuringInteractivePop: Bool = false
     var snapshotView: UIView?
     
+    var messages: [Message] = [Message]()
+    
     // pragma mark - Setters
     
     var showTypingIndicator: Bool = true {
@@ -215,8 +217,8 @@ class MessageViewController: UIViewController,
 
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // print("MVC::numberOfItemsInSection: \(GGModelData.sharedInstance.messages.count)")
-        return GGModelData.sharedInstance.messages.count
+        // print("MVC::numberOfItemsInSection: \(self.messages.count)")
+        return self.messages.count
     }
 
     // MARK: UICollectionViewDelegate
@@ -257,14 +259,14 @@ class MessageViewController: UIViewController,
     func collectionView(collectionView: MessagesCollectionView,
         messageDataForItemAtIndexPath indexPath: NSIndexPath) -> Message {
         // print("MVC::messageDataForItemAtIndexPath")
-        let data = GGModelData.sharedInstance.messages[indexPath.row]
+        let data = self.messages[indexPath.row]
         return data
     }
     
     func collectionView(collectionView: MessagesCollectionView,
         didDeleteMessageAtIndexPath indexPath: NSIndexPath) {
         print("MVC::didDeleteMessageAtIndexPath")
-        GGModelData.sharedInstance.messages.removeAtIndex(indexPath.row)
+        self.messages.removeAtIndex(indexPath.row)
     }
     
     ///////////////////////////////////////////////////////////////////////////////
@@ -278,7 +280,7 @@ class MessageViewController: UIViewController,
         *  Otherwise, return your previously created bubble image data objects.
         */
         // let message: Message = self.messages[indexPath.item]
-        let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
+        let message: Message = self.messages[indexPath.item]
     
         if (message.senderId == self.senderId) {
             return self.outgoingBubbleImage
@@ -310,7 +312,7 @@ class MessageViewController: UIViewController,
         *  Override the defaults in `viewDidLoad`
         */
         // let message: Message = self.messages[indexPath.item]
-        let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
+        let message: Message = self.messages[indexPath.item]
         /*
         let defaults = NSUserDefaults.standardUserDefaults()
         if (message.senderId == self.senderId) {
@@ -337,7 +339,7 @@ class MessageViewController: UIViewController,
         */
         if (indexPath.item % 3 == 0) {
             // let message: Message = self.messages[indexPath.item]
-            let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
+            let message: Message = self.messages[indexPath.item]
             return MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(message.date)
         }
         return nil;
@@ -346,7 +348,7 @@ class MessageViewController: UIViewController,
     func collectionView(collectionView: MessagesCollectionView, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {
         // print("MVC::attributedTextForMessageBubbleTopLabelAtIndexPath")
         // let message: Message = self.messages[indexPath.item]
-        let message: Message = GGModelData.sharedInstance.messages[indexPath.item]
+        let message: Message = self.messages[indexPath.item]
         
         /**
         *  iOS7-style sender name labels
@@ -357,7 +359,7 @@ class MessageViewController: UIViewController,
         
         if (indexPath.item - 1 > 0) {
             // let previousMessage: Message = self.messages[indexPath.item - 1]
-            let previousMessage: Message = GGModelData.sharedInstance.messages[indexPath.item - 1]
+            let previousMessage: Message = self.messages[indexPath.item - 1]
             if (previousMessage.senderId == message.senderId) {
                 return nil
             }
@@ -1172,13 +1174,13 @@ class MessageViewController: UIViewController,
         /**
         *  iOS7-style sender name labels
         */
-        let currentMessage: Message = GGModelData.sharedInstance.messages[indexPath.item]
+        let currentMessage: Message = self.messages[indexPath.item]
         if (currentMessage.senderId == self.senderId) {
             return 0.0
         }
         
         if (indexPath.item - 1 > 0) {
-            let previousMessage: Message = GGModelData.sharedInstance.messages[indexPath.item - 1]
+            let previousMessage: Message = self.messages[indexPath.item - 1]
             if (previousMessage.senderId == currentMessage.senderId) {
                 return 0.0
             }
@@ -1279,7 +1281,7 @@ class MessageViewController: UIViewController,
                 senderDisplayName: self.senderDisplayName,
                 date: NSDate(),
                 media:item)
-            GGModelData.sharedInstance.messages.append(message)
+            self.messages.append(message)
             self.finishSendingMessage()
             return false
         }
