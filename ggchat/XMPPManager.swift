@@ -248,6 +248,31 @@ class XMPPManager: NSObject,
         }
     }
     
+    func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
+        print("didReceivePresence from \(presence.fromStr())")
+        let presenceType = presence.type()
+        let presenceFromJID = presence.fromStr()
+        
+        if (self.stream.myJID.bare() != presenceFromJID) {
+            if (presenceType == "available") {
+                print("\(presenceFromJID) is \(presenceType)")
+            } else if (presenceType == "unavailable") {
+                print("\(presenceFromJID) is \(presenceType)")
+            } else if (presenceType == "subscribe") {
+                print("\(presenceFromJID) wants to subscribe")
+                var accept: Bool = true
+                if (accept) {
+                    self.roster.acceptPresenceSubscriptionRequestFrom(
+                        presence.from(),
+                        andAddToRoster: true)
+                } else {
+                    self.roster.rejectPresenceSubscriptionRequestFrom(
+                        presence.from())
+                }
+            }
+        }
+    }
+    
     //////////////////////////////////////////////////////////////////////////////
     // XMPPManager public interface
     //////////////////////////////////////////////////////////////////////////////
@@ -288,13 +313,15 @@ class XMPPManager: NSObject,
         return fetchedResultsController
     }
 
-    func sendMessage(jid: String, message: String) {
+    func sendMessage(jidStr: String, message: String) {
         if (message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
+            let messageId = self.stream.generateUUID()
             let messageText = DDXMLElement(name: "body", stringValue: message)
             let messageElement = DDXMLElement(name: "message")
-            messageElement.addAttributeWithName("to", stringValue: jid)
+            messageElement.addAttributeWithName("to", stringValue: jidStr)
             messageElement.addAttributeWithName("from", stringValue: self.stream.myJID.bare())
             messageElement.addAttributeWithName("type", stringValue: "chat")
+            messageElement.addAttributeWithName("id", stringValue: messageId)
             messageElement.addChild(messageText)
             self.stream.sendElement(messageElement)
         } else {
@@ -302,5 +329,8 @@ class XMPPManager: NSObject,
         }
     }
     
-    
+    func sendSubscriptionRequestForRoster(jidStr: String) {
+        let jid = XMPPJID.jidWithString(jidStr)
+        self.roster.addUser(jid, withNickname: nil)
+    }
 }
