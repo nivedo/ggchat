@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewMessageTableViewController: UITableViewController {
+class NewMessageTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var contactSearchBar: UISearchBar!
     
@@ -50,12 +50,21 @@ class NewMessageTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        // return 1
+        return self.fetchedResultsController.sections!.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return GGModelData.sharedInstance.contacts.count
+        // return GGModelData.sharedInstance.contacts.count
+        
+        let sections: NSArray = self.fetchedResultsController.sections!
+        
+        if (section < sections.count) {
+            return sections[section].numberOfObjects
+        }
+        
+        return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -63,8 +72,9 @@ class NewMessageTableViewController: UITableViewController {
             forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
+       
+        /*
         let contact = GGModelData.sharedInstance.contacts[indexPath.row]
-        
         let needsAvatar: Bool = true
         if (needsAvatar) {
             let avatarImageDataSource = self.tableView(
@@ -82,6 +92,10 @@ class NewMessageTableViewController: UITableViewController {
             }
         }
         cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
+        */
+        
+        let user: XMPPUserCoreDataStorageObject = self.fetchedResultsController.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
+        cell.cellMainLabel.attributedText = NSAttributedString(string: user.jidStr)
         
         return cell
     }
@@ -145,5 +159,18 @@ class NewMessageTableViewController: UITableViewController {
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
         let id = GGModelData.sharedInstance.contacts[indexPath.row].id
         return GGModelData.sharedInstance.avatars[id]
+    }
+    
+    //////////////////////////////////////////////////////////////////////////
+    // NSFetchedResultsControllerDelegate methods
+    //////////////////////////////////////////////////////////////////////////
+   
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        let frc = XMPPManager.sharedInstance.fetchResultsControllerForRoster(self)
+        return frc
+    }()
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.reloadData()
     }
 }
