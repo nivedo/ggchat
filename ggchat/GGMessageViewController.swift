@@ -29,7 +29,6 @@ class GGMessageViewController:
         self.senderDisplayName = XMPPManager.senderDisplayName
         
         self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
-        
         self.showLoadEarlierMessagesHeader = true
         
         self.messageCollectionView.reloadData()
@@ -40,6 +39,12 @@ class GGMessageViewController:
         
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                // let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
+                self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
+                // self.messages.appendContentsOf(archiveMessages)
+            })
         } else {
             self.navigationItem.title = "New Message"
         }
@@ -57,6 +62,12 @@ class GGMessageViewController:
             messages = OneMessage.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr)
             finishReceivingMessageAnimated(true)
         }
+        */
+        
+        /*
+        let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
+        self.messages.appendContentsOf(archiveMessages)
+        self.finishReceivingMessageAnimated(true)
         */
     }
     
