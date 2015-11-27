@@ -12,7 +12,7 @@ protocol ContactPickerDelegate{
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
 }
 
-class ContactTableViewController: UITableViewController {
+class ContactTableViewController: UITableViewController, XMPPRosterManagerDelegate {
 
     @IBOutlet weak var contactSearchBar: UISearchBar!
     @IBAction func addContactAction(sender: AnyObject) {
@@ -59,6 +59,14 @@ class ContactTableViewController: UITableViewController {
         self.navigationItem.title = "Contacts"
         self.contactSearchBar.placeholder = "Search for contacts or usernames"
         self.contactSearchBar.searchBarStyle = UISearchBarStyle.Minimal
+        
+        XMPPRosterManager.sharedInstance.delegate = self
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        XMPPRosterManager.sharedInstance.delegate = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,12 +78,21 @@ class ContactTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        // return 1
+        return XMPPRosterManager.buddyList.sections!.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return GGModelData.sharedInstance.contacts.count
+        // return GGModelData.sharedInstance.contacts.count
+        
+        let sections: NSArray = XMPPRosterManager.buddyList.sections!
+        
+        if (section < sections.count) {
+            return sections[section].numberOfObjects
+        }
+        
+        return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -83,7 +100,7 @@ class ContactTableViewController: UITableViewController {
             forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
-        let contact = GGModelData.sharedInstance.contacts[indexPath.row]
+        // let contact = GGModelData.sharedInstance.contacts[indexPath.row]
         
         let needsAvatar: Bool = true
         if (needsAvatar) {
@@ -101,13 +118,16 @@ class ContactTableViewController: UITableViewController {
                 }
             }
         }
-        cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
+        // cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
+        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
+        cell.cellMainLabel.attributedText = NSAttributedString(string: user.jidStr)
         
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
+        
         self.performSegueWithIdentifier("showContactMessageView", sender: self)
     }
     
@@ -146,19 +166,29 @@ class ContactTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if (segue.identifier == "showContactMessageView") {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                if let cpd = segue.destinationViewController as? ContactPickerDelegate {
+                    print("ContactPickerDelege!")
+                    cpd.didSelectContact(XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath))
+                }
+            }
+        }
     }
-    */
-
+    
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        let id = GGModelData.sharedInstance.contacts[indexPath.row].id
-        return GGModelData.sharedInstance.getAvatar(id)
+        // let id = GGModelData.sharedInstance.contacts[indexPath.row].id
+        // return GGModelData.sharedInstance.getAvatar(id)
+        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
+        return GGModelData.sharedInstance.getAvatar(user.jidStr)
+    }
+    
+    func onRosterContentChanged(controller: NSFetchedResultsController) {
+        print("onRosterContentChanged")
+        self.tableView.reloadData()
     }
 }

@@ -43,6 +43,8 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
     }
     
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         XMPPRosterManager.sharedInstance.delegate = nil
     }
 
@@ -80,8 +82,7 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
 
         // Configure the cell...
        
-        /*
-        let contact = GGModelData.sharedInstance.contacts[indexPath.row]
+        // let contact = GGModelData.sharedInstance.contacts[indexPath.row]
         let needsAvatar: Bool = true
         if (needsAvatar) {
             let avatarImageDataSource = self.tableView(
@@ -98,6 +99,7 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
                 }
             }
         }
+        /*
         cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
         */
         
@@ -172,8 +174,9 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
 
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        let id = GGModelData.sharedInstance.contacts[indexPath.row].id
-        return GGModelData.sharedInstance.getAvatar(id)
+        // let id = GGModelData.sharedInstance.contacts[indexPath.row].id
+        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
+        return GGModelData.sharedInstance.getAvatar(user.jidStr)
     }
     
     //////////////////////////////////////////////////////////////////////////
