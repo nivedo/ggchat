@@ -10,6 +10,7 @@ import UIKit
 
 class GGMessageViewController:
     MessageViewController,
+    ContactPickerDelegate,
     UIActionSheetDelegate {
 
     var recipient: XMPPUserCoreDataStorageObject?
@@ -40,8 +41,7 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
         } else {
-            // self.navigationItem.title = "New Message"
-            self.navigationItem.title = self.senderDisplayName
+            self.navigationItem.title = "New Message"
         }
     }
    

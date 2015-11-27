@@ -11,7 +11,7 @@ import UIKit
 class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDelegate {
 
     @IBOutlet weak var contactSearchBar: UISearchBar!
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +40,10 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
             action: Selector("backButtonPressed:"))
         */
         XMPPRosterManager.sharedInstance.delegate = self
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        XMPPRosterManager.sharedInstance.delegate = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,6 +110,7 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
+        
         self.performSegueWithIdentifier("showNewMessageView", sender: self)
     }
     
@@ -149,15 +154,21 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if (segue.identifier == "showNewMessageView") {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                if let cpd = segue.destinationViewController as? ContactPickerDelegate {
+                    print("ContactPickerDelege!")
+                    cpd.didSelectContact(XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath))
+                }
+            }
+        }
     }
-    */
 
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
@@ -173,15 +184,4 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
         print("onRosterContentChanged")
         self.tableView.reloadData()
     }
-    
-    /*
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        let frc = XMPPManager.sharedInstance.fetchResultsControllerForRoster(self)
-        return frc
-    }()
-    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.reloadData()
-    }
-    */
 }

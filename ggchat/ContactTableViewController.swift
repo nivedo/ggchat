@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ContactPickerDelegate{
+    func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
+}
+
 class ContactTableViewController: UITableViewController {
 
     @IBOutlet weak var contactSearchBar: UISearchBar!
