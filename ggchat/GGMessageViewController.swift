@@ -43,6 +43,10 @@ class GGMessageViewController:
             text: text)
     
         GGModelData.sharedInstance.messages.append(message)
+            
+        // TEMP: Test xmpp
+        let test_jid = "sjobs@chat.blub.io"
+        XMPPManager.sharedInstance.sendMessage(test_jid, message: text)
     
         self.finishSendingMessageAnimated(true)
     }

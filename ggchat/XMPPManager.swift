@@ -232,24 +232,26 @@ class XMPPManager: NSObject,
     }
     
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
-        /*
-        let mes = OPMessage(m: message)
-        mes.matchSummonerToJID(_onlineSummoners)
-        
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            print(mes)
-        })
-        
-        delegate?.didReceiveMessage?(mes)
-        */
+        print("didReceiveMessage")
+        if (message.isChatMessageWithBody()) {
+            if let user: XMPPUserCoreDataStorageObject = self.rosterStorage.userForJID(
+                message.from(),
+                xmppStream: self.stream,
+                managedObjectContext: self.managedObjectContextForRoster) {
+                let body: String = message.elementForName("body")!.stringValue()
+                let displayName: String = user.displayName
+                
+                print("message received: \(displayName) --> \(body)")
+            } else {
+                print("message sender \(message.from()) not in roster")
+            }
+        }
     }
     
     //////////////////////////////////////////////////////////////////////////////
     // XMPPManager public interface
     //////////////////////////////////////////////////////////////////////////////
    
-    
-    
     var managedObjectContextForRoster: NSManagedObjectContext {
         get {
             return self.rosterStorage.mainThreadManagedObjectContext
@@ -286,4 +288,19 @@ class XMPPManager: NSObject,
         return fetchedResultsController
     }
 
+    func sendMessage(jid: String, message: String) {
+        if (message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
+            let messageText = DDXMLElement(name: "body", stringValue: message)
+            let messageElement = DDXMLElement(name: "message")
+            messageElement.addAttributeWithName("to", stringValue: jid)
+            messageElement.addAttributeWithName("from", stringValue: self.stream.myJID.bare())
+            messageElement.addAttributeWithName("type", stringValue: "chat")
+            messageElement.addChild(messageText)
+            self.stream.sendElement(messageElement)
+        } else {
+            print("ERROR: Empty message not sent.")
+        }
+    }
+    
+    
 }
