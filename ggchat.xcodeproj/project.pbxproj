@@ -122,7 +122,7 @@
 		D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5B11BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift */; };
 		D4C8FCC91C068C4300992801 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8FCC81C068C4300992801 /* libxml2.2.dylib */; };
 		D4C8FCCB1C068C5B00992801 /* libresolv.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8FCCA1C068C5B00992801 /* libresolv.9.dylib */; };
-		D4C8FCD01C06A13800992801 /* StreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FCCF1C06A13800992801 /* StreamHandler.swift */; };
+		D4C8FCD01C06A13800992801 /* StreamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FCCF1C06A13800992801 /* StreamManager.swift */; };
 		D4C8FDD51C06AA2300992801 /* XMPPBandwidthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FCD41C06AA2200992801 /* XMPPBandwidthMonitor.m */; };
 		D4C8FDD61C06AA2300992801 /* XMPPCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FCD71C06AA2200992801 /* XMPPCoreDataStorage.m */; };
 		D4C8FDD71C06AA2300992801 /* XMPPFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FCDB1C06AA2200992801 /* XMPPFileTransfer.m */; };
@@ -416,7 +416,7 @@
 		D4C8FCC81C068C4300992801 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../../../../usr/lib/libxml2.2.dylib; sourceTree = "<group>"; };
 		D4C8FCCA1C068C5B00992801 /* libresolv.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.9.dylib; path = ../../../../usr/lib/libresolv.9.dylib; sourceTree = "<group>"; };
 		D4C8FCCD1C069FC100992801 /* GGBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GGBridge.h; sourceTree = "<group>"; };
-		D4C8FCCF1C06A13800992801 /* StreamHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamHandler.swift; sourceTree = "<group>"; };
+		D4C8FCCF1C06A13800992801 /* StreamManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamManager.swift; sourceTree = "<group>"; };
 		D4C8FCD31C06AA2200992801 /* XMPPBandwidthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBandwidthMonitor.h; sourceTree = "<group>"; };
 		D4C8FCD41C06AA2200992801 /* XMPPBandwidthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPBandwidthMonitor.m; sourceTree = "<group>"; };
 		D4C8FCD61C06AA2200992801 /* XMPPCoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPCoreDataStorage.h; sourceTree = "<group>"; };
@@ -941,7 +941,7 @@
 				D4683E901BF0505F00E02886 /* Views */,
 				D4683E8B1BF04F2600E02886 /* Controllers */,
 				D4683E831BF048CC00E02886 /* Models */,
-				D4C8FCCE1C06A12700992801 /* Handlers */,
+				D4C8FCCE1C06A12700992801 /* Managers */,
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
 				D4C8FCCD1C069FC100992801 /* GGBridge.h */,
@@ -1081,12 +1081,12 @@
 			name = Layouts;
 			sourceTree = "<group>";
 		};
-		D4C8FCCE1C06A12700992801 /* Handlers */ = {
+		D4C8FCCE1C06A12700992801 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				D4C8FCCF1C06A13800992801 /* StreamHandler.swift */,
+				D4C8FCCF1C06A13800992801 /* StreamManager.swift */,
 			);
-			name = Handlers;
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		D4C8FCD11C06AA2200992801 /* Extensions */ = {
@@ -1941,7 +1941,7 @@
 				D43B292B1C06897300B3F367 /* XMPPElement.m in Sources */,
 				D45FBD721C0561D500E79B4E /* SettingTableViewCell.swift in Sources */,
 				D4C8FDE71C06AA2300992801 /* XMPPIQ+JabberRPC.m in Sources */,
-				D4C8FCD01C06A13800992801 /* StreamHandler.swift in Sources */,
+				D4C8FCD01C06A13800992801 /* StreamManager.swift in Sources */,
 				D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */,
 				D4A9F4F31BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.swift in Sources */,
 				D4C8FE241C06AA2300992801 /* XMPPMessage+XEP_0184.m in Sources */,

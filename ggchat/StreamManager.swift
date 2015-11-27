@@ -1,5 +1,5 @@
 //
-//  StreamHandler.swift
+//  StreamManager.swift
 //  ggchat
 //
 //  Created by Gary Chang on 11/26/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol StreamHandlerDelegate {
+public protocol StreamManagerDelegate {
     func onStream(sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?)
     func onStreamDidConnect(sender: XMPPStream)
     func onStreamDidAuthenticate(sender: XMPPStream)
@@ -16,7 +16,7 @@ public protocol StreamHandlerDelegate {
     func onStreamDidDisconnect(sender: XMPPStream, withError error: NSError)
 }
 
-class StreamHandler: NSObject,
+class StreamManager: NSObject,
     XMPPStreamDelegate,
     XMPPRosterDelegate {
 
@@ -31,15 +31,15 @@ class StreamHandler: NSObject,
     var deliveryReceipts: XMPPMessageDeliveryReceipts!
     var capabilities: XMPPCapabilities!
     var capabilitiesStorage: XMPPCapabilitiesCoreDataStorage!
-    var delegate: StreamHandlerDelegate?
+    var delegate: StreamManagerDelegate?
    
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
     //////////////////////////////////////////////////////////////////////////////
     
-    class var sharedInstance: StreamHandler {
+    class var sharedInstance: StreamManager {
         struct Singleton {
-            static let instance = StreamHandler()
+            static let instance = StreamManager()
         }
         return Singleton.instance
     }
@@ -301,7 +301,7 @@ class StreamHandler: NSObject,
     }
     
     //////////////////////////////////////////////////////////////////////////////
-    // StreamHandler public interface
+    // StreamManager public interface
     //////////////////////////////////////////////////////////////////////////////
    
     var managedObjectContextForRoster: NSManagedObjectContext {
