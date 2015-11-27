@@ -46,7 +46,7 @@ class GGMessageViewController:
             
         // TEMP: Test xmpp
         let test_jid = "sjobs@chat.blub.io"
-        XMPPManager.sharedInstance.sendMessage(test_jid, message: text)
+        StreamHandler.sharedInstance.sendMessage(test_jid, message: text)
     
         self.finishSendingMessageAnimated(true)
     }

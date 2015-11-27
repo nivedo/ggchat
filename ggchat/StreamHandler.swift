@@ -1,5 +1,5 @@
 //
-//  XMPPManager.swift
+//  StreamHandler.swift
 //  ggchat
 //
 //  Created by Gary Chang on 11/26/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class XMPPManager: NSObject,
+class StreamHandler: NSObject,
     XMPPStreamDelegate,
     XMPPRosterDelegate {
 
@@ -29,9 +29,9 @@ class XMPPManager: NSObject,
     // Initialization
     //////////////////////////////////////////////////////////////////////////////
     
-    class var sharedInstance: XMPPManager {
+    class var sharedInstance: StreamHandler {
         struct Singleton {
-            static let instance = XMPPManager()
+            static let instance = StreamHandler()
         }
         return Singleton.instance
     }
@@ -285,7 +285,7 @@ class XMPPManager: NSObject,
     }
     
     //////////////////////////////////////////////////////////////////////////////
-    // XMPPManager public interface
+    // StreamHandler public interface
     //////////////////////////////////////////////////////////////////////////////
    
     var managedObjectContextForRoster: NSManagedObjectContext {
