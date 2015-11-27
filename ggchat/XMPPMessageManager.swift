@@ -167,30 +167,36 @@ public class XMPPMessageManager: NSObject {
 	}
 }
 
-extension XMPPMessageManager: XMPPStreamDelegate {
+extension XMPPManager {
 	
-	public func xmppStream(sender: XMPPStream, didSendMessage message: XMPPMessage) {
+	func xmppStream(sender: XMPPStream, didSendMessage message: XMPPMessage) {
 		if let completion = XMPPMessageManager.sharedInstance.didSendMessageCompletionBlock {
 			completion(stream: sender, message: message)
 		}
 	}
 	
-	public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
+	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
+    func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
+        print("didReceiveManager")
+		let user = XMPPManager.sharedInstance.rosterStorage.userForJID(
+            message.from(),
+            xmppStream: XMPPManager.sharedInstance.stream,
+            managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster())
+	
         /*
-		let user = XMPPManager.sharedInstance.xmppRosterStorage.userForJID(message.from(), stream: XMPPManager.sharedInstance.stream, managedObjectContext: OneRoster.sharedInstance.managedObjectContext_roster())
-		
 		if !OneChats.knownUserForJid(jidStr: user.jidStr) {
 			OneChats.addUserToChatList(jidStr: user.jidStr)
 		}
+        */
 		
 		if message.isChatMessageWithBody() {
+            print("receiving message from \(user.jidStr) --> \(message.elementForName("body")!.stringValue())")
 			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, didReceiveMessage: message, from: user)
 		} else {
-			//was composing
+            print("composing by \(user.jidStr)")
 			if let _ = message.elementForName("composing") {
 				XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, userIsComposing: user)
 			}
 		}
-        */
 	}
 }

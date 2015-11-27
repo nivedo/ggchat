@@ -258,21 +258,22 @@ class XMPPManager: NSObject,
         delegate?.didFailSendMessage?(mes, errMsg : errMsg)
         */
     }
-    
+   
+    /*
     func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
-        /*
         let mes = OPMessage(m: message)
         mes.fromSummoner = _loggedInUser
         delegate?.didSendMessage?(mes)
-        */
     }
+    */
     
     func xmppStream(sender: XMPPStream!, didNotAuthenticate error: DDXMLElement!) {
         let errMsg = "Error: " + error.stringValue()
         print(errMsg)
         // delegate?.didFailLogin?(errMsg)
     }
-    
+  
+    /*
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         print("didReceiveMessage")
         if (message.isChatMessageWithBody()) {
@@ -289,6 +290,7 @@ class XMPPManager: NSObject,
             }
         }
     }
+    */
     
     func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
         print("didReceivePresence from \(presence.fromStr())")
@@ -314,11 +316,11 @@ class XMPPManager: NSObject,
             }
         }
     }
-    
+
     //////////////////////////////////////////////////////////////////////////////
     // XMPPManager public interface
     //////////////////////////////////////////////////////////////////////////////
-   
+    /*
     var managedObjectContextForRoster: NSManagedObjectContext {
         get {
             return self.rosterStorage.mainThreadManagedObjectContext
@@ -354,6 +356,7 @@ class XMPPManager: NSObject,
         }
         return fetchedResultsController
     }
+    */
     
     func sendSubscriptionRequestForRoster(jidStr: String) {
         let jid = XMPPJID.jidWithString(jidStr)
