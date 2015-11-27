@@ -19,6 +19,10 @@ class XMPPManager: NSObject,
     var roster: XMPPRoster!
     var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
     // var rosterStorage: XMPPRosterMemoryStorage = XMPPRosterMemoryStorage()
+    var reconnecter: XMPPReconnect!
+    var deliveryReceipts: XMPPMessageDeliveryReceipts!
+    var capabilities: XMPPCapabilities!
+    var capabilitiesStorage: XMPPCapabilitiesCoreDataStorage!
    
    
     //////////////////////////////////////////////////////////////////////////////
@@ -48,15 +52,22 @@ class XMPPManager: NSObject,
         self.roster.activate(self.stream)
        
         // Initialize reconnector
-        let reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_main_queue())
-        reconnecter.usesOldSchoolSecureConnect = true
-        reconnecter.activate(self.stream)
+        self.reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_main_queue())
+        self.reconnecter.usesOldSchoolSecureConnect = true
+        self.reconnecter.activate(self.stream)
        
         // Initialize message delivery receipts
-        let deliveryReceipts = XMPPMessageDeliveryReceipts(dispatchQueue: dispatch_get_main_queue())
-        deliveryReceipts.autoSendMessageDeliveryReceipts = true
-        deliveryReceipts.autoSendMessageDeliveryRequests = true
-        deliveryReceipts.activate(self.stream)
+        self.deliveryReceipts = XMPPMessageDeliveryReceipts(dispatchQueue: dispatch_get_main_queue())
+        self.deliveryReceipts.autoSendMessageDeliveryReceipts = true
+        self.deliveryReceipts.autoSendMessageDeliveryRequests = true
+        self.deliveryReceipts.activate(self.stream)
+        
+        // Initialize capabilities
+        self.capabilitiesStorage = XMPPCapabilitiesCoreDataStorage.sharedInstance()
+        self.capabilities = XMPPCapabilities(capabilitiesStorage: self.capabilitiesStorage)
+        self.capabilities.autoFetchHashedCapabilities = true
+        self.capabilities.autoFetchNonHashedCapabilities = false
+        self.capabilities.activate(self.stream)
         
         self.login("gchang",
             password: "asdf",
