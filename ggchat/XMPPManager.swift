@@ -256,31 +256,7 @@ class XMPPManager: NSObject,
         print(errMsg)
         // delegate?.didFailLogin?(errMsg)
     }
-  
-    func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
-        print("didReceivePresence from \(presence.fromStr())")
-        let presenceType = presence.type()
-        let presenceFromJID = presence.fromStr()
-        
-        if (self.stream.myJID.bare() != presenceFromJID) {
-            if (presenceType == "available") {
-                print("\(presenceFromJID) is \(presenceType)")
-            } else if (presenceType == "unavailable") {
-                print("\(presenceFromJID) is \(presenceType)")
-            } else if (presenceType == "subscribe") {
-                print("\(presenceFromJID) wants to subscribe")
-                var accept: Bool = true
-                if (accept) {
-                    self.roster.acceptPresenceSubscriptionRequestFrom(
-                        presence.from(),
-                        andAddToRoster: true)
-                } else {
-                    self.roster.rejectPresenceSubscriptionRequestFrom(
-                        presence.from())
-                }
-            }
-        }
-    }
+
 
     //////////////////////////////////////////////////////////////////////////////
     // XMPPManager public interface

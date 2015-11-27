@@ -225,6 +225,7 @@
 		D4C8FE381C06AA2300992801 /* NSXMLElement+XEP_0352.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FDD41C06AA2300992801 /* NSXMLElement+XEP_0352.m */; };
 		D4C8FE3B1C08275200992801 /* XMPPMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */; };
 		D4C8FE3D1C08421100992801 /* XMPPRosterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */; };
+		D4C8FE3F1C08522D00992801 /* XMPPPresenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -624,6 +625,7 @@
 		D4C8FDD41C06AA2300992801 /* NSXMLElement+XEP_0352.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSXMLElement+XEP_0352.m"; sourceTree = "<group>"; };
 		D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPMessageManager.swift; sourceTree = "<group>"; };
 		D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPRosterManager.swift; sourceTree = "<group>"; };
+		D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPPresenceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1091,6 +1093,7 @@
 				D4C8FCCF1C06A13800992801 /* XMPPManager.swift */,
 				D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */,
 				D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */,
+				D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1875,6 +1878,7 @@
 				D4C8FDEC1C06AA2300992801 /* XMPPPrivacy.m in Sources */,
 				D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */,
 				D43B28CC1C06894100B3F367 /* DDDispatchQueueLogFormatter.m in Sources */,
+				D4C8FE3F1C08522D00992801 /* XMPPPresenceManager.swift in Sources */,
 				D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */,
 				D45FBD6E1C05525200E79B4E /* Contact.swift in Sources */,
 				D4C8FE191C06AA2300992801 /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
