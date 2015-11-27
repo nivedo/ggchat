@@ -224,6 +224,7 @@
 		D4C8FE371C06AA2300992801 /* NSXMLElement+XEP_0335.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FDD11C06AA2300992801 /* NSXMLElement+XEP_0335.m */; };
 		D4C8FE381C06AA2300992801 /* NSXMLElement+XEP_0352.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FDD41C06AA2300992801 /* NSXMLElement+XEP_0352.m */; };
 		D4C8FE3B1C08275200992801 /* XMPPMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */; };
+		D4C8FE3D1C08421100992801 /* XMPPRosterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -622,6 +623,7 @@
 		D4C8FDD31C06AA2300992801 /* NSXMLElement+XEP_0352.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSXMLElement+XEP_0352.h"; sourceTree = "<group>"; };
 		D4C8FDD41C06AA2300992801 /* NSXMLElement+XEP_0352.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSXMLElement+XEP_0352.m"; sourceTree = "<group>"; };
 		D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPMessageManager.swift; sourceTree = "<group>"; };
+		D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPRosterManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1088,6 +1090,7 @@
 			children = (
 				D4C8FCCF1C06A13800992801 /* XMPPManager.swift */,
 				D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */,
+				D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2009,6 +2012,7 @@
 				D43B29421C06897D00B3F367 /* DDList.m in Sources */,
 				D43B29031C06896200B3F367 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				D43B292E1C06897300B3F367 /* XMPPMessage.m in Sources */,
+				D4C8FE3D1C08421100992801 /* XMPPRosterManager.swift in Sources */,
 				D4C8FDE51C06AA2300992801 /* XMPPRoster.m in Sources */,
 				D4C8FE2B1C06AA2300992801 /* XMPPPing.m in Sources */,
 				D43B28CD1C06894100B3F367 /* DDMultiFormatter.m in Sources */,

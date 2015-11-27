@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewMessageTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDelegate {
 
     @IBOutlet weak var contactSearchBar: UISearchBar!
     
@@ -39,6 +39,7 @@ class NewMessageTableViewController: UITableViewController, NSFetchedResultsCont
             target: self,
             action: Selector("backButtonPressed:"))
         */
+        XMPPRosterManager.sharedInstance.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,14 +52,16 @@ class NewMessageTableViewController: UITableViewController, NSFetchedResultsCont
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         // return 1
-        return self.fetchedResultsController.sections!.count
+        // return self.fetchedResultsController.sections!.count
+        return XMPPRosterManager.buddyList.sections!.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         // return GGModelData.sharedInstance.contacts.count
         
-        let sections: NSArray = self.fetchedResultsController.sections!
+        // let sections: NSArray = self.fetchedResultsController.sections!
+        let sections: NSArray = XMPPRosterManager.buddyList.sections!
         
         if (section < sections.count) {
             return sections[section].numberOfObjects
@@ -94,7 +97,8 @@ class NewMessageTableViewController: UITableViewController, NSFetchedResultsCont
         cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
         */
         
-        let user: XMPPUserCoreDataStorageObject = self.fetchedResultsController.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
+        // let user: XMPPUserCoreDataStorageObject = self.fetchedResultsController.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
+        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
         cell.cellMainLabel.attributedText = NSAttributedString(string: user.jidStr)
         
         return cell
@@ -165,6 +169,12 @@ class NewMessageTableViewController: UITableViewController, NSFetchedResultsCont
     // NSFetchedResultsControllerDelegate methods
     //////////////////////////////////////////////////////////////////////////
    
+    func onRosterContentChanged(controller: NSFetchedResultsController) {
+        print("onRosterContentChanged")
+        self.tableView.reloadData()
+    }
+    
+    /*
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let frc = XMPPManager.sharedInstance.fetchResultsControllerForRoster(self)
         return frc
@@ -173,4 +183,5 @@ class NewMessageTableViewController: UITableViewController, NSFetchedResultsCont
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.reloadData()
     }
+    */
 }

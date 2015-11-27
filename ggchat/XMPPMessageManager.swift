@@ -169,13 +169,13 @@ public class XMPPMessageManager: NSObject {
 
 extension XMPPMessageManager: XMPPStreamDelegate {
 	
-	public func stream(sender: XMPPStream, didSendMessage message: XMPPMessage) {
+	public func xmppStream(sender: XMPPStream, didSendMessage message: XMPPMessage) {
 		if let completion = XMPPMessageManager.sharedInstance.didSendMessageCompletionBlock {
 			completion(stream: sender, message: message)
 		}
 	}
 	
-	public func stream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
+	public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
         /*
 		let user = XMPPManager.sharedInstance.xmppRosterStorage.userForJID(message.from(), stream: XMPPManager.sharedInstance.stream, managedObjectContext: OneRoster.sharedInstance.managedObjectContext_roster())
 		

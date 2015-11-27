@@ -52,6 +52,8 @@ class XMPPManager: NSObject,
     
     class func start() {
         sharedInstance.setup()
+        
+        XMPPRosterManager.sharedInstance.fetchedResultsController()?.delegate = XMPPRosterManager.sharedInstance
     }
     
     class func stop() {
@@ -65,6 +67,7 @@ class XMPPManager: NSObject,
         self.stream.addDelegate(self,
             delegateQueue: dispatch_get_main_queue())
         self.roster.autoFetchRoster = true
+        self.roster.autoAcceptKnownPresenceSubscriptionRequests = true
         self.roster.addDelegate(self, delegateQueue: dispatch_get_main_queue())
         self.roster.activate(self.stream)
        
