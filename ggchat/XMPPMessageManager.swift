@@ -169,7 +169,16 @@ public class XMPPMessageManager: NSObject {
 
 extension XMPPManager {
 	
-	func xmppStream(sender: XMPPStream, didSendMessage message: XMPPMessage) {
+    func xmppStream(sender: XMPPStream!, didFailToSendMessage message: XMPPMessage!, error: NSError!) {
+        /*
+        let errMsg = "Error Sending Message: " + error.debugDescription
+        let mes = OPMessage(m: message)
+        mes.fromSummoner = _loggedInUser
+        delegate?.didFailSendMessage?(mes, errMsg : errMsg)
+        */
+    }
+    
+	func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
 		if let completion = XMPPMessageManager.sharedInstance.didSendMessageCompletionBlock {
 			completion(stream: sender, message: message)
 		}

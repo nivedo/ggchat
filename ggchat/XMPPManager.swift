@@ -249,49 +249,14 @@ class XMPPManager: NSObject,
     //////////////////////////////////////////////////////////////////////////////
     // XMPPStreamDelegate
     //////////////////////////////////////////////////////////////////////////////
-    
-    func xmppStream(sender: XMPPStream!, didFailToSendMessage message: XMPPMessage!, error: NSError!) {
-        /*
-        let errMsg = "Error Sending Message: " + error.debugDescription
-        let mes = OPMessage(m: message)
-        mes.fromSummoner = _loggedInUser
-        delegate?.didFailSendMessage?(mes, errMsg : errMsg)
-        */
-    }
+
    
-    /*
-    func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
-        let mes = OPMessage(m: message)
-        mes.fromSummoner = _loggedInUser
-        delegate?.didSendMessage?(mes)
-    }
-    */
-    
     func xmppStream(sender: XMPPStream!, didNotAuthenticate error: DDXMLElement!) {
         let errMsg = "Error: " + error.stringValue()
         print(errMsg)
         // delegate?.didFailLogin?(errMsg)
     }
   
-    /*
-    func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
-        print("didReceiveMessage")
-        if (message.isChatMessageWithBody()) {
-            if let user: XMPPUserCoreDataStorageObject = self.rosterStorage.userForJID(
-                message.from(),
-                xmppStream: self.stream,
-                managedObjectContext: self.managedObjectContextForRoster) {
-                let body: String = message.elementForName("body")!.stringValue()
-                let displayName: String = user.displayName
-                
-                print("message received: \(displayName) --> \(body)")
-            } else {
-                print("message sender \(message.from()) not in roster")
-            }
-        }
-    }
-    */
-    
     func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
         print("didReceivePresence from \(presence.fromStr())")
         let presenceType = presence.type()
@@ -320,43 +285,6 @@ class XMPPManager: NSObject,
     //////////////////////////////////////////////////////////////////////////////
     // XMPPManager public interface
     //////////////////////////////////////////////////////////////////////////////
-    /*
-    var managedObjectContextForRoster: NSManagedObjectContext {
-        get {
-            return self.rosterStorage.mainThreadManagedObjectContext
-        }
-    }
-    
-    func fetchResultsControllerForRoster(delegate: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-        let moc: NSManagedObjectContext = self.managedObjectContextForRoster
-        
-        let entity: NSEntityDescription = NSEntityDescription.entityForName("XMPPUserCoreDataStorageObject", inManagedObjectContext: moc)!
-        
-        let sd1: NSSortDescriptor = NSSortDescriptor(key: "sectionNum", ascending: true)
-        let sd2: NSSortDescriptor = NSSortDescriptor(key: "displayName", ascending: true)
-        
-        let sortDescriptors: [NSSortDescriptor] = [sd1, sd2]
-        
-        let fetchRequest: NSFetchRequest = NSFetchRequest()
-        fetchRequest.entity = entity
-        fetchRequest.sortDescriptors = sortDescriptors
-        fetchRequest.fetchBatchSize = 10
-        
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest:fetchRequest,
-            managedObjectContext: moc,
-            sectionNameKeyPath: "sectionNum",
-            cacheName:nil)
-        fetchedResultsController.delegate = delegate
-        
-       
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print("Error performing fetch: \(error)")
-        }
-        return fetchedResultsController
-    }
-    */
     
     func sendSubscriptionRequestForRoster(jidStr: String) {
         let jid = XMPPJID.jidWithString(jidStr)
