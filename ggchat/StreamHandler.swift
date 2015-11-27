@@ -8,6 +8,14 @@
 
 import Foundation
 
+public protocol StreamHandlerDelegate {
+    func onStream(sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?)
+    func onStreamDidConnect(sender: XMPPStream)
+    func onStreamDidAuthenticate(sender: XMPPStream)
+    func onStream(sender: XMPPStream, didNotAuthenticate error: DDXMLElement)
+    func onStreamDidDisconnect(sender: XMPPStream, withError error: NSError)
+}
+
 class StreamHandler: NSObject,
     XMPPStreamDelegate,
     XMPPRosterDelegate {
@@ -23,7 +31,7 @@ class StreamHandler: NSObject,
     var deliveryReceipts: XMPPMessageDeliveryReceipts!
     var capabilities: XMPPCapabilities!
     var capabilitiesStorage: XMPPCapabilitiesCoreDataStorage!
-   
+    var delegate: StreamHandlerDelegate?
    
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
@@ -37,12 +45,16 @@ class StreamHandler: NSObject,
     }
     
     override init() {
-        self.roster = XMPPRoster(rosterStorage: self.rosterStorage)
-        
-        // Initialize stream
         super.init()
-       
-        // Configure connection
+        self.setup()
+        
+        self.login("gchang",
+            password: "asdf",
+            domain: "chat.blub.io")
+    }
+    
+    func setup() {
+        self.roster = XMPPRoster(rosterStorage: self.rosterStorage)
         
         // Initialize delegates
         self.stream.addDelegate(self,
@@ -68,11 +80,20 @@ class StreamHandler: NSObject,
         self.capabilities.autoFetchHashedCapabilities = true
         self.capabilities.autoFetchNonHashedCapabilities = false
         self.capabilities.activate(self.stream)
-        
-        self.login("gchang",
-            password: "asdf",
-            domain: "chat.blub.io")
     }
+    
+    func teardown() {
+        self.stream.removeDelegate(self)
+        self.roster.removeDelegate(self)
+        
+        self.reconnecter.deactivate()
+        self.roster.deactivate()
+        self.capabilities.deactivate()
+
+        self.stream.disconnect()
+    }
+
+    //////////////////////////////////////////////////////////////////////////////
     
     func login(username: String, password: String, domain: String) {
         self.username = username
@@ -112,11 +133,6 @@ class StreamHandler: NSObject,
                 print("ERROR: Unable to connect to \(self.username)@\(self.domain)")
             }
         }
-    }
-    
-    func disconnect() {
-       self.stream.removeDelegate(self)
-       self.stream.disconnect()
     }
    
     func xmppStream(sender: XMPPStream, willSecureWithSettings settings:NSMutableDictionary) {
