@@ -47,3 +47,12 @@ struct GGConfig_Dark {
     static let outgoingTextColor = UIColor.whiteColor()
     static let springinessEnabled = false
 }
+
+struct GGKey {
+    static let username = "username"
+    static let password = "password"
+}
+
+struct GGSetting {
+    static let xmppDomain = "chat.blub.io"
+}

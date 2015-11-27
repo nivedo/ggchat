@@ -27,11 +27,17 @@ class LoginViewController: UIViewController {
         self.welcomeLabel.font = UIFont.boldSystemFontOfSize(CGFloat(30))
         
         // Initialize username and password
-        if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey("username") {
+        if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
             self.usernameTextField.placeholder = previousUsername
         } else {
             self.usernameTextField.placeholder = "Username";
         }
+        if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
+            self.passwordTextField.placeholder = previousPassword
+        } else {
+            self.passwordTextField.placeholder = "Password";
+        }
+        
         
         self.usernameTextField.autocorrectionType = UITextAutocorrectionType.No
         self.usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
@@ -39,7 +45,7 @@ class LoginViewController: UIViewController {
         self.usernameTextField.layer.borderWidth = 1
         self.usernameTextField.layer.cornerRadius = CGFloat(5.0)
         
-        self.passwordTextField.placeholder = "Password"
+        // self.passwordTextField.placeholder = "Password"
         self.passwordTextField.autocorrectionType = UITextAutocorrectionType.No;
         self.passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         self.passwordTextField.layer.borderColor = UIColor.darkGrayColor().CGColor
@@ -57,8 +63,8 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginAction(sender: AnyObject) {
-        self.usernameTextField.text = "admin"
-        self.passwordTextField.text = "123"
+        // self.usernameTextField.text = "admin"
+        // self.passwordTextField.text = "asdf"
         if (self.usernameTextField.text == "" || self.passwordTextField.text == "") {
             let alert = UIAlertView()
             alert.title = "Please enter both a username and password!"
@@ -71,21 +77,20 @@ class LoginViewController: UIViewController {
         self.usernameTextField.resignFirstResponder()
         self.passwordTextField.resignFirstResponder()
         
-        print("Logging in with \(self.usernameTextField.text):\(self.passwordTextField.text)")
-        /*
-        AppManager.sharedInstance.login(usernameTextField.text!,
-            password: passwordTextField.text!,
-            callback: loginCallback)
-        */
+        print("Logging in with \(self.usernameTextField.text!):\(self.passwordTextField.text!)")
         
-        // TEMP
-        self.loginCallback(true, status: 0)
+        StreamManager.sharedInstance.login(
+            self.usernameTextField.text!,
+            password: self.passwordTextField.text!,
+            domain: GGSetting.xmppDomain,
+            connectCompletionHandler: nil,
+            authenticateCompletionHandler: loginCallback)
     }
    
-    func loginCallback(success: Bool, status: Int?) {
-        if success {
+    func loginCallback(stream: XMPPStream, error: DDXMLElement?) {
+        if (error == nil) {
             // Save usernmae
-            NSUserDefaults.standardUserDefaults().setValue(self.usernameTextField.text, forKey: "username")
+            NSUserDefaults.standardUserDefaults().setValue(self.usernameTextField.text, forKey: GGKey.username)
             NSUserDefaults.standardUserDefaults().synchronize()
             
             // Send notification

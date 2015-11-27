@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias StreamCompletionHandler = (stream: XMPPStream, error: DDXMLElement?) -> Void
+
 public protocol StreamManagerDelegate {
     func onStream(sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?)
     func onStreamDidConnect(sender: XMPPStream)
@@ -31,7 +33,11 @@ class StreamManager: NSObject,
     var deliveryReceipts: XMPPMessageDeliveryReceipts!
     var capabilities: XMPPCapabilities!
     var capabilitiesStorage: XMPPCapabilitiesCoreDataStorage!
+    
+    // Delegates and completion handlers
     var delegate: StreamManagerDelegate?
+    var connectCompletionHandler: StreamCompletionHandler?
+    var authenticateCompletionHandler: StreamCompletionHandler?
    
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
@@ -44,13 +50,12 @@ class StreamManager: NSObject,
         return Singleton.instance
     }
     
-    override init() {
-        super.init()
-        self.setup()
-        
-        self.login("gchang",
-            password: "asdf",
-            domain: "chat.blub.io")
+    class func start() {
+        sharedInstance.setup()
+    }
+    
+    class func stop() {
+        sharedInstance.teardown()
     }
     
     func setup() {
@@ -95,11 +100,16 @@ class StreamManager: NSObject,
 
     //////////////////////////////////////////////////////////////////////////////
     
-    func login(username: String, password: String, domain: String) {
+    func login(username: String, password: String, domain: String,
+        connectCompletionHandler: StreamCompletionHandler?,
+        authenticateCompletionHandler: StreamCompletionHandler?) {
         self.username = username
         self.password = password
         self.domain = domain
-        
+       
+        self.connectCompletionHandler = connectCompletionHandler
+        self.authenticateCompletionHandler = authenticateCompletionHandler
+            
         self.connect()
     }
   
@@ -151,6 +161,7 @@ class StreamManager: NSObject,
             print(errMsg)
             // delegate?.didFailLogin?(errMsg)
         }
+        self.connectCompletionHandler?(stream: sender, error: nil)
     }
     
     func xmppStreamConnectDidTimeout(sender: XMPPStream!) {
@@ -179,6 +190,7 @@ class StreamManager: NSObject,
         sender.sendElement(XMPPPresence())
         
         // delegate?.didLogin?()
+        self.authenticateCompletionHandler?(stream: sender, error: nil)
     }
     
     func xmppStream(sender: XMPPStream!, didReceiveIQ iq: XMPPIQ!) -> Bool {
