@@ -518,10 +518,17 @@ class MessageViewController: UIViewController,
         if (items == 0) {
             return;
         }
-        
+       
+        let maxHeightForVisibleMessage: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds) - self.messageCollectionView.contentInset.top - CGRectGetHeight(self.inputToolbar.bounds)
         let collectionViewContentHeight: CGFloat = self.messageCollectionView.messageCollectionViewLayout.collectionViewContentSize().height
-        let isContentTooSmall: Bool = (collectionViewContentHeight < CGRectGetHeight(self.messageCollectionView.bounds))
+        // let isContentTooSmall: Bool = (collectionViewContentHeight < CGRectGetHeight(self.messageCollectionView.bounds))
+        let isContentTooSmall: Bool = (collectionViewContentHeight < maxHeightForVisibleMessage)
 
+        /*
+        print(collectionViewContentHeight)
+        print(CGRectGetHeight(self.messageCollectionView.bounds))
+        print(maxHeightForVisibleMessage)
+        */
         if (isContentTooSmall) {
             //  workaround for the first few messages not scrolling
             //  when the collection view content size is too small, `scrollToItemAtIndexPath:` doesn't work properly
@@ -531,7 +538,7 @@ class MessageViewController: UIViewController,
                 animated:animated)
             return
         }
-
+        
         //  workaround for really long messages not scrolling
         //  if last message is too long, use scroll position bottom for better appearance, else use top
         //  possibly a UIKit bug, see #480 on GitHub
@@ -539,7 +546,7 @@ class MessageViewController: UIViewController,
         let finalIndexPath: NSIndexPath = NSIndexPath(forItem: finalRow, inSection: 0)
         let finalCellSize: CGSize = self.messageCollectionView.messageCollectionViewLayout.sizeForItemAtIndexPath(finalIndexPath)
 
-        let maxHeightForVisibleMessage: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds) - self.messageCollectionView.contentInset.top - CGRectGetHeight(self.inputToolbar.bounds)
+        // let maxHeightForVisibleMessage: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds) - self.messageCollectionView.contentInset.top - CGRectGetHeight(self.inputToolbar.bounds)
 
         let scrollPosition: UICollectionViewScrollPosition = (finalCellSize.height > maxHeightForVisibleMessage) ? UICollectionViewScrollPosition.Bottom : UICollectionViewScrollPosition.Top
 
