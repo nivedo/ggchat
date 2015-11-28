@@ -46,14 +46,12 @@ class GGMessageViewController:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
                 self.messages.appendContentsOf(archiveMessages)
-                // self.scrollToBottomAnimated(true)
-                self.finishReceivingMessageAnimated(true)
+                self.finishReceivingMessageAnimated(false)
             })
         } else {
             self.navigationItem.title = "New Message"
             self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
-            // self.scrollToBottomAnimated(true)
-            self.finishReceivingMessageAnimated(true)
+            self.finishReceivingMessageAnimated(false)
         }
     }
    
