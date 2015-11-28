@@ -61,8 +61,15 @@ class SettingTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("Settings clicked \(indexPath)")
-        if (indexPath.section == 0 && indexPath.row == 1) {
-            self.selectAvatarImage()
+        if (indexPath.section == 0) {
+            if (indexPath.row == 1) {
+                self.selectAvatarImage()
+            }
+        } else {
+            let menu = GGSettingData.sharedInstance.menus[indexPath.section-1][indexPath.row]
+            if (menu.segueName != "") {
+                self.performSegueWithIdentifier(menu.segueName, sender: self)
+            }
         }
     }
     

@@ -26,17 +26,31 @@ class GGSettingData {
     func loadMenus() {
         self.menus = [
             [
-                SettingMenu(displayName: "Username"),
-                SettingMenu(displayName: "Phone Number"),
+                SettingMenu(
+                    displayName: "Username",
+                    segueName: "settings.to.settings_username"),
+                SettingMenu(
+                    displayName: "Phone Number",
+                    segueName: ""),
             ],
             [
-                SettingMenu(displayName: "Notifications and Sounds"),
-                SettingMenu(displayName: "Privacy and Security"),
-                SettingMenu(displayName: "Chat Settings"),
+                SettingMenu(
+                    displayName: "Notifications and Sounds",
+                    segueName: ""),
+                SettingMenu(
+                    displayName: "Privacy and Security",
+                    segueName: ""),
+                SettingMenu(
+                    displayName: "Chat Settings",
+                    segueName: ""),
             ],
             [
-                SettingMenu(displayName: "About"),
-                SettingMenu(displayName: "Help"),
+                SettingMenu(
+                    displayName: "About",
+                    segueName: ""),
+                SettingMenu(
+                    displayName: "Help",
+                    segueName: ""),
             ],
         ]
     }

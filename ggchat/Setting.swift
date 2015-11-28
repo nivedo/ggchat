@@ -10,8 +10,10 @@ import Foundation
 
 class SettingMenu {
     var displayName: String
+    var segueName: String
     
-    init(displayName: String) {
+    init(displayName: String, segueName: String) {
         self.displayName = displayName
+        self.segueName = segueName
     }
 }

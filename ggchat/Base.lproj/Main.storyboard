@@ -355,10 +355,47 @@
                     <navigationItem key="navigationItem" id="NcY-s9-io1"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <segue destination="crw-fH-LXf" kind="show" identifier="settings.to.settings_username" id="gSi-wr-qvu"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oz-tK-uqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3920" y="878"/>
+        </scene>
+        <!--Setting Username Table View Controller-->
+        <scene sceneID="jjz-RZ-rgR">
+            <objects>
+                <tableViewController id="crw-fH-LXf" customClass="SettingUsernameTableViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EjT-9u-XKR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="0vx-Lr-DgC" customClass="SettingTableTextViewCell" customModule="ggchat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0vx-Lr-DgC" id="nhu-rl-dWb">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="crw-fH-LXf" id="lRB-ej-1gG"/>
+                            <outlet property="delegate" destination="crw-fH-LXf" id="r4v-al-ao9"/>
+                        </connections>
+                    </tableView>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kK5-vJ-ibZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4551" y="1118"/>
         </scene>
         <!--Chats-->
         <scene sceneID="BbW-23-qYx">

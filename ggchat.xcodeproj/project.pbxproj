@@ -87,6 +87,9 @@
 		D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E911BF050A200E02886 /* MessagesCollectionView.swift */; };
 		D469EAA21C09749500D30C9A /* XMPPChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAA11C09749500D30C9A /* XMPPChatManager.swift */; };
 		D469EAA41C09BFA200D30C9A /* SettingTableAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAA31C09BFA200D30C9A /* SettingTableAvatarCell.swift */; };
+		D469EAA81C09D36700D30C9A /* SettingUsernameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAA71C09D36700D30C9A /* SettingUsernameTableViewController.swift */; };
+		D469EAAB1C09D66400D30C9A /* SettingTableTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAA91C09D66400D30C9A /* SettingTableTextViewCell.swift */; };
+		D469EAAC1C09D66400D30C9A /* SettingTableTextViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D469EAAA1C09D66400D30C9A /* SettingTableTextViewCell.xib */; };
 		D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D478409E1BF067D300441A2D /* MessageBubbleImage.swift */; };
 		D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A01BF0684200441A2D /* MessageAvatarImage.swift */; };
 		D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */; };
@@ -384,6 +387,9 @@
 		D4683E911BF050A200E02886 /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
 		D469EAA11C09749500D30C9A /* XMPPChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPChatManager.swift; sourceTree = "<group>"; };
 		D469EAA31C09BFA200D30C9A /* SettingTableAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableAvatarCell.swift; sourceTree = "<group>"; };
+		D469EAA71C09D36700D30C9A /* SettingUsernameTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingUsernameTableViewController.swift; sourceTree = "<group>"; };
+		D469EAA91C09D66400D30C9A /* SettingTableTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableTextViewCell.swift; sourceTree = "<group>"; };
+		D469EAAA1C09D66400D30C9A /* SettingTableTextViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableTextViewCell.xib; sourceTree = "<group>"; };
 		D478409E1BF067D300441A2D /* MessageBubbleImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImage.swift; sourceTree = "<group>"; };
 		D47840A01BF0684200441A2D /* MessageAvatarImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImage.swift; sourceTree = "<group>"; };
 		D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImageFactory.swift; sourceTree = "<group>"; };
@@ -1010,10 +1016,11 @@
 				D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */,
 				D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */,
 				D45FBD5D1C04432900E79B4E /* ChatTableViewController.swift */,
-				D45FBD621C04972200E79B4E /* SettingTableViewController.swift */,
 				D45FBD641C0497B300E79B4E /* ContactTableViewController.swift */,
 				D45FBD661C05478400E79B4E /* NewMessageTableViewController.swift */,
 				D42B895D1C05D9EC0043C20A /* LoginViewController.swift */,
+				D45FBD621C04972200E79B4E /* SettingTableViewController.swift */,
+				D469EAA71C09D36700D30C9A /* SettingUsernameTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1044,6 +1051,8 @@
 				D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */,
 				D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */,
 				D469EAA31C09BFA200D30C9A /* SettingTableAvatarCell.swift */,
+				D469EAA91C09D66400D30C9A /* SettingTableTextViewCell.swift */,
+				D469EAAA1C09D66400D30C9A /* SettingTableTextViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1850,6 +1859,7 @@
 				D43B28CE1C06894100B3F367 /* README.txt in Resources */,
 				D43B28E51C06895600B3F367 /* build-libidn.sh in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
+				D469EAAC1C09D66400D30C9A /* SettingTableTextViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1991,6 +2001,7 @@
 				D4C8FE3B1C08275200992801 /* XMPPMessageManager.swift in Sources */,
 				D4C8FDDA1C06AA2300992801 /* XMPPGoogleSharedStatus.m in Sources */,
 				D4C8FDDC1C06AA2300992801 /* XMPPReconnect.m in Sources */,
+				D469EAAB1C09D66400D30C9A /* SettingTableTextViewCell.swift in Sources */,
 				D4C8FE111C06AA2300992801 /* XMPPDateTimeProfiles.m in Sources */,
 				D4C8FDFE1C06AA2300992801 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				D43B29041C06896200B3F367 /* XMPPDeprecatedPlainAuthentication.m in Sources */,
@@ -2045,6 +2056,7 @@
 				D43B29111C06896C00B3F367 /* NSData+XMPP.m in Sources */,
 				D45FBD451BFE894F00E79B4E /* MediaItem.swift in Sources */,
 				D4C8FE2D1C06AA2300992801 /* XMPPTime.m in Sources */,
+				D469EAA81C09D36700D30C9A /* SettingUsernameTableViewController.swift in Sources */,
 				D43B29081C06896200B3F367 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				D4A9F51F1BFA9EAE00FA4444 /* GGMessageViewController.swift in Sources */,
 				D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */,
