@@ -158,6 +158,9 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
                     print("ContactPickerDelege!")
                     cpd.didSelectContact(XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath))
                 }
+                if let mvc = segue.destinationViewController as? MessageViewController {
+                    mvc.overrideNavBackButtonToRootViewController = true
+                }
             }
         }
     }

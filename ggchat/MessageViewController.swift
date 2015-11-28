@@ -37,6 +37,7 @@ class MessageViewController: UIViewController,
     var gg_isObserving: Bool = false
     var currentInteractivePopGestureRecognizer: UIGestureRecognizer?
     var textViewWasFirstResponderDuringInteractivePop: Bool = false
+    var overrideNavBackButtonToRootViewController: Bool = false
     var snapshotView: UIView?
     
     var messages: [Message] = [Message]()
@@ -130,12 +131,14 @@ class MessageViewController: UIViewController,
         barButton.title = "Back"
         self.navigationController!.navigationBar.topItem!.backBarButtonItem = barButton
         */
-        let barButton: UIBarButtonItem = UIBarButtonItem(
-            title: "Chats",
-            style: UIBarButtonItemStyle.Plain,
-            target: self,
-            action: Selector("receivedBackPressed:"))
-        self.navigationItem.leftBarButtonItem = barButton
+        if (self.overrideNavBackButtonToRootViewController) {
+            let barButton: UIBarButtonItem = UIBarButtonItem(
+                title: "Chats",
+                style: UIBarButtonItemStyle.Plain,
+                target: self,
+                action: Selector("receivedBackPressed:"))
+            self.navigationItem.leftBarButtonItem = barButton
+        }
         
         /**
          *  Register custom menu actions for cells.
