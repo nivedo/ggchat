@@ -14,6 +14,16 @@ class SettingTableAvatarCell: UITableViewCell {
 
     @IBOutlet weak var cellTopLabel: UILabel!
     @IBOutlet weak var cellBottomLabel: UILabel!
+   
+    class func nib() -> UINib {
+        let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
+        return UINib(nibName: nibName, bundle: NSBundle(forClass: self))
+    }
+    
+    class func cellReuseIdentifier() -> String {
+        let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
+        return nibName
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

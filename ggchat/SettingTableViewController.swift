@@ -33,24 +33,54 @@ class SettingTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return GGSettingData.sharedInstance.menus.count
+        return GGSettingData.sharedInstance.menus.count + 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return GGSettingData.sharedInstance.menus[section].count
+        if (section == 0) {
+            return 2
+        } else {
+            return GGSettingData.sharedInstance.menus[section-1].count
+        }
     }
-
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.section == 0 && indexPath.row == 0) {
+            return CGFloat(80.0)
+        }
+        return CGFloat(44.0)
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
-            forIndexPath: indexPath) as! SettingTableViewCell
+        if (indexPath.section == 0) {
+            if (indexPath.row == 0) {
+                let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableAvatarCell.cellReuseIdentifier(),
+                    forIndexPath: indexPath) as! SettingTableAvatarCell
+                cell.cellTopLabel.attributedText = NSAttributedString(string: XMPPManager.senderDisplayName)
+                
+                let status = XMPPManager.sharedInstance.isConnected() ? "online" : "offline"
+                cell.cellBottomLabel.attributedText = NSAttributedString(string: status)
+                
+                (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(XMPPManager.senderId)
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
+                    forIndexPath: indexPath) as! SettingTableViewCell
+                cell.cellMainLabel.attributedText = NSAttributedString(string: "Set Profile Photo")
+                cell.hideArrow()
+                return cell
+            }
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
+                forIndexPath: indexPath) as! SettingTableViewCell
 
-        // Configure the cell...
-        let menu = GGSettingData.sharedInstance.menus[indexPath.section][indexPath.row]
-        cell.cellMainLabel.attributedText = NSAttributedString(string: menu.displayName)
-        
-        return cell
+            // Configure the cell...
+            let menu = GGSettingData.sharedInstance.menus[indexPath.section-1][indexPath.row]
+            cell.cellMainLabel.attributedText = NSAttributedString(string: menu.displayName)
+            
+            return cell
+        }
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

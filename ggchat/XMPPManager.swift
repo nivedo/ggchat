@@ -142,6 +142,17 @@ class XMPPManager: NSObject,
     }
 
     //////////////////////////////////////////////////////////////////////////////
+   
+    class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
+        let avatarImageDataSource = GGModelData.sharedInstance.getAvatar(jid)
+        
+        let avatarImage: UIImage? = avatarImageDataSource.avatarImage
+        if (avatarImage == nil) {
+            return (avatarImageDataSource.avatarPlaceholderImage, nil)
+        } else {
+            return (avatarImage!, avatarImageDataSource.avatarHighlightedImage)
+        }
+    }
     
     func isConnected() -> Bool {
         return self.stream.isConnected()
