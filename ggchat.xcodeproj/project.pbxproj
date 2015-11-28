@@ -90,6 +90,8 @@
 		D469EAA81C09D36700D30C9A /* SettingUsernameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAA71C09D36700D30C9A /* SettingUsernameTableViewController.swift */; };
 		D469EAAB1C09D66400D30C9A /* SettingTableTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAA91C09D66400D30C9A /* SettingTableTextViewCell.swift */; };
 		D469EAAC1C09D66400D30C9A /* SettingTableTextViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D469EAAA1C09D66400D30C9A /* SettingTableTextViewCell.xib */; };
+		D469EAAF1C09DC0C00D30C9A /* SettingTableBorderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAAD1C09DC0C00D30C9A /* SettingTableBorderCell.swift */; };
+		D469EAB01C09DC0C00D30C9A /* SettingTableBorderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D469EAAE1C09DC0C00D30C9A /* SettingTableBorderCell.xib */; };
 		D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D478409E1BF067D300441A2D /* MessageBubbleImage.swift */; };
 		D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A01BF0684200441A2D /* MessageAvatarImage.swift */; };
 		D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */; };
@@ -390,6 +392,8 @@
 		D469EAA71C09D36700D30C9A /* SettingUsernameTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingUsernameTableViewController.swift; sourceTree = "<group>"; };
 		D469EAA91C09D66400D30C9A /* SettingTableTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableTextViewCell.swift; sourceTree = "<group>"; };
 		D469EAAA1C09D66400D30C9A /* SettingTableTextViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableTextViewCell.xib; sourceTree = "<group>"; };
+		D469EAAD1C09DC0C00D30C9A /* SettingTableBorderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableBorderCell.swift; sourceTree = "<group>"; };
+		D469EAAE1C09DC0C00D30C9A /* SettingTableBorderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableBorderCell.xib; sourceTree = "<group>"; };
 		D478409E1BF067D300441A2D /* MessageBubbleImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImage.swift; sourceTree = "<group>"; };
 		D47840A01BF0684200441A2D /* MessageAvatarImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImage.swift; sourceTree = "<group>"; };
 		D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImageFactory.swift; sourceTree = "<group>"; };
@@ -1053,6 +1057,8 @@
 				D469EAA31C09BFA200D30C9A /* SettingTableAvatarCell.swift */,
 				D469EAA91C09D66400D30C9A /* SettingTableTextViewCell.swift */,
 				D469EAAA1C09D66400D30C9A /* SettingTableTextViewCell.xib */,
+				D469EAAD1C09DC0C00D30C9A /* SettingTableBorderCell.swift */,
+				D469EAAE1C09DC0C00D30C9A /* SettingTableBorderCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1854,6 +1860,7 @@
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
 				D4A9F5A01BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib in Resources */,
 				D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */,
+				D469EAB01C09DC0C00D30C9A /* SettingTableBorderCell.xib in Resources */,
 				D4A9F5A41BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib in Resources */,
 				D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */,
 				D43B28CE1C06894100B3F367 /* README.txt in Resources */,
@@ -1983,6 +1990,7 @@
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
 				D43B29301C06897300B3F367 /* XMPPParser.m in Sources */,
+				D469EAAF1C09DC0C00D30C9A /* SettingTableBorderCell.swift in Sources */,
 				D4C8FDFA1C06AA2300992801 /* XMPPRoom.m in Sources */,
 				D4C8FE1B1C06AA2300992801 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				D43B29441C06897D00B3F367 /* RFImageToDataTransformer.m in Sources */,

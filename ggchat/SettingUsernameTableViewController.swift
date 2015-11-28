@@ -21,8 +21,24 @@ class SettingUsernameTableViewController: UITableViewController {
        
         self.tableView.registerNib(SettingTableTextViewCell.nib(),
             forCellReuseIdentifier: SettingTableTextViewCell.cellReuseIdentifier())
+        self.tableView.registerNib(SettingTableBorderCell.nib(),
+            forCellReuseIdentifier: SettingTableBorderCell.cellReuseIdentifier())
         
         self.navigationItem.title = "Username"
+        
+        let rightBarButton: UIBarButtonItem = UIBarButtonItem(
+            title: "Done",
+            style: UIBarButtonItemStyle.Plain,
+            target: self,
+            action: Selector("receivedDonePressed:"))
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        let leftBarButton: UIBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: UIBarButtonItemStyle.Plain,
+            target: self,
+            action: Selector("receivedCancelPressed:"))
+        self.navigationItem.leftBarButtonItem = leftBarButton
+        
         self.tableView.tableFooterView = UIView()
         self.tableView.tableFooterView?.hidden = true
         self.tableView.backgroundColor = self.tableView.separatorColor
@@ -99,5 +115,11 @@ class SettingUsernameTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+ 
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableBorderCell.cellReuseIdentifier()) as! SettingTableBorderCell
+        cell.backgroundColor = UIColor.clearColor()
+        
+        return cell
+    }
 }
