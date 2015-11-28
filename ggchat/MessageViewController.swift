@@ -418,6 +418,13 @@ class MessageViewController: UIViewController,
         self.gg_removeObservers()
         self.keyboardController!.endListeningForKeyboard()
     }
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        // print("willMoveToParentViewController")
+        
+        self.tabBarController?.tabBar.hidden = false
+        // parent?.tabBarController?.tabBar.hidden = false
+    }
 
     // pragma mark - View rotation
     override func shouldAutorotate() -> Bool {
