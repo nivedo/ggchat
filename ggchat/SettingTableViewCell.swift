@@ -11,9 +11,6 @@ import UIKit
 class SettingTableViewCell: UITableViewCell {
     @IBOutlet weak var cellMainLabel: UILabel!
     
-    @IBOutlet weak var iconContainer: UIView!
-    @IBOutlet weak var iconImageView: UIImageView!
-    
     class func nib() -> UINib {
         let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
         return UINib(nibName: nibName, bundle: NSBundle(forClass: self))
