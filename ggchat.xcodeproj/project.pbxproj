@@ -85,6 +85,7 @@
 		D4683E861BF0494B00E02886 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E851BF0494B00E02886 /* Message.swift */; };
 		D4683E8A1BF04C6C00E02886 /* MessageMediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E891BF04C6C00E02886 /* MessageMediaData.swift */; };
 		D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E911BF050A200E02886 /* MessagesCollectionView.swift */; };
+		D469EAA21C09749500D30C9A /* XMPPChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469EAA11C09749500D30C9A /* XMPPChatManager.swift */; };
 		D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D478409E1BF067D300441A2D /* MessageBubbleImage.swift */; };
 		D47840A11BF0684200441A2D /* MessageAvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A01BF0684200441A2D /* MessageAvatarImage.swift */; };
 		D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */; };
@@ -380,6 +381,7 @@
 		D4683E851BF0494B00E02886 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		D4683E891BF04C6C00E02886 /* MessageMediaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMediaData.swift; sourceTree = "<group>"; };
 		D4683E911BF050A200E02886 /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
+		D469EAA11C09749500D30C9A /* XMPPChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPChatManager.swift; sourceTree = "<group>"; };
 		D478409E1BF067D300441A2D /* MessageBubbleImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImage.swift; sourceTree = "<group>"; };
 		D47840A01BF0684200441A2D /* MessageAvatarImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImage.swift; sourceTree = "<group>"; };
 		D47840A31BF176D900441A2D /* MessageBubbleImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleImageFactory.swift; sourceTree = "<group>"; };
@@ -1094,6 +1096,7 @@
 				D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */,
 				D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */,
 				D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */,
+				D469EAA11C09749500D30C9A /* XMPPChatManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1868,6 +1871,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D469EAA21C09749500D30C9A /* XMPPChatManager.swift in Sources */,
 				D4C8FDE61C06AA2300992801 /* XMPPSystemInputActivityMonitor.m in Sources */,
 				D43B28C91C06894100B3F367 /* DDLog.m in Sources */,
 				D43B29461C06897D00B3F367 /* XMPPSRVResolver.m in Sources */,

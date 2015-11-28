@@ -85,7 +85,7 @@ class LoginViewController: UIViewController {
         
         print("Logging in with \(self.usernameTextField.text!):\(self.passwordTextField.text!)")
         
-        XMPPManager.sharedInstance.login(
+        XMPPManager.sharedInstance.connect(
             self.usernameTextField.text!,
             password: self.passwordTextField.text!,
             domain: GGSetting.xmppDomain,
@@ -95,10 +95,12 @@ class LoginViewController: UIViewController {
    
     func loginCallback(stream: XMPPStream, error: DDXMLElement?) {
         if (error == nil) {
+            /*
             // Save usernmae
             NSUserDefaults.standardUserDefaults().setValue(self.usernameTextField.text, forKey: GGKey.username)
             NSUserDefaults.standardUserDefaults().setValue(self.passwordTextField.text, forKey: GGKey.password)
             NSUserDefaults.standardUserDefaults().synchronize()
+            */
             
             // Send notification
             let notification = NSNotification(name: "loginSuccessful", object: self)

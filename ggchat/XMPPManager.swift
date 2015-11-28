@@ -143,31 +143,13 @@ class XMPPManager: NSObject,
 
     //////////////////////////////////////////////////////////////////////////////
     
-    func login(username: String, password: String, domain: String,
-        connectCompletionHandler: StreamCompletionHandler?,
-        authenticateCompletionHandler: StreamCompletionHandler?) {
-        self.username = username
-        self.password = password
-        self.domain = domain
-       
-        self.connectCompletionHandler = connectCompletionHandler
-        self.authenticateCompletionHandler = authenticateCompletionHandler
-            
-        self.connect()
-    }
-  
     func isConnected() -> Bool {
         return self.stream.isConnected()
     }
     
-    func connect() {
-        self.stream.myJID = XMPPJID.jidWithUser(
-            self.username,
-            domain: self.domain,
-            resource: "ios")
-        // self.stream.myJID = XMPPJID.jidWithString("gchang@chat.blub.io")
-        // self.stream.hostName = "45.33.39.21"
-        
+    func connect(usernameOrNil: String?, password: String, domain: String,
+        connectCompletionHandler: StreamCompletionHandler?,
+        authenticateCompletionHandler: StreamCompletionHandler?) {
         if (self.stream.isConnected()) {
             // Already connected
             if (self.stream.isAuthenticated()) {
@@ -175,17 +157,38 @@ class XMPPManager: NSObject,
             } else {
                 self.xmppStreamDidConnect(self.stream)
             }
-        } else {
-            do {
-                print("Connecting with \(self.username)@\(self.domain)")
-                // try self.stream.oldSchoolSecureConnectWithTimeout(30.0)
-                // var error: NSError? = nil
-                try self.stream.connectWithTimeout(5) // XMPPStreamTimeoutNone)
-            }
-            catch {
-                print("ERROR: Unable to connect to \(self.username)@\(self.domain)")
+            return
+        }
+      
+        if (usernameOrNil == nil) {
+            if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
+                self.username = previousUsername
+            } else {
+                print("Error: Please enter username before trying to connect.")
+                return
             }
         }
+        self.username = usernameOrNil!
+        self.password = password
+        self.domain = domain
+       
+        self.stream.myJID = XMPPJID.jidWithUser(
+            self.username,
+            domain: self.domain,
+            resource: "ios")
+        
+        do {
+            print("Connecting with \(self.username)@\(self.domain)")
+            // try self.stream.oldSchoolSecureConnectWithTimeout(30.0)
+            // var error: NSError? = nil
+            try self.stream.connectWithTimeout(5) // XMPPStreamTimeoutNone)
+        }
+        catch {
+            print("ERROR: Unable to connect to \(self.username)@\(self.domain)")
+        }
+
+        self.connectCompletionHandler = connectCompletionHandler
+        self.authenticateCompletionHandler = authenticateCompletionHandler
     }
    
     func xmppStream(sender: XMPPStream, willSecureWithSettings settings:NSMutableDictionary) {
@@ -231,7 +234,11 @@ class XMPPManager: NSObject,
         print("Logged In Successfully\n")
         
         sender.sendElement(XMPPPresence())
-       
+      
+        // Save usernmae
+        NSUserDefaults.standardUserDefaults().setValue(self.username, forKey: GGKey.username)
+        NSUserDefaults.standardUserDefaults().setValue(self.password, forKey: GGKey.password)
+        
         // Save jid and displayName
         NSUserDefaults.standardUserDefaults().setValue(self.stream.myJID.bare(),
             forKey: GGKey.jid)
