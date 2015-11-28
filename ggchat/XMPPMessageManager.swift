@@ -192,11 +192,9 @@ extension XMPPManager {
             xmppStream: XMPPManager.sharedInstance.stream,
             managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster())
 	
-        /*
-		if !OneChats.knownUserForJid(jidStr: user.jidStr) {
-			OneChats.addUserToChatList(jidStr: user.jidStr)
+		if !XMPPChatManager.knownUserForJid(jidStr: user.jidStr) {
+			XMPPChatManager.addUserToChatList(jidStr: user.jidStr)
 		}
-        */
 		
 		if message.isChatMessageWithBody() {
             print("receiving message from \(user.jidStr) --> \(message.elementForName("body")!.stringValue())")
