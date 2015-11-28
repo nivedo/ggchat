@@ -103,7 +103,7 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        self.performSegueWithIdentifier("showNewMessageView", sender: self)
+        self.performSegueWithIdentifier("new_message.to.messages", sender: self)
     }
     
     func backButtonPressed(button: UIBarButtonItem) {
@@ -152,7 +152,7 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if (segue.identifier == "showNewMessageView") {
+        if (segue.identifier == "new_message.to.messages") {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 if let cpd = segue.destinationViewController as? ContactPickerDelegate {
                     print("ContactPickerDelege!")

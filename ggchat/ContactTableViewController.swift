@@ -128,7 +128,7 @@ class ContactTableViewController: UITableViewController, XMPPRosterManagerDelega
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        self.performSegueWithIdentifier("showContactMessageView", sender: self)
+        self.performSegueWithIdentifier("contacts.to.messages", sender: self)
     }
     
     /*
@@ -169,7 +169,7 @@ class ContactTableViewController: UITableViewController, XMPPRosterManagerDelega
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if (segue.identifier == "showContactMessageView") {
+        if (segue.identifier == "contacts.to.messages") {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 if let cpd = segue.destinationViewController as? ContactPickerDelegate {
                     print("ContactPickerDelege!")

@@ -54,7 +54,7 @@
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
-                                    <segue destination="k3J-sf-ZBR" kind="show" identifier="showNewMessageView" id="aIy-Q7-IZA"/>
+                                    <segue destination="k3J-sf-ZBR" kind="show" identifier="new_message.to.messages" id="aIy-Q7-IZA"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -165,7 +165,7 @@
                                     <outlet property="cellBottomLabel" destination="44r-ER-T7S" id="1b2-sb-sJt"/>
                                     <outlet property="cellCornerLabel" destination="ziM-Es-CrP" id="ams-P3-dHV"/>
                                     <outlet property="cellTopLabel" destination="QmM-0d-thf" id="7k2-hb-GkM"/>
-                                    <segue destination="k3J-sf-ZBR" kind="show" id="yg5-08-h6K"/>
+                                    <segue destination="k3J-sf-ZBR" kind="show" identifier="chats.to.messages" id="yg5-08-h6K"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -177,7 +177,7 @@
                     <navigationItem key="navigationItem" id="apt-Ou-3bO">
                         <barButtonItem key="rightBarButtonItem" image="Edit" id="5qp-zJ-79U">
                             <connections>
-                                <segue destination="1UG-IY-ugd" kind="show" id="Xru-vI-vWo"/>
+                                <segue destination="1UG-IY-ugd" kind="show" identifier="chats.to.new_message" id="Xru-vI-vWo"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -386,7 +386,7 @@
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
-                                    <segue destination="k3J-sf-ZBR" kind="show" identifier="showContactMessageView" id="Aln-Pk-2fu"/>
+                                    <segue destination="k3J-sf-ZBR" kind="show" identifier="contacts.to.messages" id="Aln-Pk-2fu"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -502,7 +502,7 @@
                         <outlet property="passwordTextField" destination="j4Q-L6-UzW" id="d3a-A5-9Ez"/>
                         <outlet property="usernameTextField" destination="Cjv-HM-0X7" id="Qnx-oM-VSV"/>
                         <outlet property="welcomeLabel" destination="L3j-Oo-Wsb" id="l15-kn-kV2"/>
-                        <segue destination="S31-Hi-fhB" kind="show" identifier="showChatViewAfterLogin" id="td0-iI-Ota"/>
+                        <segue destination="S31-Hi-fhB" kind="show" identifier="login.to.chats" id="td0-iI-Ota"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQ4-zU-o9H" userLabel="First Responder" sceneMemberID="firstResponder"/>

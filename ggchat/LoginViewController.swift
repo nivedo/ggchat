@@ -110,7 +110,7 @@ class LoginViewController: UIViewController {
             
             // Dismiss login screen
             // self.dismissViewControllerAnimated(true, completion: nil)
-            performSegueWithIdentifier("showChatViewAfterLogin", sender: self)
+            performSegueWithIdentifier("login.to.chats", sender: self)
         } else {
             let alert = UIAlertView()
             alert.title = "Login Failed"

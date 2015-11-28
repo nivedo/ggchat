@@ -163,7 +163,6 @@ class MessageViewController: UIViewController,
     }
     
     func receivedBackPressed(button: UIBarButtonItem) {
-        // self.performSegueWithIdentifier("showChatView", sender: self)
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
