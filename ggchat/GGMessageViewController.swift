@@ -91,21 +91,22 @@ class GGMessageViewController:
         senderId: String,
         senderDisplayName: String,
         date: NSDate) {
-        // GGSystemSoundPlayer.gg_playMessageSentSound()
-    
-        let message: Message = Message(
-            senderId: senderId,
-            senderDisplayName: senderDisplayName,
-            date: date,
-            text: text)
-    
-        self.messages.append(message)
             
-        // TEMP: Test xmpp
-        let test_jid = "sjobs@chat.blub.io"
-        XMPPMessageManager.sendMessage(text, to: test_jid, completionHandler: nil)
-    
-        self.finishSendingMessageAnimated(true)
+        if let recipient = self.recipient {
+            // GGSystemSoundPlayer.gg_playMessageSentSound()
+        
+            let message: Message = Message(
+                senderId: senderId,
+                senderDisplayName: senderDisplayName,
+                date: date,
+                text: text)
+        
+            self.messages.append(message)
+                
+            XMPPMessageManager.sendMessage(text, to: recipient.jidStr, completionHandler: nil)
+        
+            self.finishSendingMessageAnimated(true)
+        }
     }
 
     override func didPressAccessoryButton(sender: UIButton) {
