@@ -43,6 +43,14 @@ class SettingTableViewController: UITableViewController {
             return GGSettingData.sharedInstance.menus[section-1].count
         }
     }
+   
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (section == 0) {
+            return CGFloat(0.0)
+        } else {
+            return CGFloat(32.0)
+        }
+    }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if (indexPath.section == 0 && indexPath.row == 0) {
@@ -51,17 +59,28 @@ class SettingTableViewController: UITableViewController {
         return CGFloat(44.0)
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("Settings clicked \(indexPath)")
+        if (indexPath.section == 0 && indexPath.row == 1) {
+            self.selectAvatarImage()
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (indexPath.section == 0) {
             if (indexPath.row == 0) {
                 let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableAvatarCell.cellReuseIdentifier(),
                     forIndexPath: indexPath) as! SettingTableAvatarCell
                 cell.cellTopLabel.attributedText = NSAttributedString(string: XMPPManager.senderDisplayName)
+                cell.cellTopLabel.font = UIFont.boldSystemFontOfSize(CGFloat(18.0))
                 
                 let status = XMPPManager.sharedInstance.isConnected() ? "online" : "offline"
                 cell.cellBottomLabel.attributedText = NSAttributedString(string: status)
                 
                 (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(XMPPManager.senderId)
+                
+                let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
+                cell.avatarContainer.addGestureRecognizer(gesture)
                 
                 return cell
             } else {
@@ -135,4 +154,29 @@ class SettingTableViewController: UITableViewController {
     }
     */
 
+    func selectAvatarImage() {
+        let alert: UIAlertController = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionCancel = UIAlertAction(
+            title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
+        let actionTakePhoto = UIAlertAction(
+            title: "Take Photo",
+            style: UIAlertActionStyle.Default) { action -> Void in
+                // GGModelData.sharedInstance.addPhotoMediaMessage()
+        }
+        let actionChoosePhoto = UIAlertAction(
+            title: "Choose Photo",
+            style: UIAlertActionStyle.Default) { action -> Void in
+                // GGModelData.sharedInstance.addVideoMediaMessage()
+        }
+        alert.addAction(actionTakePhoto)
+        alert.addAction(actionChoosePhoto)
+        alert.addAction(actionCancel)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 }
