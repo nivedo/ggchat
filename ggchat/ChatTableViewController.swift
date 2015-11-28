@@ -39,6 +39,12 @@ class ChatTableViewController:
             connectCompletionHandler: nil,
             authenticateCompletionHandler: nil)
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        XMPPRosterManager.sharedInstance.delegate = nil
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -54,7 +60,8 @@ class ChatTableViewController:
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return GGModelData.sharedInstance.chats.count
+        // return GGModelData.sharedInstance.chats.count
+        return XMPPChatManager.getChatsList().count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -63,11 +70,17 @@ class ChatTableViewController:
             forIndexPath: indexPath) as! ChatTableViewCell
 
         // Configure the cell...
+        let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+        cell.cellTopLabel.attributedText = NSAttributedString(string: user.displayName)
+        cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
+        
+        /*
         let chat = GGModelData.sharedInstance.chats[indexPath.row]
 
         cell.cellTopLabel.attributedText = NSAttributedString(string: chat.chatDisplayName)
         cell.cellBottomLabel.attributedText = NSAttributedString(string: chat.recentMessage)
         cell.cellCornerLabel.attributedText = NSAttributedString(string: chat.recentUpdateTime)
+        */
         
         let needsAvatar: Bool = true
         if (needsAvatar) {
@@ -136,7 +149,9 @@ class ChatTableViewController:
 
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        return GGModelData.sharedInstance.getAvatar(Demo.id_jobs)
+        // return GGModelData.sharedInstance.getAvatar(Demo.id_jobs)
+        let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+        return GGModelData.sharedInstance.getAvatar(user.jidStr)
     }
     
     func onRosterContentChanged(controller: NSFetchedResultsController) {
