@@ -299,7 +299,7 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="XP5-SL-Yis" firstAttribute="leading" secondItem="DKx-Lq-x0V" secondAttribute="leading" constant="8" id="AQl-GF-Gpd"/>
-                                                <constraint firstAttribute="bottom" secondItem="XP5-SL-Yis" secondAttribute="bottom" constant="6" id="Coz-L9-Ano"/>
+                                                <constraint firstAttribute="bottom" secondItem="XP5-SL-Yis" secondAttribute="bottom" constant="8" id="Coz-L9-Ano"/>
                                                 <constraint firstAttribute="height" constant="80" id="Hho-7l-P1A"/>
                                                 <constraint firstAttribute="trailing" secondItem="XP5-SL-Yis" secondAttribute="trailing" constant="8" id="ReO-uN-3pb"/>
                                                 <constraint firstItem="XP5-SL-Yis" firstAttribute="top" secondItem="DKx-Lq-x0V" secondAttribute="top" constant="8" id="lKd-OL-h7L"/>

@@ -8,8 +8,11 @@
 
 import UIKit
 
-class SettingUsernameTableViewController: UITableViewController {
+class SettingUsernameTableViewController: UITableViewController, UITextFieldDelegate {
 
+    var username: String?
+    var textField: UITextField?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,7 +46,33 @@ class SettingUsernameTableViewController: UITableViewController {
         self.tableView.tableFooterView?.hidden = true
         self.tableView.backgroundColor = self.tableView.separatorColor
     }
+    
+    func receivedDonePressed(sender: AnyObject?) {
+        if let textField = self.textField {
+            self.username = textField.text
+            textField.resignFirstResponder()
+        }
+        if let username = self.username {
+            print("Update username with: \(username)")
+        } else {
+            print("No username specified.")
+        }
+    }
+    
+    func receivedCancelPressed(sender: AnyObject?) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
+    func textFieldDidEndEditing(textField: UITextField) {
+        print("textFieldEndEditing")
+        self.username = textField.text
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -67,6 +96,8 @@ class SettingUsernameTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.cellLabel.attributedText = NSAttributedString(string: "Username")
+        cell.cellTextField.delegate = self
+        self.textField = cell.cellTextField
 
         return cell
     }
