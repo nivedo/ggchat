@@ -110,17 +110,33 @@ class ChatTableViewController:
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            let refreshAlert = UIAlertController(
+                title: "",
+                message: "Are you sure you want to clear the entire message history? \n This cannot be undone.",
+                preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Clear message history",
+                style: .Destructive,
+                handler: { (action: UIAlertAction!) in
+                    XMPPChatManager.removeUserAtIndexPath(indexPath)
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: "Cancel",
+                style: .Cancel,
+                handler: { (action: UIAlertAction!) in
+            }))
+            
+            self.presentViewController(refreshAlert, animated: true, completion: nil)
+            
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -146,7 +162,23 @@ class ChatTableViewController:
         // Pass the selected object to the new view controller.
     }
     */
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if (segue.identifier == "chats.to.messages") {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                if let cpd = segue.destinationViewController as? ContactPickerDelegate {
+                    print("ContactPickerDelege!")
+                    let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+                    cpd.didSelectContact(user)
+                }
+                if let mvc = segue.destinationViewController as? MessageViewController {
+                    mvc.overrideNavBackButtonToRootViewController = true
+                }
+            }
+        }
+    }
+    
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
         // return GGModelData.sharedInstance.getAvatar(Demo.id_jobs)
