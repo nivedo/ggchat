@@ -85,6 +85,8 @@ class XMPPManager: NSObject,
     class func start() {
         sharedInstance.setup()
         
+        XMPPMessageManager.sharedInstance.setupArchiving()
+        
         XMPPRosterManager.sharedInstance.fetchedResultsController()?.delegate = XMPPRosterManager.sharedInstance
     }
     
