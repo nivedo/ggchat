@@ -25,7 +25,7 @@ class XMPPManager: NSObject,
     var username: String!
     var password: String!
     var domain: String!
-    var stream: XMPPStream = XMPPStream()
+    var stream: XMPPStream!
     var roster: XMPPRoster!
     var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
     // var rosterStorage: XMPPRosterMemoryStorage = XMPPRosterMemoryStorage()
@@ -95,6 +95,12 @@ class XMPPManager: NSObject,
     }
     
     func setup() {
+        self.stream = XMPPStream()
+        
+        #if !TARGET_IPHONE_SIMULATOR
+            self.stream.enableBackgroundingOnSocket = true
+        #endif
+        
         self.roster = XMPPRoster(rosterStorage: self.rosterStorage)
         
         // Initialize delegates
