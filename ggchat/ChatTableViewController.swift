@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ChatTableViewController: UITableViewController, UISearchBarDelegate, UISearchDisplayDelegate {
+class ChatTableViewController:
+    UITableViewController,
+    UISearchBarDelegate,
+    UISearchDisplayDelegate,
+    XMPPRosterManagerDelegate {
 
     @IBOutlet weak var chatSearchBar: UISearchBar!
     var filteredChatArray: NSMutableArray?
@@ -27,6 +31,13 @@ class ChatTableViewController: UITableViewController, UISearchBarDelegate, UISea
         
         self.chatSearchBar.placeholder = "Search for messages or users"
         self.chatSearchBar.searchBarStyle = UISearchBarStyle.Minimal
+        
+        XMPPRosterManager.sharedInstance.delegate = self
+        XMPPManager.sharedInstance.connect(
+            username: nil,
+            password: nil,
+            connectCompletionHandler: nil,
+            authenticateCompletionHandler: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -126,5 +137,10 @@ class ChatTableViewController: UITableViewController, UISearchBarDelegate, UISea
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
         return GGModelData.sharedInstance.getAvatar(Demo.id_jobs)
+    }
+    
+    func onRosterContentChanged(controller: NSFetchedResultsController) {
+        print("onRosterContentChanged")
+        self.tableView.reloadData()
     }
 }

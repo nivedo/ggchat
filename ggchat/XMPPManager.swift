@@ -147,9 +147,15 @@ class XMPPManager: NSObject,
         return self.stream.isConnected()
     }
     
-    func connect(usernameOrNil: String?, password: String, domain: String,
+    func connect(
+        username usernameOrNil: String?,
+        password passwordOrNil: String?,
         connectCompletionHandler: StreamCompletionHandler?,
         authenticateCompletionHandler: StreamCompletionHandler?) {
+            
+        self.connectCompletionHandler = connectCompletionHandler
+        self.authenticateCompletionHandler = authenticateCompletionHandler
+            
         if (self.stream.isConnected()) {
             // Already connected
             if (self.stream.isAuthenticated()) {
@@ -159,7 +165,8 @@ class XMPPManager: NSObject,
             }
             return
         }
-      
+     
+        // Set username
         if (usernameOrNil == nil) {
             if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
                 self.username = previousUsername
@@ -167,14 +174,24 @@ class XMPPManager: NSObject,
                 print("Error: Please enter username before trying to connect.")
                 return
             }
+        } else {
+            self.username = usernameOrNil!
         }
-        self.username = usernameOrNil!
-        self.password = password
-        self.domain = domain
+        // Set password
+        if (passwordOrNil == nil) {
+            if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
+                self.password = previousPassword
+            } else {
+                print("Error: Please enter password before trying to connect.")
+                return
+            }
+        } else {
+            self.password = passwordOrNil!
+        }
        
         self.stream.myJID = XMPPJID.jidWithUser(
             self.username,
-            domain: self.domain,
+            domain: GGSetting.xmppDomain,
             resource: "ios")
         
         do {
@@ -186,9 +203,6 @@ class XMPPManager: NSObject,
         catch {
             print("ERROR: Unable to connect to \(self.username)@\(self.domain)")
         }
-
-        self.connectCompletionHandler = connectCompletionHandler
-        self.authenticateCompletionHandler = authenticateCompletionHandler
     }
    
     func xmppStream(sender: XMPPStream, willSecureWithSettings settings:NSMutableDictionary) {

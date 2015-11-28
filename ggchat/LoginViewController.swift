@@ -86,9 +86,8 @@ class LoginViewController: UIViewController {
         print("Logging in with \(self.usernameTextField.text!):\(self.passwordTextField.text!)")
         
         XMPPManager.sharedInstance.connect(
-            self.usernameTextField.text!,
+            username: self.usernameTextField.text!,
             password: self.passwordTextField.text!,
-            domain: GGSetting.xmppDomain,
             connectCompletionHandler: nil,
             authenticateCompletionHandler: loginCallback)
     }
