@@ -9,7 +9,9 @@
 import UIKit
 
 class SettingTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var cellMainLabel: UILabel!
+    @IBOutlet weak var arrowImageView: UIImageView!
     
     class func nib() -> UINib {
         let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
@@ -30,6 +32,14 @@ class SettingTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func hideArrow() {
+        self.arrowImageView.hidden = true
+    }
+    
+    func showArrow() {
+        self.arrowImageView.hidden = false
     }
 
 }

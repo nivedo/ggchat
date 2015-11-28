@@ -261,6 +261,7 @@
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
+                                    <outlet property="arrowImageView" destination="8IX-o4-DZv" id="zsu-W9-6JN"/>
                                     <outlet property="cellMainLabel" destination="SPE-I4-xLP" id="umb-NQ-lKb"/>
                                 </connections>
                             </tableViewCell>
@@ -274,6 +275,76 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </tableViewCellContentView>
                                 <animations/>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingTableAvatarCell" rowHeight="60" id="k6Z-HG-NLV" customClass="SettingTableAvatarCell" customModule="ggchat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="168" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k6Z-HG-NLV" id="BmH-8k-lOU">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DKx-Lq-x0V" userLabel="Avatar container">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XP5-SL-Yis" userLabel="Avatar image view">
+                                                    <rect key="frame" x="6" y="6" width="48" height="48"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="48" id="49c-BN-juH"/>
+                                                        <constraint firstAttribute="height" constant="48" id="R1W-sm-gFY"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="XP5-SL-Yis" firstAttribute="leading" secondItem="DKx-Lq-x0V" secondAttribute="leading" constant="6" id="AQl-GF-Gpd"/>
+                                                <constraint firstAttribute="bottom" secondItem="XP5-SL-Yis" secondAttribute="bottom" constant="6" id="Coz-L9-Ano"/>
+                                                <constraint firstAttribute="height" constant="60" id="Hho-7l-P1A"/>
+                                                <constraint firstAttribute="trailing" secondItem="XP5-SL-Yis" secondAttribute="trailing" constant="6" id="ReO-uN-3pb"/>
+                                                <constraint firstItem="XP5-SL-Yis" firstAttribute="top" secondItem="DKx-Lq-x0V" secondAttribute="top" constant="6" id="lKd-OL-h7L"/>
+                                                <constraint firstAttribute="width" constant="60" id="vC8-kG-ND5"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFN-Hk-C0I" userLabel="Cell top label">
+                                            <rect key="frame" x="68" y="6" width="200" height="30"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="wuA-9B-JKo"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ie4-pq-wVo" userLabel="Cell bototm label">
+                                            <rect key="frame" x="68" y="40" width="200" height="20"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="n7Z-b6-x4h"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="oFN-Hk-C0I" firstAttribute="leading" secondItem="DKx-Lq-x0V" secondAttribute="trailing" constant="8" id="Eg3-fV-Svk"/>
+                                        <constraint firstAttribute="bottom" secondItem="Ie4-pq-wVo" secondAttribute="bottom" constant="6" id="LVh-va-2Ky"/>
+                                        <constraint firstItem="DKx-Lq-x0V" firstAttribute="leading" secondItem="BmH-8k-lOU" secondAttribute="leading" id="Ojm-Qo-JFB"/>
+                                        <constraint firstItem="DKx-Lq-x0V" firstAttribute="top" secondItem="BmH-8k-lOU" secondAttribute="top" id="oNl-c8-V9t"/>
+                                        <constraint firstItem="oFN-Hk-C0I" firstAttribute="top" secondItem="BmH-8k-lOU" secondAttribute="top" constant="6" id="t9d-2l-Ki5"/>
+                                        <constraint firstItem="Ie4-pq-wVo" firstAttribute="leading" secondItem="DKx-Lq-x0V" secondAttribute="trailing" constant="8" id="tOw-4R-agj"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <connections>
+                                    <outlet property="avatarContainer" destination="DKx-Lq-x0V" id="sIH-Gq-mn3"/>
+                                    <outlet property="avatarImageView" destination="XP5-SL-Yis" id="ovZ-ln-9VR"/>
+                                    <outlet property="cellBottomLabel" destination="Ie4-pq-wVo" id="JAE-sL-gCf"/>
+                                    <outlet property="cellTopLabel" destination="oFN-Hk-C0I" id="ITd-HT-UsI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
