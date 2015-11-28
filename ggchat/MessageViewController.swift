@@ -44,7 +44,7 @@ class MessageViewController: UIViewController,
     
     // pragma mark - Setters
     
-    var showTypingIndicator: Bool = true {
+    var showTypingIndicator: Bool = false {
         didSet {
             self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
             self.messageCollectionView.collectionViewLayout.invalidateLayout()
@@ -452,7 +452,7 @@ class MessageViewController: UIViewController,
         super.didRotateFromInterfaceOrientation(fromInterfaceOrientation)
         if (self.showTypingIndicator) {
             self.showTypingIndicator = false
-            self.showTypingIndicator = true
+            // self.showTypingIndicator = true
             self.messageCollectionView.reloadData()
         }
     }

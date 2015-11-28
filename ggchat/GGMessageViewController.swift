@@ -178,6 +178,7 @@ class GGMessageViewController:
 	func onMessage(
         sender: XMPPStream,
         userIsComposing user: XMPPUserCoreDataStorageObject) {
-            
+        self.showTypingIndicator = !self.showTypingIndicator
+        self.scrollToBottomAnimated(true)
     }
 }
