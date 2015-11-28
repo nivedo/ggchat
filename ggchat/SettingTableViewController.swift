@@ -84,7 +84,7 @@ class SettingTableViewController: UITableViewController {
                 let status = XMPPManager.sharedInstance.isConnected() ? "online" : "offline"
                 cell.cellBottomLabel.attributedText = NSAttributedString(string: status)
                 
-                (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(XMPPManager.senderId)
+                (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(XMPPManager.jid)
                 
                 let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
                 cell.avatarContainer.addGestureRecognizer(gesture)

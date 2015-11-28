@@ -33,6 +33,9 @@ class XMPPManager: NSObject,
     var deliveryReceipts: XMPPMessageDeliveryReceipts!
     var capabilities: XMPPCapabilities!
     var capabilitiesStorage: XMPPCapabilitiesCoreDataStorage!
+    var vCardStorage: XMPPvCardCoreDataStorage!
+    var vCardTempModule: XMPPvCardTempModule!
+    var vCardAvatarModule: XMPPvCardAvatarModule!
     
     // Delegates and completion handlers
     var delegate: XMPPManagerDelegate?
@@ -42,8 +45,19 @@ class XMPPManager: NSObject,
     //////////////////////////////////////////////////////////////////////////////
     // Class helper methods
     //////////////////////////////////////////////////////////////////////////////
-
-    class var senderId: String {
+  
+    class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
+        let avatarImageDataSource = GGModelData.sharedInstance.getAvatar(jid)
+        
+        let avatarImage: UIImage? = avatarImageDataSource.avatarImage
+        if (avatarImage == nil) {
+            return (avatarImageDataSource.avatarPlaceholderImage, nil)
+        } else {
+            return (avatarImage!, avatarImageDataSource.avatarHighlightedImage)
+        }
+    }
+    
+    class var jid: String {
         get {
             if (sharedInstance.isConnected()) {
                 return sharedInstance.stream.myJID.bare()
@@ -56,6 +70,8 @@ class XMPPManager: NSObject,
             }
         }
     }
+
+    class var senderId: String { return self.jid }
     
     class var senderDisplayName: String {
         get {
@@ -128,6 +144,13 @@ class XMPPManager: NSObject,
         self.capabilities.autoFetchHashedCapabilities = true
         self.capabilities.autoFetchNonHashedCapabilities = false
         self.capabilities.activate(self.stream)
+        
+        // Initialize vCard support
+        self.vCardStorage = XMPPvCardCoreDataStorage.sharedInstance()
+        self.vCardTempModule = XMPPvCardTempModule(withvCardStorage: self.vCardStorage)
+        self.vCardAvatarModule = XMPPvCardAvatarModule(withvCardTempModule: self.vCardTempModule)
+        self.vCardTempModule.activate(self.stream)
+        self.vCardAvatarModule.activate(self.stream)
     }
     
     func teardown() {
@@ -137,22 +160,14 @@ class XMPPManager: NSObject,
         self.reconnecter.deactivate()
         self.roster.deactivate()
         self.capabilities.deactivate()
+        self.vCardTempModule.deactivate()
+        self.vCardAvatarModule.deactivate()
 
         self.stream.disconnect()
     }
 
     //////////////////////////////////////////////////////////////////////////////
-   
-    class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
-        let avatarImageDataSource = GGModelData.sharedInstance.getAvatar(jid)
-        
-        let avatarImage: UIImage? = avatarImageDataSource.avatarImage
-        if (avatarImage == nil) {
-            return (avatarImageDataSource.avatarPlaceholderImage, nil)
-        } else {
-            return (avatarImage!, avatarImageDataSource.avatarHighlightedImage)
-        }
-    }
+
     
     func isConnected() -> Bool {
         return self.stream.isConnected()
