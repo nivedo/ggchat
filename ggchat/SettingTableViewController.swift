@@ -36,6 +36,9 @@ class SettingTableViewController:
         self.photoPicker.delegate = self
     }
     
+    //////////////////////////////////////////////////////////////////////////////////
+    // UIImagePickerControllerDelegate
+    
     func imagePickerController(
         picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -48,6 +51,53 @@ class SettingTableViewController:
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // UINavigationControllerDelegate
+    
+    func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
+        print("didShowViewController: \(navigationController.viewControllers.count)")
+        if (navigationController.viewControllers.count == 3) {
+            let edge: CGFloat = 10
+            let screenHeight: CGFloat = UIScreen.mainScreen().bounds.size.height
+            let screenWidth: CGFloat = UIScreen.mainScreen().bounds.size.width
+            let circleWidth: CGFloat = screenWidth - 2.0 * edge
+            
+            let plCropOverlay: UIView = viewController.view.subviews[1].subviews[0]
+            
+            plCropOverlay.hidden = true
+            let position: CGFloat = 0.5 * (screenHeight - circleWidth)
+            
+            let circleLayer: CAShapeLayer = CAShapeLayer()
+          
+            let path2: UIBezierPath = UIBezierPath(ovalInRect: CGRectMake(edge, position, circleWidth, circleWidth))
+            path2.usesEvenOddFillRule = true
+            
+            circleLayer.path = path2.CGPath
+            
+            circleLayer.fillColor = UIColor.clearColor().CGColor
+            let path: UIBezierPath = UIBezierPath(roundedRect: CGRectMake(0, 0, screenWidth, screenHeight-72),cornerRadius:0)
+            
+            path.appendPath(path2)
+            path.usesEvenOddFillRule = true
+            
+            let fillLayer: CAShapeLayer = CAShapeLayer()
+            fillLayer.path = path.CGPath
+            fillLayer.fillRule = kCAFillRuleEvenOdd
+            fillLayer.fillColor = UIColor.blackColor().CGColor
+            fillLayer.opacity = 0.7
+            viewController.view.layer.addSublayer(fillLayer)
+            
+            let moveLabel: UILabel = UILabel(frame: CGRectMake(0, 10, screenWidth, 50))
+            moveLabel.text = "Move and Scale"
+            moveLabel.textAlignment = NSTextAlignment.Center
+            moveLabel.textColor = UIColor.whiteColor()
+            
+            viewController.view.addSubview(moveLabel)
+        }
+    }
+   
+    //////////////////////////////////////////////////////////////////////////////////
     
     override func viewWillAppear(animated: Bool) {
         // This call is necessary because popViewControllerAnimated will not
