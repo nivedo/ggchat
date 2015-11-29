@@ -20,7 +20,8 @@ public protocol XMPPManagerDelegate {
 
 class XMPPManager: NSObject,
     XMPPStreamDelegate,
-    XMPPRosterDelegate {
+    XMPPRosterDelegate,
+    XMPPvCardTempModuleDelegate {
 
     var username: String!
     var password: String!
@@ -87,15 +88,7 @@ class XMPPManager: NSObject,
         }
         return self.displayName!
     }
-    
-    func updateDisplayName(givenName: String, familyName: String) {
-        // let vCardTemp: XMPPvCardTemp = self.vCardTempModule.myvCardTemp
-        let vCardXML = DDXMLElement(name: "vCard", xmlns: "vcard-temp")
-        let newvCardTemp: XMPPvCardTemp = XMPPvCardTemp(fromElement: vCardXML)
-        newvCardTemp.givenName = givenName
-        newvCardTemp.familyName = familyName
-        self.vCardTempModule.updateMyvCardTemp(newvCardTemp)
-    }
+
    
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
@@ -159,6 +152,7 @@ class XMPPManager: NSObject,
         self.vCardStorage = XMPPvCardCoreDataStorage.sharedInstance()
         self.vCardTempModule = XMPPvCardTempModule(withvCardStorage: self.vCardStorage)
         self.vCardAvatarModule = XMPPvCardAvatarModule(withvCardTempModule: self.vCardTempModule)
+        self.vCardTempModule.addDelegate(self, delegateQueue: dispatch_get_main_queue())
         self.vCardTempModule.activate(self.stream)
         self.vCardAvatarModule.activate(self.stream)
     }
@@ -166,6 +160,7 @@ class XMPPManager: NSObject,
     func teardown() {
         self.stream.removeDelegate(self)
         self.roster.removeDelegate(self)
+        self.vCardTempModule.removeDelegate(self)
         
         self.reconnecter.deactivate()
         self.roster.deactivate()
@@ -295,6 +290,9 @@ class XMPPManager: NSObject,
         NSUserDefaults.standardUserDefaults().setValue(self.stream.myJID.bare(),
             forKey: GGKey.displayName)
         NSUserDefaults.standardUserDefaults().synchronize()
+        
+        // Fetch vCard
+        self.vCardTempModule.fetchvCardTempForJID(self.stream.myJID)
     
         self.authenticateCompletionHandler?(stream: sender, error: nil)
     }
