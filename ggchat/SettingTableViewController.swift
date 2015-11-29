@@ -8,8 +8,13 @@
 
 import UIKit
 
-class SettingTableViewController: UITableViewController {
+class SettingTableViewController:
+    UITableViewController,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate {
 
+    let photoPicker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,8 +31,24 @@ class SettingTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.tableFooterView?.hidden = true
         self.tableView.backgroundColor = self.tableView.separatorColor
+        
+        // Initialize photo and camera delegates
+        self.photoPicker.delegate = self
     }
-   
+    
+    func imagePickerController(
+        picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        // imageView.contentMode = .ScaleAspectFit
+        // imageView.image = chosenImage
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         // This call is necessary because popViewControllerAnimated will not
         // call viewDidLoad() or refresh the tableView after the pop
@@ -210,7 +231,9 @@ class SettingTableViewController: UITableViewController {
         let actionChoosePhoto = UIAlertAction(
             title: "Choose Photo",
             style: UIAlertActionStyle.Default) { action -> Void in
-                // GGModelData.sharedInstance.addVideoMediaMessage()
+                self.photoPicker.allowsEditing = true
+                self.photoPicker.sourceType = .PhotoLibrary
+                self.presentViewController(self.photoPicker, animated: true, completion: nil)
         }
         alert.addAction(actionTakePhoto)
         alert.addAction(actionChoosePhoto)
