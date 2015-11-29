@@ -71,11 +71,13 @@ class SettingTableViewController: UITableViewController {
         if (indexPath.section == 0) {
             if (indexPath.row == 1) {
                 self.selectAvatarImage()
+            } else if (indexPath.row == 2) {
+                self.performSegueWithIdentifier("settings.to.settings_textfield", sender: "displayName")
             }
         } else {
             let menu = GGSettingData.sharedInstance.menus[indexPath.section-1][indexPath.row]
             if (menu.segueName != "") {
-                self.performSegueWithIdentifier(menu.segueName, sender: menu)
+                self.performSegueWithIdentifier(menu.segueName, sender: menu.id)
             }
         }
     }
@@ -171,9 +173,14 @@ class SettingTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if (segue.identifier == "settings.to.settings_textfield") {
             if let stf = segue.destinationViewController as? SettingTextFieldTableViewController {
-                if let menu = sender as? SettingMenu {
-                    if menu.id == "username" {
+                if let id = sender as? String {
+                    if id == "username" {
                         stf.beforeSegue("Username",
+                            completionHandler: { (textValue: String) -> Void in
+                                XMPPvCardManager.sharedInstance.updateDisplayName(textValue)
+                        })
+                    } else if id == "displayName" {
+                        stf.beforeSegue("Display Name",
                             completionHandler: { (textValue: String) -> Void in
                                 XMPPvCardManager.sharedInstance.updateDisplayName(textValue)
                         })
