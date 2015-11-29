@@ -26,8 +26,8 @@ class GGMessageViewController:
         // Do any additional setup after loading the view.
         // self.senderId = Demo.id_chang
         // self.senderDisplayName = Demo.displayName_chang
-        self.senderId = XMPPManager.senderId
-        self.senderDisplayName = XMPPManager.senderDisplayName
+        self.senderId = XMPPManager.jid
+        self.senderDisplayName = XMPPManager.displayName(true)
         
         // self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
         

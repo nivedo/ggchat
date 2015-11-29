@@ -25,6 +25,7 @@ class XMPPManager: NSObject,
     var username: String!
     var password: String!
     var domain: String!
+    var displayName: String?
     var stream: XMPPStream!
     var roster: XMPPRoster!
     var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
@@ -70,12 +71,11 @@ class XMPPManager: NSObject,
             }
         }
     }
-
-    class var senderId: String { return self.jid }
-    
-    class var senderDisplayName: String {
-        get {
+   
+    class func displayName(force: Bool) -> String {
+        if force || sharedInstance.displayName == nil {
             if (sharedInstance.isConnected()) {
+                // TODO
                 return sharedInstance.stream.myJID.bare()
             } else {
                 if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.displayName) {
@@ -85,8 +85,9 @@ class XMPPManager: NSObject,
                 }
             }
         }
+        return sharedInstance.displayName!
     }
-    
+   
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
     //////////////////////////////////////////////////////////////////////////////

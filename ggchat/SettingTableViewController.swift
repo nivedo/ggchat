@@ -78,7 +78,7 @@ class SettingTableViewController: UITableViewController {
             if (indexPath.row == 0) {
                 let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableAvatarCell.cellReuseIdentifier(),
                     forIndexPath: indexPath) as! SettingTableAvatarCell
-                cell.cellTopLabel.attributedText = NSAttributedString(string: XMPPManager.senderDisplayName)
+                cell.cellTopLabel.attributedText = NSAttributedString(string: XMPPManager.displayName(true))
                 cell.cellTopLabel.font = UIFont.boldSystemFontOfSize(CGFloat(18.0))
                 
                 let status = XMPPManager.sharedInstance.isConnected() ? "online" : "offline"
