@@ -78,13 +78,13 @@ class SettingTableViewController: UITableViewController {
             if (indexPath.row == 0) {
                 let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableAvatarCell.cellReuseIdentifier(),
                     forIndexPath: indexPath) as! SettingTableAvatarCell
-                cell.cellTopLabel.attributedText = NSAttributedString(string: XMPPManager.displayName(true))
+                cell.cellTopLabel.attributedText = NSAttributedString(string: XMPPManager.sharedInstance.displayName(true))
                 cell.cellTopLabel.font = UIFont.boldSystemFontOfSize(CGFloat(18.0))
                 
                 let status = XMPPManager.sharedInstance.isConnected() ? "online" : "offline"
                 cell.cellBottomLabel.attributedText = NSAttributedString(string: status)
                 
-                (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(XMPPManager.jid)
+                (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(XMPPManager.sharedInstance.jid)
                 
                 let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
                 cell.avatarContainer.addGestureRecognizer(gesture)

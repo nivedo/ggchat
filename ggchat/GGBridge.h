@@ -25,6 +25,7 @@
 #import "XMPPRosterCoreDataStorage.h"
 #import "XMPPRosterMemoryStorage.h"
 #import "XMPPvCardCoreDataStorage.h"
+#import "XMPPvCardTemp.h"
 
 #import "XMPPLogging.h"
 #import "XMPPUser.h"

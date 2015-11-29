@@ -58,10 +58,10 @@ class XMPPManager: NSObject,
         }
     }
     
-    class var jid: String {
+    var jid: String {
         get {
-            if (sharedInstance.isConnected()) {
-                return sharedInstance.stream.myJID.bare()
+            if (self.isConnected()) {
+                return self.stream.myJID.bare()
             } else {
                 if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.jid) {
                     return previousJID
@@ -72,11 +72,11 @@ class XMPPManager: NSObject,
         }
     }
    
-    class func displayName(force: Bool) -> String {
-        if force || sharedInstance.displayName == nil {
-            if (sharedInstance.isConnected()) {
+    func displayName(force: Bool) -> String {
+        if force || self.displayName == nil {
+            if (self.isConnected()) {
                 // TODO
-                return sharedInstance.stream.myJID.bare()
+                return self.stream.myJID.bare()
             } else {
                 if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.displayName) {
                     return previousJID
@@ -85,7 +85,16 @@ class XMPPManager: NSObject,
                 }
             }
         }
-        return sharedInstance.displayName!
+        return self.displayName!
+    }
+    
+    func updateDisplayName(givenName: String, familyName: String) {
+        // let vCardTemp: XMPPvCardTemp = self.vCardTempModule.myvCardTemp
+        let vCardXML = DDXMLElement(name: "vCard", xmlns: "vcard-temp")
+        let newvCardTemp: XMPPvCardTemp = XMPPvCardTemp(fromElement: vCardXML)
+        newvCardTemp.givenName = givenName
+        newvCardTemp.familyName = familyName
+        self.vCardTempModule.updateMyvCardTemp(newvCardTemp)
     }
    
     //////////////////////////////////////////////////////////////////////////////
