@@ -71,7 +71,6 @@
 		D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */; };
 		D45FBD6C1C054EE200E79B4E /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */; };
 		D45FBD6E1C05525200E79B4E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD6D1C05525200E79B4E /* Contact.swift */; };
-		D45FBD721C0561D500E79B4E /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */; };
 		D45FBD741C056A3F00E79B4E /* GGSettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD731C056A3F00E79B4E /* GGSettingData.swift */; };
 		D45FBD761C05721D00E79B4E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD751C05721D00E79B4E /* Setting.swift */; };
 		D45FBD781C05754400E79B4E /* SettingTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */; };
@@ -100,6 +99,8 @@
 		D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */; };
 		D4A7864E1C0A7CF900C37427 /* XMPPvCardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */; };
 		D4A786501C0A93EF00C37427 /* SettingTextFieldTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */; };
+		D4A786531C0A9BB000C37427 /* SettingTableMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */; };
+		D4A786541C0A9BB000C37427 /* SettingTableMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A786521C0A9BB000C37427 /* SettingTableMenuCell.xib */; };
 		D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */; };
 		D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */; };
 		D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */; };
@@ -368,7 +369,6 @@
 		D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		D45FBD6D1C05525200E79B4E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		D45FBD731C056A3F00E79B4E /* GGSettingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGSettingData.swift; sourceTree = "<group>"; };
 		D45FBD751C05721D00E79B4E /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableHeaderCell.swift; sourceTree = "<group>"; };
@@ -403,6 +403,8 @@
 		D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+Messages.swift"; sourceTree = "<group>"; };
 		D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPvCardManager.swift; sourceTree = "<group>"; };
 		D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTextFieldTableViewController.swift; sourceTree = "<group>"; };
+		D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableMenuCell.swift; sourceTree = "<group>"; };
+		D4A786521C0A9BB000C37427 /* SettingTableMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableMenuCell.xib; sourceTree = "<group>"; };
 		D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 		D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellTextView.swift; sourceTree = "<group>"; };
 		D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1054,13 +1056,14 @@
 				D45FBD5F1C0443E000E79B4E /* ChatTableViewCell.swift */,
 				D45FBD681C05499000E79B4E /* ContactTableViewCell.swift */,
 				D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */,
-				D45FBD711C0561D500E79B4E /* SettingTableViewCell.swift */,
 				D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */,
 				D469EAA31C09BFA200D30C9A /* SettingTableAvatarCell.swift */,
 				D469EAA91C09D66400D30C9A /* SettingTableTextViewCell.swift */,
 				D469EAAA1C09D66400D30C9A /* SettingTableTextViewCell.xib */,
 				D469EAAD1C09DC0C00D30C9A /* SettingTableBorderCell.swift */,
 				D469EAAE1C09DC0C00D30C9A /* SettingTableBorderCell.xib */,
+				D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */,
+				D4A786521C0A9BB000C37427 /* SettingTableMenuCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1859,6 +1862,7 @@
 				D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */,
 				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
 				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
+				D4A786541C0A9BB000C37427 /* SettingTableMenuCell.xib in Resources */,
 				D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */,
 				D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */,
 				D4A9F5A01BFC182600FA4444 /* MessageTypingIndicatorFooterView.xib in Resources */,
@@ -1898,6 +1902,7 @@
 				D4C8FDE61C06AA2300992801 /* XMPPSystemInputActivityMonitor.m in Sources */,
 				D43B28C91C06894100B3F367 /* DDLog.m in Sources */,
 				D43B29461C06897D00B3F367 /* XMPPSRVResolver.m in Sources */,
+				D4A786531C0A9BB000C37427 /* SettingTableMenuCell.swift in Sources */,
 				D4C8FE161C06AA2300992801 /* XMPPCapabilities.xcdatamodel in Sources */,
 				D4C8FDFD1C06AA2300992801 /* XMPPvCardCoreDataStorage.m in Sources */,
 				D4C8FE1E1C06AA2300992801 /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
@@ -1977,7 +1982,6 @@
 				D43B28DD1C06894D00B3F367 /* DDXMLDocument.m in Sources */,
 				D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */,
 				D43B292B1C06897300B3F367 /* XMPPElement.m in Sources */,
-				D45FBD721C0561D500E79B4E /* SettingTableViewCell.swift in Sources */,
 				D4C8FDE71C06AA2300992801 /* XMPPIQ+JabberRPC.m in Sources */,
 				D4C8FCD01C06A13800992801 /* XMPPManager.swift in Sources */,
 				D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */,

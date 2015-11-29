@@ -18,6 +18,9 @@ class SettingTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+       
+        self.tableView.registerNib(SettingTableMenuCell.nib(),
+            forCellReuseIdentifier: SettingTableMenuCell.cellReuseIdentifier())
         
         self.navigationItem.title = "Settings"
         self.tableView.tableFooterView = UIView()
@@ -100,20 +103,20 @@ class SettingTableViewController: UITableViewController {
                 
                 return cell
             } else if (indexPath.row == 1) {
-                let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
-                    forIndexPath: indexPath) as! SettingTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableMenuCell.cellReuseIdentifier(),
+                    forIndexPath: indexPath) as! SettingTableMenuCell
                 cell.cellMainLabel.attributedText = NSAttributedString(string: "Set Profile Photo")
                 cell.hideArrow()
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
-                    forIndexPath: indexPath) as! SettingTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableMenuCell.cellReuseIdentifier(),
+                    forIndexPath: indexPath) as! SettingTableMenuCell
                 cell.cellMainLabel.attributedText = NSAttributedString(string: "Set Display Name")
                 return cell
             }
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
-                forIndexPath: indexPath) as! SettingTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableMenuCell.cellReuseIdentifier(),
+                forIndexPath: indexPath) as! SettingTableMenuCell
 
             // Configure the cell...
             let menu = GGSettingData.sharedInstance.menus[indexPath.section-1][indexPath.row]

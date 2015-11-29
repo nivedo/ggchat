@@ -1,14 +1,14 @@
 //
-//  SettingTableViewCell.swift
+//  SettingTableMenuCell.swift
 //  ggchat
 //
-//  Created by Gary Chang on 11/25/15.
+//  Created by Gary Chang on 11/29/15.
 //  Copyright © 2015 Blub. All rights reserved.
 //
 
 import UIKit
 
-class SettingTableViewCell: UITableViewCell {
+class SettingTableMenuCell: UITableViewCell {
     
     @IBOutlet weak var cellMainLabel: UILabel!
     @IBOutlet weak var arrowImageView: UIImageView!
@@ -33,7 +33,7 @@ class SettingTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     func hideArrow() {
         self.arrowImageView.hidden = true
     }
@@ -41,5 +41,4 @@ class SettingTableViewCell: UITableViewCell {
     func showArrow() {
         self.arrowImageView.hidden = false
     }
-
 }
