@@ -29,12 +29,11 @@ public class XMPPvCardManager: NSObject {
 		return XMPPvCardManagerSingleton.instance
 	}
     
-    func updateDisplayName(givenName: String, familyName: String) {
+    func updateDisplayName(name: String) {
         // let vCardTemp: XMPPvCardTemp = self.vCardTempModule.myvCardTemp
         let vCardXML = DDXMLElement(name: "vCard", xmlns: "vcard-temp")
         let newvCardTemp: XMPPvCardTemp = XMPPvCardTemp(fromElement: vCardXML)
-        newvCardTemp.givenName = givenName
-        newvCardTemp.familyName = familyName
+        newvCardTemp.nickname = name
         XMPPManager.sharedInstance.vCardTempModule.updateMyvCardTemp(newvCardTemp)
     }
 }

@@ -24,6 +24,13 @@ class SettingTableViewController: UITableViewController {
         self.tableView.tableFooterView?.hidden = true
         self.tableView.backgroundColor = self.tableView.separatorColor
     }
+   
+    override func viewWillAppear(animated: Bool) {
+        // This call is necessary because popViewControllerAnimated will not
+        // call viewDidLoad() or refresh the tableView after the pop
+        
+        self.tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

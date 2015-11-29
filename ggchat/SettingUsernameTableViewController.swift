@@ -54,7 +54,8 @@ class SettingUsernameTableViewController: UITableViewController, UITextFieldDele
         }
         if let username = self.username {
             print("Update username with: \(username)")
-            XMPPvCardManager.sharedInstance.updateDisplayName("Gary", familyName: "Chang")
+            XMPPvCardManager.sharedInstance.updateDisplayName(username)
+            self.navigationController?.popViewControllerAnimated(true)
         } else {
             print("No username specified.")
         }
