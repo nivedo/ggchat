@@ -15,6 +15,7 @@ class GGMessageViewController:
     UIActionSheetDelegate {
 
     var recipient: XMPPUserCoreDataStorageObject?
+    var recipientDetails = UIView?()
    
     // Initialization
     
@@ -42,38 +43,52 @@ class GGMessageViewController:
         
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
-            
+          
+            XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jidStr,
+                sender: XMPPManager.sharedInstance.lastActivity) { (response, forJID, error) -> Void in
+                let lastActivityResponse = XMPPLastActivityManager.sharedInstance.getLastActivityFrom((response?.lastActivitySeconds())!)
+                self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
+                    lastActivityResponse, displayName: recipient.displayName)
+                
+                if (self.recipientDetails != nil) {
+                        self.navigationItem.title = ""
+                }
+                self.navigationController!.view.addSubview(self.recipientDetails!)
+            }
+            // Load archive messages
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
                 self.messages.appendContentsOf(archiveMessages)
                 self.finishReceivingMessageAnimated(false)
             })
         } else {
-            self.navigationItem.title = "New Message"
+            if self.recipientDetails == nil {
+                self.navigationItem.title = "New Message"
+            }
             self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
             self.finishReceivingMessageAnimated(false)
         }
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.recipientDetails?.removeFromSuperview()
+    }
    
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject) {
         self.recipient = recipient
-        
-        self.navigationItem.title = recipient.displayName
        
-        /*
-        if !OneChats.knownUserForJid(jidStr: recipient.jidStr) {
-            OneChats.addUserToChatList(jidStr: recipient.jidStr)
-        } else {
-            messages = OneMessage.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr)
-            finishReceivingMessageAnimated(true)
+        if self.recipientDetails == nil {
+            self.navigationItem.title = recipient.displayName
         }
-        */
         
-        /*
-        let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
-        self.messages.appendContentsOf(archiveMessages)
-        self.finishReceivingMessageAnimated(true)
-        */
+        if !XMPPChatManager.knownUserForJid(jidStr: recipient.jidStr) {
+            XMPPChatManager.addUserToChatList(jidStr: recipient.jidStr)
+        } else {
+            /*
+            self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
+            finishReceivingMessageAnimated(true)
+            */
+        }
     }
     
     // Action delegates
