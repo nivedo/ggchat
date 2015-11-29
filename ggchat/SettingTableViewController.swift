@@ -66,9 +66,8 @@ class SettingTableViewController:
 
     //////////////////////////////////////////////////////////////////////////////////
     // UINavigationControllerDelegate
-    
+    /*
     func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
-        return
         // print("didShowViewController: \(navigationController.viewControllers.count)")
         if (navigationController.viewControllers.count == 3) {
             let edge: CGFloat = 10
@@ -109,6 +108,7 @@ class SettingTableViewController:
             viewController.view.addSubview(moveLabel)
         }
     }
+    */
    
     //////////////////////////////////////////////////////////////////////////////////
     
