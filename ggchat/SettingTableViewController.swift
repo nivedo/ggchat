@@ -45,7 +45,7 @@ class SettingTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 0) {
-            return 2
+            return 3
         } else {
             return GGSettingData.sharedInstance.menus[section-1].count
         }
@@ -75,7 +75,7 @@ class SettingTableViewController: UITableViewController {
         } else {
             let menu = GGSettingData.sharedInstance.menus[indexPath.section-1][indexPath.row]
             if (menu.segueName != "") {
-                self.performSegueWithIdentifier(menu.segueName, sender: self)
+                self.performSegueWithIdentifier(menu.segueName, sender: menu)
             }
         }
     }
@@ -97,11 +97,16 @@ class SettingTableViewController: UITableViewController {
                 cell.avatarContainer.addGestureRecognizer(gesture)
                 
                 return cell
-            } else {
+            } else if (indexPath.row == 1) {
                 let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
                     forIndexPath: indexPath) as! SettingTableViewCell
                 cell.cellMainLabel.attributedText = NSAttributedString(string: "Set Profile Photo")
                 cell.hideArrow()
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCell.cellReuseIdentifier(),
+                    forIndexPath: indexPath) as! SettingTableViewCell
+                cell.cellMainLabel.attributedText = NSAttributedString(string: "Set Display Name")
                 return cell
             }
         } else {
@@ -158,15 +163,25 @@ class SettingTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if (segue.identifier == "settings.to.settings_textfield") {
+            if let stf = segue.destinationViewController as? SettingTextFieldTableViewController {
+                if let menu = sender as? SettingMenu {
+                    if menu.id == "username" {
+                        stf.beforeSegue("Username",
+                            completionHandler: { (textValue: String) -> Void in
+                                XMPPvCardManager.sharedInstance.updateDisplayName(textValue)
+                        })
+                    }
+                }
+            }
+        }
     }
-    */
 
     func selectAvatarImage() {
         let alert: UIAlertController = UIAlertController(

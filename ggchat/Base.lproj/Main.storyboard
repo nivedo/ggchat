@@ -356,17 +356,17 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
-                        <segue destination="crw-fH-LXf" kind="show" identifier="settings.to.settings_username" id="gSi-wr-qvu"/>
+                        <segue destination="crw-fH-LXf" kind="show" identifier="settings.to.settings_textfield" id="gSi-wr-qvu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oz-tK-uqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3920" y="878"/>
         </scene>
-        <!--Setting Username Table View Controller-->
+        <!--Setting Text Field Table View Controller-->
         <scene sceneID="jjz-RZ-rgR">
             <objects>
-                <tableViewController id="crw-fH-LXf" customClass="SettingUsernameTableViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="crw-fH-LXf" customClass="SettingTextFieldTableViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EjT-9u-XKR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

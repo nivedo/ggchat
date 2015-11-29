@@ -9,10 +9,12 @@
 import Foundation
 
 class SettingMenu {
+    var id: String
     var displayName: String
     var segueName: String
     
-    init(displayName: String, segueName: String) {
+    init(id: String, displayName: String, segueName: String) {
+        self.id = id
         self.displayName = displayName
         self.segueName = segueName
     }

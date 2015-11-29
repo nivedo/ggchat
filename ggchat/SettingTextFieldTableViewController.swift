@@ -1,17 +1,23 @@
 //
-//  SettingUsernameTableViewController.swift
+//  SettingTextFieldTableViewController.swift
 //  ggchat
 //
-//  Created by Gary Chang on 11/28/15.
+//  Created by Gary Chang on 11/29/15.
 //  Copyright © 2015 Blub. All rights reserved.
 //
 
 import UIKit
 
-class SettingUsernameTableViewController: UITableViewController, UITextFieldDelegate {
+public typealias SettingTextFieldCompletionHandler = (String) -> Void
 
-    var username: String?
+class SettingTextFieldTableViewController: UITableViewController, UITextFieldDelegate {
+
+    var textValue: String?
     var textField: UITextField?
+    
+    var keyName: String!
+    var completionHandler: SettingTextFieldCompletionHandler!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +33,7 @@ class SettingUsernameTableViewController: UITableViewController, UITextFieldDele
         self.tableView.registerNib(SettingTableBorderCell.nib(),
             forCellReuseIdentifier: SettingTableBorderCell.cellReuseIdentifier())
         
-        self.navigationItem.title = "Username"
+        self.navigationItem.title = self.keyName
         
         let rightBarButton: UIBarButtonItem = UIBarButtonItem(
             title: "Done",
@@ -47,17 +53,22 @@ class SettingUsernameTableViewController: UITableViewController, UITextFieldDele
         self.tableView.backgroundColor = self.tableView.separatorColor
     }
     
+    func beforeSegue(keyName: String, completionHandler: SettingTextFieldCompletionHandler) {
+        self.keyName = keyName
+        self.completionHandler = completionHandler
+    }
+    
     func receivedDonePressed(sender: AnyObject?) {
         if let textField = self.textField {
-            self.username = textField.text
+            self.textValue = textField.text
             textField.resignFirstResponder()
         }
-        if let username = self.username {
-            print("Update username with: \(username)")
-            XMPPvCardManager.sharedInstance.updateDisplayName(username)
+        if let textValue = self.textValue {
+            print("Update with text value: \(textValue)")
+            self.completionHandler(textValue)
             self.navigationController?.popViewControllerAnimated(true)
         } else {
-            print("No username specified.")
+            print("No text value specified.")
         }
     }
     
@@ -67,7 +78,7 @@ class SettingUsernameTableViewController: UITableViewController, UITextFieldDele
 
     func textFieldDidEndEditing(textField: UITextField) {
         // print("textFieldEndEditing")
-        self.username = textField.text
+        self.textValue = textField.text
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -97,7 +108,7 @@ class SettingUsernameTableViewController: UITableViewController, UITextFieldDele
             forIndexPath: indexPath) as! SettingTableTextViewCell
 
         // Configure the cell...
-        cell.cellLabel.attributedText = NSAttributedString(string: "Username")
+        cell.cellLabel.attributedText = NSAttributedString(string: self.keyName)
         cell.cellTextField.delegate = self
         self.textField = cell.cellTextField
 

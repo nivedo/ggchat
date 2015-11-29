@@ -27,28 +27,35 @@ class GGSettingData {
         self.menus = [
             [
                 SettingMenu(
+                    id: "username",
                     displayName: "Username",
-                    segueName: "settings.to.settings_username"),
+                    segueName: "settings.to.settings_textfield"),
                 SettingMenu(
+                    id: "phone_number",
                     displayName: "Phone Number",
                     segueName: ""),
             ],
             [
                 SettingMenu(
+                    id: "notification",
                     displayName: "Notifications and Sounds",
                     segueName: ""),
                 SettingMenu(
+                    id: "privacy",
                     displayName: "Privacy and Security",
                     segueName: ""),
                 SettingMenu(
+                    id: "chat",
                     displayName: "Chat Settings",
                     segueName: ""),
             ],
             [
                 SettingMenu(
+                    id: "about",
                     displayName: "About",
                     segueName: ""),
                 SettingMenu(
+                    id: "help",
                     displayName: "Help",
                     segueName: ""),
             ],
