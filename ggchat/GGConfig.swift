@@ -33,6 +33,7 @@ struct GGConfig {
     static let outgoingBubbleColor = UIColor.gg_messageBubbleGreenColor()
     static let outgoingTextColor = UIColor.whiteColor()
     static let springinessEnabled = false
+    static let avatarSize: CGFloat = 30.0
 }
 
 struct GGConfig_Dark {

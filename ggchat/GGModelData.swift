@@ -130,6 +130,10 @@ class GGModelData {
                 diameter: Demo.avatarSize),
         ]
     }
+   
+    func updateAvatar(id: String, image: UIImage) {
+        self.avatars[id] = MessageAvatarImageFactory.avatarImageWithImage(image, diameter: Demo.avatarSize)
+    }
     
     func getAvatar(id: String) -> MessageAvatarImage {
         if let val = self.avatars[id] {

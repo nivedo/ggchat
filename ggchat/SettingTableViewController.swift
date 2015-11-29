@@ -42,21 +42,34 @@ class SettingTableViewController:
     func imagePickerController(
         picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        // imageView.contentMode = .ScaleAspectFit
-        // imageView.image = chosenImage
+        let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        let newSize: CGFloat = CGFloat(64.0)
+        let resizedImage = self.imageWithImage(chosenImage, scaledToSize: CGSize(width: newSize, height: newSize))
+        
+        GGModelData.sharedInstance.updateAvatar(XMPPManager.sharedInstance.jid, image: resizedImage)
+        XMPPvCardManager.sharedInstance.updateAvatarImage(resizedImage)
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 
     //////////////////////////////////////////////////////////////////////////////////
     // UINavigationControllerDelegate
     
     func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
-        print("didShowViewController: \(navigationController.viewControllers.count)")
+        return
+        // print("didShowViewController: \(navigationController.viewControllers.count)")
         if (navigationController.viewControllers.count == 3) {
             let edge: CGFloat = 10
             let screenHeight: CGFloat = UIScreen.mainScreen().bounds.size.height

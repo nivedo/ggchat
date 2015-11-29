@@ -48,29 +48,32 @@ class XMPPManager: NSObject,
     //////////////////////////////////////////////////////////////////////////////
   
     class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
-        let avatarImageDataSource = GGModelData.sharedInstance.getAvatar(jid)
+        var avatar: MessageAvatarImage?
         
-        let avatarImage: UIImage? = avatarImageDataSource.avatarImage
-        if (avatarImage == nil) {
-            return (avatarImageDataSource.avatarPlaceholderImage, nil)
-        } else {
-            return (avatarImage!, avatarImageDataSource.avatarHighlightedImage)
-        }
-    }
-    
-    class func avatarImageForUser(user: XMPPUserCoreDataStorageObject) -> UIImage? {
-        // Our xmppRosterStorage will cache photos as they arrive from the xmppvCardAvatarModule.
-        // We only need to ask the avatar module for a photo, if the roster doesn't have it.
-        if user.photo != nil {
-            return user.photo!
-        } else {
-            let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(user.jid)
-            
-            if let photoData = photoData {
-                return UIImage(data: photoData)
+        if let user = sharedInstance.rosterStorage.userForJID(
+            XMPPJID.jidWithString(jid),
+            xmppStream: sharedInstance.stream,
+            managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster()) {
+            if user.photo != nil {
+                avatar = MessageAvatarImageFactory.avatarImageWithImage(user.photo!, diameter: GGConfig.avatarSize)
             } else {
-                return nil
+                let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(user.jid)
+                
+                if let photoData = photoData {
+                    avatar = MessageAvatarImageFactory.avatarImageWithImage(UIImage(data: photoData)!, diameter: GGConfig.avatarSize)
+                }
             }
+        }
+       
+        if avatar == nil {
+            avatar = GGModelData.sharedInstance.getAvatar(jid)
+        }
+       
+        let avatarImage: UIImage? = avatar!.avatarImage
+        if (avatarImage == nil) {
+            return (avatar!.avatarPlaceholderImage, nil)
+        } else {
+            return (avatarImage!, avatar!.avatarHighlightedImage)
         }
     }
     
