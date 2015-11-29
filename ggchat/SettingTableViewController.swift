@@ -289,7 +289,9 @@ class SettingTableViewController:
         let actionTakePhoto = UIAlertAction(
             title: "Take Photo",
             style: UIAlertActionStyle.Default) { action -> Void in
-                // GGModelData.sharedInstance.addPhotoMediaMessage()
+                self.photoPicker.allowsEditing = true
+                self.photoPicker.sourceType = .Camera
+                self.presentViewController(self.photoPicker, animated: true, completion: nil)
         }
         let actionChoosePhoto = UIAlertAction(
             title: "Choose Photo",
