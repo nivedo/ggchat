@@ -41,18 +41,18 @@ public class XMPPvCardManager: NSObject {
 
 extension XMPPManager {
 
-    func xmppvCardTempModuleDidUpdateMyvCard(vCardTempModule: XMPPvCardTempModule) {
-        
+    func xmppvCardTempModuleDidUpdateMyvCard(vCardTempModule: XMPPvCardTempModule!) {
+        print("didUpdateMyvCard")
     }
     
-    func xmppvCardTempModule(vCardTempModule: XMPPvCardTempModule, failedToUpdateMyvCard error:DDXMLElement) {
-        
+    func xmppvCardTempModule(vCardTempModule: XMPPvCardTempModule!, failedToUpdateMyvCard error: DDXMLElement!) {
+        print("failedToUpdateMyvCard: \(error)")
     }
     
     func xmppvCardTempModule(vCardTempModule: XMPPvCardTempModule!, didReceivevCardTemp vCardTemp: XMPPvCardTemp!, forJID jid: XMPPJID!) {
         print("didReceivevCardTemp")
-        let vcard = XMPPManager.sharedInstance.vCardStorage.vCardTempForJID(jid,
-            xmppStream: XMPPManager.sharedInstance.stream)
+        let vcard = self.vCardStorage.vCardTempForJID(jid,
+            xmppStream: self.stream)
         print(vcard.description)
     }
 }

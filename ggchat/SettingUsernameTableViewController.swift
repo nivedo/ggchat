@@ -54,6 +54,7 @@ class SettingUsernameTableViewController: UITableViewController, UITextFieldDele
         }
         if let username = self.username {
             print("Update username with: \(username)")
+            XMPPvCardManager.sharedInstance.updateDisplayName("Gary", familyName: "Chang")
         } else {
             print("No username specified.")
         }
@@ -64,7 +65,7 @@ class SettingUsernameTableViewController: UITableViewController, UITextFieldDele
     }
 
     func textFieldDidEndEditing(textField: UITextField) {
-        print("textFieldEndEditing")
+        // print("textFieldEndEditing")
         self.username = textField.text
     }
     
