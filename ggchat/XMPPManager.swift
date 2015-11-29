@@ -76,7 +76,7 @@ class XMPPManager: NSObject,
         let vCard = self.vCardStorage.vCardTempForJID(
             self.stream.myJID,
             xmppStream: self.stream)
-        if let displayName = vCard.nickname {
+        if let displayName = vCard?.nickname {
             if displayName != "" {
                 NSUserDefaults.standardUserDefaults().setValue(displayName, forKey: GGKey.displayName)
                 return displayName

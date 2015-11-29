@@ -120,7 +120,11 @@ class ContactTableViewController: UITableViewController, XMPPRosterManagerDelega
         }
         // cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
         let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
-        cell.cellMainLabel.attributedText = NSAttributedString(string: user.jidStr)
+        var displayName = user.jidStr
+        if (user.nickname != nil && user.nickname != "") {
+            displayName = user.nickname
+        }
+        cell.cellMainLabel.attributedText = NSAttributedString(string: displayName)
         
         return cell
     }

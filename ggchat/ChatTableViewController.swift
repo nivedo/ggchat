@@ -172,9 +172,6 @@ class ChatTableViewController:
                     let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
                     cpd.didSelectContact(user)
                 }
-                if let mvc = segue.destinationViewController as? MessageViewController {
-                    mvc.overrideNavBackButtonToRootViewController = true
-                }
             }
         }
     }
