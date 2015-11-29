@@ -58,6 +58,22 @@ class XMPPManager: NSObject,
         }
     }
     
+    class func avatarImageForUser(user: XMPPUserCoreDataStorageObject) -> UIImage? {
+        // Our xmppRosterStorage will cache photos as they arrive from the xmppvCardAvatarModule.
+        // We only need to ask the avatar module for a photo, if the roster doesn't have it.
+        if user.photo != nil {
+            return user.photo!
+        } else {
+            let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(user.jid)
+            
+            if let photoData = photoData {
+                return UIImage(data: photoData)
+            } else {
+                return nil
+            }
+        }
+    }
+    
     var jid: String {
         get {
             if (self.isConnected()) {
