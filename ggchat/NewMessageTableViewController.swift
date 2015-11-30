@@ -11,9 +11,11 @@ import UIKit
 class NewMessageTableViewController:
     UITableViewController,
     UISearchResultsUpdating,
+    NSFetchedResultsControllerDelegate,
     XMPPRosterManagerDelegate {
 
     var searchResultController = UISearchController()
+    var searchFetchController: NSFetchedResultsController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,16 +48,42 @@ class NewMessageTableViewController:
         })()
         
         XMPPRosterManager.sharedInstance.delegate = self
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.searchResultController.view.removeFromSuperview()
         
         XMPPRosterManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
+        if (self.inSearchMode) {
+            let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
+                searchController.searchBar.text!)
+            
+            self.searchFetchController = XMPPRosterManager.sharedInstance.newFetchedResultsController(searchPredicate)
+            self.searchFetchController?.delegate = self
+            
+            print("updateSearch, active: \(self.searchResultController.active)")
+        }
+        self.tableView.reloadData()
+    }
+   
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.reloadData()
+    }
+    
+    var inSearchMode: Bool {
+        get {
+            return self.searchResultController.active
+                && self.searchResultController.searchBar.text!.characters.count > 0
+        }
+    }
+    
+    func frc() -> NSFetchedResultsController? {
+        return self.inSearchMode ? self.searchFetchController : XMPPRosterManager.sharedInstance.fetchedResultsController()
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,12 +95,12 @@ class NewMessageTableViewController:
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return XMPPRosterManager.buddyList.sections!.count
+        return self.frc()!.sections!.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sections: NSArray = XMPPRosterManager.buddyList.sections!
+        let sections: NSArray = self.frc()!.sections!
         
         if (section < sections.count) {
             return sections[section].numberOfObjects
@@ -104,14 +132,20 @@ class NewMessageTableViewController:
             }
         }
         
-        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
-        cell.cellMainLabel.attributedText = NSAttributedString(string: user.jidStr)
+        let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
+        var displayName = user.jidStr
+        if (user.nickname != nil && user.nickname != "") {
+            displayName = user.nickname
+        }
+        cell.cellMainLabel.attributedText = NSAttributedString(string: displayName)
         
         return cell
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
+        self.searchResultController.searchBar.resignFirstResponder()
+        self.searchResultController.active = false
         
         self.performSegueWithIdentifier("new_message.to.messages", sender: self)
     }
