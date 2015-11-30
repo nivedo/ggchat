@@ -16,8 +16,8 @@ class ContactTableViewController: UITableViewController,
     UISearchResultsUpdating,
     XMPPRosterManagerDelegate {
     
-    var resultSearchController = UISearchController()
-    var filteredUsers = [XMPPUserCoreDataStorageObject]()
+    var searchResultController = UISearchController()
+    var searchFetchController: NSFetchedResultsController?
 
     @IBAction func addContactAction(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(
@@ -62,7 +62,7 @@ class ContactTableViewController: UITableViewController,
         
         self.navigationItem.title = "Contacts"
         
-        self.resultSearchController = ({
+        self.searchResultController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
             controller.dimsBackgroundDuringPresentation = false // true
@@ -87,19 +87,19 @@ class ContactTableViewController: UITableViewController,
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (searchController.searchBar.text!.characters.count > 0) {
-            self.filteredUsers.removeAll(keepCapacity: false)
-           
             let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
                 searchController.searchBar.text!)
+           
+            self.searchFetchController = XMPPRosterManager.sharedInstance.newFetchedResultsController(searchPredicate)
             
-            let buddies = XMPPRosterManager.buddyList.fetchedObjects! as NSArray
-            let filteredBuddies = buddies.filteredArrayUsingPredicate(searchPredicate)
-            self.filteredUsers = filteredBuddies as! [XMPPUserCoreDataStorageObject]
-            
-            print("updateSearch, active: \(self.resultSearchController.active), match: \(self.filteredUsers.count)")
+            print("updateSearch, active: \(self.searchResultController.active)")
             
             self.tableView.reloadData()
         }
+    }
+    
+    func frc() -> NSFetchedResultsController? {
+        return self.searchResultController.active ? self.searchFetchController : XMPPRosterManager.sharedInstance.fetchedResultsController()
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,16 +110,11 @@ class ContactTableViewController: UITableViewController,
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        // return 1
-        return XMPPRosterManager.buddyList.sections!.count
+        return self.frc()!.sections!.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        // return GGModelData.sharedInstance.contacts.count
-        
-        let sections: NSArray = XMPPRosterManager.buddyList.sections!
+        let sections: NSArray = self.frc()!.sections!
         
         if (section < sections.count) {
             return sections[section].numberOfObjects
@@ -133,7 +128,6 @@ class ContactTableViewController: UITableViewController,
             forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
-        // let contact = GGModelData.sharedInstance.contacts[indexPath.row]
         
         let needsAvatar: Bool = true
         if (needsAvatar) {
@@ -151,8 +145,8 @@ class ContactTableViewController: UITableViewController,
                 }
             }
         }
-        // cell.cellMainLabel.attributedText = NSAttributedString(string: contact.displayName)
-        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
+        // let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
+        let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
         var displayName = user.jidStr
         if (user.nickname != nil && user.nickname != "") {
             displayName = user.nickname
