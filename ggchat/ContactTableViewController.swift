@@ -17,6 +17,7 @@ class ContactTableViewController: UITableViewController,
     XMPPRosterManagerDelegate {
     
     var resultSearchController = UISearchController()
+    var filteredUsers = [XMPPUserCoreDataStorageObject]()
 
     @IBAction func addContactAction(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(
@@ -85,9 +86,20 @@ class ContactTableViewController: UITableViewController,
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        print("updateSearchResultsForSearchController")
-        
-        self.tableView.reloadData()
+        if (searchController.searchBar.text!.characters.count > 0) {
+            self.filteredUsers.removeAll(keepCapacity: false)
+           
+            let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
+                searchController.searchBar.text!)
+            
+            let buddies = XMPPRosterManager.buddyList.fetchedObjects! as NSArray
+            let filteredBuddies = buddies.filteredArrayUsingPredicate(searchPredicate)
+            self.filteredUsers = filteredBuddies as! [XMPPUserCoreDataStorageObject]
+            
+            print("updateSearch, active: \(self.resultSearchController.active), match: \(self.filteredUsers.count)")
+            
+            self.tableView.reloadData()
+        }
     }
     
     override func didReceiveMemoryWarning() {
