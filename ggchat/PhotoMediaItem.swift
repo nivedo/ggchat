@@ -17,7 +17,7 @@ class PhotoMediaItem: MediaItem {
 
     init(image: UIImage) {
         super.init()
-        self.image = image.copy() as! UIImage
+        self.image = image.copy() as? UIImage
         self.cachedImageView = nil
     }
 

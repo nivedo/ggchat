@@ -50,7 +50,7 @@ class Message {
     }
     
     func hash() -> Int {
-        let contentHash = self.text!.hash;
+        let contentHash = self.isMediaMessage ? self.media!.mediaHash() : self.text!.hash
         return Int(self.senderId.hash ^ self.date.hash ^ contentHash)
     }
 }

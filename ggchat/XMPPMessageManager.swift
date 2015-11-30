@@ -69,6 +69,10 @@ public class XMPPMessageManager: NSObject {
             print("ERROR: Empty mesasge not sent.")
         }
 	}
+    
+    public class func sendPhoto(photo: UIImage, to receiver: String, completionHandler completion: MessageCompletionHandler?) {
+        
+    }
 	
 	public class func sendIsComposingMessage(recipient: String, completionHandler completion:MessageCompletionHandler) {
 		if recipient.characters.count > 0 {

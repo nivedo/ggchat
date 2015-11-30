@@ -12,10 +12,13 @@ class GGMessageViewController:
     MessageViewController,
     ContactPickerDelegate,
     XMPPMessageManagerDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate,
     UIActionSheetDelegate {
 
     var recipient: XMPPUserCoreDataStorageObject?
     var recipientDetails = UIView?()
+    var photoPicker = UIImagePickerController()
    
     // Initialization
     
@@ -34,10 +37,46 @@ class GGMessageViewController:
         
         self.showLoadEarlierMessagesHeader = true
         XMPPMessageManager.sharedInstance.delegate = self
+       
+        self.photoPicker.delegate = self
         
         self.messageCollectionView.reloadData()
     }
 
+    //////////////////////////////////////////////////////////////////////////////////
+    // UIImagePickerControllerDelegate
+    
+    func imagePickerController(
+        picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+            print("didFinishPickingMedia")
+            if let recipient = self.recipient {
+                // GGSystemSoundPlayer.gg_playMessageSentSound()
+                let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+                let photoMedia: PhotoMediaItem = PhotoMediaItem(image: chosenImage)
+                let message: Message = Message(
+                    senderId: senderId,
+                    senderDisplayName: senderDisplayName,
+                    date: NSDate(),
+                    media: photoMedia)
+            
+                self.messages.append(message)
+                
+                XMPPMessageManager.sendPhoto(chosenImage,
+                    to: recipient.jidStr,
+                    completionHandler: nil)
+            
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.finishSendingMessageAnimated(true)
+            } else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -123,14 +162,6 @@ class GGMessageViewController:
     }
 
     override func didPressAccessoryButton(sender: UIButton) {
-        /*
-        let sheet: UIActionSheet = UIActionSheet(
-            title: "Media messages",
-            delegate: self,
-            cancelButtonTitle: "Cancel",
-            destructiveButtonTitle: nil,
-            otherButtonTitles: "Send photo", "Send location", "Send video")
-        */
         let alert: UIAlertController = UIAlertController(
             title: "Media messages",
             message: "Choose media type",
@@ -142,7 +173,9 @@ class GGMessageViewController:
         let actionPhoto = UIAlertAction(
             title: "Send photo",
             style: UIAlertActionStyle.Default) { action -> Void in
-            GGModelData.sharedInstance.addPhotoMediaMessage()
+            self.photoPicker.allowsEditing = false
+            self.photoPicker.sourceType = .PhotoLibrary
+            self.presentViewController(self.photoPicker, animated: true, completion: nil)
         }
         let actionLocation = UIAlertAction(
             title: "Send location",

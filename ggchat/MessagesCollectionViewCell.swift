@@ -142,9 +142,9 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         self.messageBubbleTopLabel.text = nil
         self.cellBottomLabel.text = nil
         
-        self.textView.dataDetectorTypes = UIDataDetectorTypes.None
-        self.textView.text = nil
-        self.textView.attributedText = nil
+        self.textView?.dataDetectorTypes = UIDataDetectorTypes.None
+        self.textView?.text = nil
+        self.textView?.attributedText = nil
         
         self.avatarImageView.image = nil
         self.avatarImageView.highlightedImage = nil
@@ -191,13 +191,13 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     
     override var highlighted: Bool {
         didSet {
-            self.messageBubbleImageView.highlighted = self.highlighted;
+            self.messageBubbleImageView.highlighted = self.highlighted
         }
     }
     
     override var selected: Bool {
         didSet {
-            self.messageBubbleImageView.highlighted = self.selected;
+            self.messageBubbleImageView.highlighted = self.selected
         }
     }
     
@@ -291,18 +291,18 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var mediaView: UIView {
-        set (mediaView) {
+    var mediaView: UIView? {
+        willSet {
             self.messageBubbleImageView.removeFromSuperview()
             self.textView.removeFromSuperview()
             
-            mediaView.translatesAutoresizingMaskIntoConstraints = false
-            mediaView.frame = self.messageBubbleContainerView.bounds
+            newValue!.translatesAutoresizingMaskIntoConstraints = false
+            newValue!.frame = self.messageBubbleContainerView.bounds
             
-            self.messageBubbleContainerView.addSubview(mediaView)
-            self.messageBubbleContainerView.gg_pinAllEdgesOfSubview(mediaView)
-            self.mediaView = mediaView;
-            
+            self.messageBubbleContainerView.addSubview(newValue!)
+            self.messageBubbleContainerView.gg_pinAllEdgesOfSubview(newValue!)
+        }
+        didSet {
             //  because of cell re-use (and caching media views, if using built-in library media item)
             //  we may have dequeued a cell with a media view and add this one on top
             //  thus, remove any additional subviews hidden behind the new media view
@@ -314,12 +314,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
                 }
             }
         }
-        get {
-            return self.mediaView
-        }
     }
-    
-
     
     // pragma mark - Utilities
     
