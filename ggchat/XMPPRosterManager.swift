@@ -54,36 +54,42 @@ public class XMPPRosterManager: NSObject, NSFetchedResultsControllerDelegate {
 		return XMPPManager.sharedInstance.rosterStorage.mainThreadManagedObjectContext
 	}
 	
-	public func fetchedResultsController() -> NSFetchedResultsController? {
+    public func fetchedResultsController() -> NSFetchedResultsController? {
 		if fetchedResultsControllerVar == nil {
-			let moc = XMPPRosterManager.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
-			let entity = NSEntityDescription.entityForName("XMPPUserCoreDataStorageObject", inManagedObjectContext: moc!)
-			let sd1 = NSSortDescriptor(key: "sectionNum", ascending: true)
-			let sd2 = NSSortDescriptor(key: "displayName", ascending: true)
-			
-			let sortDescriptors = [sd1, sd2]
-			let fetchRequest = NSFetchRequest()
-			
-			fetchRequest.entity = entity
-			fetchRequest.sortDescriptors = sortDescriptors
-			fetchRequest.fetchBatchSize = 10
-			
-			fetchedResultsControllerVar = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc!, sectionNameKeyPath: "sectionNum", cacheName: nil)
-			fetchedResultsControllerVar?.delegate = self
-			
-			do {
-				try fetchedResultsControllerVar!.performFetch()
-			} catch let error as NSError {
-				print("Error: \(error.localizedDescription)")
-				abort()
-			}
-			//  if fetchedResultsControllerVar?.performFetch() == nil {
-			//Handle fetch error
-			//}
+			fetchedResultsControllerVar = newFetchedResultsController()
 		}
 		
 		return fetchedResultsControllerVar!
 	}
+    
+    public func newFetchedResultsController(predicate: NSPredicate? = nil ) -> NSFetchedResultsController {
+        let moc = XMPPRosterManager.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
+		let entity = NSEntityDescription.entityForName("XMPPUserCoreDataStorageObject", inManagedObjectContext: moc!)
+		let sd1 = NSSortDescriptor(key: "sectionNum", ascending: true)
+		let sd2 = NSSortDescriptor(key: "displayName", ascending: true)
+		
+		let sortDescriptors = [sd1, sd2]
+		let fetchRequest = NSFetchRequest()
+	
+        if predicate != nil {
+            fetchRequest.predicate = predicate!
+        }
+        
+		fetchRequest.entity = entity
+		fetchRequest.sortDescriptors = sortDescriptors
+		fetchRequest.fetchBatchSize = 10
+		
+		let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc!, sectionNameKeyPath: "sectionNum", cacheName: nil)
+		frc.delegate = self
+		
+		do {
+			try frc.performFetch()
+		} catch let error as NSError {
+			print("Error: \(error.localizedDescription)")
+			abort()
+		}
+        return frc
+    }
 	
 	public class func userFromRosterAtIndexPath(indexPath indexPath: NSIndexPath) -> XMPPUserCoreDataStorageObject {
 		return sharedInstance.fetchedResultsController()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
