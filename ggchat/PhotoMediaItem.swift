@@ -11,32 +11,42 @@ import UIKit
 
 class PhotoMediaItem: MediaItem {
     
-    var cachedImageView: UIImageView?
+    var cachedImageView_: UIImageView?
+    var image_: UIImage?
 
     // pragma mark - Initialization
 
     init(image: UIImage) {
         super.init()
-        self.image = image.copy() as? UIImage
-        self.cachedImageView = nil
+        self.image_ = image.copy() as? UIImage
+        self.cachedImageView_ = nil
     }
 
+    deinit {
+        self.image = nil
+        self.cachedImageView_ = nil
+    }
+    
     override func clearCachedMediaViews() {
         super.clearCachedMediaViews()
-        self.cachedImageView = nil
+        self.cachedImageView_ = nil
     }
 
     // pragma mark - Setters
 
     var image: UIImage? {
-        didSet {
-            self.cachedImageView = nil
+        set {
+            self.image = newValue!.copy() as! UIImage
+            self.cachedImageView_ = nil
+        }
+        get {
+            return self.image_
         }
     }
 
     override var appliesMediaViewMaskAsOutgoing: Bool {
         didSet {
-            self.cachedImageView = nil
+            self.cachedImageView_ = nil
         }
     }
 
@@ -47,7 +57,7 @@ class PhotoMediaItem: MediaItem {
             return nil
         }
         
-        if (self.cachedImageView == nil) {
+        if (self.cachedImageView_ == nil) {
             let size: CGSize = self.mediaViewDisplaySize()
             let imageView: UIImageView = UIImageView(image: self.image)
             imageView.frame = CGRectMake(0.0, 0.0, size.width, size.height)
@@ -56,10 +66,10 @@ class PhotoMediaItem: MediaItem {
             MessageMediaViewBubbleImageMasker.applyBubbleImageMaskToMediaView(
                 imageView,
                 isOutgoing: self.appliesMediaViewMaskAsOutgoing)
-            self.cachedImageView = imageView
+            self.cachedImageView_ = imageView
         }
         
-        return self.cachedImageView
+        return self.cachedImageView_
     }
 
     override func mediaHash() -> Int {
@@ -80,10 +90,10 @@ class PhotoMediaItem: MediaItem {
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.image = aDecoder.decodeObjectForKey(NSStringFromSelector(Selector("image"))) as? UIImage
+        self.image_ = aDecoder.decodeObjectForKey(NSStringFromSelector(Selector("image"))) as? UIImage
     }
 
-    required override init() {
+    required init() {
         super.init()
     }
 

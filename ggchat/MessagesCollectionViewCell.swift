@@ -142,9 +142,9 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         self.messageBubbleTopLabel.text = nil
         self.cellBottomLabel.text = nil
         
-        self.textView?.dataDetectorTypes = UIDataDetectorTypes.None
-        self.textView?.text = nil
-        self.textView?.attributedText = nil
+        self.textView.dataDetectorTypes = UIDataDetectorTypes.None
+        self.textView.text = nil
+        self.textView.attributedText = nil
         
         self.avatarImageView.image = nil
         self.avatarImageView.highlightedImage = nil

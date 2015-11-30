@@ -63,9 +63,9 @@ class MessagesCollectionView:
         self.registerNib(OutgoingMessagesCollectionViewCell.nib(),
             forCellWithReuseIdentifier: OutgoingMessagesCollectionViewCell.cellReuseIdentifier())
         
-        self.registerNib(UINib(nibName: "IncomingMessagesCollectionViewCell", bundle: nil),
+        self.registerNib(IncomingMessagesCollectionViewCell.nib(),
             forCellWithReuseIdentifier: IncomingMessagesCollectionViewCell.mediaCellReuseIdentifier())
-        self.registerNib(UINib(nibName: "OutgoingMessagesCollectionViewCell", bundle: nil),
+        self.registerNib(OutgoingMessagesCollectionViewCell.nib(),
             forCellWithReuseIdentifier: OutgoingMessagesCollectionViewCell.mediaCellReuseIdentifier())
         
         self.registerNib(MessageTypingIndicatorFooterView.nib(),
