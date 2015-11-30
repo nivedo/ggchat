@@ -8,10 +8,13 @@
 
 import UIKit
 
-class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDelegate {
+class NewMessageTableViewController:
+    UITableViewController,
+    UISearchResultsUpdating,
+    XMPPRosterManagerDelegate {
 
-    @IBOutlet weak var contactSearchBar: UISearchBar!
-   
+    var searchResultController = UISearchController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,17 +31,20 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.title = "New Message"
-        self.contactSearchBar.placeholder = "Search for contacts or usernames"
-        self.contactSearchBar.searchBarStyle = UISearchBarStyle.Minimal
         
-        /*
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "",
-            style: .Plain ,
-            target: self,
-            action: Selector("backButtonPressed:"))
-        */
+        self.searchResultController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false // true
+            controller.searchBar.sizeToFit()
+            controller.searchBar.placeholder = "Search for contacts or usernames"
+            controller.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
+        
         XMPPRosterManager.sharedInstance.delegate = self
     }
     
@@ -47,7 +53,11 @@ class NewMessageTableViewController: UITableViewController, XMPPRosterManagerDel
         
         XMPPRosterManager.sharedInstance.delegate = nil
     }
-
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
