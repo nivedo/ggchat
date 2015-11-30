@@ -136,8 +136,6 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     
     // pragma mark - Collection view cell
     override func prepareForReuse() {
-        super.prepareForReuse()
-    
         self.cellTopLabel.text = nil
         self.messageBubbleTopLabel.text = nil
         self.cellBottomLabel.text = nil
@@ -148,6 +146,8 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         
         self.avatarImageView.image = nil
         self.avatarImageView.highlightedImage = nil
+
+        super.prepareForReuse()
     }
 
     override func preferredLayoutAttributesFittingAttributes(layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {

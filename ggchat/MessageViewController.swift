@@ -478,6 +478,7 @@ class MessageViewController: UIViewController,
     }
 
     func finishSendingMessageAnimated(animated: Bool) {
+        print("finishSendingMessageAnimated")
         let textView: UITextView = self.inputToolbar.contentView.textView
         textView.text = nil
         textView.undoManager!.removeAllActions()
@@ -499,6 +500,7 @@ class MessageViewController: UIViewController,
     }
 
     func finishReceivingMessageAnimated(animated: Bool) {
+        print("finishReceivingMessageAnimated")
         self.showTypingIndicator = false
 
         self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
@@ -525,11 +527,13 @@ class MessageViewController: UIViewController,
         // let isContentTooSmall: Bool = (collectionViewContentHeight < CGRectGetHeight(self.messageCollectionView.bounds))
         let isContentTooSmall: Bool = (collectionViewContentHeight < maxHeightForVisibleMessage)
 
+        print("scrollToBottomAnimated animated: \(animated), isContentTooSmall: \(isContentTooSmall)")
         /*
         print(collectionViewContentHeight)
         print(CGRectGetHeight(self.messageCollectionView.bounds))
         print(maxHeightForVisibleMessage)
         */
+        
         if (isContentTooSmall) {
             //  workaround for the first few messages not scrolling
             //  when the collection view content size is too small, `scrollToItemAtIndexPath:` doesn't work properly
@@ -539,7 +543,7 @@ class MessageViewController: UIViewController,
                 animated:animated)
             return
         }
-        
+
         //  workaround for really long messages not scrolling
         //  if last message is too long, use scroll position bottom for better appearance, else use top
         //  possibly a UIKit bug, see #480 on GitHub
@@ -570,16 +574,22 @@ class MessageViewController: UIViewController,
         let isMediaMessage: Bool = messageItem.isMediaMessage
 
         var cellIdentifier: String
+        cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
+        /*
         if (isMediaMessage) {
             cellIdentifier = isOutgoingMessage ? self.outgoingMediaCellIdentifier : self.incomingMediaCellIdentifier
         } else {
             cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
         }
+        */
 
         // print(cellIdentifier)
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
 
+        print("-----------> messages: \(self.messages.count), index: \(indexPath), media: \(isMediaMessage)")
+        print(cell)
+            
         if (!isMediaMessage) {
             cell.textView.text = messageItem.text
 
@@ -597,6 +607,7 @@ class MessageViewController: UIViewController,
             cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
         } else {
             let messageMedia: MessageMediaData = messageItem.media!
+            print(cell.messageBubbleImageView)
             cell.mediaView = (messageMedia.mediaView() != nil ? messageMedia.mediaView() : messageMedia.mediaPlaceholderView())!
         }
         

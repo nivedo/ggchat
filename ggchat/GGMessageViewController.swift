@@ -39,7 +39,8 @@ class GGMessageViewController:
         XMPPMessageManager.sharedInstance.delegate = self
        
         self.photoPicker.delegate = self
-        
+       
+        self.loadUserHistory()
         self.messageCollectionView.reloadData()
     }
 
@@ -66,11 +67,9 @@ class GGMessageViewController:
                     to: recipient.jidStr,
                     completionHandler: nil)
             
-                self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
-            } else {
-                self.dismissViewControllerAnimated(true, completion: nil)
             }
+            self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -78,8 +77,12 @@ class GGMessageViewController:
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        print("GG::viewWillAppear")
         
+        super.viewWillAppear(animated)
+    }
+    
+    func loadUserHistory() {
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
           
@@ -96,8 +99,7 @@ class GGMessageViewController:
             }
             // Load archive messages
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
-                self.messages.appendContentsOf(archiveMessages)
+                self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
                 self.finishReceivingMessageAnimated(false)
             })
         } else {
