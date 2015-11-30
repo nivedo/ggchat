@@ -12,9 +12,12 @@ protocol ContactPickerDelegate{
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
 }
 
-class ContactTableViewController: UITableViewController, XMPPRosterManagerDelegate {
+class ContactTableViewController: UITableViewController,
+    UISearchResultsUpdating,
+    XMPPRosterManagerDelegate {
+    
+    var resultSearchController = UISearchController()
 
-    @IBOutlet weak var contactSearchBar: UISearchBar!
     @IBAction func addContactAction(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(
             title: "Add people to chat with",
@@ -57,10 +60,22 @@ class ContactTableViewController: UITableViewController, XMPPRosterManagerDelega
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.title = "Contacts"
-        self.contactSearchBar.placeholder = "Search for contacts or usernames"
-        self.contactSearchBar.searchBarStyle = UISearchBarStyle.Minimal
+        
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false // true
+            controller.searchBar.sizeToFit()
+            controller.searchBar.placeholder = "Search for contacts or usernames"
+            controller.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
         
         XMPPRosterManager.sharedInstance.delegate = self
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -68,7 +83,13 @@ class ContactTableViewController: UITableViewController, XMPPRosterManagerDelega
         
         XMPPRosterManager.sharedInstance.delegate = nil
     }
-
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        print("updateSearchResultsForSearchController")
+        
+        self.tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
