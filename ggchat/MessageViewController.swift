@@ -114,8 +114,10 @@ class MessageViewController: UIViewController,
         }
         
         // Navigation bar
-        // self.navigationItem.title = "Steve Jobs"
         self.tabBarController?.tabBar.hidden = true
+        // self.navigationController!.navigationBarHidden = false
+        // self.navigationController!.navigationBar.hidden = false
+        
         /*
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage.gg_defaultTypingIndicatorImage(),

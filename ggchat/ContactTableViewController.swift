@@ -171,6 +171,8 @@ class ContactTableViewController: UITableViewController,
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
+        self.searchResultController.searchBar.resignFirstResponder()
+        self.searchResultController.active = false
         
         self.performSegueWithIdentifier("contacts.to.messages", sender: self)
     }
