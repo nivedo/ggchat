@@ -144,10 +144,13 @@ class NewMessageTableViewController:
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
+        
+        let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
+        
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
         
-        self.performSegueWithIdentifier("new_message.to.messages", sender: self)
+        self.performSegueWithIdentifier("new_message.to.messages", sender: user)
     }
     
     func backButtonPressed(button: UIBarButtonItem) {
@@ -197,14 +200,13 @@ class NewMessageTableViewController:
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.identifier == "new_message.to.messages") {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                if let cpd = segue.destinationViewController as? ContactPickerDelegate {
-                    print("ContactPickerDelege!")
-                    cpd.didSelectContact(XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath))
-                }
-                if let mvc = segue.destinationViewController as? MessageViewController {
-                    mvc.overrideNavBackButtonToRootViewController = true
-                }
+            let user = sender as! XMPPUserCoreDataStorageObject
+            if let cpd = segue.destinationViewController as? ContactPickerDelegate {
+                print("ContactPickerDelege!")
+                cpd.didSelectContact(user)
+            }
+            if let mvc = segue.destinationViewController as? MessageViewController {
+                mvc.overrideNavBackButtonToRootViewController = true
             }
         }
     }
