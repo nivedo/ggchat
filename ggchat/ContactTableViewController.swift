@@ -14,6 +14,7 @@ protocol ContactPickerDelegate{
 
 class ContactTableViewController: UITableViewController,
     UISearchResultsUpdating,
+    NSFetchedResultsControllerDelegate,
     XMPPRosterManagerDelegate {
     
     var searchResultController = UISearchController()
@@ -81,25 +82,37 @@ class ContactTableViewController: UITableViewController,
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.searchResultController.view.removeFromSuperview()
         
         XMPPRosterManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if (searchController.searchBar.text!.characters.count > 0) {
+        if (self.inSearchMode) {
             let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
                 searchController.searchBar.text!)
            
             self.searchFetchController = XMPPRosterManager.sharedInstance.newFetchedResultsController(searchPredicate)
+            self.searchFetchController?.delegate = self
             
             print("updateSearch, active: \(self.searchResultController.active)")
-            
-            self.tableView.reloadData()
+        }
+        self.tableView.reloadData()
+    }
+   
+	func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.reloadData()
+    }
+    
+    var inSearchMode: Bool {
+        get {
+            return self.searchResultController.active
+                && self.searchResultController.searchBar.text!.characters.count > 0
         }
     }
     
     func frc() -> NSFetchedResultsController? {
-        return self.searchResultController.active ? self.searchFetchController : XMPPRosterManager.sharedInstance.fetchedResultsController()
+        return self.inSearchMode ? self.searchFetchController : XMPPRosterManager.sharedInstance.fetchedResultsController()
     }
     
     override func didReceiveMemoryWarning() {

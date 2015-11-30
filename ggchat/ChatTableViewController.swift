@@ -10,12 +10,10 @@ import UIKit
 
 class ChatTableViewController:
     UITableViewController,
-    UISearchBarDelegate,
-    UISearchDisplayDelegate,
+    UISearchResultsUpdating,
     XMPPRosterManagerDelegate {
 
-    @IBOutlet weak var chatSearchBar: UISearchBar!
-    var filteredChatArray: NSMutableArray?
+    var searchResultController = UISearchController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +25,19 @@ class ChatTableViewController:
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.title = "Chats"
-        self.filteredChatArray = NSMutableArray(capacity: GGModelData.sharedInstance.chats.count)
         
-        self.chatSearchBar.placeholder = "Search for messages or users"
-        self.chatSearchBar.searchBarStyle = UISearchBarStyle.Minimal
+        self.searchResultController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false // true
+            controller.searchBar.sizeToFit()
+            controller.searchBar.placeholder = "Search for messages or usernames"
+            controller.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
         
         XMPPRosterManager.sharedInstance.delegate = self
         XMPPManager.sharedInstance.connect(
@@ -46,6 +53,9 @@ class ChatTableViewController:
         XMPPRosterManager.sharedInstance.delegate = nil
     }
 
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
