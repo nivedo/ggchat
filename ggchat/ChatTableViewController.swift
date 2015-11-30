@@ -14,6 +14,7 @@ class ChatTableViewController:
     XMPPRosterManagerDelegate {
 
     var searchResultController = UISearchController()
+    var filteredChatsList = NSArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,15 +46,39 @@ class ChatTableViewController:
             password: nil,
             connectCompletionHandler: nil,
             authenticateCompletionHandler: nil)
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.searchResultController.view.removeFromSuperview()
         
         XMPPRosterManager.sharedInstance.delegate = nil
     }
 
     func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if (self.inSearchMode) {
+            let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
+                searchController.searchBar.text!)
+           
+            self.filteredChatsList = XMPPChatManager.getChatsList().filteredArrayUsingPredicate(searchPredicate)
+            
+            print("updateSearch, active: \(self.searchResultController.active), match: \(self.filteredChatsList.count)")
+        }
+        self.tableView.reloadData()
+    }
+    
+    var inSearchMode: Bool {
+        get {
+            return self.searchResultController.active
+                && self.searchResultController.searchBar.text!.characters.count > 0
+        }
+    }
+    
+    var dataList: NSArray {
+        get {
+            return self.inSearchMode ? self.filteredChatsList : XMPPChatManager.getChatsList()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,14 +89,11 @@ class ChatTableViewController:
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        // return GGModelData.sharedInstance.chats.count
-        return XMPPChatManager.getChatsList().count
+        return self.dataList.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -80,17 +102,9 @@ class ChatTableViewController:
             forIndexPath: indexPath) as! ChatTableViewCell
 
         // Configure the cell...
-        let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+        let user = self.dataList.objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
         cell.cellTopLabel.attributedText = NSAttributedString(string: user.displayName)
         cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
-        
-        /*
-        let chat = GGModelData.sharedInstance.chats[indexPath.row]
-
-        cell.cellTopLabel.attributedText = NSAttributedString(string: chat.chatDisplayName)
-        cell.cellBottomLabel.attributedText = NSAttributedString(string: chat.recentMessage)
-        cell.cellCornerLabel.attributedText = NSAttributedString(string: chat.recentUpdateTime)
-        */
         
         let needsAvatar: Bool = true
         if (needsAvatar) {
@@ -122,32 +136,44 @@ class ChatTableViewController:
 
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            let refreshAlert = UIAlertController(
-                title: "",
-                message: "Are you sure you want to clear the entire message history? \n This cannot be undone.",
-                preferredStyle: UIAlertControllerStyle.ActionSheet)
-            
-            refreshAlert.addAction(UIAlertAction(title: "Clear message history",
-                style: .Destructive,
-                handler: { (action: UIAlertAction!) in
-                    XMPPChatManager.removeUserAtIndexPath(indexPath)
-                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-            }))
-            
-            refreshAlert.addAction(UIAlertAction(title: "Cancel",
-                style: .Cancel,
-                handler: { (action: UIAlertAction!) in
-            }))
-            
-            self.presentViewController(refreshAlert, animated: true, completion: nil)
-            
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        if !self.inSearchMode {
+            if editingStyle == .Delete {
+                // Delete the row from the data source
+                let refreshAlert = UIAlertController(
+                    title: "",
+                    message: "Are you sure you want to clear the entire message history? \n This cannot be undone.",
+                    preferredStyle: UIAlertControllerStyle.ActionSheet)
+                
+                refreshAlert.addAction(UIAlertAction(title: "Clear message history",
+                    style: .Destructive,
+                    handler: { (action: UIAlertAction!) in
+                        XMPPChatManager.removeUserAtIndexPath(indexPath)
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                }))
+                
+                refreshAlert.addAction(UIAlertAction(title: "Cancel",
+                    style: .Cancel,
+                    handler: { (action: UIAlertAction!) in
+                }))
+                
+                self.presentViewController(refreshAlert, animated: true, completion: nil)
+                
+            } else if editingStyle == .Insert {
+                // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            }
+        }
     }
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("clicked \(indexPath)")
+        
+        let user: XMPPUserCoreDataStorageObject = self.dataList.objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+        self.searchResultController.searchBar.resignFirstResponder()
+        self.searchResultController.active = false
+        
+        self.performSegueWithIdentifier("chats.to.messages", sender: user)
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
@@ -163,25 +189,14 @@ class ChatTableViewController:
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.identifier == "chats.to.messages") {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                if let cpd = segue.destinationViewController as? ContactPickerDelegate {
-                    print("ContactPickerDelege!")
-                    let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
-                    cpd.didSelectContact(user)
-                }
+            let user = sender as! XMPPUserCoreDataStorageObject
+            if let cpd = segue.destinationViewController as? ContactPickerDelegate {
+                print("ContactPickerDelege!")
+                cpd.didSelectContact(user)
             }
         }
     }
