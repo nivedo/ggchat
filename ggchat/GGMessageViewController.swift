@@ -63,7 +63,7 @@ class GGMessageViewController:
             
                 self.messages.append(message)
                
-                // TODO: Image size to big
+                // TODO: Image size to big, must send out of band.
                 /*
                 XMPPMessageManager.sendMessage(
                     "",
