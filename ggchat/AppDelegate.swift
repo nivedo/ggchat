@@ -23,8 +23,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLog.addLogger(DDTTYLogger.sharedInstance(), withLogLevel: logLevel)
         
         XMPPManager.start()
-        
+    
+        if application.respondsToSelector("registerUserNotificationSettings:") {
+            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        } else {
+            let type: UIRemoteNotificationType = UIRemoteNotificationType(rawValue: (UIRemoteNotificationType.Alert.rawValue | UIRemoteNotificationType.Badge.rawValue | UIRemoteNotificationType.Sound.rawValue))
+            application.registerForRemoteNotificationTypes(type)
+        }
         return true
+    }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        print("didRegisterUserNotficationSettings")
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        print("Remote notification token: \(deviceToken)")
+    }
+   
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Failed to get token: \(error)")
     }
 
     func applicationWillResignActive(application: UIApplication) {

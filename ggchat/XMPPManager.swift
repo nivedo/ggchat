@@ -25,7 +25,7 @@ class XMPPManager: NSObject,
 
     var username: String!
     var password: String!
-    var domain: String!
+    var domain: String = GGSetting.xmppDomain
     var stream: XMPPStream!
     var roster: XMPPRoster!
     var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
@@ -250,7 +250,7 @@ class XMPPManager: NSObject,
        
         self.stream.myJID = XMPPJID.jidWithUser(
             self.username,
-            domain: GGSetting.xmppDomain,
+            domain: self.domain,
             resource: "ios")
         
         do {
