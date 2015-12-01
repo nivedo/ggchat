@@ -382,7 +382,7 @@ class MessageViewController: UIViewController,
 
     // pragma mark - View lifecycle
     override func viewWillAppear(animated: Bool) {
-        print("MessageViewController::viewWillAppear()")
+        // print("MessageViewController::viewWillAppear()")
         super.viewWillAppear(animated)
         self.view.layoutIfNeeded()
         self.messageCollectionView.collectionViewLayout.invalidateLayout()
@@ -478,7 +478,7 @@ class MessageViewController: UIViewController,
     }
 
     func finishSendingMessageAnimated(animated: Bool) {
-        print("finishSendingMessageAnimated")
+        // print("finishSendingMessageAnimated")
         let textView: UITextView = self.inputToolbar.contentView.textView
         textView.text = nil
         textView.undoManager!.removeAllActions()
@@ -500,7 +500,7 @@ class MessageViewController: UIViewController,
     }
 
     func finishReceivingMessageAnimated(animated: Bool) {
-        print("finishReceivingMessageAnimated")
+        // print("finishReceivingMessageAnimated")
         self.showTypingIndicator = false
 
         self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
@@ -527,8 +527,8 @@ class MessageViewController: UIViewController,
         // let isContentTooSmall: Bool = (collectionViewContentHeight < CGRectGetHeight(self.messageCollectionView.bounds))
         let isContentTooSmall: Bool = (collectionViewContentHeight < maxHeightForVisibleMessage)
 
-        print("scrollToBottomAnimated animated: \(animated), isContentTooSmall: \(isContentTooSmall)")
         /*
+        print("scrollToBottomAnimated animated: \(animated), isContentTooSmall: \(isContentTooSmall)")
         print(collectionViewContentHeight)
         print(CGRectGetHeight(self.messageCollectionView.bounds))
         print(maxHeightForVisibleMessage)
@@ -579,12 +579,12 @@ class MessageViewController: UIViewController,
         } else {
             cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
         }
-        print("-------> index: \(indexPath.row)/\(self.messages.count), media: \(isMediaMessage), identifier: \(cellIdentifier)")
+        // print("-------> index: \(indexPath.row)/\(self.messages.count), media: \(isMediaMessage), identifier: \(cellIdentifier)")
             
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
 
-        print(cell)
+        // print(cell)
             
         if (!isMediaMessage) {
             cell.textView.text = messageItem.text
@@ -603,7 +603,7 @@ class MessageViewController: UIViewController,
             cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
         } else {
             let messageMedia: MessageMediaData = messageItem.media!
-            print(cell.messageBubbleImageView)
+            // print(cell.messageBubbleImageView)
             cell.mediaView = (messageMedia.mediaView() != nil ? messageMedia.mediaView() : messageMedia.mediaPlaceholderView())!
         }
         

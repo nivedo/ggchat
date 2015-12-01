@@ -62,11 +62,15 @@ class GGMessageViewController:
                     media: photoMedia)
             
                 self.messages.append(message)
-                
-                XMPPMessageManager.sendPhoto(chosenImage,
+               
+                // TODO: Image size to big
+                /*
+                XMPPMessageManager.sendMessage(
+                    "",
+                    image: chosenImage,
                     to: recipient.jidStr,
                     completionHandler: nil)
-            
+                */
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
             } else {
@@ -159,7 +163,10 @@ class GGMessageViewController:
         
             self.messages.append(message)
                 
-            XMPPMessageManager.sendMessage(text, to: recipient.jidStr, completionHandler: nil)
+            XMPPMessageManager.sendMessage(text,
+                image: nil,
+                to: recipient.jidStr,
+                completionHandler: nil)
         
             self.finishSendingMessageAnimated(true)
         }
