@@ -1858,7 +1858,7 @@
 				TargetAttributes = {
 					D4683E511BF0486F00E02886 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 366VR48A29;
+						DevelopmentTeam = NDTVJY82Z3;
 					};
 					D4683E651BF0486F00E02886 = {
 						CreatedOnToolsVersion = 7.1;
@@ -2346,7 +2346,7 @@
 					"$(PROJECT_DIR)/ggchat/libidn",
 				);
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = io.syncopate.ggchat;
+				PRODUCT_BUNDLE_IDENTIFIER = io.blub.ggchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ggchat/GGBridge.h;
 			};
@@ -2367,7 +2367,7 @@
 					"$(PROJECT_DIR)/ggchat/libidn",
 				);
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = io.syncopate.ggchat;
+				PRODUCT_BUNDLE_IDENTIFIER = io.blub.ggchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ggchat/GGBridge.h;
 			};

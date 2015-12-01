@@ -18,7 +18,7 @@ class GGMessageViewController:
     UIActionSheetDelegate {
 
     var recipient: XMPPUserCoreDataStorageObject?
-    var recipientDetails = UIView?()
+    var recipientDetails: UIView?
     var photoPicker = UIImagePickerController()
    
     // Initialization
@@ -41,7 +41,7 @@ class GGMessageViewController:
        
         self.photoPicker.delegate = self
        
-        self.loadUserHistory()
+        self.loadUserHistory(true, loadLastActivity: true)
         self.messageCollectionView.reloadData()
     }
 
@@ -87,28 +87,42 @@ class GGMessageViewController:
         print("GG::viewWillAppear")
         
         super.viewWillAppear(animated)
+        loadUserHistory(false, loadLastActivity: false)
     }
     
-    func loadUserHistory() {
+    func loadUserHistory(loadArchiveMessages: Bool, loadLastActivity: Bool) {
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
-          
-            XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jidStr,
-                sender: XMPPManager.sharedInstance.lastActivity) { (response, forJID, error) -> Void in
-                let lastActivityResponse = XMPPLastActivityManager.sharedInstance.getLastActivityFrom((response?.lastActivitySeconds())!)
-                self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
-                    lastActivityResponse, displayName: recipient.displayName)
-                
-                if (self.recipientDetails != nil) {
+         
+            if self.recipientDetails == nil || loadLastActivity {
+                XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jidStr,
+                    sender: XMPPManager.sharedInstance.lastActivity) { (response, forJID, error) -> Void in
+                    let lastActivityResponse = XMPPLastActivityManager.sharedInstance.getLastActivityFrom((response?.lastActivitySeconds())!)
+                    
+                    for subview: UIView in self.navigationController!.view.subviews as [UIView] {
+                        if subview == self.recipientDetails {
+                            subview.removeFromSuperview()
+                        }
+                    }
+                    self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
+                        lastActivityResponse, displayName: recipient.displayName)
+                    if (self.recipientDetails != nil) {
                         self.navigationItem.title = ""
+                        
+                        self.navigationController!.view.addSubview(
+                            self.recipientDetails!)
+                    }
+                    // print(self.recipientDetails)
                 }
-                self.navigationController!.view.addSubview(self.recipientDetails!)
             }
+            
             // Load archive messages
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
-                self.finishReceivingMessageAnimated(false)
-            })
+            if loadArchiveMessages {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
+                    self.finishReceivingMessageAnimated(false)
+                })
+            }
         } else {
             if self.recipientDetails == nil {
                 self.navigationItem.title = "New Message"
@@ -119,8 +133,17 @@ class GGMessageViewController:
     }
     
     override func viewWillDisappear(animated: Bool) {
+        print("GG::viewWillDisappear")
+        self.recipientDetails?.removeFromSuperview()
+        
+        super.viewWillDisappear(animated)
+    }
+   
+    /*
+    override func didMoveToParentViewController(parent: UIViewController?) {
         self.recipientDetails?.removeFromSuperview()
     }
+    */
    
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject) {
         self.recipient = recipient
@@ -209,9 +232,8 @@ class GGMessageViewController:
         self.presentViewController(alert, animated: true, completion: nil)
         
         // alert.showFromToolbar(self.inputToolbar)
-        JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        
-        self.finishSendingMessageAnimated(true)
+        // JSQSystemSoundPlayer.jsq_playMessageSentSound()
+        // self.finishSendingMessageAnimated(true)
     }
     
 	func onMessage(
