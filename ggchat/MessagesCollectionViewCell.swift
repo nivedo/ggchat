@@ -60,10 +60,10 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cellBottomLabel: MessageLabel!
     @IBOutlet weak var cellTopLabel: MessageLabel!
     @IBOutlet weak var messageBubbleTopLabel: MessageLabel!
-    @IBOutlet weak var textView: MessageCellTextView!
+    @IBOutlet var textView: MessageCellTextView!
     
     @IBOutlet weak var messageBubbleContainerView: UIView!
-    @IBOutlet weak var messageBubbleImageView: UIImageView!
+    @IBOutlet var messageBubbleImageView: UIImageView!
     @IBOutlet weak var avatarContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
    
@@ -295,6 +295,8 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         willSet {
             self.messageBubbleImageView.removeFromSuperview()
             self.textView.removeFromSuperview()
+            // self.messageBubbleImageView.hidden = true
+            // self.textView.hidden = true
             
             newValue!.translatesAutoresizingMaskIntoConstraints = false
             newValue!.frame = self.messageBubbleContainerView.bounds

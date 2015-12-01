@@ -67,9 +67,11 @@ class GGMessageViewController:
                     to: recipient.jidStr,
                     completionHandler: nil)
             
+                self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
+            } else {
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
-            self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

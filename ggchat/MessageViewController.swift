@@ -574,20 +574,16 @@ class MessageViewController: UIViewController,
         let isMediaMessage: Bool = messageItem.isMediaMessage
 
         var cellIdentifier: String
-        cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
-        /*
         if (isMediaMessage) {
             cellIdentifier = isOutgoingMessage ? self.outgoingMediaCellIdentifier : self.incomingMediaCellIdentifier
         } else {
             cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
         }
-        */
-
-        // print(cellIdentifier)
+        print("-------> index: \(indexPath.row)/\(self.messages.count), media: \(isMediaMessage), identifier: \(cellIdentifier)")
+            
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView
 
-        print("-----------> messages: \(self.messages.count), index: \(indexPath), media: \(isMediaMessage)")
         print(cell)
             
         if (!isMediaMessage) {
