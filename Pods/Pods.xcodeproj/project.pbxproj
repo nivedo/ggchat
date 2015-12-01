@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		13BBC2B33424BAA8C8116F866BED7CE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85455FF7BA435AFD02BF8C1FFB86A8CD /* Foundation.framework */; };
+		242676881F9A1BF44EB77429E2BC4FAB /* JSQSystemSoundPlayer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 67AEDDE5B21EA53D6F35B1CF5DFADDD1 /* JSQSystemSoundPlayer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39B266C14BECF870BC215B9D144CD002 /* Pods-ggchat-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D478AA4D72E4FB976BCF6BFE015AA32 /* Pods-ggchat-dummy.m */; };
+		40EC578BEC97BEA5646DAF814C44E8FF /* Pods-ggchat-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 37CE505C9E6F31F1943E6EDEC96D16FE /* Pods-ggchat-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		85FA8EB1D0A3D4D21F97F6A5F6D1BE27 /* JSQSystemSoundPlayer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 099486188396B0574B7F0A968DD2EF3C /* JSQSystemSoundPlayer-dummy.m */; };
+		963DEAD47689D2DED58B983DD09EA0EB /* JSQSystemSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 15984E325BB3B75AA805D0F8F0023169 /* JSQSystemSoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B8BC5F594226BEA5AEF26EB18D213C3E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351851C294BB3D97BAB9B2F814DAA59F /* AudioToolbox.framework */; };
+		E3B31497F7DB6B9F5F7895755C6B7C2B /* JSQSystemSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB69E67D269009695A2C051F0BB808 /* JSQSystemSoundPlayer.m */; };
+		EFE13C999036FC7B865EC0616DDE0617 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85455FF7BA435AFD02BF8C1FFB86A8CD /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3995596D9C03860495BCF2BA1DE1AD2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3B624C428C71866D63C529AEF179D02C;
+			remoteInfo = JSQSystemSoundPlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		099486188396B0574B7F0A968DD2EF3C /* JSQSystemSoundPlayer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSQSystemSoundPlayer-dummy.m"; sourceTree = "<group>"; };
+		0C2C21E95D2EFF9D9F2E5E91BFA0AE1A /* Pods_ggchat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ggchat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		15984E325BB3B75AA805D0F8F0023169 /* JSQSystemSoundPlayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSQSystemSoundPlayer.h; path = JSQSystemSoundPlayer/JSQSystemSoundPlayer/JSQSystemSoundPlayer.h; sourceTree = "<group>"; };
+		1FC1FBDC747C6C436D40319EC4FAA096 /* JSQSystemSoundPlayer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSQSystemSoundPlayer-prefix.pch"; sourceTree = "<group>"; };
+		351851C294BB3D97BAB9B2F814DAA59F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		37CE505C9E6F31F1943E6EDEC96D16FE /* Pods-ggchat-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ggchat-umbrella.h"; sourceTree = "<group>"; };
+		3B579D45988DA2E5C9716B84FBCDE95F /* Pods-ggchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ggchat.release.xcconfig"; sourceTree = "<group>"; };
+		4EB9BAE164B50307ECE9AAD6924808B4 /* Pods-ggchat.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ggchat.modulemap"; sourceTree = "<group>"; };
+		67AEDDE5B21EA53D6F35B1CF5DFADDD1 /* JSQSystemSoundPlayer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSQSystemSoundPlayer-umbrella.h"; sourceTree = "<group>"; };
+		7BDA10BDEB7D173607CB0508396AC0E0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D478AA4D72E4FB976BCF6BFE015AA32 /* Pods-ggchat-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ggchat-dummy.m"; sourceTree = "<group>"; };
+		7E46419A57F3440BFCD7404AAE029733 /* Pods-ggchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ggchat.debug.xcconfig"; sourceTree = "<group>"; };
+		85455FF7BA435AFD02BF8C1FFB86A8CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		98FE4629CEF7CD72361813CB38F46EC7 /* Pods-ggchat-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ggchat-frameworks.sh"; sourceTree = "<group>"; };
+		A69441893649848E8CFB32901D2A2D3E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A85FB4DAC858B121A1846EA19E376705 /* Pods-ggchat-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ggchat-acknowledgements.plist"; sourceTree = "<group>"; };
+		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CD7F519084A58655A5C700039C46B059 /* JSQSystemSoundPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSQSystemSoundPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEF09BB3807471898FBF8D994A3D2867 /* JSQSystemSoundPlayer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = JSQSystemSoundPlayer.modulemap; sourceTree = "<group>"; };
+		E0110D1F03612CFB59132F4A06C154D9 /* Pods-ggchat-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ggchat-acknowledgements.markdown"; sourceTree = "<group>"; };
+		E1FC88B88EB615511A80758C484DCCC3 /* Pods-ggchat-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ggchat-resources.sh"; sourceTree = "<group>"; };
+		F89739BFB4426A7D529C6112297F4419 /* JSQSystemSoundPlayer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JSQSystemSoundPlayer.xcconfig; sourceTree = "<group>"; };
+		FBBB69E67D269009695A2C051F0BB808 /* JSQSystemSoundPlayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSQSystemSoundPlayer.m; path = JSQSystemSoundPlayer/JSQSystemSoundPlayer/JSQSystemSoundPlayer.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C7276BE3608D72DC7D909333D591EAC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFE13C999036FC7B865EC0616DDE0617 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB6EA9FBA5D12F9A70ABC5F6557005AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8BC5F594226BEA5AEF26EB18D213C3E /* AudioToolbox.framework in Frameworks */,
+				13BBC2B33424BAA8C8116F866BED7CE2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04725EC7BFB57B5625E5937CFAA1EB14 /* Pods-ggchat */ = {
+			isa = PBXGroup;
+			children = (
+				A69441893649848E8CFB32901D2A2D3E /* Info.plist */,
+				4EB9BAE164B50307ECE9AAD6924808B4 /* Pods-ggchat.modulemap */,
+				E0110D1F03612CFB59132F4A06C154D9 /* Pods-ggchat-acknowledgements.markdown */,
+				A85FB4DAC858B121A1846EA19E376705 /* Pods-ggchat-acknowledgements.plist */,
+				7D478AA4D72E4FB976BCF6BFE015AA32 /* Pods-ggchat-dummy.m */,
+				98FE4629CEF7CD72361813CB38F46EC7 /* Pods-ggchat-frameworks.sh */,
+				E1FC88B88EB615511A80758C484DCCC3 /* Pods-ggchat-resources.sh */,
+				37CE505C9E6F31F1943E6EDEC96D16FE /* Pods-ggchat-umbrella.h */,
+				7E46419A57F3440BFCD7404AAE029733 /* Pods-ggchat.debug.xcconfig */,
+				3B579D45988DA2E5C9716B84FBCDE95F /* Pods-ggchat.release.xcconfig */,
+			);
+			name = "Pods-ggchat";
+			path = "Target Support Files/Pods-ggchat";
+			sourceTree = "<group>";
+		};
+		08D9B76283B2DB3AE4A454361EABA5EE /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				04725EC7BFB57B5625E5937CFAA1EB14 /* Pods-ggchat */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		175690B3894001EF1392A97FA195A4F9 /* JSQSystemSoundPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				15984E325BB3B75AA805D0F8F0023169 /* JSQSystemSoundPlayer.h */,
+				FBBB69E67D269009695A2C051F0BB808 /* JSQSystemSoundPlayer.m */,
+				7FABAA5AA44D44EB90B786709E7CCBF4 /* Support Files */,
+			);
+			path = JSQSystemSoundPlayer;
+			sourceTree = "<group>";
+		};
+		272646A12DFEF78A396F68926BD967EC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				175690B3894001EF1392A97FA195A4F9 /* JSQSystemSoundPlayer */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C8ED9D4FEF685113DB4131A14ED8523 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4C8ED9D4FEF685113DB4131A14ED8523 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				351851C294BB3D97BAB9B2F814DAA59F /* AudioToolbox.framework */,
+				85455FF7BA435AFD02BF8C1FFB86A8CD /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
+				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
+				272646A12DFEF78A396F68926BD967EC /* Pods */,
+				8200B58EC830488B7415A73027A6D27B /* Products */,
+				08D9B76283B2DB3AE4A454361EABA5EE /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		7FABAA5AA44D44EB90B786709E7CCBF4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7BDA10BDEB7D173607CB0508396AC0E0 /* Info.plist */,
+				CEF09BB3807471898FBF8D994A3D2867 /* JSQSystemSoundPlayer.modulemap */,
+				F89739BFB4426A7D529C6112297F4419 /* JSQSystemSoundPlayer.xcconfig */,
+				099486188396B0574B7F0A968DD2EF3C /* JSQSystemSoundPlayer-dummy.m */,
+				1FC1FBDC747C6C436D40319EC4FAA096 /* JSQSystemSoundPlayer-prefix.pch */,
+				67AEDDE5B21EA53D6F35B1CF5DFADDD1 /* JSQSystemSoundPlayer-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/JSQSystemSoundPlayer";
+			sourceTree = "<group>";
+		};
+		8200B58EC830488B7415A73027A6D27B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CD7F519084A58655A5C700039C46B059 /* JSQSystemSoundPlayer.framework */,
+				0C2C21E95D2EFF9D9F2E5E91BFA0AE1A /* Pods_ggchat.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		167706144DDB11494BEABE348605506F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40EC578BEC97BEA5646DAF814C44E8FF /* Pods-ggchat-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F99F057CEABB43A013C190E8CE1A60E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				242676881F9A1BF44EB77429E2BC4FAB /* JSQSystemSoundPlayer-umbrella.h in Headers */,
+				963DEAD47689D2DED58B983DD09EA0EB /* JSQSystemSoundPlayer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3B624C428C71866D63C529AEF179D02C /* JSQSystemSoundPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 31B98E506FFCCCC6E94A0E7A47E64A0E /* Build configuration list for PBXNativeTarget "JSQSystemSoundPlayer" */;
+			buildPhases = (
+				359134B41738C99DAA33DF615E72E9B3 /* Sources */,
+				EB6EA9FBA5D12F9A70ABC5F6557005AD /* Frameworks */,
+				1F99F057CEABB43A013C190E8CE1A60E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSQSystemSoundPlayer;
+			productName = JSQSystemSoundPlayer;
+			productReference = CD7F519084A58655A5C700039C46B059 /* JSQSystemSoundPlayer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BA2B520803800C8F4F5D129AD87E97C5 /* Pods-ggchat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC7E6310C24CDE176B1373061FF5134D /* Build configuration list for PBXNativeTarget "Pods-ggchat" */;
+			buildPhases = (
+				A55A7EA297D316B2DC95BF9388EC6E67 /* Sources */,
+				C7276BE3608D72DC7D909333D591EAC6 /* Frameworks */,
+				167706144DDB11494BEABE348605506F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1B7AB1764F07EAE606EF5A72775AE55 /* PBXTargetDependency */,
+			);
+			name = "Pods-ggchat";
+			productName = "Pods-ggchat";
+			productReference = 0C2C21E95D2EFF9D9F2E5E91BFA0AE1A /* Pods_ggchat.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 8200B58EC830488B7415A73027A6D27B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3B624C428C71866D63C529AEF179D02C /* JSQSystemSoundPlayer */,
+				BA2B520803800C8F4F5D129AD87E97C5 /* Pods-ggchat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		359134B41738C99DAA33DF615E72E9B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85FA8EB1D0A3D4D21F97F6A5F6D1BE27 /* JSQSystemSoundPlayer-dummy.m in Sources */,
+				E3B31497F7DB6B9F5F7895755C6B7C2B /* JSQSystemSoundPlayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A55A7EA297D316B2DC95BF9388EC6E67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39B266C14BECF870BC215B9D144CD002 /* Pods-ggchat-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1B7AB1764F07EAE606EF5A72775AE55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSQSystemSoundPlayer;
+			target = 3B624C428C71866D63C529AEF179D02C /* JSQSystemSoundPlayer */;
+			targetProxy = 3995596D9C03860495BCF2BA1DE1AD2C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		21BEB7FAA83AC6BC2D0D91CFFFA0B2FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B579D45988DA2E5C9716B84FBCDE95F /* Pods-ggchat.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-ggchat/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ggchat/Pods-ggchat.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_ggchat;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		34E6494A86DCCB67439075CB45C1B50A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E46419A57F3440BFCD7404AAE029733 /* Pods-ggchat.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-ggchat/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ggchat/Pods-ggchat.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_ggchat;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		685087034F1B52C53AA540DFF76C7B2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F89739BFB4426A7D529C6112297F4419 /* JSQSystemSoundPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/JSQSystemSoundPlayer/JSQSystemSoundPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JSQSystemSoundPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JSQSystemSoundPlayer/JSQSystemSoundPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = JSQSystemSoundPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		FB45FFD90572718D82AB9092B750F0CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF0391589D84ED89584E4500E9D171AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F89739BFB4426A7D529C6112297F4419 /* JSQSystemSoundPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/JSQSystemSoundPlayer/JSQSystemSoundPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JSQSystemSoundPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JSQSystemSoundPlayer/JSQSystemSoundPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = JSQSystemSoundPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */,
+				FB45FFD90572718D82AB9092B750F0CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		31B98E506FFCCCC6E94A0E7A47E64A0E /* Build configuration list for PBXNativeTarget "JSQSystemSoundPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				685087034F1B52C53AA540DFF76C7B2F /* Debug */,
+				FF0391589D84ED89584E4500E9D171AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC7E6310C24CDE176B1373061FF5134D /* Build configuration list for PBXNativeTarget "Pods-ggchat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34E6494A86DCCB67439075CB45C1B50A /* Debug */,
+				21BEB7FAA83AC6BC2D0D91CFFFA0B2FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */; };
 		D42B895E1C05D9EC0043C20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B895D1C05D9EC0043C20A /* LoginViewController.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
@@ -102,6 +103,7 @@
 		D4A786531C0A9BB000C37427 /* SettingTableMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */; };
 		D4A786541C0A9BB000C37427 /* SettingTableMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A786521C0A9BB000C37427 /* SettingTableMenuCell.xib */; };
 		D4A786561C0AE1BB00C37427 /* XMPPLastActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786551C0AE1BB00C37427 /* XMPPLastActivityManager.swift */; };
+		D4A786661C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786651C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift */; };
 		D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */; };
 		D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */; };
 		D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */; };
@@ -256,6 +258,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ggchat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.release.xcconfig"; sourceTree = "<group>"; };
 		D42B895D1C05D9EC0043C20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -402,11 +406,13 @@
 		D47840A91BF1B67800441A2D /* UIImage+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Messages.swift"; sourceTree = "<group>"; };
 		D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GGMessagesAssets.bundle; sourceTree = "<group>"; };
 		D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+Messages.swift"; sourceTree = "<group>"; };
+		D485F18A3E4F03D00C056737 /* Pods-ggchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.debug.xcconfig"; sourceTree = "<group>"; };
 		D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPvCardManager.swift; sourceTree = "<group>"; };
 		D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTextFieldTableViewController.swift; sourceTree = "<group>"; };
 		D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableMenuCell.swift; sourceTree = "<group>"; };
 		D4A786521C0A9BB000C37427 /* SettingTableMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableMenuCell.xib; sourceTree = "<group>"; };
 		D4A786551C0AE1BB00C37427 /* XMPPLastActivityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPLastActivityManager.swift; sourceTree = "<group>"; };
+		D4A786651C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSQSystemSoundPlayer+Message.swift"; sourceTree = "<group>"; };
 		D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 		D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellTextView.swift; sourceTree = "<group>"; };
 		D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -658,6 +664,7 @@
 				D43B294D1C068A2800B3F367 /* Security.framework in Frameworks */,
 				D43B294B1C068A1F00B3F367 /* CFNetwork.framework in Frameworks */,
 				D43B28E61C06895600B3F367 /* libidn.a in Frameworks */,
+				3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +685,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01492D06EB94158E39130024 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D485F18A3E4F03D00C056737 /* Pods-ggchat.debug.xcconfig */,
+				C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BDAD08421CB58D0D76AE60DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D43B28AC1C0688E300B3F367 /* XMPPFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -943,6 +967,8 @@
 				D4683E691BF0486F00E02886 /* ggchatTests */,
 				D4683E741BF0486F00E02886 /* ggchatUITests */,
 				D4683E531BF0486F00E02886 /* Products */,
+				01492D06EB94158E39130024 /* Pods */,
+				BDAD08421CB58D0D76AE60DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1085,6 +1111,7 @@
 		D47840A51BF1AD6F00441A2D /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				D4A786651C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift */,
 				D47840A61BF1AD8100441A2D /* UIColor+Messages.swift */,
 				D47840A91BF1B67800441A2D /* UIImage+Messages.swift */,
 				D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */,
@@ -1761,9 +1788,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4683E7A1BF0486F00E02886 /* Build configuration list for PBXNativeTarget "ggchat" */;
 			buildPhases = (
+				153541EA6F097846D0AFA62C /* Check Pods Manifest.lock */,
 				D4683E4E1BF0486F00E02886 /* Sources */,
 				D4683E4F1BF0486F00E02886 /* Frameworks */,
 				D4683E501BF0486F00E02886 /* Resources */,
+				9E8D257466A056BE40D62E41 /* Embed Pods Frameworks */,
+				97B0C080869D0EBFC7017667 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1895,6 +1925,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		153541EA6F097846D0AFA62C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		97B0C080869D0EBFC7017667 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ggchat/Pods-ggchat-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E8D257466A056BE40D62E41 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ggchat/Pods-ggchat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D4683E4E1BF0486F00E02886 /* Sources */ = {
@@ -2082,6 +2160,7 @@
 				D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */,
 				D4C8FE021C06AA2300992801 /* XMPPvCardTempAdrTypes.m in Sources */,
 				D43B292D1C06897300B3F367 /* XMPPJID.m in Sources */,
+				D4A786661C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift in Sources */,
 				D4C8FE001C06AA2300992801 /* XMPPvCardTemp.m in Sources */,
 				D43B292F1C06897300B3F367 /* XMPPModule.m in Sources */,
 				D4C8FE141C06AA2300992801 /* XMPPTransports.m in Sources */,
@@ -2246,6 +2325,7 @@
 		};
 		D4683E7B1BF0486F00E02886 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D485F18A3E4F03D00C056737 /* Pods-ggchat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
@@ -2265,6 +2345,7 @@
 		};
 		D4683E7C1BF0486F00E02886 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;

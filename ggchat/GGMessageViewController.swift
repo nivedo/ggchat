@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JSQSystemSoundPlayer
 
 class GGMessageViewController:
     MessageViewController,
@@ -153,7 +154,7 @@ class GGMessageViewController:
         date: NSDate) {
             
         if let recipient = self.recipient {
-            // GGSystemSoundPlayer.gg_playMessageSentSound()
+            JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
             let message: Message = Message(
                 senderId: senderId,
@@ -208,7 +209,7 @@ class GGMessageViewController:
         self.presentViewController(alert, animated: true, completion: nil)
         
         // alert.showFromToolbar(self.inputToolbar)
-        // [JSQSystemSoundPlayer jsq_playMessageSentSound];
+        JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
         self.finishSendingMessageAnimated(true)
     }
@@ -222,6 +223,9 @@ class GGMessageViewController:
                 let tokens = from.componentsSeparatedByString("/")
                 // print("\(tokens[0]) ? \(self.recipient!.jidStr)")
                 if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
+                    
+                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                    
                     let message = Message(
                         senderId: from,
                         senderDisplayName: from,
