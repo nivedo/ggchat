@@ -2336,6 +2336,7 @@
 			baseConfigurationReference = D485F18A3E4F03D00C056737 /* Pods-ggchat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = ggchat/Info.plist;
@@ -2345,7 +2346,7 @@
 					"$(PROJECT_DIR)/ggchat/libidn",
 				);
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchat;
+				PRODUCT_BUNDLE_IDENTIFIER = io.syncopate.ggchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ggchat/GGBridge.h;
 			};
@@ -2356,6 +2357,7 @@
 			baseConfigurationReference = C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = ggchat/Info.plist;
@@ -2365,7 +2367,7 @@
 					"$(PROJECT_DIR)/ggchat/libidn",
 				);
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = blub.ggchat;
+				PRODUCT_BUNDLE_IDENTIFIER = io.syncopate.ggchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ggchat/GGBridge.h;
 			};
