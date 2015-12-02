@@ -106,6 +106,8 @@
 		D4A786661C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786651C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift */; };
 		D4A786691C0D5A7E00C37427 /* SettingTableSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786671C0D5A7E00C37427 /* SettingTableSwitchCell.swift */; };
 		D4A7866A1C0D5A7E00C37427 /* SettingTableSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A786681C0D5A7E00C37427 /* SettingTableSwitchCell.xib */; };
+		D4A7866D1C0E90EC00C37427 /* TappableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7866C1C0E90EC00C37427 /* TappableText.swift */; };
+		D4A7866F1C0EA0F700C37427 /* SettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7866E1C0EA0F700C37427 /* SettingManager.swift */; };
 		D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */; };
 		D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */; };
 		D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */; };
@@ -417,6 +419,8 @@
 		D4A786651C0D48AD00C37427 /* JSQSystemSoundPlayer+Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSQSystemSoundPlayer+Message.swift"; sourceTree = "<group>"; };
 		D4A786671C0D5A7E00C37427 /* SettingTableSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableSwitchCell.swift; sourceTree = "<group>"; };
 		D4A786681C0D5A7E00C37427 /* SettingTableSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableSwitchCell.xib; sourceTree = "<group>"; };
+		D4A7866C1C0E90EC00C37427 /* TappableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableText.swift; sourceTree = "<group>"; };
+		D4A7866E1C0EA0F700C37427 /* SettingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
 		D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 		D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellTextView.swift; sourceTree = "<group>"; };
 		D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -998,6 +1002,7 @@
 				D4683E8B1BF04F2600E02886 /* Controllers */,
 				D4683E831BF048CC00E02886 /* Models */,
 				D4C8FCCE1C06A12700992801 /* Managers */,
+				D4A7866B1C0E90AC00C37427 /* Extensions */,
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
 				D4C8FCCD1C069FC100992801 /* GGBridge.h */,
@@ -1136,6 +1141,14 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		D4A7866B1C0E90AC00C37427 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D4A7866C1C0E90EC00C37427 /* TappableText.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		D4A9F5051BF476BC00FA4444 /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1157,6 +1170,7 @@
 				D469EAA11C09749500D30C9A /* XMPPChatManager.swift */,
 				D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */,
 				D4A786551C0AE1BB00C37427 /* XMPPLastActivityManager.swift */,
+				D4A7866E1C0EA0F700C37427 /* SettingManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2036,6 +2050,7 @@
 				D4C8FE041C06AA2300992801 /* XMPPvCardTempEmail.m in Sources */,
 				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
 				D4A786501C0A93EF00C37427 /* SettingTextFieldTableViewController.swift in Sources */,
+				D4A7866F1C0EA0F700C37427 /* SettingManager.swift in Sources */,
 				D4C8FE0D1C06AA2300992801 /* XMPPIQ+XEP_0066.m in Sources */,
 				D4C8FDE91C06AA2300992801 /* XMPPJabberRPCModule.m in Sources */,
 				D4C8FE2F1C06AA2300992801 /* XEP_0223.m in Sources */,
@@ -2155,6 +2170,7 @@
 				D45FBD5E1C04432900E79B4E /* ChatTableViewController.swift in Sources */,
 				D43B29471C06897D00B3F367 /* XMPPStringPrep.m in Sources */,
 				D4C8FDFF1C06AA2300992801 /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
+				D4A7866D1C0E90EC00C37427 /* TappableText.swift in Sources */,
 				D45FBD651C0497B300E79B4E /* ContactTableViewController.swift in Sources */,
 				D4C8FDF41C06AA2300992801 /* XMPPRoomOccupantHybridMemoryStorageObject.m in Sources */,
 				D4C8FDEB1C06AA2300992801 /* XMPPLastActivity.m in Sources */,

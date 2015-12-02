@@ -50,7 +50,7 @@ class MessageCellTextView: UITextView {
                 return false
             }
         }
-    return true
+        return true
     }
     
     // TODO: This should be override
