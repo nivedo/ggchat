@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLog.addLogger(DDTTYLogger.sharedInstance(), withLogLevel: logLevel)
         
         XMPPManager.start()
-    
+   
+        // Register remote notifications with APNS
         if application.respondsToSelector("registerUserNotificationSettings:") {
             let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
@@ -31,6 +32,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let type: UIRemoteNotificationType = UIRemoteNotificationType(rawValue: (UIRemoteNotificationType.Alert.rawValue | UIRemoteNotificationType.Badge.rawValue | UIRemoteNotificationType.Sound.rawValue))
             application.registerForRemoteNotificationTypes(type)
         }
+        
+        // Check launch options
+        if let options = launchOptions {
+            if let payload = options[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+                // Launched from remote notification
+                print("Launch from remote notification: \(payload)")
+                
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.sharedApplication().cancelAllLocalNotifications()
+            } else if let local = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+                print("Launch from local notification: \(local)")
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.sharedApplication().cancelAllLocalNotifications()
+            }
+        }
+        
         return true
     }
     
@@ -59,10 +76,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        print("applicationWillEnterForeground")
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        print("applicationDidBecomeActive")
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -70,6 +92,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         XMPPManager.stop()
     }
 
-
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("applicationDidReceiveRemoteNotification: \(UIApplication.sharedApplication().applicationState))")
+        print(userInfo)
+    }
+   
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        print("applicationDidReceiveLocalNotification: \(UIApplication.sharedApplication().applicationState))")
+    }
 }
 
