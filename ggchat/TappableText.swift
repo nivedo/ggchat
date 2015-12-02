@@ -10,13 +10,15 @@ import Foundation
 import UIKit
 
 class TappableText {
-   
+  
+    static let tapSelector: String = "textTapped:"
+    
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
     
-    class var sharedInstance: XMPPManager {
+    class var sharedInstance: TappableText {
         struct Singleton {
-            static let instance = XMPPManager()
+            static let instance = TappableText()
         }
         return Singleton.instance
     }

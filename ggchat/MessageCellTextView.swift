@@ -40,6 +40,12 @@ class MessageCellTextView: UITextView {
         ]
         self.linkTextAttributes = attributes
         self.selectedRange = NSMakeRange(NSNotFound, NSNotFound)
+        
+        if SettingManager.sharedInstance.tappableMessageText {
+            let tap = UITapGestureRecognizer(target: self, action: Selector(TappableText.tapSelector))
+            self.addGestureRecognizer(tap)
+            // self.tapGestureRecognizer = tap
+        }
     }
 
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

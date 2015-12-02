@@ -12,9 +12,9 @@ class SettingManager {
 
     var tappableMessageText: Bool = false
     
-    class var sharedInstance: XMPPManager {
+    class var sharedInstance: SettingManager {
         struct Singleton {
-            static let instance = XMPPManager()
+            static let instance = SettingManager()
         }
         return Singleton.instance
     }
