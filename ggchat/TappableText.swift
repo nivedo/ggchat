@@ -12,6 +12,7 @@ import UIKit
 protocol TappableTextDelegate {
     
     func onTap(attributes: [String: AnyObject])
+    func onTapCatchAll()
     
 }
 
@@ -87,8 +88,10 @@ class TappableText: NSObject {
                 if tappable {
                     print(attributes, NSStringFromRange(range))
                     self.delegate?.onTap(attributes)
+                    return
                 }
             }
         }
+        self.delegate?.onTapCatchAll()
     }
 }

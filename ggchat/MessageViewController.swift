@@ -142,6 +142,10 @@ class MessageViewController: UIViewController,
             self.navigationItem.leftBarButtonItem = barButton
         }
         
+        // Tap gesture recognizer to dismiss keyboard
+        let tap = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard"))
+        self.messageCollectionView.addGestureRecognizer(tap)
+        
         /**
          *  Register custom menu actions for cells.
          */
@@ -836,6 +840,11 @@ class MessageViewController: UIViewController,
 
         textView.resignFirstResponder()
     }
+    
+    func dismissKeyboard() {
+        print("dismissKeyboard")
+        self.textViewDidEndEditing(self.inputToolbar.contentView.textView)
+    }
 
     // pragma mark - Notifications
 
@@ -1250,6 +1259,7 @@ class MessageViewController: UIViewController,
         didTapAvatarImageView avatarImageView: UIImageView,
         atIndexPath indexPath: NSIndexPath) {
         print("MVC::didTapAvatarImageView")
+        self.dismissKeyboard()
     }
 
     /**
@@ -1261,6 +1271,7 @@ class MessageViewController: UIViewController,
     func collectionView(collectionView: MessagesCollectionView,
         didTapMessageBubbleAtIndexPath indexPath: NSIndexPath) {
         print("MVC::didTapMessageBubbleAtIndexPath")
+        self.dismissKeyboard()
     }
 
     /**
@@ -1281,6 +1292,7 @@ class MessageViewController: UIViewController,
         didTapCellAtIndexPath indexPath: NSIndexPath,
         touchLocation: CGPoint) {
         print("MVC::didTapCellAtIndexPath")
+        self.dismissKeyboard()
     }
     
     //////////////////////////////////////////////////////////////////////////////////
