@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+protocol TappableTextDelegate {
+    
+    func onTap(attributes: [String: AnyObject])
+    
+}
+
 class TappableText: NSObject {
   
     static let tapSelector: String = "textTapped:"
@@ -17,6 +23,7 @@ class TappableText: NSObject {
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
     let delimiter = " "
+    var delegate: TappableTextDelegate?
     
     class var sharedInstance: TappableText {
         struct Singleton {
@@ -36,7 +43,7 @@ class TappableText: NSObject {
             }
            
             var attr: [String : NSObject]? = attributes
-            if self.lookup.contains(token) {
+            if self.lookup.contains(token.lowercaseString) {
                 if attr == nil {
                     attr = [TappableText.tapAttributeKey : true]
                 } else {
@@ -79,6 +86,7 @@ class TappableText: NSObject {
             if let tappable = attributes[TappableText.tapAttributeKey] as? Bool {
                 if tappable {
                     print(attributes, NSStringFromRange(range))
+                    self.delegate?.onTap(attributes)
                 }
             }
         }

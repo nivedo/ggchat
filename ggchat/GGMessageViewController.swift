@@ -13,6 +13,7 @@ class GGMessageViewController:
     MessageViewController,
     ContactPickerDelegate,
     XMPPMessageManagerDelegate,
+    TappableTextDelegate,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
     UIActionSheetDelegate {
@@ -20,6 +21,7 @@ class GGMessageViewController:
     var recipient: XMPPUserCoreDataStorageObject?
     var recipientDetails: UIView?
     var photoPicker = UIImagePickerController()
+    var imageModelViewController: ImageModalViewController?
    
     // Initialization
     
@@ -43,6 +45,11 @@ class GGMessageViewController:
        
         self.loadUserHistory(true, loadLastActivity: true)
         self.messageCollectionView.reloadData()
+   
+        if SettingManager.sharedInstance.tappableMessageText {
+            TappableText.sharedInstance.delegate = self
+        }
+        self.initImageModalViewController()
     }
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -135,6 +142,10 @@ class GGMessageViewController:
     override func viewWillDisappear(animated: Bool) {
         print("GG::viewWillDisappear")
         self.recipientDetails?.removeFromSuperview()
+        
+        if SettingManager.sharedInstance.tappableMessageText {
+            TappableText.sharedInstance.delegate = nil
+        }
         
         super.viewWillDisappear(animated)
     }
@@ -267,11 +278,20 @@ class GGMessageViewController:
         self.showTypingIndicator = !self.showTypingIndicator
         self.scrollToBottomAnimated(true)
     }
+   
+    func onTap(attributes: [String: AnyObject] ) {
+        if self.imageModelViewController != nil {
+            self.presentTransparentViewController(
+                self.imageModelViewController!,
+                animated: true,
+                completion: nil)
+        }
+    }
     
     func presentTransparentViewController(
         viewControllerToPresent: UIViewController,
         animated flag: Bool,
-        completion: (Void) -> Void) {
+        completion: ((Void) -> Void)?) {
         if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
             self.parentViewController!.navigationController!.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
         } else {
@@ -281,5 +301,11 @@ class GGMessageViewController:
         self.presentViewController(viewControllerToPresent,
             animated: true,
             completion: completion)
+    }
+    
+    func initImageModalViewController() {
+        let storyboardName: String = "Main"
+        let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
+        self.imageModelViewController = storyboard.instantiateViewControllerWithIdentifier("Message Image Model View Controller") as? ImageModalViewController
     }
 }

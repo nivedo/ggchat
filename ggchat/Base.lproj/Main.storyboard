@@ -512,6 +512,54 @@
             </objects>
             <point key="canvasLocation" x="2109" y="815"/>
         </scene>
+        <!--Message Image Model View Controller-->
+        <scene sceneID="JLF-zg-nYE">
+            <objects>
+                <viewController storyboardIdentifier="Message Image Model View Controller" title="Message Image Model View Controller" id="ZYZ-pe-mSj" customClass="ImageModalViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VHD-lr-qDD"/>
+                        <viewControllerLayoutGuide type="bottom" id="SCQ-ku-6yk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wse-Xj-7hn">
+                        <rect key="frame" x="0.0" y="0.0" width="325" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OUR-d3-GQe">
+                                <rect key="frame" x="42" y="102" width="240" height="363"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jSP-P0-gd5">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="363"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="jSP-P0-gd5" firstAttribute="leading" secondItem="OUR-d3-GQe" secondAttribute="leading" id="D8S-NR-MuT"/>
+                                    <constraint firstAttribute="bottom" secondItem="jSP-P0-gd5" secondAttribute="bottom" id="ekF-tt-3Ym"/>
+                                    <constraint firstItem="jSP-P0-gd5" firstAttribute="top" secondItem="OUR-d3-GQe" secondAttribute="top" id="gp7-na-3uz"/>
+                                    <constraint firstAttribute="trailing" secondItem="jSP-P0-gd5" secondAttribute="trailing" id="sW4-16-8gu"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OUR-d3-GQe" firstAttribute="centerX" secondItem="wse-Xj-7hn" secondAttribute="centerX" id="8JD-Ta-QWj"/>
+                            <constraint firstItem="OUR-d3-GQe" firstAttribute="centerY" secondItem="wse-Xj-7hn" secondAttribute="centerY" id="MAU-sy-X7Y"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="325" height="568"/>
+                    <connections>
+                        <outlet property="imageContainer" destination="OUR-d3-GQe" id="tqN-DZ-9vg"/>
+                        <outlet property="imageView" destination="jSP-P0-gd5" id="Boi-eK-h0T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zlz-yK-COi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2368.5" y="1521"/>
+        </scene>
         <!--Settings-->
         <scene sceneID="2Ss-Jf-au6">
             <objects>

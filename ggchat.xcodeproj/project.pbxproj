@@ -108,6 +108,7 @@
 		D4A7866A1C0D5A7E00C37427 /* SettingTableSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A786681C0D5A7E00C37427 /* SettingTableSwitchCell.xib */; };
 		D4A7866D1C0E90EC00C37427 /* TappableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7866C1C0E90EC00C37427 /* TappableText.swift */; };
 		D4A7866F1C0EA0F700C37427 /* SettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7866E1C0EA0F700C37427 /* SettingManager.swift */; };
+		D4A786711C0EC76900C37427 /* ImageModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786701C0EC76900C37427 /* ImageModalViewController.swift */; };
 		D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */; };
 		D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */; };
 		D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */; };
@@ -421,6 +422,7 @@
 		D4A786681C0D5A7E00C37427 /* SettingTableSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableSwitchCell.xib; sourceTree = "<group>"; };
 		D4A7866C1C0E90EC00C37427 /* TappableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableText.swift; sourceTree = "<group>"; };
 		D4A7866E1C0EA0F700C37427 /* SettingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
+		D4A786701C0EC76900C37427 /* ImageModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageModalViewController.swift; sourceTree = "<group>"; };
 		D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 		D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellTextView.swift; sourceTree = "<group>"; };
 		D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1145,6 +1147,7 @@
 			isa = PBXGroup;
 			children = (
 				D4A7866C1C0E90EC00C37427 /* TappableText.swift */,
+				D4A786701C0EC76900C37427 /* ImageModalViewController.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2203,6 +2206,7 @@
 				D4C8FDE21C06AA2300992801 /* XMPPResourceMemoryStorageObject.m in Sources */,
 				D43B29311C06897300B3F367 /* XMPPPresence.m in Sources */,
 				D4C8FDF61C06AA2300992801 /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
+				D4A786711C0EC76900C37427 /* ImageModalViewController.swift in Sources */,
 				D4C8FE251C06AA2300992801 /* XMPPMessageDeliveryReceipts.m in Sources */,
 				D4C8FDEA1C06AA2300992801 /* XMPPIQ+LastActivity.m in Sources */,
 				D4C8FE211C06AA2300992801 /* XMPPvCardAvatarModule.m in Sources */,
