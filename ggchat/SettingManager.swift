@@ -10,7 +10,7 @@ import Foundation
 
 class SettingManager {
 
-    var tappableMessageText: Bool = false
+    var tappableMessageText: Bool = true // false
     
     class var sharedInstance: SettingManager {
         struct Singleton {

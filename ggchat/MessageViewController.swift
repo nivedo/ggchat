@@ -598,7 +598,8 @@ class MessageViewController: UIViewController,
             }
             if SettingManager.sharedInstance.tappableMessageText {
                 cell.textView.text = nil
-                cell.textView.attributedText = messageItem.textAsAttributedStringForView()
+                cell.textView.attributedText = messageItem.textAsAttributedStringForView(
+                    [ NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont ])
             }
 
 

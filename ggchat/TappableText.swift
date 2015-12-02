@@ -15,6 +15,7 @@ class TappableText: NSObject {
     
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
+    let delimiter = " "
     
     class var sharedInstance: TappableText {
         struct Singleton {
@@ -23,19 +24,32 @@ class TappableText: NSObject {
         return Singleton.instance
     }
     
-    func tappableAttributedString(text: String) -> NSAttributedString {
-        let paragraph = NSMutableAttributedString(string: text)
-        
-        let tests = [ "tap1", "tap2" ]
-        for tap in tests {
+    func tappableAttributedString(text: String, attributes: [String: NSObject]?) -> NSAttributedString {
+        let paragraph = NSMutableAttributedString(string: "")
+      
+        let tokens = text.componentsSeparatedByString(self.delimiter)
+        for (index, token) in tokens.enumerate() {
+            var str = token
+            if index < tokens.count - 1 {
+                str += self.delimiter
+            }
+           
+            var attr: [String : NSObject]? = attributes
+            if self.lookup.contains(token) {
+                if attr == nil {
+                    attr = ["tappable" : true]
+                } else {
+                    attr!["tappable"] = true
+                }
+            }
             let attributedString = NSAttributedString(
-                string: tap,
-                attributes: [
-                    "tappable" : true
-                ]
-            )
+                string: str,
+                attributes: attr)
             paragraph.appendAttributedString(attributedString)
         }
+        
+        assert(text.characters.count == paragraph.string.characters.count,
+            "Original text \(text.characters.count) and tappable text \(paragraph.string.characters.count) must have same length.")
         return paragraph.copy() as! NSAttributedString
     }
     
