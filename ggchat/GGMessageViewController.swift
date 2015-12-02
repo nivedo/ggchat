@@ -267,4 +267,19 @@ class GGMessageViewController:
         self.showTypingIndicator = !self.showTypingIndicator
         self.scrollToBottomAnimated(true)
     }
+    
+    func presentTransparentViewController(
+        viewControllerToPresent: UIViewController,
+        animated flag: Bool,
+        completion: (Void) -> Void) {
+        if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
+            self.parentViewController!.navigationController!.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+        } else {
+            viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        }
+        
+        self.presentViewController(viewControllerToPresent,
+            animated: true,
+            completion: completion)
+    }
 }

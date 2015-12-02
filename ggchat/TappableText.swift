@@ -12,6 +12,7 @@ import UIKit
 class TappableText: NSObject {
   
     static let tapSelector: String = "textTapped:"
+    static let tapAttributeKey: String = "tappable"
     
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
@@ -37,9 +38,9 @@ class TappableText: NSObject {
             var attr: [String : NSObject]? = attributes
             if self.lookup.contains(token) {
                 if attr == nil {
-                    attr = ["tappable" : true]
+                    attr = [TappableText.tapAttributeKey : true]
                 } else {
-                    attr!["tappable"] = true
+                    attr![TappableText.tapAttributeKey] = true
                 }
             }
             let attributedString = NSAttributedString(
@@ -74,11 +75,12 @@ class TappableText: NSObject {
         if (characterIndex < textView.textStorage.length) {
             var range: NSRange = NSMakeRange(0, 1)
             let attributes: [String: AnyObject] = textView.textStorage.attributesAtIndex(characterIndex, effectiveRange: &range)
-            print(attributes, NSStringFromRange(range))
             
-            //Based on the attributes, do something
-            ///if ([attributes objectForKey:...)] //make a network call, load a cat Pic, etc
-            
+            if let tappable = attributes[TappableText.tapAttributeKey] as? Bool {
+                if tappable {
+                    print(attributes, NSStringFromRange(range))
+                }
+            }
         }
     }
 }
