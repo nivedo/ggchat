@@ -42,7 +42,9 @@ class MessageCellTextView: UITextView {
         self.selectedRange = NSMakeRange(NSNotFound, NSNotFound)
         
         if SettingManager.sharedInstance.tappableMessageText {
-            let tap = UITapGestureRecognizer(target: self, action: Selector(TappableText.tapSelector))
+            let tap = UITapGestureRecognizer(
+                target: TappableText.sharedInstance,
+                action: Selector(TappableText.tapSelector))
             self.addGestureRecognizer(tap)
             // self.tapGestureRecognizer = tap
         }

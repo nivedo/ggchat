@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TappableText {
+class TappableText: NSObject {
   
     static let tapSelector: String = "textTapped:"
     

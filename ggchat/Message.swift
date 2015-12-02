@@ -17,6 +17,10 @@ class Message {
     var isMediaMessage: Bool
     var media: MessageMediaData?
     
+    func textAsAttributedStringForView() -> NSAttributedString {
+        return TappableText.sharedInstance.tappableAttributedString(
+            self.text!)
+    }
     
     init(senderId: String, senderDisplayName: String, date: NSDate, text: String) {
         self.senderId = senderId

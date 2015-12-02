@@ -596,6 +596,10 @@ class MessageViewController: UIViewController,
                     string: messageItem.text!,
                     attributes: [ NSFontAttributeName : messageCollectionView.messageCollectionViewLayout.messageBubbleFont ])
             }
+            if SettingManager.sharedInstance.tappableMessageText {
+                cell.textView.text = nil
+                cell.textView.attributedText = messageItem.textAsAttributedStringForView()
+            }
 
 
             let bubbleImageDataSource: MessageBubbleImage = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath)
