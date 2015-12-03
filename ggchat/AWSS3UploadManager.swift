@@ -31,6 +31,7 @@ protocol S3UploadDelegate {
     func onUploadPauseCancel()
     func onUploadCancelFailure()
     func onUploadPauseFailure()
+    
 }
 
 class AWSS3UploadManager {
@@ -43,7 +44,7 @@ class AWSS3UploadManager {
     }
 
     var uploads = Array<S3Upload?>()
-    var uploadDelegate: S3UploadDelegate?
+    var delegate: S3UploadDelegate?
     
     func upload(fileURL: NSURL, fileName: String) {
         let uploadRequest = AWSS3TransferManagerUploadRequest()
@@ -65,28 +66,28 @@ class AWSS3UploadManager {
                         switch (errorCode) {
                         case .Cancelled, .Paused:
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.uploadDelegate?.onUploadPauseCancel()
+                                self.delegate?.onUploadPauseCancel()
                             })
                             break;
                             
                         default:
                             print("upload() failed: [\(error)]")
-                            self.uploadDelegate?.onUploadFailure()
+                            self.delegate?.onUploadFailure()
                             break;
                         }
                     } else {
                         print("upload() failed: [\(error)]")
-                        self.uploadDelegate?.onUploadFailure()
+                        self.delegate?.onUploadFailure()
                     }
                 } else {
                     print("upload() failed: [\(error)]")
-                    self.uploadDelegate?.onUploadFailure()
+                    self.delegate?.onUploadFailure()
                 }
             }
             
             if let exception = task.exception {
                 print("upload() failed: [\(exception)]")
-                self.uploadDelegate?.onUploadFailure()
+                self.delegate?.onUploadFailure()
             }
             
             if task.result != nil {
@@ -94,7 +95,7 @@ class AWSS3UploadManager {
                     if let index = self.indexOfUploadRequest(uploadRequest) {
                         self.uploads[index]!.onSuccess(uploadRequest.body)
                        
-                        self.uploadDelegate?.onUploadSuccess(uploadRequest.body)
+                        self.delegate?.onUploadSuccess(uploadRequest.body)
                     }
                 })
             }
@@ -108,11 +109,11 @@ class AWSS3UploadManager {
                 uploadRequest.request?.cancel().continueWithBlock({ (task) -> AnyObject! in
                     if let error = task.error {
                         print("cancel() failed: [\(error)]")
-                        self.uploadDelegate?.onUploadCancelFailure()
+                        self.delegate?.onUploadCancelFailure()
                     }
                     if let exception = task.exception {
                         print("cancel() failed: [\(exception)]")
-                        self.uploadDelegate?.onUploadCancelFailure()
+                        self.delegate?.onUploadCancelFailure()
                     }
                     return nil
                 })
@@ -124,18 +125,19 @@ class AWSS3UploadManager {
         uploadRequest.pause().continueWithBlock({ (task) -> AnyObject! in
             if let error = task.error {
                 print("pause() failed: [\(error)]")
-                self.uploadDelegate?.onUploadPauseCancel()
+                self.delegate?.onUploadPauseCancel()
             }
             if let exception = task.exception {
                 print("pause() failed: [\(exception)]")
-                self.uploadDelegate?.onUploadPauseCancel()
+                self.delegate?.onUploadPauseCancel()
             }
             
             return nil
         })
     }
     
-    func followProgress(uploadRequest: AWSS3TransferManagerUploadRequest, completion: S3ProgressCompletion) {
+    func followProgress(uploadRequest: AWSS3TransferManagerUploadRequest,
+        completion: S3ProgressCompletion) {
         uploadRequest.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 completion(bytesSent, totalBytesSent, totalBytesExpectedToSend)
