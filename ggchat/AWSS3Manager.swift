@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import AWSS3
+
+public typealias S3ProgressCompletion = (Int64, Int64, Int64) -> Void
 
 class AWSS3Manager {
     
@@ -26,5 +29,4 @@ class AWSS3Manager {
             credentialsProvider: credentialsProvider)
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
     }
-    
 }
