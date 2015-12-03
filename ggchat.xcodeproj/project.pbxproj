@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */; };
+		5DADA37F787969A1E440FEB4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F50A1F65453D0EFE9716EF /* Pods.framework */; };
 		D42B895E1C05D9EC0043C20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B895D1C05D9EC0043C20A /* LoginViewController.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
@@ -109,6 +110,7 @@
 		D4A7866D1C0E90EC00C37427 /* TappableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7866C1C0E90EC00C37427 /* TappableText.swift */; };
 		D4A7866F1C0EA0F700C37427 /* SettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7866E1C0EA0F700C37427 /* SettingManager.swift */; };
 		D4A786711C0EC76900C37427 /* ImageModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786701C0EC76900C37427 /* ImageModalViewController.swift */; };
+		D4A786751C10320B00C37427 /* AWSS3Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786741C10320B00C37427 /* AWSS3Manager.swift */; };
 		D4A9F4E41BF1E1BF00FA4444 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */; };
 		D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */; };
 		D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */; };
@@ -264,6 +266,7 @@
 
 /* Begin PBXFileReference section */
 		01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ggchat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2F50A1F65453D0EFE9716EF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.release.xcconfig"; sourceTree = "<group>"; };
 		D42B895D1C05D9EC0043C20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
@@ -423,6 +426,7 @@
 		D4A7866C1C0E90EC00C37427 /* TappableText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableText.swift; sourceTree = "<group>"; };
 		D4A7866E1C0EA0F700C37427 /* SettingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
 		D4A786701C0EC76900C37427 /* ImageModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageModalViewController.swift; sourceTree = "<group>"; };
+		D4A786741C10320B00C37427 /* AWSS3Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSS3Manager.swift; sourceTree = "<group>"; };
 		D4A9F4E31BF1E1BF00FA4444 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
 		D4A9F4E51BF26CDE00FA4444 /* MessageCellTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellTextView.swift; sourceTree = "<group>"; };
 		D4A9F4E71BF2778A00FA4444 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -675,6 +679,7 @@
 				D43B294B1C068A1F00B3F367 /* CFNetwork.framework in Frameworks */,
 				D43B28E61C06895600B3F367 /* libidn.a in Frameworks */,
 				3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */,
+				5DADA37F787969A1E440FEB4 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,6 +713,7 @@
 			isa = PBXGroup;
 			children = (
 				01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */,
+				B2F50A1F65453D0EFE9716EF /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1174,6 +1180,7 @@
 				D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */,
 				D4A786551C0AE1BB00C37427 /* XMPPLastActivityManager.swift */,
 				D4A7866E1C0EA0F700C37427 /* SettingManager.swift */,
+				D4A786741C10320B00C37427 /* AWSS3Manager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1993,7 +2000,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ggchat/Pods-ggchat-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2036,6 +2043,7 @@
 				D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */,
 				D43B28CA1C06894100B3F367 /* DDTTYLogger.m in Sources */,
 				D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */,
+				D4A786751C10320B00C37427 /* AWSS3Manager.swift in Sources */,
 				D4C8FDFB1C06AA2300992801 /* XMPPvCard.xcdatamodeld in Sources */,
 				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,

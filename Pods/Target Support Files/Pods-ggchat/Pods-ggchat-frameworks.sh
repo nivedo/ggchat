@@ -84,8 +84,14 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-ggchat/AWSCognito.framework"
+  install_framework "Pods-ggchat/AWSCore.framework"
+  install_framework "Pods-ggchat/AWSS3.framework"
   install_framework "Pods-ggchat/JSQSystemSoundPlayer.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-ggchat/AWSCognito.framework"
+  install_framework "Pods-ggchat/AWSCore.framework"
+  install_framework "Pods-ggchat/AWSS3.framework"
   install_framework "Pods-ggchat/JSQSystemSoundPlayer.framework"
 fi
