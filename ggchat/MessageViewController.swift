@@ -592,6 +592,17 @@ class MessageViewController: UIViewController,
         cell.delegate = collectionView
 
         // print(cell)
+        
+        // This is a HACK, should be in init of cell
+        if (isOutgoingMessage) {
+            cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Right
+            cell.cellBottomLabel.textAlignment = NSTextAlignment.Right
+            cell.textView.textColor = GGConfig.outgoingTextColor
+        } else {
+            cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Left
+            cell.cellBottomLabel.textAlignment = NSTextAlignment.Left
+            cell.textView.textColor = GGConfig.incomingTextColor
+        }
             
         if (!isMediaMessage) {
             cell.textView.text = messageItem.text
@@ -604,11 +615,14 @@ class MessageViewController: UIViewController,
                     attributes: [ NSFontAttributeName : messageCollectionView.messageCollectionViewLayout.messageBubbleFont ])
             }
             if SettingManager.sharedInstance.tappableMessageText {
+                let textColor = isOutgoingMessage ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor
                 cell.textView.text = nil
-                cell.textView.attributedText = messageItem.textAsAttributedStringForView(
-                    [ NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont ])
+                cell.textView.attributedText = messageItem.textAsAttributedStringForView(textColor,
+                    attributes:
+                    [
+                    NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont
+                    ])
             }
-
 
             let bubbleImageDataSource: MessageBubbleImage = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath)
             cell.messageBubbleImageView.image = bubbleImageDataSource.messageBubbleImage
@@ -617,17 +631,6 @@ class MessageViewController: UIViewController,
             let messageMedia: MessageMediaData = messageItem.media!
             // print(cell.messageBubbleImageView)
             cell.mediaView = (messageMedia.mediaView() != nil ? messageMedia.mediaView() : messageMedia.mediaPlaceholderView())!
-        }
-        
-        // This is a HACK, should be in init of cell
-        if (isOutgoingMessage) {
-            cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Right
-            cell.cellBottomLabel.textAlignment = NSTextAlignment.Right
-            cell.textView.textColor = GGConfig.outgoingTextColor
-        } else {
-            cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Left
-            cell.cellBottomLabel.textAlignment = NSTextAlignment.Left
-            cell.textView.textColor = GGConfig.incomingTextColor
         }
 
         var needsAvatar: Bool = true

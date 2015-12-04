@@ -33,7 +33,7 @@ class TappableText: NSObject {
         return Singleton.instance
     }
     
-    func tappableAttributedString(text: String, attributes: [String: NSObject]?) -> NSAttributedString {
+    func tappableAttributedString(text: String, textColor: UIColor, attributes: [String: NSObject]?) -> NSAttributedString {
         let paragraph = NSMutableAttributedString(string: "")
       
         let tokens = text.componentsSeparatedByString(self.delimiter)
@@ -43,12 +43,14 @@ class TappableText: NSObject {
                 str += self.delimiter
             }
            
-            var attr: [String : NSObject]? = attributes
-            if self.lookup.contains(token.lowercaseString) {
-                if attr == nil {
-                    attr = [TappableText.tapAttributeKey : true]
-                } else {
-                    attr![TappableText.tapAttributeKey] = true
+            let linkable = self.lookup.contains(token.lowercaseString)
+            var attr: [String : NSObject] = [
+                TappableText.tapAttributeKey : linkable,
+                NSForegroundColorAttributeName : linkable ? UIColor.gg_highlightedColor() : textColor
+            ]
+            if let additionalAttr = attributes {
+                for (key, value) in additionalAttr {
+                    attr[key] = value
                 }
             }
             let attributedString = NSAttributedString(

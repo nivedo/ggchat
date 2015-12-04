@@ -40,7 +40,7 @@ class ContactTableViewController: UITableViewController,
             title: "Enter Phone Number",
             style: UIAlertActionStyle.Default) { action -> Void in
             // GGModelData.sharedInstance.addVideoMediaMessage()
-            Crashlytics.sharedInstance().crash()
+            // Crashlytics.sharedInstance().crash()
         }
         alert.addAction(actionPickFromContacts)
         alert.addAction(actionEnterPhoneNumber)
