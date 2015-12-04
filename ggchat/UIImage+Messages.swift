@@ -10,6 +10,23 @@ import Foundation
 import UIKit
 
 extension UIImage {
+    
+    func gg_imageScaledToSize(size : CGSize, isOpaque : Bool) -> UIImage {
+        
+        // begin a context of the desired size
+        UIGraphicsBeginImageContextWithOptions(size, isOpaque, 0.0)
+        
+        // draw image in the rect with zero origin and size of the context
+        let imageRect = CGRect(origin: CGPointZero, size: size)
+        self.drawInRect(imageRect)
+        
+        // get the scaled image, close the context and return the image
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return scaledImage
+    }
+    
     func gg_imageMaskedWithColor(maskColor: UIColor) -> UIImage {
         
         let imageRect = CGRectMake(0.0, 0.0, self.size.width, self.size.height)

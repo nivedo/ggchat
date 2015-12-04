@@ -17,22 +17,30 @@ class ImageModalViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-       
-        // self.view.opaque = false
-        // self.view.alpha = CGFloat(0.6)
-        self.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.7))
+        self.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.8))
         let image = UIImage(named: "zorbo")
-        self.imageView.image = image
+
+        let screenSize = UIScreen.mainScreen().bounds
+        let xTarget = screenSize.width * 0.8
+        let scaleFactor = xTarget / image!.size.width
+        let yTarget = scaleFactor * image!.size.height
+        let newSize = CGSizeMake(xTarget, yTarget)
+        
+        self.imageView.image = image?.gg_imageScaledToSize(newSize, isOpaque: true)
+        /*
         self.imageView.frame = CGRectMake(
             self.imageView.frame.origin.x,
             self.imageView.frame.origin.y,
             image!.size.width,
             image!.size.height)
+        */
         
         self.imageContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(1))
-        // self.imageView.layer.shouldRasterize = true
-        // No setting rasterizationScale, will cause blurry images on retina.
-        // self.imageView.layer.rasterizationScale = UIScreen.mainScreen().scale
+        let imageLayer = self.imageContainer.layer
+        imageLayer.masksToBounds = true
+        imageLayer.cornerRadius = CGFloat(8.0)
+        // imageLayer.borderColor = UIColor.blackColor().CGColor
+        // imageLayer.borderWidth = CGFloat(3.0)
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("gg_handleTapGesture:"))
         self.view.addGestureRecognizer(tap)
