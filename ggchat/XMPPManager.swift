@@ -217,10 +217,10 @@ class XMPPManager: NSObject,
             
         if (self.stream.isConnected()) {
             // Already connected
-            if (self.stream.isAuthenticated()) {
-                print("Error: Already logged in. Please logout before attempting another login.")
-            } else {
+            if !self.stream.isAuthenticated() {
                 self.xmppStreamDidConnect(self.stream)
+            } else {
+                self.xmppStreamDidAuthenticate(self.stream)
             }
             return
         }

@@ -95,6 +95,9 @@ class GGMessageViewController:
         
         super.viewWillAppear(animated)
         loadUserHistory(false, loadLastActivity: false)
+        if SettingManager.sharedInstance.tappableMessageText {
+            TappableText.sharedInstance.delegate = self
+        }
     }
     
     func loadUserHistory(loadArchiveMessages: Bool, loadLastActivity: Bool) {
