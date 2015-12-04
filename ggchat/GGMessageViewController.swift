@@ -79,6 +79,9 @@ class GGMessageViewController:
                     to: recipient.jidStr,
                     completionHandler: nil)
                 */
+               
+                
+                
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
             } else {

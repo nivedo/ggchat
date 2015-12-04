@@ -35,6 +35,8 @@ protocol S3UploadDelegate {
 }
 
 class AWSS3UploadManager {
+   
+    let tempFolderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload")
     
     class var sharedInstance: AWSS3UploadManager {
         struct Singleton {
@@ -43,8 +45,31 @@ class AWSS3UploadManager {
         return Singleton.instance
     }
 
+    init() {
+        let error = NSErrorPointer()
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(
+                tempFolderURL,
+                withIntermediateDirectories: true,
+                attributes: nil)
+        } catch let error1 as NSError {
+            error.memory = error1
+            print("Creating 'upload' directory failed. Error: \(error)")
+        }
+    }
+    
     var uploads = Array<S3Upload?>()
     var delegate: S3UploadDelegate?
+   
+    func upload(image: UIImage) {
+        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".png")
+        let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
+        let filePath = fileURL.path!
+        let imageData = UIImagePNGRepresentation(image)
+        imageData!.writeToFile(filePath, atomically: true)
+        
+        self.upload(fileURL, fileName: fileName)
+    }
     
     func upload(fileURL: NSURL, fileName: String) {
         let uploadRequest = AWSS3TransferManagerUploadRequest()
