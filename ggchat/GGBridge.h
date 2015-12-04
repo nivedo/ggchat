@@ -35,7 +35,3 @@
 #import "DDLog.h"
 #import "DDASLLogger.h"
 #import "DDTTYLogger.h"
-
-#import <AWSCore/AWSCore.h>
-#import <AWSCognito/AWSCognito.h>
-#import <AWSS3/AWSS3.h>

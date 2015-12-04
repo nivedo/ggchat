@@ -53,9 +53,11 @@ public class XMPPMessageManager: NSObject {
 	// MARK: public methods
 	public class func sendMessage(
         message: String,
+        image: UIImage?,
         to receiver: String,
         completionHandler completion: MessageCompletionHandler?) {
-        if (message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
+        if (message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ||
+            image != nil) {
             let messageId = XMPPManager.sharedInstance.stream.generateUUID()
             let body = DDXMLElement(name: "body", stringValue: message)
             let completeMessage = DDXMLElement(name: "message")
@@ -65,8 +67,7 @@ public class XMPPMessageManager: NSObject {
     		completeMessage.addAttributeWithName("to", stringValue: receiver)
             completeMessage.addAttributeWithName("from", stringValue: XMPPManager.sharedInstance.stream.myJID.bare())
     		completeMessage.addChild(body)
-           
-            /*
+            
             if let chosenImage = image {
                 let data: NSData = UIImageJPEGRepresentation(chosenImage, CGFloat(1.0))!
                 let imageStr: String = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
@@ -75,7 +76,6 @@ public class XMPPMessageManager: NSObject {
                 imageAttachment.setStringValue(imageStr)
                 completeMessage.addChild(imageAttachment)
             }
-            */
     		
     		sharedInstance.didSendMessageCompletionBlock = completion
     		XMPPManager.sharedInstance.stream.sendElement(completeMessage)
