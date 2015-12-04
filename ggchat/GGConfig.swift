@@ -58,6 +58,7 @@ struct GGKey {
 
 struct GGSetting {
     static let xmppDomain = "chat.blub.io"
+    
     static let awsCognitoRegionType = AWSRegionType.APNortheast1
     static let awsServiceRegionType = AWSRegionType.APNortheast1
     static let awsCognitoIdentityPoolId = "ap-northeast-1:7fb7c28f-a7ff-491d-a02b-8a139014388d"

@@ -79,8 +79,7 @@ class GGMessageViewController:
                     to: recipient.jidStr,
                     completionHandler: nil)
                 */
-               
-                
+                AWSS3UploadManager.sharedInstance.upload(chosenImage)
                 
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
