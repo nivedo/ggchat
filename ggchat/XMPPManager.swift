@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias StreamCompletionHandler = (stream: XMPPStream, error: DDXMLElement?) -> Void
+public typealias StreamCompletionHandler = (stream: XMPPStream, error: String?) -> Void
 
 public protocol XMPPManagerDelegate {
     func onStream(sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?)
@@ -284,15 +284,16 @@ class XMPPManager: NSObject,
     }
     
     func xmppStreamConnectDidTimeout(sender: XMPPStream!) {
-        let errMsg = "Timed Out"
+        let errMsg = "Timed Out."
         print(errMsg)
-        // delegate?.didFailLogin?(errMsg)
+        self.connectCompletionHandler?(stream: sender, error: errMsg)
         
     }
     
     func xmppStream(sender: XMPPStream!, didReceiveError error: DDXMLElement!) {
-        print("Error: " + error.stringValue())
+        print("didReceiveError: " + error.stringValue())
         
+        // self.authenticateCompletionHandler?(stream: sender, error: "Password incorrect")
     }
     
     func xmppStreamDidDisconnect(sender: XMPPStream!, withError error: NSError!) {
@@ -381,11 +382,10 @@ class XMPPManager: NSObject,
 
    
     func xmppStream(sender: XMPPStream!, didNotAuthenticate error: DDXMLElement!) {
-        let errMsg = "Error: " + error.stringValue()
+        let errMsg = "didNotAuthenticate: " + error.stringValue()
         print(errMsg)
-        // delegate?.didFailLogin?(errMsg)
+        self.authenticateCompletionHandler?(stream: sender, error: "Username or password incorrect")
     }
-
 
     //////////////////////////////////////////////////////////////////////////////
     // XMPPManager public interface

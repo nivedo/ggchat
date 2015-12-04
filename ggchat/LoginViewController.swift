@@ -88,11 +88,21 @@ class LoginViewController: UIViewController {
         XMPPManager.sharedInstance.connect(
             username: self.usernameTextField.text!,
             password: self.passwordTextField.text!,
-            connectCompletionHandler: nil,
-            authenticateCompletionHandler: loginCallback)
+            connectCompletionHandler: connectCallback,
+            authenticateCompletionHandler: authenticateCallback)
     }
    
-    func loginCallback(stream: XMPPStream, error: DDXMLElement?) {
+    func connectCallback(stream: XMPPStream, error: String?) {
+        if (error != nil) {
+            let alert = UIAlertView()
+            alert.title = "Login Failed"
+            alert.message = error!
+            alert.addButtonWithTitle("Retry")
+            alert.show()
+        }
+    }
+    
+    func authenticateCallback(stream: XMPPStream, error: String?) {
         if (error == nil) {
             /*
             // Save usernmae
@@ -114,7 +124,7 @@ class LoginViewController: UIViewController {
         } else {
             let alert = UIAlertView()
             alert.title = "Login Failed"
-            alert.message = "Wrong username or password."
+            alert.message = "Wrong password."
             alert.addButtonWithTitle("Retry")
             alert.show()
         }
