@@ -199,7 +199,6 @@ class GGMessageViewController:
             self.messages.append(message)
                 
             XMPPMessageManager.sendMessage(text,
-                image: nil,
                 to: recipient.jidStr,
                 completionHandler: nil)
         

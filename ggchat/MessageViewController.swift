@@ -197,6 +197,7 @@ class MessageViewController: UIViewController,
         
         // Do any additional setup after loading the view.
         self.setup()
+        self.tabBarController?.tabBar.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -390,6 +391,8 @@ class MessageViewController: UIViewController,
         super.viewWillAppear(animated)
         self.view.layoutIfNeeded()
         self.messageCollectionView.collectionViewLayout.invalidateLayout()
+        
+        self.tabBarController?.tabBar.hidden = true
 
         if (self.automaticallyScrollsToMostRecentMessage) {
             dispatch_async(dispatch_get_main_queue()) {
