@@ -1826,6 +1826,7 @@
 				D4683E501BF0486F00E02886 /* Resources */,
 				9E8D257466A056BE40D62E41 /* Embed Pods Frameworks */,
 				97B0C080869D0EBFC7017667 /* Copy Pods Resources */,
+				D42B01761C11652300643835 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2004,6 +2005,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ggchat/Pods-ggchat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		D42B01761C11652300643835 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 587dde364e13033cd8241f7df547a56e3e475fb9 c2645da940c4061d4c39e5c5e82ee1e62b6915558d47d872af627e4471cc2710";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2369,9 +2383,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = ggchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2396,7 +2414,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = ggchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

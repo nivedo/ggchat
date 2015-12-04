@@ -22,6 +22,8 @@ target 'ggchat' do
   #pod 'AWSSQS'
   pod 'AWSCognito'
   pod 'JSQSystemSoundPlayer'
+  pod 'Fabric'
+  pod 'Crashlytics'
 end
 
 target 'ggchatTests' do

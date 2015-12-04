@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 protocol ContactPickerDelegate{
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
@@ -39,6 +40,7 @@ class ContactTableViewController: UITableViewController,
             title: "Enter Phone Number",
             style: UIAlertActionStyle.Default) { action -> Void in
             // GGModelData.sharedInstance.addVideoMediaMessage()
+            Crashlytics.sharedInstance().crash()
         }
         alert.addAction(actionPickFromContacts)
         alert.addAction(actionEnterPhoneNumber)
