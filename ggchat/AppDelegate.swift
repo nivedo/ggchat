@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let logLevel = XMPP_LOG_FLAG_SEND | XMPP_LOG_FLAG_TRACE | XMPP_LOG_FLAG_VERBOSE
         DDLog.addLogger(DDASLLogger.sharedInstance(), withLogLevel: logLevel)
         DDLog.addLogger(DDTTYLogger.sharedInstance(), withLogLevel: logLevel)
-        
+  
+        // Connect to XMPP
         XMPPManager.start()
    
         // Register remote notifications with APNS
@@ -47,6 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UIApplication.sharedApplication().cancelAllLocalNotifications()
             }
         }
+        
+        // Connect to AWS
+        AWSS3Manager.start()
         
         return true
     }
