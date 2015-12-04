@@ -107,22 +107,24 @@ class GGMessageViewController:
             if self.recipientDetails == nil || loadLastActivity {
                 XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jidStr,
                     sender: XMPPManager.sharedInstance.lastActivity) { (response, forJID, error) -> Void in
-                    let lastActivityResponse = XMPPLastActivityManager.sharedInstance.getLastActivityFrom((response?.lastActivitySeconds())!)
-                    
-                    for subview: UIView in self.navigationController!.view.subviews as [UIView] {
-                        if subview == self.recipientDetails {
-                            subview.removeFromSuperview()
-                        }
-                    }
-                    self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
-                        lastActivityResponse, displayName: recipient.displayName)
-                    if (self.recipientDetails != nil) {
-                        self.navigationItem.title = ""
+                    if let lastActivitySeconds = response?.lastActivitySeconds() {
+                        let lastActivityResponse = XMPPLastActivityManager.sharedInstance.getLastActivityFrom(lastActivitySeconds)
                         
-                        self.navigationController!.view.addSubview(
-                            self.recipientDetails!)
+                        for subview: UIView in self.navigationController!.view.subviews as [UIView] {
+                            if subview == self.recipientDetails {
+                                subview.removeFromSuperview()
+                            }
+                        }
+                        self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
+                            lastActivityResponse, displayName: recipient.displayName)
+                        if (self.recipientDetails != nil) {
+                            self.navigationItem.title = ""
+                            
+                            self.navigationController!.view.addSubview(
+                                self.recipientDetails!)
+                        }
+                        // print(self.recipientDetails)
                     }
-                    // print(self.recipientDetails)
                 }
             }
             
