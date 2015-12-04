@@ -54,6 +54,9 @@
 		D43B29481C06897D00B3F367 /* XMPPTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B29411C06897D00B3F367 /* XMPPTimer.m */; };
 		D43B294B1C068A1F00B3F367 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43B294A1C068A1F00B3F367 /* CFNetwork.framework */; };
 		D43B294D1C068A2800B3F367 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43B294C1C068A2800B3F367 /* Security.framework */; };
+		D44A033E1C114ECA0059E530 /* AWSS3DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44A033B1C114ECA0059E530 /* AWSS3DownloadManager.swift */; };
+		D44A033F1C114ECA0059E530 /* AWSS3Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44A033C1C114ECA0059E530 /* AWSS3Manager.swift */; };
+		D44A03401C114ECA0059E530 /* AWSS3UploadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44A033D1C114ECA0059E530 /* AWSS3UploadManager.swift */; };
 		D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */; };
 		D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */; };
 		D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD421BFDB1B300E79B4E /* GGConfig.swift */; };
@@ -362,6 +365,9 @@
 		D43B29491C0689C100B3F367 /* XMPPFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPPFramework.h; sourceTree = "<group>"; };
 		D43B294A1C068A1F00B3F367 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		D43B294C1C068A2800B3F367 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D44A033B1C114ECA0059E530 /* AWSS3DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSS3DownloadManager.swift; sourceTree = "<group>"; };
+		D44A033C1C114ECA0059E530 /* AWSS3Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSS3Manager.swift; sourceTree = "<group>"; };
+		D44A033D1C114ECA0059E530 /* AWSS3UploadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSS3UploadManager.swift; sourceTree = "<group>"; };
 		D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKeyboardController.swift; sourceTree = "<group>"; };
 		D45FBD421BFDB1B300E79B4E /* GGConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGConfig.swift; sourceTree = "<group>"; };
 		D45FBD441BFE894F00E79B4E /* MediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
@@ -1166,6 +1172,9 @@
 		D4C8FCCE1C06A12700992801 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D44A033B1C114ECA0059E530 /* AWSS3DownloadManager.swift */,
+				D44A033C1C114ECA0059E530 /* AWSS3Manager.swift */,
+				D44A033D1C114ECA0059E530 /* AWSS3UploadManager.swift */,
 				D4C8FCCF1C06A13800992801 /* XMPPManager.swift */,
 				D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */,
 				D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */,
@@ -2032,6 +2041,7 @@
 				D4C8FE371C06AA2300992801 /* NSXMLElement+XEP_0335.m in Sources */,
 				D4C8FE341C06AA2300992801 /* NSXMLElement+XEP_0297.m in Sources */,
 				D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */,
+				D44A033E1C114ECA0059E530 /* AWSS3DownloadManager.swift in Sources */,
 				D4C8FDF71C06AA2300992801 /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
 				D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */,
 				D43B28CA1C06894100B3F367 /* DDTTYLogger.m in Sources */,
@@ -2074,6 +2084,7 @@
 				D4C8FE131C06AA2300992801 /* XMPPSoftwareVersion.m in Sources */,
 				D4C8FE071C06AA2300992801 /* XMPPvCardTempTel.m in Sources */,
 				D47840A71BF1AD8100441A2D /* UIColor+Messages.swift in Sources */,
+				D44A033F1C114ECA0059E530 /* AWSS3Manager.swift in Sources */,
 				D4C8FDDD1C06AA2300992801 /* XMPPGroupCoreDataStorageObject.m in Sources */,
 				D4C8FDD61C06AA2300992801 /* XMPPCoreDataStorage.m in Sources */,
 				D4C8FDDE1C06AA2300992801 /* XMPPResourceCoreDataStorageObject.m in Sources */,
@@ -2109,6 +2120,7 @@
 				D469EAAF1C09DC0C00D30C9A /* SettingTableBorderCell.swift in Sources */,
 				D4C8FDFA1C06AA2300992801 /* XMPPRoom.m in Sources */,
 				D4C8FE1B1C06AA2300992801 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
+				D44A03401C114ECA0059E530 /* AWSS3UploadManager.swift in Sources */,
 				D43B29441C06897D00B3F367 /* RFImageToDataTransformer.m in Sources */,
 				D4C8FE011C06AA2300992801 /* XMPPvCardTempAdr.m in Sources */,
 				D43B29091C06896200B3F367 /* XMPPXOAuth2Google.m in Sources */,
@@ -2358,6 +2370,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = ggchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2365,7 +2378,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ggchat/libidn",
 				);
-				OTHER_LDFLAGS = "-lxml2";
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.blub.ggchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ggchat/GGBridge.h;
@@ -2379,6 +2395,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = ggchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2386,7 +2403,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ggchat/libidn",
 				);
-				OTHER_LDFLAGS = "-lxml2";
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.blub.ggchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ggchat/GGBridge.h;

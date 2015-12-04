@@ -1,10 +1,21 @@
 PODS:
+  - AWSCognito (2.3.1):
+    - AWSCore (= 2.3.1)
+  - AWSCore (2.3.1)
+  - AWSS3 (2.3.1):
+    - AWSCore (= 2.3.1)
   - JSQSystemSoundPlayer (4.3.0)
 
 DEPENDENCIES:
+  - AWSCognito
+  - AWSCore
+  - AWSS3
   - JSQSystemSoundPlayer
 
 SPEC CHECKSUMS:
+  AWSCognito: 6f153e3f5fa2ca14b883490cfcb3e48455b64a4b
+  AWSCore: 7ad34b4bc285b778a3df699cb6f00aad3d1c446f
+  AWSS3: b7f4a0ad4da6dcc172e757dcb2b2423d26b32325
   JSQSystemSoundPlayer: 8021a6c823a8d83372c703f49ef7d1f31e7647ff
 
 COCOAPODS: 0.39.0

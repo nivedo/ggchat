@@ -4,6 +4,21 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AWSCognito.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>AWSCore.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>AWSS3.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JSQSystemSoundPlayer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>3B41A9B1D49827D58E203AF61D34F608</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3B624C428C71866D63C529AEF179D02C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA2B520803800C8F4F5D129AD87E97C5</key>
+		<key>74CC32C58E7AE782A588581C72E199BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BAA396C4D689A02A15029B49E076FAF0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BBC37A1B9FDB895FB16A1AEDD9318277</key>
 		<dict>
 			<key>primary</key>
 			<true/>
