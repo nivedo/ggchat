@@ -27,6 +27,7 @@ class GGHearthStoneAsset : ImageModalAsset {
     var apiURL: String
     var fullName: String?
     var imageURL: String?
+    var imageLocalURL: NSURL?
     var image: UIImage?
     var delegate: ImageModalAssetDelegate?
     
@@ -92,13 +93,31 @@ class GGHearthStoneAsset : ImageModalAsset {
         if let image = self.image {
             let imageData = UIImagePNGRepresentation(image)
             let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-            let imageURL = documentsURL.URLByAppendingPathComponent("cached.png")
+            let imageURL = documentsURL.URLByAppendingPathComponent("\(self.name).png")
             
             if !imageData!.writeToURL(imageURL, atomically: false) {
-                print("not saved")
+                print("Asset not saved")
             } else {
-                print("saved")
-                NSUserDefaults.standardUserDefaults().setObject(imageURL, forKey: "imagePath")
+                print("Asset saved at \(imageLocalURL)")
+                // NSUserDefaults.standardUserDefaults().setObject(imageURL, forKey: "imagePath")
+                self.imageLocalURL = imageURL
+            }
+        }
+    }
+    
+    func loadSavedImage() {
+        if let localUrl = self.imageLocalURL, let imageData = NSData(contentsOfURL: localUrl) {
+            self.image = UIImage(data: imageData)
+        }
+    }
+    
+    func deleteSavedImage() {
+        if let localUrl = self.imageLocalURL {
+            let fileManager = NSFileManager.defaultManager()
+            do {
+                try fileManager.removeItemAtURL(localUrl)
+            } catch {
+                print("Cannot delete file at \(localUrl)")
             }
         }
     }
