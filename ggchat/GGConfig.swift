@@ -22,7 +22,7 @@ struct GGConfig_iMessage {
     static let springinessEnabled = false
 }
 
-struct GGConfig {
+struct GGConfig_Old {
     static let backgroundColor = UIColor.grayColor()
     static let loadButtonColorNormal = UIColor.lightGrayColor()
     static let cellTopLabelTextColor = UIColor.whiteColor()
@@ -32,6 +32,20 @@ struct GGConfig {
     static let incomingTextColor = UIColor.darkGrayColor()
     static let outgoingBubbleColor = UIColor.gg_messageBubbleGreenColor()
     static let outgoingTextColor = UIColor.whiteColor()
+    static let springinessEnabled = false
+    static let avatarSize: CGFloat = 30.0
+}
+
+struct GGConfig {
+    static let backgroundColor = UIColor(red:0.93, green:0.94, blue:0.95, alpha:1.0)
+    static let loadButtonColorNormal = UIColor.lightGrayColor()
+    static let cellTopLabelTextColor = UIColor(red:0.73, green:0.73, blue:0.73, alpha:1.0)
+    static let cellBottomLabelTextColor = UIColor(red:0.73, green:0.73, blue:0.73, alpha:1.0)
+    static let bubbleTopLabelTextColor = UIColor(red:0.73, green:0.73, blue:0.73, alpha:1.0)
+    static let incomingBubbleColor = UIColor.whiteColor()
+    static let incomingTextColor = UIColor.darkGrayColor()
+    static let outgoingBubbleColor = UIColor(red:0.81, green:0.94, blue:0.62, alpha:1.0)
+    static let outgoingTextColor = UIColor.darkGrayColor()
     static let springinessEnabled = false
     static let avatarSize: CGFloat = 30.0
 }
