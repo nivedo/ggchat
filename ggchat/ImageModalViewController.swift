@@ -20,8 +20,22 @@ class ImageModalViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.8))
-        var image: UIImage!
+       
+        self.imageContainer.backgroundColor = UIColor.clearColor()
+        self.imageView.backgroundColor = UIColor.clearColor()
         
+        let imageLayer = self.imageContainer.layer
+        imageLayer.masksToBounds = true
+        imageLayer.cornerRadius = CGFloat(8.0)
+        
+        self.updateModal()
+        
+        let tap = UITapGestureRecognizer(target: self, action: Selector("gg_handleTapGesture:"))
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    func updateModal() {
+        var image: UIImage!
         if let attr = self.attributes, let key = attr[TappableText.tapAssetKey] as? String {
             if let asset = TappableText.sharedInstance.imageModalAsset(key) {
                 image = asset.getUIImage()
@@ -39,29 +53,22 @@ class ImageModalViewController: UIViewController {
         let newSize = CGSizeMake(xTarget, yTarget)
         
         self.imageView.image = image?.gg_imageScaledToSize(newSize, isOpaque: false)
-        /*
-        self.imageView.frame = CGRectMake(
-            self.imageView.frame.origin.x,
-            self.imageView.frame.origin.y,
-            image!.size.width,
-            image!.size.height)
-        */
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.updateModal()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        // self.imageContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.8))
-        // self.imageView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.8))
-        self.imageContainer.backgroundColor = UIColor.clearColor()
-        // self.imageContainer.opaque = false
-        self.imageView.backgroundColor = UIColor.clearColor()
-        // self.imageView.opaque = false
+        self.attributes = nil
+    }
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        super.willMoveToParentViewController(parent)
         
-        let imageLayer = self.imageContainer.layer
-        imageLayer.masksToBounds = true
-        imageLayer.cornerRadius = CGFloat(8.0)
-        // imageLayer.borderColor = UIColor.blackColor().CGColor
-        // imageLayer.borderWidth = CGFloat(3.0)
-        
-        let tap = UITapGestureRecognizer(target: self, action: Selector("gg_handleTapGesture:"))
-        self.view.addGestureRecognizer(tap)
+        self.attributes = nil
     }
 
     override func didReceiveMemoryWarning() {

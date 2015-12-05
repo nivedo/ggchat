@@ -287,6 +287,7 @@ class GGMessageViewController:
         self.dismissKeyboard()
         if let imvc = self.imageModelViewController {
             imvc.attributes = attributes
+            // print(attributes)
             self.presentTransparentViewController(
                 imvc,
                 animated: true,
