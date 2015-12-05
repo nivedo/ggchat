@@ -33,6 +33,11 @@ class TappableText: NSObject {
         return Singleton.instance
     }
     
+    override init() {
+        // Initialize lookup
+        self.lookup.appendContentsOf(GGHearthStone.sharedInstance.cardNames)
+    }
+    
     func tappableAttributedString(text: String, textColor: UIColor, attributes: [String: NSObject]?) -> NSAttributedString {
         let paragraph = NSMutableAttributedString(string: "")
       

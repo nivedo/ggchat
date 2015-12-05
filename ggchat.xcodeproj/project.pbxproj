@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */; };
+		D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01781C11B85F00643835 /* GGHearthStone.swift */; };
 		D42B895E1C05D9EC0043C20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B895D1C05D9EC0043C20A /* LoginViewController.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
@@ -268,6 +269,7 @@
 /* Begin PBXFileReference section */
 		01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ggchat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.release.xcconfig"; sourceTree = "<group>"; };
+		D42B01781C11B85F00643835 /* GGHearthStone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGHearthStone.swift; sourceTree = "<group>"; };
 		D42B895D1C05D9EC0043C20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -718,6 +720,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D42B01771C11B81C00643835 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				D42B01781C11B85F00643835 /* GGHearthStone.swift */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
 		D43B28AC1C0688E300B3F367 /* XMPPFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1011,8 +1021,9 @@
 				D4683E831BF048CC00E02886 /* Models */,
 				D4C8FCCE1C06A12700992801 /* Managers */,
 				D4A7866B1C0E90AC00C37427 /* Extensions */,
-				D4683E571BF0486F00E02886 /* ViewController.swift */,
+				D42B01771C11B81C00643835 /* Modules */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
+				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4C8FCCD1C069FC100992801 /* GGBridge.h */,
 				D45FBD421BFDB1B300E79B4E /* GGConfig.swift */,
 				D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */,
@@ -2063,6 +2074,7 @@
 				D4C8FDFB1C06AA2300992801 /* XMPPvCard.xcdatamodeld in Sources */,
 				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
+				D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */,
 				D4C8FE2A1C06AA2300992801 /* XMPPAutoPing.m in Sources */,
 				D4C8FDD91C06AA2300992801 /* XMPPOutgoingFileTransfer.m in Sources */,
 				D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */,
