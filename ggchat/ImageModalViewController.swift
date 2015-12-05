@@ -38,7 +38,7 @@ class ImageModalViewController: UIViewController {
         let yTarget = scaleFactor * image!.size.height
         let newSize = CGSizeMake(xTarget, yTarget)
         
-        self.imageView.image = image?.gg_imageScaledToSize(newSize, isOpaque: true)
+        self.imageView.image = image?.gg_imageScaledToSize(newSize, isOpaque: false)
         /*
         self.imageView.frame = CGRectMake(
             self.imageView.frame.origin.x,
@@ -47,7 +47,13 @@ class ImageModalViewController: UIViewController {
             image!.size.height)
         */
         
-        self.imageContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(1))
+        // self.imageContainer.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.8))
+        // self.imageView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.8))
+        self.imageContainer.backgroundColor = UIColor.clearColor()
+        // self.imageContainer.opaque = false
+        self.imageView.backgroundColor = UIColor.clearColor()
+        // self.imageView.opaque = false
+        
         let imageLayer = self.imageContainer.layer
         imageLayer.masksToBounds = true
         imageLayer.cornerRadius = CGFloat(8.0)
