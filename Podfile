@@ -24,6 +24,7 @@ target 'ggchat' do
   pod 'JSQSystemSoundPlayer'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'MBProgressHUD', '~> 0.9.1'
 end
 
 target 'ggchatTests' do

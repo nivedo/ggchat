@@ -8,6 +8,7 @@ PODS:
     - Fabric (~> 1.6.0)
   - Fabric (1.6.1)
   - JSQSystemSoundPlayer (4.3.0)
+  - MBProgressHUD (0.9.1)
 
 DEPENDENCIES:
   - AWSCognito
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - JSQSystemSoundPlayer
+  - MBProgressHUD (~> 0.9.1)
 
 SPEC CHECKSUMS:
   AWSCognito: 6f153e3f5fa2ca14b883490cfcb3e48455b64a4b
@@ -24,5 +26,6 @@ SPEC CHECKSUMS:
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
   Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
   JSQSystemSoundPlayer: 8021a6c823a8d83372c703f49ef7d1f31e7647ff
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
 
 COCOAPODS: 0.39.0

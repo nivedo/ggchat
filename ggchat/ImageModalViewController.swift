@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class ImageModalViewController: UIViewController {
+class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
 
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var imageView: UIImageView!
    
     var attributes: [String: AnyObject]?
+    var imageAsset: ImageModalAsset?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,24 +37,32 @@ class ImageModalViewController: UIViewController {
     }
     
     func updateModal() {
-        var image: UIImage!
+        var image: UIImage?
         if let attr = self.attributes, let key = attr[TappableText.tapAssetKey] as? String {
             if let asset = TappableText.sharedInstance.imageModalAsset(key) {
                 image = asset.getUIImage()
+                self.imageAsset = asset
+                if image == nil {
+                    // Image not downloaded yet
+                    self.imageAsset?.delegate = self
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.labelText = "Downloading card assets"
+                }
+            } else {
+                // TEMP: Placeholder for tokens without assets
+                image = UIImage(named: "zorbo")
             }
         }
-        // Placeholder image
-        if image == nil {
-            image = UIImage(named: "zorbo")
-        }
-
-        let screenSize = UIScreen.mainScreen().bounds
-        let xTarget = screenSize.width * 0.8
-        let scaleFactor = xTarget / image!.size.width
-        let yTarget = scaleFactor * image!.size.height
-        let newSize = CGSizeMake(xTarget, yTarget)
         
-        self.imageView.image = image?.gg_imageScaledToSize(newSize, isOpaque: false)
+        if image != nil {
+            let screenSize = UIScreen.mainScreen().bounds
+            let xTarget = screenSize.width * 0.8
+            let scaleFactor = xTarget / image!.size.width
+            let yTarget = scaleFactor * image!.size.height
+            let newSize = CGSizeMake(xTarget, yTarget)
+            
+            self.imageView.image = image?.gg_imageScaledToSize(newSize, isOpaque: false)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,12 +73,14 @@ class ImageModalViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         self.attributes = nil
+        self.imageAsset?.delegate = nil
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
         super.willMoveToParentViewController(parent)
         
         self.attributes = nil
+        self.imageAsset?.delegate = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -89,5 +101,13 @@ class ImageModalViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func onDownloadError() {
+        // Download error
+    }
+    
+    func onDownloadSuccess(image: UIImage) {
+        MBProgressHUD.hideHUDForView(self.view, animated: true)
+        updateModal()
+    }
 }

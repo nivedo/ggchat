@@ -8,8 +8,16 @@
 
 import Foundation
 
+protocol ImageModalAssetDelegate {
+    
+    func onDownloadSuccess(image: UIImage)
+    func onDownloadError()
+    
+}
+
 protocol ImageModalAsset {
     
+    var delegate: ImageModalAssetDelegate? { get set }
     func getUIImage() -> UIImage?
     
 }
@@ -20,6 +28,7 @@ class GGHearthStoneAsset : ImageModalAsset {
     var fullName: String?
     var imageURL: String?
     var image: UIImage?
+    var delegate: ImageModalAssetDelegate?
     
     init(name: String) {
         self.name = name
@@ -68,10 +77,12 @@ class GGHearthStoneAsset : ImageModalAsset {
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
                     guard let data = data where error == nil else {
                         print("Image download failed: \(error)")
+                        self.delegate?.onDownloadError()
                         return
                     }
                     print("Finished downloading \"\(url)\".")
                     self.image = UIImage(data: data)
+                    self.delegate?.onDownloadSuccess(self.image!)
                 }
             }
         }
