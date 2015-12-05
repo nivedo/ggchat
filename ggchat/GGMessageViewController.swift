@@ -285,9 +285,10 @@ class GGMessageViewController:
    
     func onTap(attributes: [String: AnyObject] ) {
         self.dismissKeyboard()
-        if self.imageModelViewController != nil {
+        if let imvc = self.imageModelViewController {
+            imvc.attributes = attributes
             self.presentTransparentViewController(
-                self.imageModelViewController!,
+                imvc,
                 animated: true,
                 completion: nil)
         }

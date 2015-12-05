@@ -12,13 +12,25 @@ class ImageModalViewController: UIViewController {
 
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var imageView: UIImageView!
+   
+    var attributes: [String: AnyObject]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.8))
-        let image = UIImage(named: "zorbo")
+        var image: UIImage!
+        
+        if let attr = self.attributes, let key = attr[TappableText.tapAssetKey] as? String {
+            if let asset = TappableText.sharedInstance.imageModalAsset(key) {
+                image = asset.getUIImage()
+            }
+        }
+        // Placeholder image
+        if image == nil {
+            image = UIImage(named: "zorbo")
+        }
 
         let screenSize = UIScreen.mainScreen().bounds
         let xTarget = screenSize.width * 0.8
