@@ -33,9 +33,13 @@ class TappableText: NSObject {
         return Singleton.instance
     }
     
-    override init() {
-        // Initialize lookup
-        self.lookup.appendContentsOf(GGHearthStone.sharedInstance.cardNames)
+    func isTappableToken(token: String) -> Bool {
+        let t = token.lowercaseString
+        var tappable = self.lookup.contains(t)
+        if !tappable {
+            tappable = GGHearthStone.sharedInstance.isCard(t)
+        }
+        return tappable
     }
     
     func tappableAttributedString(text: String, textColor: UIColor, attributes: [String: NSObject]?) -> NSAttributedString {
@@ -48,10 +52,10 @@ class TappableText: NSObject {
                 str += self.delimiter
             }
            
-            let linkable = self.lookup.contains(token.lowercaseString)
+            let tappable = self.isTappableToken(token.lowercaseString)
             var attr: [String : NSObject] = [
-                TappableText.tapAttributeKey : linkable,
-                NSForegroundColorAttributeName : linkable ? UIColor.gg_highlightedColor() : textColor
+                TappableText.tapAttributeKey : tappable,
+                NSForegroundColorAttributeName : tappable ? UIColor.gg_highlightedColor() : textColor
             ]
             if let additionalAttr = attributes {
                 for (key, value) in additionalAttr {

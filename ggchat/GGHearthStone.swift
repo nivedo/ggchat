@@ -10,16 +10,57 @@ import Foundation
 
 class GGHearthStoneAsset {
     var name: String
-    var url: String?
+    var apiURL: String
+    var fullName: String?
+    var imageURL: String?
     
     init(name: String) {
         self.name = name
+        self.apiURL = GGHearthStone.apiURL(name)
     }
+    
+    enum JSONError: String, ErrorType {
+        case NoData = "ERROR: no data"
+        case ConversionFailed = "ERROR: conversion from JSON failed"
+    }
+    
+    func apiFetchInfo() {
+        guard let endpoint = NSURL(string: self.apiURL) else { print("Error creating endpoint");return }
+        let request = NSMutableURLRequest(URL:endpoint)
+        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
+            do {
+                guard let dat = data else { throw JSONError.NoData }
+                guard let json = try NSJSONSerialization.JSONObjectWithData(dat, options: []) as? NSDictionary else { throw JSONError.ConversionFailed }
+                print(json)
+                if let fullName = json["card"] as? String {
+                    // print(fullName)
+                    self.fullName = fullName
+                }
+                if let imageURL = json["image"] as? String {
+                    // print(imageURL)
+                    self.imageURL = imageURL
+                } 
+            } catch let error as JSONError {
+                print(error.rawValue)
+            } catch {
+                print(error)
+            }
+            }.resume()
+        }
 }
 
 class GGHearthStone {
    
-    static let host = "http://45.33.39.21:1235"
+    private static let host = "http://45.33.39.21:1235"
+   
+    class func apiURL(cardName: String) -> String {
+        let urlName = cardName.stringByReplacingOccurrencesOfString(
+            " ",
+            withString: "",
+            options: NSStringCompareOptions.LiteralSearch,
+            range: nil)
+        return "\(self.host)/images/\(urlName)"
+    }
     
     class var sharedInstance: GGHearthStone {
         struct Singleton {
@@ -28,8 +69,8 @@ class GGHearthStone {
         return Singleton.instance
     }
   
-    var cardNames = [String]()
-    var cardAssets = [GGHearthStoneAsset]()
+    private var cardNames = [String]()
+    private var cardAssets = [String : GGHearthStoneAsset]()
     
     init() {
         print("**************** HEARTHSTONE ******************")
@@ -44,7 +85,7 @@ class GGHearthStone {
                         if let card = c as? NSDictionary {
                             if let cardName = card["name"] as? String {
                                 self.cardNames.append(cardName)
-                                self.cardAssets.append(GGHearthStoneAsset(name: cardName))
+                                self.cardAssets[cardName] = GGHearthStoneAsset(name: cardName)
                             }
                         }
                     }
@@ -56,27 +97,15 @@ class GGHearthStone {
     }
     
     func isCard(name: String) -> Bool {
-        return self.cardNames.contains(name)
-    }
-    
-    enum JSONError: String, ErrorType {
-        case NoData = "ERROR: no data"
-        case ConversionFailed = "ERROR: conversion from JSON failed"
-    }
-    
-    func parseJsonAtURL(urlPath: String) {
-        guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
-        let request = NSMutableURLRequest(URL:endpoint)
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
-            do {
-                guard let dat = data else { throw JSONError.NoData }
-                guard let json = try NSJSONSerialization.JSONObjectWithData(dat, options: []) as? NSDictionary else { throw JSONError.ConversionFailed }
-                print(json)
-            } catch let error as JSONError {
-                print(error.rawValue)
-            } catch {
-                print(error)
-            }
-            }.resume()
+        let valid = self.cardNames.contains(name)
+       
+        // Pre-fetch card if valid
+        if valid {
+            self.cardAssets[name]!.apiFetchInfo()
         }
+        
+        return valid
+    }
+    
+
 }
