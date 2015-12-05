@@ -8,15 +8,26 @@
 
 import Foundation
 
-class GGHearthStoneAsset {
+protocol ImageModalAsset {
+    
+    func getUIImage() -> UIImage?
+    
+}
+
+class GGHearthStoneAsset : ImageModalAsset {
     var name: String
     var apiURL: String
     var fullName: String?
     var imageURL: String?
+    var image: UIImage?
     
     init(name: String) {
         self.name = name
         self.apiURL = GGHearthStone.apiURL(name)
+    }
+    
+    func getUIImage() -> UIImage? {
+        return self.image
     }
     
     enum JSONError: String, ErrorType {
@@ -24,7 +35,7 @@ class GGHearthStoneAsset {
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
     
-    func apiFetchInfo() {
+    func fetchInfo() {
         guard let endpoint = NSURL(string: self.apiURL) else { print("Error creating endpoint");return }
         let request = NSMutableURLRequest(URL:endpoint)
         NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
@@ -39,6 +50,7 @@ class GGHearthStoneAsset {
                 if let imageURL = json["image"] as? String {
                     // print(imageURL)
                     self.imageURL = imageURL
+                    self.downloadImage()
                 } 
             } catch let error as JSONError {
                 print(error.rawValue)
@@ -47,6 +59,42 @@ class GGHearthStoneAsset {
             }
             }.resume()
         }
+   
+    func downloadImage() {
+        if let urlImage = self.imageURL {
+            let url = NSURL(fileURLWithPath: urlImage)
+            print("Started downloading \"\(url.URLByDeletingPathExtension!.lastPathComponent!)\".")
+            getDataFromUrl(url) { (data, response, error)  in
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                    guard let data = data where error == nil else { return }
+                    print("Finished downloading \"\(url.URLByDeletingPathExtension!.lastPathComponent!)\".")
+                    self.image = UIImage(data: data)
+                }
+            }
+        }
+    }
+    
+    func saveImage() {
+        if let image = self.image {
+            let imageData = UIImagePNGRepresentation(image)
+            let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            let imageURL = documentsURL.URLByAppendingPathComponent("cached.png")
+            
+            if !imageData!.writeToURL(imageURL, atomically: false) {
+                print("not saved")
+            } else {
+                print("saved")
+                NSUserDefaults.standardUserDefaults().setObject(imageURL, forKey: "imagePath")
+            }
+        }
+    }
+    
+    func getDataFromUrl(url:NSURL,
+        completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+    }
 }
 
 class GGHearthStone {
@@ -70,7 +118,7 @@ class GGHearthStone {
     }
   
     private var cardNames = [String]()
-    private var cardAssets = [String : GGHearthStoneAsset]()
+    var cardAssets = [String : GGHearthStoneAsset]()
     
     init() {
         print("**************** HEARTHSTONE ******************")
@@ -101,7 +149,7 @@ class GGHearthStone {
        
         // Pre-fetch card if valid
         if valid {
-            self.cardAssets[name]!.apiFetchInfo()
+            self.cardAssets[name]!.fetchInfo()
         }
         
         return valid

@@ -20,6 +20,7 @@ class TappableText: NSObject {
   
     static let tapSelector: String = "textTapped:"
     static let tapAttributeKey: String = "tappable"
+    static let tapAssetKey: String = "tapAsset"
     
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
@@ -33,13 +34,18 @@ class TappableText: NSObject {
         return Singleton.instance
     }
     
-    func isTappableToken(token: String) -> Bool {
+    func isTappableToken(token: String) -> (Bool, String) {
         let t = token.lowercaseString
+        let k: String = t
         var tappable = self.lookup.contains(t)
         if !tappable {
             tappable = GGHearthStone.sharedInstance.isCard(t)
         }
-        return tappable
+        return (tappable, k)
+    }
+    
+    func imageModalAsset(key: String) -> ImageModalAsset? {
+        return GGHearthStone.sharedInstance.cardAssets[key]
     }
     
     func tappableAttributedString(text: String, textColor: UIColor, attributes: [String: NSObject]?) -> NSAttributedString {
@@ -52,9 +58,10 @@ class TappableText: NSObject {
                 str += self.delimiter
             }
            
-            let tappable = self.isTappableToken(token.lowercaseString)
+            let (tappable, assetKey) = self.isTappableToken(token)
             var attr: [String : NSObject] = [
                 TappableText.tapAttributeKey : tappable,
+                TappableText.tapAssetKey : assetKey,
                 NSForegroundColorAttributeName : tappable ? UIColor.gg_highlightedColor() : textColor
             ]
             if let additionalAttr = attributes {
