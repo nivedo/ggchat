@@ -48,15 +48,16 @@ class TappableText: NSObject {
         return GGHearthStone.sharedInstance.cardAssets[key]
     }
     
-    func tappableAttributedString(text: String, textColor: UIColor, attributes: [String: NSObject]?) -> NSAttributedString {
+    func tappableAttributedString(
+        text: String,
+        textColor: UIColor,
+        attributes: [String: NSObject]?,
+        brackets: Bool = false) -> NSAttributedString {
         let paragraph = NSMutableAttributedString(string: "")
       
         let tokens = text.componentsSeparatedByString(self.delimiter)
         for (index, token) in tokens.enumerate() {
             var str = token
-            if index < tokens.count - 1 {
-                str += self.delimiter
-            }
            
             let (tappable, assetKey) = self.isTappableToken(token)
             var attr: [String : NSObject] = [
@@ -69,14 +70,23 @@ class TappableText: NSObject {
                     attr[key] = value
                 }
             }
+            if tappable && brackets {
+                str = "[\(str)]"
+            }
+            
+            if index < tokens.count - 1 {
+                str += self.delimiter
+            }
             let attributedString = NSAttributedString(
                 string: str,
                 attributes: attr)
             paragraph.appendAttributedString(attributedString)
         }
-        
-        assert(text.characters.count == paragraph.string.characters.count,
-            "Original text \(text.characters.count) and tappable text \(paragraph.string.characters.count) must have same length.")
+       
+        if !brackets {
+            assert(text.characters.count == paragraph.string.characters.count,
+                "Original text \(text.characters.count) and tappable text \(paragraph.string.characters.count) must have same length.")
+        }
         return paragraph.copy() as! NSAttributedString
     }
     
