@@ -605,13 +605,13 @@ class MessageViewController: UIViewController,
         }
             
         if (!isMediaMessage) {
-            cell.textView.text = messageItem.text
+            cell.textView.text = messageItem.displayText
 
             if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
                 //  workaround for iOS 7 textView data detectors bug
                 cell.textView.text = nil
                 cell.textView.attributedText = NSAttributedString(
-                    string: messageItem.text!,
+                    string: messageItem.displayText,
                     attributes: [ NSFontAttributeName : messageCollectionView.messageCollectionViewLayout.messageBubbleFont ])
             }
             if SettingManager.sharedInstance.tappableMessageText {
@@ -766,7 +766,7 @@ class MessageViewController: UIViewController,
             let messageData: Message = messageCollectionView.messageDataSource.collectionView(
                 collectionView,
                 messageDataForItemAtIndexPath:indexPath)
-            UIPasteboard.generalPasteboard().string = messageData.text
+            UIPasteboard.generalPasteboard().string = messageData.displayText
         } else if (action == Selector("delete:")) {
             messageCollectionView.messageDataSource.collectionView(collectionView,
                 didDeleteMessageAtIndexPath:indexPath)

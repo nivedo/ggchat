@@ -13,7 +13,7 @@ class Message {
     var senderId: String
     var senderDisplayName: String
     var date: NSDate
-    var text: String?
+    private var text: String?
     var isMediaMessage: Bool
     var media: MessageMediaData?
     
@@ -22,6 +22,12 @@ class Message {
         attributes: [String: NSObject]?) -> NSAttributedString {
         return TappableText.sharedInstance.tappableAttributedString(
             self.text!, textColor: textColor, attributes: attributes)
+    }
+    
+    var displayText: String {
+        get {
+            return self.text!
+        }
     }
     
     init(senderId: String, senderDisplayName: String, date: NSDate, text: String) {
