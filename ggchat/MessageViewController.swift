@@ -623,10 +623,11 @@ class MessageViewController: UIViewController,
                     NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont
                     ])
             }
-            // cell.textView.backgroundColor = GGConfig.incomingBubbleColor
             if let bubbleImageDataSource = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath) {
                 cell.messageBubbleImageView.image = bubbleImageDataSource.messageBubbleImage
                 cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
+            } else {
+                cell.textView.backgroundColor = GGConfig.incomingBubbleColor
             }
         } else {
             let messageMedia: MessageMediaData = messageItem.media!
