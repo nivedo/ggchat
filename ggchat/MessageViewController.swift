@@ -280,7 +280,7 @@ class MessageViewController: UIViewController,
     
     ///////////////////////////////////////////////////////////////////////////////
     
-    func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage {
+    func collectionView(collectionView: MessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageBubbleImage? {
         // print("MVC::messageBubbleImageDataForItemAtIndexPath")
         /**
         *  You may return nil here if you do not want bubbles.
@@ -288,7 +288,7 @@ class MessageViewController: UIViewController,
         *
         *  Otherwise, return your previously created bubble image data objects.
         */
-        // let message: Message = self.messages[indexPath.item]
+        return nil
         let message: Message = self.messages[indexPath.item]
     
         if (message.senderId == self.senderId) {
@@ -623,10 +623,11 @@ class MessageViewController: UIViewController,
                     NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont
                     ])
             }
-
-            let bubbleImageDataSource: MessageBubbleImage = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath)
-            cell.messageBubbleImageView.image = bubbleImageDataSource.messageBubbleImage
-            cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
+            cell.textView.backgroundColor = GGConfig.incomingBubbleColor
+            if let bubbleImageDataSource = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath) {
+                cell.messageBubbleImageView.image = bubbleImageDataSource.messageBubbleImage
+                cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
+            }
         } else {
             let messageMedia: MessageMediaData = messageItem.media!
             // print(cell.messageBubbleImageView)

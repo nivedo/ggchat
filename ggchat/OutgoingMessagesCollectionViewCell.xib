@@ -83,8 +83,8 @@
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="60m-yv-GFf" secondAttribute="trailing" id="0NA-nM-c14"/>
-                            <constraint firstItem="60m-yv-GFf" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" constant="6" id="0nz-Zp-IS3"/>
+                            <constraint firstAttribute="trailing" secondItem="60m-yv-GFf" secondAttribute="trailing" constant="6" id="0NA-nM-c14"/>
+                            <constraint firstItem="60m-yv-GFf" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" id="0nz-Zp-IS3"/>
                             <constraint firstAttribute="bottom" secondItem="va9-h1-Qlp" secondAttribute="bottom" id="6Ih-oH-Dlj"/>
                             <constraint firstAttribute="trailing" secondItem="va9-h1-Qlp" secondAttribute="trailing" id="7yn-Vn-d9p"/>
                             <constraint firstItem="va9-h1-Qlp" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="leading" id="EPq-ge-wgZ"/>
