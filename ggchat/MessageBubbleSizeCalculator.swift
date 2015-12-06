@@ -117,8 +117,7 @@ class MessageBubbleSizeCalculator {
             return self.widthForFixedWidthBubblesWithLayout(layout)
         }
         
-        // return layout.itemWidth
-        return 320.0
+        return layout.itemWidth
     }
     
     func widthForFixedWidthBubblesWithLayout(layout: MessagesCollectionViewFlowLayout) -> CGFloat {
