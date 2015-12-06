@@ -22,6 +22,8 @@ class TappableText: NSObject {
     static let tapAttributeKey: String = "tappable"
     static let tapAssetKey: String = "tapAsset"
     
+    static let alphaCharSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
+    
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
     let delimiter = " "
@@ -35,7 +37,9 @@ class TappableText: NSObject {
     }
     
     func isTappableToken(token: String) -> (Bool, String) {
-        let t = token.lowercaseString
+        var t = token.lowercaseString
+        t = t.componentsSeparatedByCharactersInSet(TappableText.alphaCharSet).joinWithSeparator("")
+        
         let k: String = t
         var tappable = self.lookup.contains(t)
         if !tappable {
