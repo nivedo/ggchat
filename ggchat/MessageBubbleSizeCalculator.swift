@@ -68,7 +68,8 @@ class MessageBubbleSizeCalculator {
             let avatarSize: CGSize = self.gg_avatarSizeForMessageData(messageData, withLayout:layout)
             
             //  from the cell xibs, there is a 2 point space between avatar and bubble
-            let spacingBetweenAvatarAndBubble: CGFloat = 2.0
+            // let spacingBetweenAvatarAndBubble: CGFloat = 2.0
+            let spacingBetweenAvatarAndBubble: CGFloat = 0.0
             let horizontalContainerInsets: CGFloat = layout.messageBubbleTextViewTextContainerInsets.left + layout.messageBubbleTextViewTextContainerInsets.right
             let horizontalFrameInsets: CGFloat = layout.messageBubbleTextViewFrameInsets.left + layout.messageBubbleTextViewFrameInsets.right
             
