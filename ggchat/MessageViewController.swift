@@ -288,7 +288,7 @@ class MessageViewController: UIViewController,
         *
         *  Otherwise, return your previously created bubble image data objects.
         */
-        return nil
+        // return nil
         let message: Message = self.messages[indexPath.item]
     
         if (message.senderId == self.senderId) {
@@ -623,7 +623,7 @@ class MessageViewController: UIViewController,
                     NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont
                     ])
             }
-            cell.textView.backgroundColor = GGConfig.incomingBubbleColor
+            // cell.textView.backgroundColor = GGConfig.incomingBubbleColor
             if let bubbleImageDataSource = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath) {
                 cell.messageBubbleImageView.image = bubbleImageDataSource.messageBubbleImage
                 cell.messageBubbleImageView.highlightedImage = bubbleImageDataSource.messageBubbleHighlightedImage
