@@ -52,7 +52,7 @@ class GGHearthStoneAsset : ImageModalAsset {
             do {
                 guard let dat = data else { throw JSONError.NoData }
                 guard let json = try NSJSONSerialization.JSONObjectWithData(dat, options: []) as? NSDictionary else { throw JSONError.ConversionFailed }
-                print(json)
+                // print(json)
                 if let fullName = json["card"] as? String {
                     // print(fullName)
                     self.fullName = fullName
@@ -73,15 +73,15 @@ class GGHearthStoneAsset : ImageModalAsset {
     func downloadImage() {
         if let urlImage = self.imageURL, let url = NSURL(string: urlImage) {
             // print("Started downloading \"\(url.URLByDeletingPathExtension!.lastPathComponent!)\".")
-            print("Started downloading \"\(url)\".")
+            // print("Started downloading \"\(url)\".")
             getDataFromUrl(url) { (data, response, error)  in
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
                     guard let data = data where error == nil else {
-                        print("Image download failed: \(error)")
+                        // print("Image download failed: \(error)")
                         self.delegate?.onDownloadError()
                         return
                     }
-                    print("Finished downloading \"\(url)\".")
+                    // print("Finished downloading \"\(url)\".")
                     self.image = UIImage(data: data)
                     self.delegate?.onDownloadSuccess(self.image!)
                 }
