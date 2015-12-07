@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */; };
 		D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01781C11B85F00643835 /* GGHearthStone.swift */; };
+		D42B017B1C1531A500643835 /* MessageAutocompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */; };
+		D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */; };
+		D42B017F1C153FAD00643835 /* MessageAutocompleteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */; };
 		D42B895E1C05D9EC0043C20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B895D1C05D9EC0043C20A /* LoginViewController.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
@@ -270,6 +273,9 @@
 		01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ggchat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.release.xcconfig"; sourceTree = "<group>"; };
 		D42B01781C11B85F00643835 /* GGHearthStone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGHearthStone.swift; sourceTree = "<group>"; };
+		D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteController.swift; sourceTree = "<group>"; };
+		D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteCell.swift; sourceTree = "<group>"; };
+		D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAutocompleteCell.xib; sourceTree = "<group>"; };
 		D42B895D1C05D9EC0043C20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -1078,6 +1084,7 @@
 			children = (
 				D4A9F51A1BFA95F500FA4444 /* MessageViewController.swift */,
 				D4A9F51B1BFA95F500FA4444 /* MessageViewController.xib */,
+				D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */,
 				D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */,
 				D45FBD5D1C04432900E79B4E /* ChatTableViewController.swift */,
 				D45FBD641C0497B300E79B4E /* ContactTableViewController.swift */,
@@ -1122,6 +1129,8 @@
 				D4A786521C0A9BB000C37427 /* SettingTableMenuCell.xib */,
 				D4A786671C0D5A7E00C37427 /* SettingTableSwitchCell.swift */,
 				D4A786681C0D5A7E00C37427 /* SettingTableSwitchCell.xib */,
+				D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */,
+				D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1948,6 +1957,7 @@
 				D4A9F5A41BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.xib in Resources */,
 				D4A9F51D1BFA95F500FA4444 /* MessageViewController.xib in Resources */,
 				D43B28CE1C06894100B3F367 /* README.txt in Resources */,
+				D42B017F1C153FAD00643835 /* MessageAutocompleteCell.xib in Resources */,
 				D43B28E51C06895600B3F367 /* build-libidn.sh in Resources */,
 				D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */,
 				D469EAAC1C09D66400D30C9A /* SettingTableTextViewCell.xib in Resources */,
@@ -2150,6 +2160,7 @@
 				D43B29441C06897D00B3F367 /* RFImageToDataTransformer.m in Sources */,
 				D4C8FE011C06AA2300992801 /* XMPPvCardTempAdr.m in Sources */,
 				D43B29091C06896200B3F367 /* XMPPXOAuth2Google.m in Sources */,
+				D42B017B1C1531A500643835 /* MessageAutocompleteController.swift in Sources */,
 				D4C8FE361C06AA2300992801 /* XMPPMessage+XEP_0333.m in Sources */,
 				D4C8FDDB1C06AA2300992801 /* XMPPProcessOne.m in Sources */,
 				D469EAA41C09BFA200D30C9A /* SettingTableAvatarCell.swift in Sources */,
@@ -2252,6 +2263,7 @@
 				D4C8FE031C06AA2300992801 /* XMPPvCardTempBase.m in Sources */,
 				D4C8FDF51C06AA2300992801 /* XMPPRoomMemoryStorage.m in Sources */,
 				D4C8FE291C06AA2300992801 /* XMPPStreamManagement.m in Sources */,
+				D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
