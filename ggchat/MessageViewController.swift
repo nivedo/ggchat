@@ -842,8 +842,13 @@ class MessageViewController: UIViewController,
         if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
             NSCharacterSet.whitespaceCharacterSet()).last {
             if lastWord.characters.count > 1 {
-                if let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord) {
-                    self.autocompleteController?.displaySuggestions(suggestions, frame: self.inputToolbar.frame)
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                    let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord)
+                    if suggestions != nil {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
+                        }
+                    }
                 }
             }
         }
@@ -858,10 +863,15 @@ class MessageViewController: UIViewController,
                 print("editing text \"\(textView.text)\" -->  \"\(lastWord)\"")
                 
                 if lastWord.characters.count > 1 {
-                    if let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord) {
-                        self.autocompleteController?.displaySuggestions(suggestions, frame: self.inputToolbar.frame)
-                    } else {
-                        self.autocompleteController?.hide()
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                        let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if suggestions != nil {
+                                self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
+                            } else {
+                                self.autocompleteController?.hide()
+                            }
+                        }
                     }
                 } else {
                     self.autocompleteController?.hide()
