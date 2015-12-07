@@ -187,9 +187,17 @@ class GGHearthStone {
         
         return valid
     }
-    
+   
+    var activeSuggestionJobs: Int = 0
     func getCardSugggestions(name: String, threshold: Float = 0.7) -> [String]? {
-        var suggestions: [String]?
+        if self.activeSuggestionJobs > 0 {
+            return nil
+        }
+        
+        self.activeSuggestionJobs++
+        // print(self.activeSuggestionJobs)
+        
+        var suggestions = [String]()
         let targetName = name.lowercaseString
         
         class StringHelper {
@@ -216,6 +224,7 @@ class GGHearthStone {
             }
         }
        
+        self.activeSuggestionJobs--
         return suggestions
     }
 }

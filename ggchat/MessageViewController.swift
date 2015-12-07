@@ -497,6 +497,7 @@ class MessageViewController: UIViewController,
         textView.text = nil
         textView.undoManager!.removeAllActions()
 
+        self.autocompleteController?.hide()
         self.inputToolbar.toggleSendButtonEnabled()
 
         NSNotificationCenter.defaultCenter().postNotificationName(UITextViewTextDidChangeNotification, object:textView)
@@ -844,7 +845,7 @@ class MessageViewController: UIViewController,
             if lastWord.characters.count > 1 {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                     let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord)
-                    if suggestions != nil {
+                    if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
                         dispatch_async(dispatch_get_main_queue()) {
                             self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
                         }
@@ -865,11 +866,13 @@ class MessageViewController: UIViewController,
                 if lastWord.characters.count > 1 {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                         let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord)
-                        dispatch_async(dispatch_get_main_queue()) {
-                            if suggestions != nil {
-                                self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
-                            } else {
-                                self.autocompleteController?.hide()
+                        if suggestions != nil && textView.text != nil {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                if suggestions!.count > 0 {
+                                    self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
+                                } else {
+                                    self.autocompleteController?.hide()
+                                }
                             }
                         }
                     }
