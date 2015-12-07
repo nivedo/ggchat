@@ -194,10 +194,12 @@ class MessageComposerTextView: UITextView {
     }
 
     func gg_didReceiveTextViewNotification(notification: NSNotification) {
+        /*
         if notification.name == UITextViewTextDidChangeNotification
             && self.text.characters.count > 0 {
             // print("editing text \(self.text)")
         }
+        */
         self.setNeedsDisplay()
     }
 
