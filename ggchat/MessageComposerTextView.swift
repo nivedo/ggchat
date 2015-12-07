@@ -61,7 +61,6 @@ class MessageComposerTextView: UITextView {
         self.placeHolder = nil
         self.placeHolderTextColor = UIColor.lightGrayColor()
         
-        self.gg_addTextViewNotificationObservers()
     }
  
     override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -77,6 +76,7 @@ class MessageComposerTextView: UITextView {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.gg_configureTextView()
+        self.gg_addTextViewNotificationObservers()
     }
 
     // pragma mark - Composer text view
@@ -194,6 +194,10 @@ class MessageComposerTextView: UITextView {
     }
 
     func gg_didReceiveTextViewNotification(notification: NSNotification) {
+        if notification.name == UITextViewTextDidChangeNotification
+            && self.text.characters.count > 0 {
+            // print("editing text \(self.text)")
+        }
         self.setNeedsDisplay()
     }
 
