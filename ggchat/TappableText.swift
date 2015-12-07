@@ -75,7 +75,7 @@ class TappableText: NSObject {
                 }
             }
             if tappable && brackets {
-                str = "[\(str)]"
+                str = "[\(str.capitalizedString)]"
             }
             
             if index < tokens.count - 1 {

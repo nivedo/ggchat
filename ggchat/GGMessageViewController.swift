@@ -202,7 +202,7 @@ class GGMessageViewController:
                     textColor: UIColor.darkGrayColor(),
                     attributes: nil,
                     brackets: true)
-                text_ = attributedText.string.capitalizedString
+                text_ = attributedText.string
             }
             let message: Message = Message(
                 senderId: senderId,
