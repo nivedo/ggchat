@@ -194,16 +194,25 @@ class GGMessageViewController:
             
         if let recipient = self.recipient {
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        
+       
+            var text_ = text
+            if SettingManager.sharedInstance.tappableMessageText {
+                let attributedText = TappableText.sharedInstance.tappableAttributedString(
+                    text,
+                    textColor: UIColor.darkGrayColor(),
+                    attributes: nil,
+                    brackets: true)
+                text_ = attributedText.string.capitalizedString
+            }
             let message: Message = Message(
                 senderId: senderId,
                 senderDisplayName: senderDisplayName,
                 date: date,
-                text: text)
-        
+                text: text_)
+            
             self.messages.append(message)
                 
-            XMPPMessageManager.sendMessage(text,
+            XMPPMessageManager.sendMessage(text_,
                 to: recipient.jidStr,
                 completionHandler: nil)
         
