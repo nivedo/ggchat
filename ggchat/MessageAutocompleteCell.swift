@@ -11,6 +11,8 @@ import UIKit
 class MessageAutocompleteCell: UITableViewCell {
     
     @IBOutlet weak var cellMainLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var iconContainer: UIView!
     
     class func nib() -> UINib {
         let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
@@ -30,6 +32,10 @@ class MessageAutocompleteCell: UITableViewCell {
         self.cellMainLabel.textColor = UIColor.whiteColor()
         self.cellMainLabel.font = UIFont.boldSystemFontOfSize(CGFloat(16.0))
         self.separatorInset = UIEdgeInsetsMake(0.0, 40.0, 0.0, 0.0)
+   
+        self.iconContainer.backgroundColor = UIColor.clearColor()
+        self.iconImageView.image = UIImage(named: "hearthstone-icon")
+        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

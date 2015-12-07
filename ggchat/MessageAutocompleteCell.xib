@@ -7,11 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="32" id="KGk-i7-Jjw" customClass="MessageAutocompleteCell" customModule="ggchat" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="KGk-i7-Jjw" customClass="MessageAutocompleteCell" customModule="ggchat" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmo-JE-72i" userLabel="Cell main label">
@@ -21,12 +21,37 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MxR-eW-Kmn">
+                        <rect key="frame" x="4" y="4" width="32" height="32"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gOX-sm-8jZ">
+                                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                <animations/>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gOX-sm-8jZ" firstAttribute="leading" secondItem="MxR-eW-Kmn" secondAttribute="leading" id="5BY-qL-2Vf"/>
+                            <constraint firstAttribute="bottom" secondItem="gOX-sm-8jZ" secondAttribute="bottom" id="L7p-K8-DeI"/>
+                            <constraint firstItem="gOX-sm-8jZ" firstAttribute="top" secondItem="MxR-eW-Kmn" secondAttribute="top" id="Q5e-Xc-jyi"/>
+                            <constraint firstAttribute="trailing" secondItem="gOX-sm-8jZ" secondAttribute="trailing" id="W6l-uF-Iv4"/>
+                            <constraint firstAttribute="width" constant="32" id="nra-6q-oOS"/>
+                            <constraint firstAttribute="height" constant="32" id="pds-f0-1Cx"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <animations/>
+                <constraints>
+                    <constraint firstItem="MxR-eW-Kmn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="gEr-hR-Zv9"/>
+                    <constraint firstItem="MxR-eW-Kmn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="r0A-v8-FCo"/>
+                </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
                 <outlet property="cellMainLabel" destination="gmo-JE-72i" id="JUE-VO-XQA"/>
+                <outlet property="iconContainer" destination="MxR-eW-Kmn" id="1P3-Jh-xLS"/>
+                <outlet property="iconImageView" destination="gOX-sm-8jZ" id="Q1S-qw-nNQ"/>
             </connections>
         </tableViewCell>
     </objects>
