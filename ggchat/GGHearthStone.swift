@@ -188,5 +188,34 @@ class GGHearthStone {
         return valid
     }
     
-
+    func getCardSugggestions(name: String, threshold: Float = 0.5) -> [String]? {
+        var suggestions: [String]?
+        let targetName = name.lowercaseString
+        
+        class StringHelper {
+            var str: String
+            var score: Float
+            
+            init(str: String, score: Float) {
+                self.str = str
+                self.score = score
+            }
+        }
+       
+        var sortArray = [StringHelper]()
+        for card in self.cardNames {
+            let score = card.jaroWinklerDistance(targetName)
+            if score > threshold {
+                sortArray.append(StringHelper(str: card, score: score))
+            }
+        }
+        if sortArray.count > 0 {
+            suggestions = sortArray.sort({ $0.score > $1.score }).map {
+                (let helper) -> String in
+                return helper.str
+            }
+        }
+       
+        return suggestions
+    }
 }
