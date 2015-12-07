@@ -26,16 +26,19 @@ extension String {
     var length: Int {
         return self.characters.count
     }
+    
+    func jaroWinklerDistance(other: String) -> Float {
+        return JaroWinkler.getDistance(self, secondWord: other)
+    }
 }
 
 class JaroWinkler {
     
-    let INDEX_NOT_FOUND = -1
-    let EMPTY = ""
-    let SPACE = " "
+    static let INDEX_NOT_FOUND = -1
+    static let EMPTY = ""
+    static let SPACE = " "
     
-    
-    func getDistance(firstWord : String, secondWord : String) -> Float {
+    class func getDistance(firstWord : String, secondWord : String) -> Float {
         
         let defaultScalingFactor : Float = 0.1
         
@@ -54,14 +57,14 @@ class JaroWinkler {
      
      */
     
-    func commonPrefixLength(first : String, second: String) -> Int {
+    private class func commonPrefixLength(first : String, second: String) -> Int {
         let result = self.getCommonPrefix(first, second: second).length
         
         // Limit the result to 4.
         return result > 4 ? 4 : result
     }
     
-    func getCommonPrefix(first: String, second: String) -> String {
+    private class func getCommonPrefix(first: String, second: String) -> String {
         
         if first == "" {
             return EMPTY
@@ -91,7 +94,7 @@ class JaroWinkler {
     }
     
     
-    func indexOfDifference(first : String, second: String) -> Int {
+    private class func indexOfDifference(first : String, second: String) -> Int {
         
         if first == second {
             return INDEX_NOT_FOUND
@@ -111,7 +114,7 @@ class JaroWinkler {
         return INDEX_NOT_FOUND
     }
     
-    func score(firstString : String, secondString : String) -> Float {
+    private class func score(firstString : String, secondString : String) -> Float {
         
         var shorter : String!
         var longer : String!
@@ -167,7 +170,7 @@ class JaroWinkler {
     }
     
     
-    func getSetOfMatchingCharacterWithin(first : String, second : String, limit : Int ) -> String {
+    private class func getSetOfMatchingCharacterWithin(first : String, second : String, limit : Int ) -> String {
         
         var common = ""
         var copy = second.copy() as! String
@@ -196,7 +199,7 @@ class JaroWinkler {
     }
     
     
-    func transpositions(m1 : String, m2 : String) -> Int {
+    private class func transpositions(m1 : String, m2 : String) -> Int {
         var transpositions = 0
         
         for i in 0 ..< m1.length {
