@@ -16,6 +16,7 @@ class MessageViewController: UIViewController,
     MessageInputToolbarDelegate,
     MessageKeyboardControllerDelegate,
     MessageComposerTextViewPasteDelegate,
+    MessageAutocompleteControllerDelegate,
     UITextViewDelegate {
     
     static let kMessagesKeyValueObservingContext = UnsafeMutablePointer<Void>()
@@ -27,6 +28,7 @@ class MessageViewController: UIViewController,
     @IBOutlet weak var messageCollectionView: MessagesCollectionView!
     @IBOutlet weak var inputToolbar: MessageInputToolbar!
     var keyboardController: MessageKeyboardController?
+    var autocompleteController: MessageAutocompleteController?
     
     var automaticallyScrollsToMostRecentMessage: Bool = true
     var outgoingCellIdentifier: String = OutgoingMessagesCollectionViewCell.cellReuseIdentifier()
@@ -93,7 +95,7 @@ class MessageViewController: UIViewController,
         
         self.messageCollectionView.dataSource = self
         self.messageCollectionView.delegate = self
-        self.inputToolbar.contentView.textView.delegate = self
+        // self.inputToolbar.contentView.textView.delegate = self
         
         self.inputToolbar.delegate = self
         self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")
@@ -111,6 +113,11 @@ class MessageViewController: UIViewController,
                 contextView: self.view,
                 panGestureRecognizer: self.messageCollectionView.panGestureRecognizer,
                 delegate: self)
+            
+            self.autocompleteController = MessageAutocompleteController(
+                delegate: self)
+            self.view.addSubview(self.autocompleteController!.tableView)
+            // self.view.bringSubviewToFront(self.autocompleteController!.tableView)
         }
         
         // Navigation bar
@@ -831,13 +838,36 @@ class MessageViewController: UIViewController,
         if (self.automaticallyScrollsToMostRecentMessage) {
             self.scrollToBottomAnimated(true)
         }
+        
+        if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
+            NSCharacterSet.whitespaceCharacterSet()).last {
+            if lastWord.characters.count > 1 {
+                if let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord) {
+                    self.autocompleteController?.displaySuggestions(suggestions, frame: self.inputToolbar.frame)
+                }
+            }
+        }
     }
 
     func textViewDidChange(textView: UITextView) {
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
-
+        if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
+            NSCharacterSet.whitespaceCharacterSet()).last {
+                print("editing text \"\(textView.text)\" -->  \"\(lastWord)\"")
+                
+                if lastWord.characters.count > 1 {
+                    if let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord) {
+                        self.autocompleteController?.displaySuggestions(suggestions, frame: self.inputToolbar.frame)
+                    } else {
+                        self.autocompleteController?.hide()
+                    }
+                } else {
+                    self.autocompleteController?.hide()
+                }
+        }
+        
         self.inputToolbar.toggleSendButtonEnabled()
     }
 
@@ -847,10 +877,12 @@ class MessageViewController: UIViewController,
         }
 
         textView.resignFirstResponder()
+        self.autocompleteController?.hide()
     }
     
     func dismissKeyboard() {
         print("dismissKeyboard")
+        self.autocompleteController?.hide()
         self.textViewDidEndEditing(self.inputToolbar.contentView.textView)
     }
 
