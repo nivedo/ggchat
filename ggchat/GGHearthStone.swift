@@ -188,7 +188,7 @@ class GGHearthStone {
         return valid
     }
     
-    func getCardSugggestions(name: String, threshold: Float = 0.5) -> [String]? {
+    func getCardSugggestions(name: String, threshold: Float = 0.7) -> [String]? {
         var suggestions: [String]?
         let targetName = name.lowercaseString
         

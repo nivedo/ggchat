@@ -25,6 +25,11 @@ class MessageAutocompleteCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.backgroundColor = UIColor.clearColor()
+        self.cellMainLabel.textColor = UIColor.whiteColor()
+        self.cellMainLabel.font = UIFont.boldSystemFontOfSize(CGFloat(16.0))
+        self.separatorInset = UIEdgeInsetsMake(0.0, 40.0, 0.0, 0.0)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

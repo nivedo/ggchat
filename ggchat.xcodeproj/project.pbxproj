@@ -12,6 +12,7 @@
 		D42B017B1C1531A500643835 /* MessageAutocompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */; };
 		D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */; };
 		D42B017F1C153FAD00643835 /* MessageAutocompleteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */; };
+		D42B01821C154AF700643835 /* JaroWinklerDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01811C154AF700643835 /* JaroWinklerDistance.swift */; };
 		D42B895E1C05D9EC0043C20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B895D1C05D9EC0043C20A /* LoginViewController.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
@@ -276,6 +277,7 @@
 		D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteController.swift; sourceTree = "<group>"; };
 		D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteCell.swift; sourceTree = "<group>"; };
 		D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAutocompleteCell.xib; sourceTree = "<group>"; };
+		D42B01811C154AF700643835 /* JaroWinklerDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JaroWinklerDistance.swift; sourceTree = "<group>"; };
 		D42B895D1C05D9EC0043C20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -734,6 +736,14 @@
 			name = Modules;
 			sourceTree = "<group>";
 		};
+		D42B01801C154ACB00643835 /* Algorithms */ = {
+			isa = PBXGroup;
+			children = (
+				D42B01811C154AF700643835 /* JaroWinklerDistance.swift */,
+			);
+			name = Algorithms;
+			sourceTree = "<group>";
+		};
 		D43B28AC1C0688E300B3F367 /* XMPPFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1018,6 +1028,7 @@
 			isa = PBXGroup;
 			children = (
 				D43B28AC1C0688E300B3F367 /* XMPPFramework */,
+				D42B01801C154ACB00643835 /* Algorithms */,
 				D4A9F5051BF476BC00FA4444 /* Layouts */,
 				D47840AB1BF1B99C00441A2D /* Assets */,
 				D47840A51BF1AD6F00441A2D /* Categories */,
@@ -2212,6 +2223,7 @@
 				D4C8FE3D1C08421100992801 /* XMPPRosterManager.swift in Sources */,
 				D4C8FDE51C06AA2300992801 /* XMPPRoster.m in Sources */,
 				D4C8FE2B1C06AA2300992801 /* XMPPPing.m in Sources */,
+				D42B01821C154AF700643835 /* JaroWinklerDistance.swift in Sources */,
 				D43B28CD1C06894100B3F367 /* DDMultiFormatter.m in Sources */,
 				D43B29481C06897D00B3F367 /* XMPPTimer.m in Sources */,
 				D4C8FE231C06AA2300992801 /* XMPPPresence+XEP_0172.m in Sources */,
