@@ -9,13 +9,17 @@
 import Foundation
 import AWSS3
 
+public typealias S3DownloadCompletion = (NSURL) -> Void
+
 class S3Download {
     var request: AWSS3TransferManagerDownloadRequest?
     var fileURL: NSURL?
+    var userData: [String: AnyObject]?
    
-    init(request: AWSS3TransferManagerDownloadRequest) {
+    init(request: AWSS3TransferManagerDownloadRequest, userData: [String: AnyObject]?) {
         self.request = request
         self.fileURL = nil
+        self.userData = userData
     }
     
     func onSuccess(fileURL: NSURL) {
@@ -29,11 +33,13 @@ protocol S3DownloadDelegate {
     func onDownloadFailure()
     func onDownloadPause()
     func onDownloadPauseFailure()
-    func onDownloadSuccess(fileURL: NSURL)
+    func onDownloadSuccess(fileURL: NSURL, userData: [String: AnyObject]?)
     
 }
 
 class AWSS3DownloadManager {
+   
+    let tempFolderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("download")
     
     class var sharedInstance: AWSS3DownloadManager {
         struct Singleton {
@@ -41,11 +47,45 @@ class AWSS3DownloadManager {
         }
         return Singleton.instance
     }
+    
+    init() {
+        let error = NSErrorPointer()
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(
+                tempFolderURL,
+                withIntermediateDirectories: true,
+                attributes: nil)
+        } catch let error1 as NSError {
+            error.memory = error1
+            print("Creating 'download' directory failed. Error: \(error)")
+        }
+    }
    
     var downloads = Array<S3Download?>()
     var delegate: S3DownloadDelegate?
+   
+    func download(fileName: String, userData: [String: AnyObject]?, completion: S3DownloadCompletion?) {
+        let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
+       
+        /*
+        let filePath = fileURL.path!
+        if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+            self.downloads.append(S3Download(fileURL: fileURL))
+        } else {
+        */
+        
+        let downloadRequest = AWSS3TransferManagerDownloadRequest()
+        downloadRequest.key = fileName
+        downloadRequest.bucket = GGSetting.awsS3BucketName
+        downloadRequest.downloadingFileURL = fileURL
+        
+        self.downloads.append(S3Download(request: downloadRequest, userData: userData))
+        self.download(downloadRequest, completion: completion)
+    }
     
-    func download(downloadRequest: AWSS3TransferManagerDownloadRequest) {
+    func download(downloadRequest: AWSS3TransferManagerDownloadRequest,
+        completion: S3DownloadCompletion?) {
+            
         switch (downloadRequest.state) {
         case .NotStarted, .Paused:
             let transferManager = AWSS3TransferManager.defaultS3TransferManager()
@@ -68,7 +108,10 @@ class AWSS3DownloadManager {
                             self.downloads[index]!.onSuccess(downloadRequest.downloadingFileURL)
                             
                             self.delegate?.onDownloadSuccess(
-                                downloadRequest.downloadingFileURL)
+                                downloadRequest.downloadingFileURL,
+                                userData: self.downloads[index]!.userData
+                            )
+                            completion?(downloadRequest.downloadingFileURL)
                         }
                     })
                 }
@@ -80,7 +123,8 @@ class AWSS3DownloadManager {
             break
         }
     }
-    
+   
+    /*
     func downloadAll() {
         for (_, value) in self.downloads.enumerate() {
             if let downloadRequest = value?.request {
@@ -91,6 +135,7 @@ class AWSS3DownloadManager {
             }
         }
     }
+    */
     
     func cancelAllDownloads() {
         for (_, value) in self.downloads.enumerate() {
