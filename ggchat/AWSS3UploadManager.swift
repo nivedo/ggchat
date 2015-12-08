@@ -34,6 +34,54 @@ protocol S3UploadDelegate {
     
 }
 
+struct S3PhotoSize {
+    static let facebook = CGSize(width: 1200, height: 628)
+    static let twitter = CGSize(width: 1024, height: 512)
+    static let linkedin = CGSize(width: 800, height: 800)
+    static let google = CGSize(width: 800, height: 1200)
+    static let pinterest = CGSize(width: 735, height: 1102)
+    static let instagram = CGSize(width: 1080, height: 1080)
+    
+    static let maxDimension = CGFloat(200.0)
+    static let thumbnailDimension = CGFloat(20.0)  // Thumbnail should be less than 10 KB
+}
+
+class S3PhotoManager {
+
+    class func isSquare(image: UIImage) -> Bool {
+        let s = image.size
+        return s.height == s.width
+    }
+   
+    class func isLandscape(image: UIImage) -> Bool {
+        let s = image.size
+        return s.width > s.height
+    }
+    
+    class func isPortrait(image: UIImage) -> Bool {
+        let s = image.size
+        return s.height > s.width
+    }
+   
+    class func originalCompressedImage(image: UIImage) -> UIImage {
+        let size = CGSizeMake(S3PhotoSize.maxDimension, S3PhotoSize.maxDimension)
+        return image.gg_imageCompressedToFitSize(size, isOpaque: true)
+    }
+    
+    class func thumbnailCompressedImage(image: UIImage) -> UIImage {
+        let size = CGSizeMake(S3PhotoSize.thumbnailDimension, S3PhotoSize.thumbnailDimension)
+        return image.gg_imageCompressedToFitSize(size, isOpaque: true)
+    }
+    
+    class func upload(image: UIImage) {
+        let originalImage = self.originalCompressedImage(image)
+        let thumbnailImage = self.thumbnailCompressedImage(image)
+        
+        AWSS3UploadManager.sharedInstance.upload(originalImage, fileType: "jpg")
+        AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileType: "jpg", fileNameSuffix: "_thumb")
+    }
+}
+
 class AWSS3UploadManager {
    
     let tempFolderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload")
@@ -61,14 +109,17 @@ class AWSS3UploadManager {
     var uploads = Array<S3Upload?>()
     var delegate: S3UploadDelegate?
    
-    func upload(image: UIImage) {
-        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".png")
+    func upload(image: UIImage, fileType: String, fileNameSuffix: String = "") -> String {
+        let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
+        let fileName = "\(uniqueId)\(fileNameSuffix).\(fileType)"
         let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
         let filePath = fileURL.path!
         let imageData = UIImagePNGRepresentation(image)
         imageData!.writeToFile(filePath, atomically: true)
         
         self.upload(fileURL, fileName: fileName)
+        
+        return fileName
     }
     
     func upload(fileURL: NSURL, fileName: String) {

@@ -79,6 +79,8 @@ class GGMessageViewController:
                     to: recipient.jidStr,
                     completionHandler: nil)
                 */
+                S3PhotoManager.upload(chosenImage)
+                
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
             } else {

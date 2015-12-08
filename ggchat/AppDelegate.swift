@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLog.addLogger(DDTTYLogger.sharedInstance(), withLogLevel: logLevel)
         
         XMPPManager.start()
+        AWSS3Manager.start()
    
         // Register remote notifications with APNS
         if application.respondsToSelector("registerUserNotificationSettings:") {

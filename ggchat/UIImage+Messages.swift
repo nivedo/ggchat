@@ -27,6 +27,45 @@ extension UIImage {
         return scaledImage
     }
     
+    func gg_imageCompressedToSize(size : CGSize, isOpaque : Bool, compressionQuality: CGFloat = 0.5) -> UIImage {
+        
+        // begin a context of the desired size
+        UIGraphicsBeginImageContextWithOptions(size, isOpaque, 0.0)
+        
+        // draw image in the rect with zero origin and size of the context
+        let imageRect = CGRect(origin: CGPointZero, size: size)
+        self.drawInRect(imageRect)
+        
+        // get the scaled image, close the context and return the image
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        let data: NSData = UIImageJPEGRepresentation(scaledImage, compressionQuality)!
+        UIGraphicsEndImageContext()
+        
+        return UIImage(data: data)!
+    }
+    
+    func gg_imageScaledToFitSize(size: CGSize, isOpaque: Bool) -> UIImage {
+        assert(self.size.width > 0, "Scale image to fit size, width must be nonzero")
+        assert(self.size.height > 0, "Scale image to fit size, height must be nonzero")
+        let aspect: CGFloat = self.size.width / self.size.height
+        if size.width / aspect <= size.height {
+            return self.gg_imageScaledToSize(CGSizeMake(size.width, size.width / aspect), isOpaque: isOpaque)
+        } else {
+            return self.gg_imageScaledToSize(CGSizeMake(size.height * aspect, size.height), isOpaque: isOpaque)
+        }
+    }
+    
+    func gg_imageCompressedToFitSize(size: CGSize, isOpaque: Bool) -> UIImage {
+        assert(self.size.width > 0, "Scale image to fit size, width must be nonzero")
+        assert(self.size.height > 0, "Scale image to fit size, height must be nonzero")
+        let aspect: CGFloat = self.size.width / self.size.height
+        if size.width / aspect <= size.height {
+            return self.gg_imageCompressedToSize(CGSizeMake(size.width, size.width / aspect), isOpaque: isOpaque)
+        } else {
+            return self.gg_imageCompressedToSize(CGSizeMake(size.height * aspect, size.height), isOpaque: isOpaque)
+        }
+    }
+    
     func gg_imageMaskedWithColor(maskColor: UIColor) -> UIImage {
         
         let imageRect = CGRectMake(0.0, 0.0, self.size.width, self.size.height)
