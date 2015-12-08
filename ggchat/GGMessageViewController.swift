@@ -281,20 +281,20 @@ class GGMessageViewController:
     
 	func onPhoto(
         sender: XMPPStream,
-        didReceivePhoto message: XMPPMessage,
+        didReceivePhoto xmppMessage: XMPPMessage,
         from user: XMPPUserCoreDataStorageObject) {
         // print(message.elementForName("photo"))
-        if let photo = message.elementForName("photo"),
+        if let photo = xmppMessage.elementForName("photo"),
             let originalKey = photo.elementForName("originalKey")?.stringValue(),
             let thumbnailKey = photo.elementForName("thumbnailKey")?.stringValue() {
             
-            if let from: String = message.attributeForName("from")?.stringValue() {
+            if let from: String = xmppMessage.attributeForName("from")?.stringValue() {
                 let tokens = from.componentsSeparatedByString("/")
                 if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
                 
                 // Right recipient
-                var photoMedia: PhotoMediaItem = PhotoMediaItem()
-                var message: Message = Message(
+                let photoMedia: PhotoMediaItem = PhotoMediaItem()
+                let message: Message = Message(
                         senderId: self.senderId,
                         senderDisplayName: self.senderDisplayName,
                         date: NSDate(),
@@ -308,12 +308,25 @@ class GGMessageViewController:
                     
                     let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                     let image = UIImage(data: data)
-                    
+                   
+                    // if (message.media as? PhotoMediaItem)?.image == nil {
                     message.addMedia(PhotoMediaItem(image: image!))
-                        
                     self.messages.append(message)
                     self.finishReceivingMessageAnimated(true)
+                        
+                    print("Downloading original \(originalKey)")
+                    AWSS3DownloadManager.sharedInstance.download(
+                        originalKey,
+                        userData: nil,
+                        completion: { (fileURL: NSURL) -> Void in
+                        
+                        let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                        let image = UIImage(data: data)
+                        message.addMedia(PhotoMediaItem(image: image!))
+                        // self.messageCollectionView.reloadData()
+                        self.finishReceivingMessageAnimated(true)
                     })
+                })
                 }
             }
         }
