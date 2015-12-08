@@ -639,6 +639,10 @@ class MessageViewController: UIViewController,
             }
         } else {
             let messageMedia: MessageMediaData = messageItem.media!
+            
+            if let mediaItem = messageMedia as? MediaItem {
+                mediaItem.appliesMediaViewMaskAsOutgoing = isOutgoingMessage
+            }
             // print(cell.messageBubbleImageView)
             cell.mediaView = (messageMedia.mediaView() != nil ? messageMedia.mediaView() : messageMedia.mediaPlaceholderView())!
         }
