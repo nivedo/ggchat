@@ -42,8 +42,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="244" height="94"/>
                                 <animations/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-sU-TcX" userLabel="Text view" customClass="MessageCellTextView" customModule="ggchat" customModuleProvider="target">
-                                <rect key="frame" x="3" y="0.0" width="238" height="94"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-sU-TcX" userLabel="Text view" customClass="MessageCellTextView" customModule="ggchat" customModuleProvider="target">
+                                <rect key="frame" x="6" y="0.0" width="238" height="94"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
