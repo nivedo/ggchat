@@ -83,6 +83,28 @@ public class XMPPMessageManager: NSObject {
             print("ERROR: Empty mesasge not sent.")
         }
 	}
+    
+    public class func sendPhoto(
+        originalKey: String,
+        thumbnailKey: String,
+        to receiver: String,
+        completionHandler completion: MessageCompletionHandler?) {
+        
+        let messageId = XMPPManager.sharedInstance.stream.generateUUID()
+        let completeMessage = DDXMLElement(name: "message")
+		
+		completeMessage.addAttributeWithName("id", stringValue: messageId)
+		completeMessage.addAttributeWithName("type", stringValue: "chat")
+		completeMessage.addAttributeWithName("to", stringValue: receiver)
+        completeMessage.addAttributeWithName("from", stringValue: XMPPManager.sharedInstance.stream.myJID.bare())
+        let originalKey = DDXMLElement(name: "originalKey", stringValue: originalKey)
+        let thumbnailKey = DDXMLElement(name: "thumbnailKey", stringValue: thumbnailKey)
+		completeMessage.addChild(originalKey)
+		completeMessage.addChild(thumbnailKey)
+           
+        sharedInstance.didSendMessageCompletionBlock = completion
+    	XMPPManager.sharedInstance.stream.sendElement(completeMessage)
+	}
 	
 	public class func sendIsComposingMessage(recipient: String, completionHandler completion:MessageCompletionHandler) {
 		if recipient.characters.count > 0 {

@@ -12,12 +12,12 @@ import AWSS3
 class S3Upload {
     var request: AWSS3TransferManagerUploadRequest?
     var fileURL: NSURL?
-    var xmpp: Bool = false
+    var userData: [String: AnyObject]?
     
-    init(request: AWSS3TransferManagerUploadRequest, xmpp: Bool) {
+    init(request: AWSS3TransferManagerUploadRequest, userData: [String: AnyObject]?) {
         self.request = request
         self.fileURL = nil
-        self.xmpp = xmpp
+        self.userData = userData
     }
     
     func onSuccess(fileURL: NSURL) {
@@ -29,7 +29,7 @@ class S3Upload {
 protocol S3UploadDelegate {
     
     func onUploadFailure()
-    func onUploadSuccess(key: String, xmpp: Bool)
+    func onUploadSuccess(key: String, userData: [String: AnyObject]?)
     func onUploadPauseCancel()
     func onUploadCancelFailure()
     func onUploadPauseFailure()
@@ -71,21 +71,21 @@ class S3PhotoManager: S3UploadDelegate {
         return image.gg_imageCompressedToFitSize(size, isOpaque: true)
     }
    
-    func sendPhoto(image: UIImage) {
-        self.upload(image)
-    }
-    
-    func upload(image: UIImage) -> String {
+    func sendPhoto(image: UIImage, to: String) {
+        
         let originalImage = self.originalCompressedImage(image)
         let thumbnailImage = self.thumbnailCompressedImage(image)
         
         let uniqueKey = NSProcessInfo.processInfo().globallyUniqueString
         let originalKey = "\(uniqueKey).jpg"
         let thumbnailKey = "\(uniqueKey)_thumb.jpg"
-        AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey, xmpp: false)
-        AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, xmpp: true)
-        
-        return uniqueKey
+        let userData: [String: AnyObject] = [
+            "originalKey"  : originalKey,
+            "thumbnailKey"  : thumbnailKey,
+            "to" : to
+        ]
+        AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey)
+        AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
     }
     
     // S3UploadDelegate methods
@@ -93,8 +93,19 @@ class S3PhotoManager: S3UploadDelegate {
         
     }
     
-    func onUploadSuccess(key: String, xmpp: Bool) {
-        print("onUploadSucces: \(key), xmpp: \(xmpp)")
+    func onUploadSuccess(key: String, userData: [String: AnyObject]?) {
+        print("onUploadSucces: \(key)")
+        
+        if let data = userData,
+            let originalKey = data["originalKey"] as? String,
+            let thumbnailKey = data["thumbnailKey"] as? String,
+            let to = data["to"] as? String {
+            XMPPMessageManager.sendPhoto(
+                originalKey,
+                thumbnailKey: thumbnailKey,
+                to: to,
+                completionHandler: nil)
+        }
     }
     
     func onUploadPauseCancel() {
@@ -137,7 +148,7 @@ class AWSS3UploadManager {
     var uploads = Array<S3Upload?>()
     var delegate: S3UploadDelegate?
    
-    func upload(image: UIImage, fileName: String, xmpp: Bool) {
+    func upload(image: UIImage, fileName: String, userData: [String: AnyObject]? = nil) {
         let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
         let filePath = fileURL.path!
         let imageData = UIImageJPEGRepresentation(image, 1.0)
@@ -148,7 +159,7 @@ class AWSS3UploadManager {
         uploadRequest.key = fileName
         uploadRequest.bucket = GGSetting.awsS3BucketName
         
-        self.uploads.append(S3Upload(request: uploadRequest, xmpp: xmpp))
+        self.uploads.append(S3Upload(request: uploadRequest, userData: userData))
         self.upload(uploadRequest)
     }
     
@@ -191,7 +202,7 @@ class AWSS3UploadManager {
                     if let index = self.indexOfUploadRequest(uploadRequest) {
                         let key = uploadRequest.key!
                         self.uploads[index]!.onSuccess(uploadRequest.body)
-                        self.delegate?.onUploadSuccess(key, xmpp: self.uploads[index]!.xmpp)
+                        self.delegate?.onUploadSuccess(key, userData: self.uploads[index]!.userData)
                     }
                 })
             }

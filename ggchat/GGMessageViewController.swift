@@ -71,15 +71,7 @@ class GGMessageViewController:
             
                 self.messages.append(message)
                
-                // TODO: Image size to big, must send out of band.
-                /*
-                XMPPMessageManager.sendMessage(
-                    "",
-                    image: chosenImage,
-                    to: recipient.jidStr,
-                    completionHandler: nil)
-                */
-                S3PhotoManager.sharedInstance.sendPhoto(chosenImage)
+                S3PhotoManager.sharedInstance.sendPhoto(chosenImage, to: recipient.jidStr)
                 
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
