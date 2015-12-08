@@ -594,7 +594,7 @@ class MessageViewController: UIViewController,
         } else {
             cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier
         }
-        // print("-------> index: \(indexPath.row)/\(self.messages.count), media: \(isMediaMessage), identifier: \(cellIdentifier)")
+        // print("-------> index: \(indexPath.row)/\(self.messages.count), media: \(isMediaMessage), identifier: \(cellIdentifier), sender: \(messageSenderId)")
             
         let cell: MessagesCollectionViewCell = messageCollectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath:indexPath) as! MessagesCollectionViewCell
         cell.delegate = collectionView

@@ -295,8 +295,8 @@ class GGMessageViewController:
                 // Right recipient
                 let photoMedia: PhotoMediaItem = PhotoMediaItem()
                 let message: Message = Message(
-                        senderId: self.senderId,
-                        senderDisplayName: self.senderDisplayName,
+                        senderId: from,
+                        senderDisplayName: from,
                         date: NSDate(),
                         media: photoMedia)
                     
