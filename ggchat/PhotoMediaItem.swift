@@ -36,7 +36,11 @@ class PhotoMediaItem: MediaItem {
 
     var image: UIImage? {
         set {
-            self.image = newValue!.copy() as! UIImage
+            if newValue != nil {
+                self.image_ = newValue!.copy() as! UIImage
+            } else {
+                self.image_ = nil
+            }
             self.cachedImageView_ = nil
         }
         get {

@@ -57,6 +57,11 @@ class Message {
         self.media = media
     }
     
+    func addMedia(media: MessageMediaData) {
+        self.media = media
+        self.isMediaMessage = true
+    }
+    
     func messageHash() -> Int {
         return self.hash()
     }

@@ -291,20 +291,26 @@ class GGMessageViewController:
             if let from: String = message.attributeForName("from")?.stringValue() {
                 let tokens = from.componentsSeparatedByString("/")
                 if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
+                
                 // Right recipient
-                print("Downloading photos \(thumbnailKey)")
-                AWSS3DownloadManager.sharedInstance.download(
-                    thumbnailKey,
-                    userData: nil,
-                    completion: { (fileURL: NSURL) -> Void in
-                    let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-                    let image = UIImage(data: data)
-                    let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!)
-                    let message: Message = Message(
+                var photoMedia: PhotoMediaItem = PhotoMediaItem()
+                var message: Message = Message(
                         senderId: self.senderId,
                         senderDisplayName: self.senderDisplayName,
                         date: NSDate(),
                         media: photoMedia)
+                    
+                print("Downloading thumbnail \(thumbnailKey)")
+                AWSS3DownloadManager.sharedInstance.download(
+                    thumbnailKey,
+                    userData: nil,
+                    completion: { (fileURL: NSURL) -> Void in
+                    
+                    let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                    let image = UIImage(data: data)
+                    
+                    message.addMedia(PhotoMediaItem(image: image!))
+                        
                     self.messages.append(message)
                     self.finishReceivingMessageAnimated(true)
                     })
