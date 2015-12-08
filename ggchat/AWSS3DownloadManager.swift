@@ -18,7 +18,7 @@ class S3Download {
         self.fileURL = nil
     }
     
-    func onSucces(fileURL: NSURL) {
+    func onSuccess(fileURL: NSURL) {
         self.request = nil
         self.fileURL = fileURL
     }
@@ -65,7 +65,7 @@ class AWSS3DownloadManager {
                 } else {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if let index = self.indexOfDownloadRequest(downloadRequest) {
-                            self.downloads[index]!.onSucces(downloadRequest.downloadingFileURL)
+                            self.downloads[index]!.onSuccess(downloadRequest.downloadingFileURL)
                             
                             self.delegate?.onDownloadSuccess(
                                 downloadRequest.downloadingFileURL)

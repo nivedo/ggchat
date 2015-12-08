@@ -12,10 +12,12 @@ import AWSS3
 class S3Upload {
     var request: AWSS3TransferManagerUploadRequest?
     var fileURL: NSURL?
+    var xmpp: Bool = false
     
-    init(request: AWSS3TransferManagerUploadRequest) {
+    init(request: AWSS3TransferManagerUploadRequest, xmpp: Bool) {
         self.request = request
         self.fileURL = nil
+        self.xmpp = xmpp
     }
     
     func onSuccess(fileURL: NSURL) {
@@ -27,7 +29,7 @@ class S3Upload {
 protocol S3UploadDelegate {
     
     func onUploadFailure()
-    func onUploadSuccess(fileURL: NSURL)
+    func onUploadSuccess(key: String, xmpp: Bool)
     func onUploadPauseCancel()
     func onUploadCancelFailure()
     func onUploadPauseFailure()
@@ -46,39 +48,65 @@ struct S3PhotoSize {
     static let thumbnailDimension = CGFloat(20.0)  // Thumbnail should be less than 10 KB
 }
 
-class S3PhotoManager {
-
-    class func isSquare(image: UIImage) -> Bool {
-        let s = image.size
-        return s.height == s.width
-    }
-   
-    class func isLandscape(image: UIImage) -> Bool {
-        let s = image.size
-        return s.width > s.height
+class S3PhotoManager: S3UploadDelegate {
+    
+    class var sharedInstance: S3PhotoManager {
+        struct Singleton {
+            static let instance = S3PhotoManager()
+        }
+        return Singleton.instance
     }
     
-    class func isPortrait(image: UIImage) -> Bool {
-        let s = image.size
-        return s.height > s.width
+    init() {
+        AWSS3UploadManager.sharedInstance.delegate = self
     }
-   
-    class func originalCompressedImage(image: UIImage) -> UIImage {
+    
+    func originalCompressedImage(image: UIImage) -> UIImage {
         let size = CGSizeMake(S3PhotoSize.maxDimension, S3PhotoSize.maxDimension)
         return image.gg_imageCompressedToFitSize(size, isOpaque: true)
     }
     
-    class func thumbnailCompressedImage(image: UIImage) -> UIImage {
+    func thumbnailCompressedImage(image: UIImage) -> UIImage {
         let size = CGSizeMake(S3PhotoSize.thumbnailDimension, S3PhotoSize.thumbnailDimension)
         return image.gg_imageCompressedToFitSize(size, isOpaque: true)
     }
+   
+    func sendPhoto(image: UIImage) {
+        self.upload(image)
+    }
     
-    class func upload(image: UIImage) {
+    func upload(image: UIImage) -> String {
         let originalImage = self.originalCompressedImage(image)
         let thumbnailImage = self.thumbnailCompressedImage(image)
         
-        AWSS3UploadManager.sharedInstance.upload(originalImage, fileType: "jpg")
-        AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileType: "jpg", fileNameSuffix: "_thumb")
+        let uniqueKey = NSProcessInfo.processInfo().globallyUniqueString
+        let originalKey = "\(uniqueKey).jpg"
+        let thumbnailKey = "\(uniqueKey)_thumb.jpg"
+        AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey, xmpp: false)
+        AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, xmpp: true)
+        
+        return uniqueKey
+    }
+    
+    // S3UploadDelegate methods
+    func onUploadFailure() {
+        
+    }
+    
+    func onUploadSuccess(key: String, xmpp: Bool) {
+        print("onUploadSucces: \(key), xmpp: \(xmpp)")
+    }
+    
+    func onUploadPauseCancel() {
+        
+    }
+    
+    func onUploadCancelFailure() {
+        
+    }
+    
+    func onUploadPauseFailure() {
+        
     }
 }
 
@@ -109,26 +137,18 @@ class AWSS3UploadManager {
     var uploads = Array<S3Upload?>()
     var delegate: S3UploadDelegate?
    
-    func upload(image: UIImage, fileType: String, fileNameSuffix: String = "") -> String {
-        let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
-        let fileName = "\(uniqueId)\(fileNameSuffix).\(fileType)"
+    func upload(image: UIImage, fileName: String, xmpp: Bool) {
         let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
         let filePath = fileURL.path!
-        let imageData = UIImagePNGRepresentation(image)
+        let imageData = UIImageJPEGRepresentation(image, 1.0)
         imageData!.writeToFile(filePath, atomically: true)
         
-        self.upload(fileURL, fileName: fileName)
-        
-        return fileName
-    }
-    
-    func upload(fileURL: NSURL, fileName: String) {
         let uploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.body = fileURL
         uploadRequest.key = fileName
         uploadRequest.bucket = GGSetting.awsS3BucketName
         
-        self.uploads.append(S3Upload(request: uploadRequest))
+        self.uploads.append(S3Upload(request: uploadRequest, xmpp: xmpp))
         self.upload(uploadRequest)
     }
     
@@ -169,9 +189,9 @@ class AWSS3UploadManager {
             if task.result != nil {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if let index = self.indexOfUploadRequest(uploadRequest) {
+                        let key = uploadRequest.key!
                         self.uploads[index]!.onSuccess(uploadRequest.body)
-                       
-                        self.delegate?.onUploadSuccess(uploadRequest.body)
+                        self.delegate?.onUploadSuccess(key, xmpp: self.uploads[index]!.xmpp)
                     }
                 })
             }
