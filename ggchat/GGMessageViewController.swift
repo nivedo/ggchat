@@ -279,6 +279,12 @@ class GGMessageViewController:
         }
     }
     
+	func onPhoto(
+        sender: XMPPStream,
+        didReceivePhoto messgae: XMPPMessage,
+        from user: XMPPUserCoreDataStorageObject) {
+    }
+    
 	func onMessage(
         sender: XMPPStream,
         userIsComposing user: XMPPUserCoreDataStorageObject) {

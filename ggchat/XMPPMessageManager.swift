@@ -17,6 +17,10 @@ public protocol XMPPMessageManagerDelegate : NSObjectProtocol {
         sender: XMPPStream,
         didReceiveMessage message: XMPPMessage,
         from user: XMPPUserCoreDataStorageObject)
+	func onPhoto(
+        sender: XMPPStream,
+        didReceivePhoto message: XMPPMessage,
+        from user: XMPPUserCoreDataStorageObject)
 	func onMessage(
         sender: XMPPStream,
         userIsComposing user: XMPPUserCoreDataStorageObject)
@@ -99,8 +103,10 @@ public class XMPPMessageManager: NSObject {
         completeMessage.addAttributeWithName("from", stringValue: XMPPManager.sharedInstance.stream.myJID.bare())
         let originalKey = DDXMLElement(name: "originalKey", stringValue: originalKey)
         let thumbnailKey = DDXMLElement(name: "thumbnailKey", stringValue: thumbnailKey)
-		completeMessage.addChild(originalKey)
-		completeMessage.addChild(thumbnailKey)
+        let photo = DDXMLElement(name: "photo")
+		photo.addChild(originalKey)
+		photo.addChild(thumbnailKey)
+		completeMessage.addChild(photo)
            
         sharedInstance.didSendMessageCompletionBlock = completion
     	XMPPManager.sharedInstance.stream.sendElement(completeMessage)
@@ -234,7 +240,14 @@ extension XMPPManager {
 		
 		if message.isChatMessageWithBody() {
             print("receiving message from \(user.jidStr) --> \(message.elementForName("body")!.stringValue())")
-			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, didReceiveMessage: message, from: user)
+			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
+                didReceiveMessage: message,
+                from: user)
+        } else if message.isChatMessageWithPhoto() {
+            print("receiving photo from \(user.jidStr) --> \(message.elementForName("photo")!.stringValue())")
+			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
+                didReceivePhoto: message,
+                from: user)
 		} else {
             print("composing by \(user.jidStr)")
 			if let _ = message.elementForName("composing") {
@@ -242,4 +255,14 @@ extension XMPPManager {
 			}
 		}
 	}
+}
+
+extension XMPPMessage {
+    
+    func isChatMessageWithPhoto() -> Bool {
+        if self.isChatMessage() {
+            return self.elementForName("photo") != nil
+        }
+        return false
+    }
 }
