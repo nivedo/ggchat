@@ -281,8 +281,22 @@ class GGMessageViewController:
     
 	func onPhoto(
         sender: XMPPStream,
-        didReceivePhoto messgae: XMPPMessage,
+        didReceivePhoto message: XMPPMessage,
         from user: XMPPUserCoreDataStorageObject) {
+        // print(message.elementForName("photo"))
+        if let photo = message.elementForName("photo"),
+            let originalKey = photo.elementForName("originalKey")?.stringValue(),
+            let thumbnailKey = photo.elementForName("thumbnailKey")?.stringValue() {
+            
+            if let from: String = message.attributeForName("from")?.stringValue() {
+                let tokens = from.componentsSeparatedByString("/")
+                if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
+                // Right recipient
+                print("Downloading photos \(thumbnailKey)")
+                
+                }
+            }
+        }
     }
     
 	func onMessage(
