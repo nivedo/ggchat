@@ -76,10 +76,10 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     static var ggMessagesCollectionViewCellActions = NSMutableSet()
     
     @IBOutlet weak var messageBubbleContainerWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var textViewTopVerticalSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var textViewBottomVerticalSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var textViewMarginHorizontalSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var textViewAvatarHorizontalSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet var textViewTopVerticalSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet var textViewBottomVerticalSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet var textViewMarginHorizontalSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet var textViewAvatarHorizontalSpaceConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var cellTopLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageBubbleTopLabelHeightConstraint: NSLayoutConstraint!
