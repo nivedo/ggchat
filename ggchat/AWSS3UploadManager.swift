@@ -103,7 +103,7 @@ class S3PhotoManager: S3UploadDelegate {
             } else {
                 let message: Message = self.placeholderPhotoMessage(from)
                 AWSS3DownloadManager.sharedInstance.download(
-                    originalKey,
+                    thumbnailKey,
                     userData: nil,
                     completion: { (fileURL: NSURL) -> Void in
                         // message = self.photoMessage(fileURL, from: from)
@@ -112,6 +112,16 @@ class S3PhotoManager: S3UploadDelegate {
                         let image = UIImage(data: data)
                         message.addMedia(PhotoMediaItem(image: image!))
                         completion?()
+                        
+                        AWSS3DownloadManager.sharedInstance.download(
+                            originalKey,
+                            userData: nil,
+                            completion: { (fileURL: NSURL) -> Void in
+                            let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                            let image = UIImage(data: data)
+                            message.addMedia(PhotoMediaItem(image: image!))
+                            completion?()
+                        })
                     })
                 return message
             }
