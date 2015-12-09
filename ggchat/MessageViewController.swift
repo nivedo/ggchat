@@ -639,7 +639,7 @@ class MessageViewController: UIViewController,
             }
         } else {
             let messageMedia: MessageMediaData = messageItem.media!
-            
+           
             if let mediaItem = messageMedia as? MediaItem {
                 mediaItem.appliesMediaViewMaskAsOutgoing = isOutgoingMessage
             }

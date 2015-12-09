@@ -14,7 +14,9 @@ class MediaItem: NSObject, NSCoding, NSCopying, MessageMediaData {
     var cachedPlaceholderView: UIView?
     var appliesMediaViewMaskAsOutgoing: Bool = true {
         didSet {
-            self.cachedPlaceholderView = nil
+            if oldValue != self.appliesMediaViewMaskAsOutgoing {
+                self.cachedPlaceholderView = nil
+            }
         }
     }
 

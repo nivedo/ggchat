@@ -37,7 +37,7 @@ class PhotoMediaItem: MediaItem {
     var image: UIImage? {
         set {
             if newValue != nil {
-                self.image_ = newValue!.copy() as! UIImage
+                self.image_ = newValue!.copy() as? UIImage
             } else {
                 self.image_ = nil
             }
@@ -50,20 +50,22 @@ class PhotoMediaItem: MediaItem {
 
     override var appliesMediaViewMaskAsOutgoing: Bool {
         didSet {
-            self.cachedImageView_ = nil
+            if oldValue != self.appliesMediaViewMaskAsOutgoing {
+                self.cachedImageView_ = nil
+            }
         }
     }
 
     // pragma mark - MessageMediaData protocol
 
     override func mediaView() -> UIView? {
-        if (self.image == nil) {
+        if (self.image_ == nil) {
             return nil
         }
         
         if (self.cachedImageView_ == nil) {
             let size: CGSize = self.mediaViewDisplaySize()
-            let imageView: UIImageView = UIImageView(image: self.image)
+            let imageView: UIImageView = UIImageView(image: self.image_)
             imageView.frame = CGRectMake(0.0, 0.0, size.width, size.height)
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             imageView.clipsToBounds = true
@@ -83,7 +85,7 @@ class PhotoMediaItem: MediaItem {
     // pragma mark - NSObject
 
     override var hash: Int {
-        return super.hash ^ self.image!.hash
+        return super.hash ^ self.image_!.hash
     }
 
     override var description: String {
@@ -103,14 +105,14 @@ class PhotoMediaItem: MediaItem {
 
     override func encodeWithCoder(aCoder: NSCoder) {
         super.encodeWithCoder(aCoder)
-        aCoder.encodeObject(self.image,
+        aCoder.encodeObject(self.image_,
             forKey: NSStringFromSelector(Selector("image")))
     }
 
     // pragma mark - NSCopying
 
     override func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy: PhotoMediaItem = PhotoMediaItem(image: self.image!)
+        let copy: PhotoMediaItem = PhotoMediaItem(image: self.image_!)
         copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing
         return copy
     }
