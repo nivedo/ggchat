@@ -85,7 +85,11 @@ class PhotoMediaItem: MediaItem {
     // pragma mark - NSObject
 
     override var hash: Int {
-        return super.hash ^ self.image_!.hash
+        if self.image_ != nil {
+            return super.hash ^ self.image_!.hash
+        } else {
+            return super.hash
+        }
     }
 
     override var description: String {

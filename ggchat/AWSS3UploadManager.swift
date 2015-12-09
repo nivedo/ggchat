@@ -95,28 +95,42 @@ class S3PhotoManager: S3UploadDelegate {
         let from = xmppMessage.attributeStringValueForName("from")!
         if let originalFileURL = AWSS3DownloadManager.sharedInstance.fileURLOfDownloadKey(originalKey) {
             // print("Found cached download at \(originalFileURL)")
-            return self.getPhotoMessage(originalFileURL, from: from)
+            return self.photoMessage(originalFileURL, from: from)
         } else {
             if let thumbnailFileURL = AWSS3DownloadManager.sharedInstance.fileURLOfDownloadKey(thumbnailKey) {
                 // print("Found cached download at \(thumbnailFileURL)")
-                return self.getPhotoMessage(thumbnailFileURL, from: from)
+                return self.photoMessage(thumbnailFileURL, from: from)
             } else {
-                var message: Message?
+                let message: Message = self.placeholderPhotoMessage(from)
                 AWSS3DownloadManager.sharedInstance.download(
                     originalKey,
                     userData: nil,
                     completion: { (fileURL: NSURL) -> Void in
-                        message = self.getPhotoMessage(fileURL, from: from)
+                        // message = self.photoMessage(fileURL, from: from)
+                        print("Downloaded \(fileURL)")
+                        let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                        let image = UIImage(data: data)
+                        message.addMedia(PhotoMediaItem(image: image!))
                     })
                 return message
             }
         }
     }
 
-    func getPhotoMessage(fileURL: NSURL, from: String) -> Message {
+    func photoMessage(fileURL: NSURL, from: String) -> Message {
         let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
         let image = UIImage(data: data)
         let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!)
+        let message: Message = Message(
+            senderId: from,
+            senderDisplayName: from,
+            date: NSDate(),
+            media: photoMedia)
+        return message
+    }
+    
+    func placeholderPhotoMessage(from: String) -> Message {
+        let photoMedia: PhotoMediaItem = PhotoMediaItem()
         let message: Message = Message(
             senderId: from,
             senderDisplayName: from,
