@@ -47,6 +47,7 @@ class MessageAutocompleteController: NSObject,
         self.tableView.dataSource = self
         self.tableView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(CGFloat(0.7))
         self.tableView.tableFooterView = UIView()
+        self.tableView.indicatorStyle = UIScrollViewIndicatorStyle.White
         
         self.tableView.hidden = true
         self.tableView.reloadData()
