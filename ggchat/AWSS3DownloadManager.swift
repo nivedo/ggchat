@@ -97,7 +97,8 @@ class AWSS3DownloadManager {
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
         let task = transferManager.download(downloadRequest)
        
-        if task.error == nil && task.exception == nil {
+        if task.error == nil && task.exception == nil && task.result != nil {
+            print(task.result)
             if let index = self.indexOfDownloadRequest(downloadRequest) {
                 self.downloads[index]!.onSuccess(downloadRequest.downloadingFileURL)
             }
