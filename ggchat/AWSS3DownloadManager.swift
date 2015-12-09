@@ -84,6 +84,27 @@ class AWSS3DownloadManager {
         self.downloads.append(S3Download(request: downloadRequest, userData: userData))
         self.download(downloadRequest, completion: completion)
     }
+
+    func downloadSynchronous(fileName: String, userData: [String: AnyObject]? = nil) -> NSURL? {
+        let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
+    
+        let downloadRequest = AWSS3TransferManagerDownloadRequest()
+        downloadRequest.key = fileName
+        downloadRequest.bucket = GGSetting.awsS3BucketName
+        downloadRequest.downloadingFileURL = fileURL
+        
+        self.downloads.append(S3Download(request: downloadRequest, userData: userData))
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        let task = transferManager.download(downloadRequest)
+       
+        if task.error == nil && task.exception == nil {
+            if let index = self.indexOfDownloadRequest(downloadRequest) {
+                self.downloads[index]!.onSuccess(downloadRequest.downloadingFileURL)
+            }
+            return downloadRequest.downloadingFileURL
+        }
+        return nil
+    }
     
     func download(downloadRequest: AWSS3TransferManagerDownloadRequest,
         completion: S3DownloadCompletion?) {

@@ -102,13 +102,13 @@ class S3PhotoManager: S3UploadDelegate {
                 return self.getPhotoMessage(thumbnailFileURL, from: from)
             } else {
                 var message: Message?
-                AWSS3DownloadManager.sharedInstance.download(
-                    originalKey,
-                    userData: nil,
-                    completion: { (fileURL: NSURL) -> Void in
-                        message = self.getPhotoMessage(fileURL, from: from)
-                })
-                return message
+                if let fileURL = AWSS3DownloadManager.sharedInstance.downloadSynchronous(
+                    originalKey) {
+                    message = self.getPhotoMessage(fileURL, from: from)
+                    return message
+                } else {
+                    return nil
+                }
             }
         }
     }
