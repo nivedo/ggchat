@@ -202,61 +202,72 @@ class GGHearthStone {
         return valid
     }
    
-    var activeSuggestionJobs: Int = 0
-    func getCardSugggestions(name: String, threshold: Float = 0.7) -> [String]? {
-        if self.activeSuggestionJobs > 0 {
-            return nil
-        }
+    class StringHelper {
+        var str: String
+        var score: Float
         
-        self.activeSuggestionJobs++
+        init(str: String, score: Float) {
+            self.str = str
+            self.score = score
+        }
+    }
+    
+    func getCardSugggestions(name: String, threshold: Float = 0.7) -> [String]? {
+        
         let numTokens = min(name.numTokens, self.cardMaxTokens)
         let tokens = name.componentsSeparatedByCharactersInSet(
             NSCharacterSet.whitespaceCharacterSet())
-        var suggestions = [String]()
+        var suggestions = [StringHelper]()
         
         for i in 1...numTokens {
             let startIndex: Int = tokens.count - i
             let lastTokens = tokens[startIndex..<tokens.count]
             
             let target = lastTokens.joinWithSeparator(" ")
-            suggestions.appendContentsOf(self.computeCardSuggestion(target, threshold: threshold))
+            if let s = self.computeCardSuggestion(target, threshold: threshold) {
+                suggestions.appendContentsOf(s)
+            } else {
+                return nil
+            }
         }
-       
-        self.activeSuggestionJobs--
-        return suggestions
-    }
-    
-    private func computeCardSuggestion(name: String, threshold: Float) -> [String] {
-        var suggestions = [String]()
-       
-        let numTokens = name.numTokens
-        let targetName = name.lowercaseString
         
-        class StringHelper {
-            var str: String
-            var score: Float
-            
-            init(str: String, score: Float) {
-                self.str = str
-                self.score = score
-            }
-        }
-       
-        var sortArray = [StringHelper]()
-        for card in self.cardNames {
-            if card.numTokens >= numTokens {
-                let score = card.jaroWinklerDistance(targetName)
-                if score > threshold {
-                    sortArray.append(StringHelper(str: card, score: score))
-                }
-            }
-        }
-        if sortArray.count > 0 {
-            suggestions = sortArray.sort({ $0.score > $1.score }).map {
+        var results = [String]()
+        if suggestions.count > 0 {
+            results = suggestions.sort({ $0.score > $1.score }).map {
                 (let helper) -> String in
                 return helper.str
             }
         }
+       
+        return results
+    }
+    
+    var activeSuggestionJobs: Int = 0
+    
+    private func computeCardSuggestion(name: String, threshold: Float) -> [StringHelper]? {
+        if self.activeSuggestionJobs > 0 {
+            return nil
+        }
+        
+        var suggestions = [StringHelper]()
+        if name.characters.count <= 1 {
+            return suggestions
+        }
+        self.activeSuggestionJobs++
+        
+        let numTokens = name.numTokens
+        let targetName = name.lowercaseString
+        
+        for card in self.cardNames {
+            if card.numTokens >= numTokens {
+                let score = card.jaroWinklerDistance(targetName)
+                if score > threshold {
+                    suggestions.append(StringHelper(str: card, score: score))
+                }
+            }
+        }
+        
+        self.activeSuggestionJobs--
         return suggestions
     }
 }

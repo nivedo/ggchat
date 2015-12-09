@@ -863,24 +863,29 @@ class MessageViewController: UIViewController,
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
-        if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
-            NSCharacterSet.whitespaceCharacterSet()).last {
-                print("editing text \"\(textView.text)\" -->  \"\(lastWord)\"")
-                
-                if lastWord.characters.count > 1 {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                        let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(lastWord)
-                        dispatch_async(dispatch_get_main_queue()) {
-                            if suggestions != nil && suggestions!.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {
-                                self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
-                            } else {
-                                self.autocompleteController?.hide()
-                            }
+        // if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
+        //     NSCharacterSet.whitespaceCharacterSet()).last {
+        if let word = textView.text {
+            print("editing text \"\(textView.text)\" -->  \"\(word)\"")
+            
+            // if word.characters.count > 1 {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                let suggestions = GGHearthStone.sharedInstance.getCardSugggestions(word)
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let s = suggestions {
+                        if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {
+                            self.autocompleteController?.displaySuggestions(s, frame: self.inputToolbar.frame)
+                        } else {
+                            self.autocompleteController?.hide()
                         }
                     }
-                } else {
-                    self.autocompleteController?.hide()
                 }
+            }
+            /*
+            } else {
+                self.autocompleteController?.hide()
+            }
+            */
         }
         
         self.inputToolbar.toggleSendButtonEnabled()
