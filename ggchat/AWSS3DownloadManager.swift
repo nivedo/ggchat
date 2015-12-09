@@ -13,11 +13,13 @@ public typealias S3DownloadCompletion = (NSURL) -> Void
 
 class S3Download {
     var request: AWSS3TransferManagerDownloadRequest?
+    var key: String?
     var fileURL: NSURL?
     var userData: [String: AnyObject]?
    
     init(request: AWSS3TransferManagerDownloadRequest, userData: [String: AnyObject]?) {
         self.request = request
+        self.key = request.key
         self.fileURL = nil
         self.userData = userData
     }
@@ -185,6 +187,15 @@ class AWSS3DownloadManager {
         for (index, object) in self.downloads.enumerate() {
             if object!.request == downloadRequest {
                 return index
+            }
+        }
+        return nil
+    }
+    
+    func fileURLOfDownloadKey(downloadKey: String) -> NSURL? {
+        for d in self.downloads {
+            if d?.key == downloadKey {
+                return d?.fileURL
             }
         }
         return nil

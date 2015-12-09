@@ -88,6 +88,43 @@ class S3PhotoManager: S3UploadDelegate {
         AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
     }
     
+    func getPhotoMessage(xmppMessage: DDXMLElement) -> Message? {
+        let photo = xmppMessage.elementForName("body")!.elementForName("photo")!
+        let originalKey = photo.elementForName("originalKey")!.stringValue()
+        let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
+        let from = xmppMessage.attributeStringValueForName("from")!
+        if let originalFileURL = AWSS3DownloadManager.sharedInstance.fileURLOfDownloadKey(originalKey) {
+            // print("Found cached download at \(originalFileURL)")
+            return self.getPhotoMessage(originalFileURL, from: from)
+        } else {
+            if let thumbnailFileURL = AWSS3DownloadManager.sharedInstance.fileURLOfDownloadKey(thumbnailKey) {
+                // print("Found cached download at \(thumbnailFileURL)")
+                return self.getPhotoMessage(thumbnailFileURL, from: from)
+            } else {
+                var message: Message?
+                AWSS3DownloadManager.sharedInstance.download(
+                    originalKey,
+                    userData: nil,
+                    completion: { (fileURL: NSURL) -> Void in
+                        message = self.getPhotoMessage(fileURL, from: from)
+                })
+                return message
+            }
+        }
+    }
+
+    func getPhotoMessage(fileURL: NSURL, from: String) -> Message {
+        let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+        let image = UIImage(data: data)
+        let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!)
+        let message: Message = Message(
+            senderId: from,
+            senderDisplayName: from,
+            date: NSDate(),
+            media: photoMedia)
+        return message
+    }
+    
     // S3UploadDelegate methods
     func onUploadFailure() {
         

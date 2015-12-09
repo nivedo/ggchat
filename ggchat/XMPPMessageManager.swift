@@ -157,9 +157,17 @@ public class XMPPMessageManager: NSObject {
 				} else {
 					sender = jid
 				}
-				
-				let fullMessage = Message(senderId: sender, senderDisplayName: sender, date: date, text: body)
-				retrievedMessages.addObject(fullMessage)
+                
+                if let _ = element.elementForName("body")!.elementForName("photo") {
+                    if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(element) {
+                        retrievedMessages.addObject(photoMessage)
+                    } else {
+                        print("Unable to load archive photo message")
+                    }
+                } else {
+                    let fullMessage = Message(senderId: sender, senderDisplayName: sender, date: date, text: body)
+                    retrievedMessages.addObject(fullMessage)
+                }
 			}
 		} catch _ {
 			//catch fetch error here

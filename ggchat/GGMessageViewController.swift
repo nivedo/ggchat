@@ -293,13 +293,6 @@ class GGMessageViewController:
                 if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
                 
                 // Right recipient
-                let photoMedia: PhotoMediaItem = PhotoMediaItem()
-                let message: Message = Message(
-                        senderId: from,
-                        senderDisplayName: from,
-                        date: NSDate(),
-                        media: photoMedia)
-                    
                 print("Downloading thumbnail \(thumbnailKey)")
                 AWSS3DownloadManager.sharedInstance.download(
                     thumbnailKey,
@@ -308,9 +301,13 @@ class GGMessageViewController:
                     
                     let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                     let image = UIImage(data: data)
-                   
-                    // if (message.media as? PhotoMediaItem)?.image == nil {
-                    message.addMedia(PhotoMediaItem(image: image!))
+                    let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!)
+                    let message: Message = Message(
+                            senderId: from,
+                            senderDisplayName: from,
+                            date: NSDate(),
+                            media: photoMedia)
+                        
                     self.messages.append(message)
                     self.finishReceivingMessageAnimated(true)
                         
