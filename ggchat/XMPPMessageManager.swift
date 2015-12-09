@@ -69,17 +69,6 @@ public class XMPPMessageManager: NSObject {
     		completeMessage.addAttributeWithName("to", stringValue: receiver)
             completeMessage.addAttributeWithName("from", stringValue: XMPPManager.sharedInstance.stream.myJID.bare())
     		completeMessage.addChild(body)
-           
-            /*
-            if let chosenImage = image {
-                let data: NSData = UIImageJPEGRepresentation(chosenImage, CGFloat(1.0))!
-                let imageStr: String = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
-                
-                let imageAttachment: DDXMLElement = DDXMLElement(name: "attachment")
-                imageAttachment.setStringValue(imageStr)
-                completeMessage.addChild(imageAttachment)
-            }
-            */
     		
     		sharedInstance.didSendMessageCompletionBlock = completion
     		XMPPManager.sharedInstance.stream.sendElement(completeMessage)
@@ -95,6 +84,7 @@ public class XMPPMessageManager: NSObject {
         completionHandler completion: MessageCompletionHandler?) {
         
         let messageId = XMPPManager.sharedInstance.stream.generateUUID()
+        let body = DDXMLElement(name: "body")
         let completeMessage = DDXMLElement(name: "message")
 		
 		completeMessage.addAttributeWithName("id", stringValue: messageId)
@@ -106,7 +96,8 @@ public class XMPPMessageManager: NSObject {
         let photo = DDXMLElement(name: "photo")
 		photo.addChild(originalKey)
 		photo.addChild(thumbnailKey)
-		completeMessage.addChild(photo)
+		body.addChild(photo)
+        completeMessage.addChild(body)
            
         sharedInstance.didSendMessageCompletionBlock = completion
     	XMPPManager.sharedInstance.stream.sendElement(completeMessage)
@@ -240,14 +231,15 @@ extension XMPPManager {
 		
 		if message.isChatMessageWithBody() {
             print("receiving message from \(user.jidStr) --> \(message.elementForName("body")!.stringValue())")
-			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
-                didReceiveMessage: message,
-                from: user)
-        } else if message.isChatMessageWithPhoto() {
-            print("receiving photo from \(user.jidStr) --> \(message.elementForName("photo")!.stringValue())")
-			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
-                didReceivePhoto: message,
-                from: user)
+            if let _ = message.elementForName("body")!.elementForName("photo") {
+    			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
+                    didReceivePhoto: message,
+                    from: user)
+            } else {
+    			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
+                    didReceiveMessage: message,
+                    from: user)
+            }
 		} else {
             print("composing by \(user.jidStr)")
 			if let _ = message.elementForName("composing") {
@@ -257,6 +249,7 @@ extension XMPPManager {
 	}
 }
 
+/*
 extension XMPPMessage {
     
     func isChatMessageWithPhoto() -> Bool {
@@ -266,3 +259,4 @@ extension XMPPMessage {
         return false
     }
 }
+*/

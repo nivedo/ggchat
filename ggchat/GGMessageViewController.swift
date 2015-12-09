@@ -284,7 +284,7 @@ class GGMessageViewController:
         didReceivePhoto xmppMessage: XMPPMessage,
         from user: XMPPUserCoreDataStorageObject) {
         // print(message.elementForName("photo"))
-        if let photo = xmppMessage.elementForName("photo"),
+        if let photo = xmppMessage.elementForName("body")!.elementForName("photo"),
             let originalKey = photo.elementForName("originalKey")?.stringValue(),
             let thumbnailKey = photo.elementForName("thumbnailKey")?.stringValue() {
             
