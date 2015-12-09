@@ -59,6 +59,7 @@ class Message {
     
     func addMedia(media: MessageMediaData) {
         self.media = media
+        self.media!.setNeedsDisplay()
         self.isMediaMessage = true
     }
     

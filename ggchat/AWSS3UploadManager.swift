@@ -88,7 +88,7 @@ class S3PhotoManager: S3UploadDelegate {
         AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
     }
     
-    func getPhotoMessage(xmppMessage: DDXMLElement) -> Message? {
+    func getPhotoMessage(xmppMessage: DDXMLElement, completion: ((Void) -> Void)?) -> Message? {
         let photo = xmppMessage.elementForName("body")!.elementForName("photo")!
         let originalKey = photo.elementForName("originalKey")!.stringValue()
         let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
@@ -107,10 +107,11 @@ class S3PhotoManager: S3UploadDelegate {
                     userData: nil,
                     completion: { (fileURL: NSURL) -> Void in
                         // message = self.photoMessage(fileURL, from: from)
-                        print("Downloaded \(fileURL)")
+                        // print("Downloaded \(fileURL)")
                         let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                         let image = UIImage(data: data)
                         message.addMedia(PhotoMediaItem(image: image!))
+                        completion?()
                     })
                 return message
             }

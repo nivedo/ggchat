@@ -15,5 +15,6 @@ protocol MessageMediaData {
     func mediaViewDisplaySize() -> CGSize
     func mediaPlaceholderView() -> UIView?
     func mediaHash() -> Int
+    func setNeedsDisplay()
     
 }

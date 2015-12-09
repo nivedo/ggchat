@@ -57,7 +57,11 @@ class PhotoMediaItem: MediaItem {
     }
 
     // pragma mark - MessageMediaData protocol
-
+    override func setNeedsDisplay() {
+        super.setNeedsDisplay()
+        self.cachedImageView_?.setNeedsDisplay()
+    }
+    
     override func mediaView() -> UIView? {
         if (self.image_ == nil) {
             return nil

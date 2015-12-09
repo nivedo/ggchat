@@ -53,6 +53,10 @@ class MediaItem: NSObject, NSCoding, NSCopying, MessageMediaData {
         assert(false, "Error! required method not implemented in subclass. Need to implement")
         return nil
     }
+    
+    func setNeedsDisplay() {
+        self.mediaView()?.setNeedsDisplay()
+    }
 
     func mediaViewDisplaySize() -> CGSize {
         if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {

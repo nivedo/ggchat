@@ -125,7 +125,12 @@ class GGMessageViewController:
             // Load archive messages
             if loadArchiveMessages {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
+                    let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
+                        jid: recipient.jidStr,
+                        mediaCompletion: { (Void) -> Void in
+                        self.messageCollectionView.reloadData()
+                    })
+                    self.messages = archiveMessages as NSArray as! [Message]
                     self.finishReceivingMessageAnimated(false)
                 })
             }
