@@ -130,6 +130,17 @@ class GGHearthStoneAsset : ImageModalAsset {
     }
 }
 
+extension String {
+    
+    var numTokens: Int {
+        get {
+            let tokens = self.componentsSeparatedByCharactersInSet(
+                NSCharacterSet.whitespaceCharacterSet())
+            return tokens.count
+        }
+    }
+}
+
 class GGHearthStone {
    
     private static let host = "http://45.33.39.21:1235"
@@ -151,6 +162,7 @@ class GGHearthStone {
     }
   
     private var cardNames = [String]()
+    private var cardMaxTokens: Int = 1
     var cardAssets = [String : GGHearthStoneAsset]()
     
     init() {
@@ -167,6 +179,8 @@ class GGHearthStone {
                             if let cardName = card["name"] as? String {
                                 self.cardNames.append(cardName)
                                 self.cardAssets[cardName] = GGHearthStoneAsset(name: cardName)
+                                
+                                self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
                             }
                         }
                     }
@@ -195,9 +209,27 @@ class GGHearthStone {
         }
         
         self.activeSuggestionJobs++
-        // print(self.activeSuggestionJobs)
-        
+        let numTokens = min(name.numTokens, self.cardMaxTokens)
+        let tokens = name.componentsSeparatedByCharactersInSet(
+            NSCharacterSet.whitespaceCharacterSet())
         var suggestions = [String]()
+        
+        for i in 1...numTokens {
+            let startIndex: Int = tokens.count - i
+            let lastTokens = tokens[startIndex..<tokens.count]
+            
+            let target = lastTokens.joinWithSeparator(" ")
+            suggestions.appendContentsOf(self.computeCardSuggestion(target, threshold: threshold))
+        }
+       
+        self.activeSuggestionJobs--
+        return suggestions
+    }
+    
+    private func computeCardSuggestion(name: String, threshold: Float) -> [String] {
+        var suggestions = [String]()
+       
+        let numTokens = name.numTokens
         let targetName = name.lowercaseString
         
         class StringHelper {
@@ -212,9 +244,11 @@ class GGHearthStone {
        
         var sortArray = [StringHelper]()
         for card in self.cardNames {
-            let score = card.jaroWinklerDistance(targetName)
-            if score > threshold {
-                sortArray.append(StringHelper(str: card, score: score))
+            if card.numTokens >= numTokens {
+                let score = card.jaroWinklerDistance(targetName)
+                if score > threshold {
+                    sortArray.append(StringHelper(str: card, score: score))
+                }
             }
         }
         if sortArray.count > 0 {
@@ -223,8 +257,6 @@ class GGHearthStone {
                 return helper.str
             }
         }
-       
-        self.activeSuggestionJobs--
         return suggestions
     }
 }
