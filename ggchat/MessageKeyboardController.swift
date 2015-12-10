@@ -331,10 +331,10 @@ class MessageKeyboardController: NSObject {
                     delay:0.0,
                     options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.BeginFromCurrentState.rawValue | UIViewAnimationOptions.CurveEaseOut.rawValue),
                     animations: {
-                        self.keyboardView!.frame = newKeyboardViewFrame
+                        self.keyboardView?.frame = newKeyboardViewFrame
                     },
                     completion: { (Bool) in
-                        self.keyboardView!.userInteractionEnabled = !shouldHide
+                        self.keyboardView?.userInteractionEnabled = !shouldHide
                         if (shouldHide) {
                             self.gg_resetKeyboardAndTextView()
                         }

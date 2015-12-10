@@ -24,6 +24,7 @@ class TappableText: NSObject {
     
     static let alphaCharSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
     static let punctuationCharSet = NSCharacterSet(charactersInString: ".!?;,")
+    static let bracketCharSet = NSCharacterSet(charactersInString: "[]")
     
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
@@ -39,12 +40,25 @@ class TappableText: NSObject {
     
     func isTappableToken(token: String) -> (Bool, String) {
         var t = token.lowercaseString
-        t = t.componentsSeparatedByCharactersInSet(TappableText.alphaCharSet).joinWithSeparator("")
-        /*
-        if TappableText.punctuationCharSet.longCharacterIsMember(t.unicodeScalars.last!.value) {
-            t.removeAtIndex(t.endIndex.predecessor())
+        // t = t.componentsSeparatedByCharactersInSet(TappableText.alphaCharSet).joinWithSeparator("")
+      
+        // This will be temporary
+        if let first = t.unicodeScalars.first {
+            if TappableText.bracketCharSet.longCharacterIsMember(first.value) {
+                t.removeAtIndex(t.startIndex)
+            }
         }
-        */
+        if let last = t.unicodeScalars.last {
+            if TappableText.bracketCharSet.longCharacterIsMember(last.value) {
+                t.removeAtIndex(t.endIndex.predecessor())
+            }
+        }
+        
+        if let last = t.unicodeScalars.last {
+            if TappableText.punctuationCharSet.longCharacterIsMember(last.value) {
+                t.removeAtIndex(t.endIndex.predecessor())
+            }
+        }
         
         let k: String = t
         var tappable = self.lookup.contains(t)
