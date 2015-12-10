@@ -23,6 +23,7 @@ class TappableText: NSObject {
     static let tapAssetKey: String = "tapAsset"
     
     static let alphaCharSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
+    static let punctuationCharSet = NSCharacterSet(charactersInString: ".!?;,")
     
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
@@ -39,6 +40,11 @@ class TappableText: NSObject {
     func isTappableToken(token: String) -> (Bool, String) {
         var t = token.lowercaseString
         t = t.componentsSeparatedByCharactersInSet(TappableText.alphaCharSet).joinWithSeparator("")
+        /*
+        if TappableText.punctuationCharSet.longCharacterIsMember(t.unicodeScalars.last!.value) {
+            t.removeAtIndex(t.endIndex.predecessor())
+        }
+        */
         
         let k: String = t
         var tappable = self.lookup.contains(t)

@@ -24,6 +24,8 @@ protocol ImageModalAsset {
 
 class GGHearthStoneAsset : ImageModalAsset {
     var name: String
+    var bundleId: Int
+    var assetId: String
     var apiURL: String
     var fullName: String?
     var imageURL: String?
@@ -31,8 +33,10 @@ class GGHearthStoneAsset : ImageModalAsset {
     var image: UIImage?
     var delegate: ImageModalAssetDelegate?
     
-    init(name: String) {
+    init(name: String, bundleId: Int, assetId: String) {
         self.name = name
+        self.bundleId = bundleId
+        self.assetId = assetId
         self.apiURL = GGHearthStone.apiURL(name)
     }
     
@@ -164,7 +168,8 @@ class GGHearthStone {
     private var cardNames = [String]()
     private var cardMaxTokens: Int = 1
     var cardAssets = [String : GGHearthStoneAsset]()
-    
+   
+    /*
     init() {
         print("**************** HEARTHSTONE ******************")
         if let asset = NSDataAsset(name: "hearthstone-cards", bundle: NSBundle.mainBundle()) {
@@ -179,6 +184,34 @@ class GGHearthStone {
                             if let cardName = card["name"] as? String {
                                 self.cardNames.append(cardName)
                                 self.cardAssets[cardName] = GGHearthStoneAsset(name: cardName)
+                                
+                                self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            print("Error: Unable to find hearthstone-cards.json")
+        }
+    }
+    */
+    
+    init() {
+        print("**************** HEARTHSTONE ******************")
+        if let asset = NSDataAsset(name: "hearthstone_en", bundle: NSBundle.mainBundle()) {
+            let json = try? NSJSONSerialization.JSONObjectWithData(
+                asset.data,
+                options: NSJSONReadingOptions.AllowFragments)
+            if let dict = json as? NSDictionary {
+                if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int {
+                    print("Number of hearthstone cards: \(cards.count)")
+                    for c in cards {
+                        if let card = c as? NSDictionary {
+                            if let cardName = card["name"] as? String, let id = card["id"] as? String {
+                                let lowercaseName = cardName.lowercaseString
+                                self.cardNames.append(lowercaseName)
+                                self.cardAssets[lowercaseName] = GGHearthStoneAsset(name: cardName, bundleId: bundleId, assetId: id)
                                 
                                 self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
                             }
