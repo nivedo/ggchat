@@ -277,14 +277,15 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         for (_, value) in updateItems.enumerate() {
             let updateItem = value as UICollectionViewUpdateItem
             if (updateItem.updateAction == UICollectionUpdateAction.Insert) {
-                
+                /*
                 if (self.springinessEnabled && self.dynamicAnimator.layoutAttributesForCellAtIndexPath(updateItem.indexPathAfterUpdate) != nil) {
                     // stop = false
                 }
+                */
                 
                 let collectionViewHeight: CGFloat = CGRectGetHeight(self.messageCollectionView.bounds)
                 
-                let attributes: MessagesCollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: updateItem.indexPathAfterUpdate) as! MessagesCollectionViewLayoutAttributes
+                let attributes: MessagesCollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: updateItem.indexPathAfterUpdate!) as! MessagesCollectionViewLayoutAttributes
                 
                 if (attributes.representedElementCategory == UICollectionElementCategory.Cell) {
                     self.gg_configureMessageCellLayoutAttributes(attributes)
