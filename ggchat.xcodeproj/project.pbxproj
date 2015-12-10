@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */; };
+		D411D51B1C194F310089C90B /* LevenshteinDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D411D51A1C194F310089C90B /* LevenshteinDistance.swift */; };
 		D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01781C11B85F00643835 /* GGHearthStone.swift */; };
 		D42B017B1C1531A500643835 /* MessageAutocompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */; };
 		D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */; };
@@ -273,6 +274,7 @@
 /* Begin PBXFileReference section */
 		01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ggchat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.release.xcconfig"; sourceTree = "<group>"; };
+		D411D51A1C194F310089C90B /* LevenshteinDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistance.swift; sourceTree = "<group>"; };
 		D42B01781C11B85F00643835 /* GGHearthStone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGHearthStone.swift; sourceTree = "<group>"; };
 		D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteController.swift; sourceTree = "<group>"; };
 		D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteCell.swift; sourceTree = "<group>"; };
@@ -740,6 +742,7 @@
 			isa = PBXGroup;
 			children = (
 				D42B01811C154AF700643835 /* JaroWinklerDistance.swift */,
+				D411D51A1C194F310089C90B /* LevenshteinDistance.swift */,
 			);
 			name = Algorithms;
 			sourceTree = "<group>";
@@ -2142,6 +2145,7 @@
 				D4C8FE311C06AA2300992801 /* XMPPMessage+XEP_0224.m in Sources */,
 				D4A786561C0AE1BB00C37427 /* XMPPLastActivityManager.swift in Sources */,
 				D47840A41BF176D900441A2D /* MessageBubbleImageFactory.swift in Sources */,
+				D411D51B1C194F310089C90B /* LevenshteinDistance.swift in Sources */,
 				D4683E861BF0494B00E02886 /* Message.swift in Sources */,
 				D43B28C81C06894100B3F367 /* DDFileLogger.m in Sources */,
 				D45FBD511BFED00500E79B4E /* VideoMediaItem.swift in Sources */,

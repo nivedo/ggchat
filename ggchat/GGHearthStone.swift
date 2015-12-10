@@ -224,7 +224,7 @@ class GGHearthStone {
             let lastTokens = tokens[startIndex..<tokens.count]
             
             let target = lastTokens.joinWithSeparator(" ")
-            if let s = self.computeCardSuggestion(target, threshold: threshold) {
+            if let s = self.computeCardSuggestion(target, threshold: threshold, matchPrefixAfterChars: 4) {
                 suggestions.appendContentsOf(s)
             } else {
                 return nil
@@ -244,7 +244,7 @@ class GGHearthStone {
     
     var activeSuggestionJobs: Int = 0
     
-    private func computeCardSuggestion(name: String, threshold: Float) -> [StringHelper]? {
+    private func computeCardSuggestion(name: String, threshold: Float, matchPrefixAfterChars: Int) -> [StringHelper]? {
         if self.activeSuggestionJobs > 0 {
             return nil
         }
@@ -261,7 +261,11 @@ class GGHearthStone {
         for card in self.cardNames {
             if card.numTokens >= numTokens {
                 let score = card.jaroWinklerDistance(targetName)
-                if score > threshold {
+                var matchPrefix = true
+                if name.characters.count >= matchPrefixAfterChars {
+                    matchPrefix = (card.rangeOfString(name) != nil)
+                }
+                if score > threshold && matchPrefix {
                     suggestions.append(StringHelper(str: card, score: score))
                 }
             }
