@@ -228,32 +228,36 @@ extension XMPPManager {
 	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         print("didReceiveManager")
-		let user = XMPPManager.sharedInstance.rosterStorage.userForJID(
+		if let user = XMPPManager.sharedInstance.rosterStorage.userForJID(
             message.from(),
             xmppStream: XMPPManager.sharedInstance.stream,
-            managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster())
-	
-		if !XMPPChatManager.knownUserForJid(jidStr: user.jidStr) {
-			XMPPChatManager.addUserToChatList(jidStr: user.jidStr)
-		}
-		
-		if message.isChatMessageWithBody() {
-            print("receiving message from \(user.jidStr) --> \(message.elementForName("body")!.stringValue())")
-            if let _ = message.elementForName("body")!.elementForName("photo") {
-    			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
-                    didReceivePhoto: message,
-                    from: user)
-            } else {
-    			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
-                    didReceiveMessage: message,
-                    from: user)
-            }
-		} else {
-            print("composing by \(user.jidStr)")
-			if let _ = message.elementForName("composing") {
-				XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, userIsComposing: user)
-			}
-		}
+            managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster()) {
+    
+            // (1) User is in roster
+                
+    		if !XMPPChatManager.knownUserForJid(jidStr: user.jidStr) {
+    			XMPPChatManager.addUserToChatList(jidStr: user.jidStr)
+    		}
+    		
+    		if message.isChatMessageWithBody() {
+                print("receiving message from \(user.jidStr) --> \(message.elementForName("body")!.stringValue())")
+                if let _ = message.elementForName("body")!.elementForName("photo") {
+        			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
+                        didReceivePhoto: message,
+                        from: user)
+                } else {
+        			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
+                        didReceiveMessage: message,
+                        from: user)
+                }
+    		} else {
+                print("composing by \(user.jidStr)")
+    			if let _ = message.elementForName("composing") {
+    				XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, userIsComposing: user)
+    			}
+    		}
+        }
+        // (2) User is not in roster
 	}
 }
 
