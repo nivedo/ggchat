@@ -206,6 +206,10 @@ class XMPPManager: NSObject,
         return self.stream.isConnected()
     }
     
+    func isOutgoingJID(jid: String) -> Bool {
+        return jid == self.stream.myJID.bare()
+    }
+    
     func connect(
         username usernameOrNil: String?,
         password passwordOrNil: String?,

@@ -165,7 +165,12 @@ public class XMPPMessageManager: NSObject {
                         print("Unable to load archive photo message")
                     }
                 } else {
-                    let fullMessage = Message(senderId: sender, senderDisplayName: sender, date: date, text: body)
+                    let fullMessage = Message(
+                        senderId: sender,
+                        senderDisplayName: sender,
+                        isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(sender),
+                        date: date,
+                        text: body)
                     retrievedMessages.addObject(fullMessage)
                 }
 			}

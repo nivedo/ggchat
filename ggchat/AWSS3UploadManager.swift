@@ -135,6 +135,7 @@ class S3PhotoManager: S3UploadDelegate {
         let message: Message = Message(
             senderId: from,
             senderDisplayName: from,
+            isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(from),
             date: NSDate(),
             media: photoMedia)
         return message
@@ -145,6 +146,7 @@ class S3PhotoManager: S3UploadDelegate {
         let message: Message = Message(
             senderId: from,
             senderDisplayName: from,
+            isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(from),
             date: NSDate(),
             media: photoMedia)
         return message

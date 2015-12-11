@@ -66,6 +66,7 @@ class GGMessageViewController:
                 let message: Message = Message(
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
+                    isOutgoing: true,
                     date: NSDate(),
                     media: photoMedia)
             
@@ -193,21 +194,11 @@ class GGMessageViewController:
             
         if let recipient = self.recipient {
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
-      
-            /*
-            var text_ = text
-            if SettingManager.sharedInstance.tappableMessageText {
-                let attributedText = TappableText.sharedInstance.tappableAttributedString(
-                    text,
-                    textColor: UIColor.darkGrayColor(),
-                    attributes: nil,
-                    brackets: true)
-                text_ = attributedText.string
-            }
-            */
+
             let message: Message = Message(
                 senderId: senderId,
                 senderDisplayName: senderDisplayName,
+                isOutgoing: true,
                 date: date,
                 text: text)
             
@@ -276,6 +267,7 @@ class GGMessageViewController:
                     let message = Message(
                         senderId: from,
                         senderDisplayName: from,
+                        isOutgoing: false,
                         date: NSDate(),
                         text: msg)
                     self.messages.append(message)
@@ -312,6 +304,7 @@ class GGMessageViewController:
                     let message: Message = Message(
                             senderId: from,
                             senderDisplayName: from,
+                            isOutgoing: false,
                             date: NSDate(),
                             media: photoMedia)
                         

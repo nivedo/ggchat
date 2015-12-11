@@ -623,13 +623,14 @@ class MessageViewController: UIViewController,
                     attributes: [ NSFontAttributeName : messageCollectionView.messageCollectionViewLayout.messageBubbleFont ])
             }
             if SettingManager.sharedInstance.tappableMessageText {
-                let textColor = isOutgoingMessage ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor
+                // let textColor = isOutgoingMessage ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor
                 cell.textView.text = nil
-                cell.textView.attributedText = messageItem.textAsAttributedStringForView(textColor,
-                    attributes:
-                    [
-                    NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont
-                    ])
+                cell.textView.attributedText = messageItem.attributedText
+                    // messageItem.textAsAttributedStringForView(textColor,
+                    // attributes: nil)
+                    // [
+                    // NSFontAttributeName: messageCollectionView.messageCollectionViewLayout.messageBubbleFont
+                    // ])
             }
             if let bubbleImageDataSource = messageCollectionView.messageDataSource.collectionView(collectionView, messageBubbleImageDataForItemAtIndexPath:indexPath) {
                 cell.messageBubbleImageView.image = bubbleImageDataSource.messageBubbleImage
@@ -1381,6 +1382,7 @@ class MessageViewController: UIViewController,
             let message: Message = Message(
                 senderId: self.senderId,
                 senderDisplayName: self.senderDisplayName,
+                isOutgoing: true,
                 date: NSDate(),
                 media:item)
             self.messages.append(message)

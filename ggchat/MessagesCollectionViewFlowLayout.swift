@@ -109,7 +109,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         self.sectionInset = UIEdgeInsetsMake(10.0, 4.0, 10.0, 4.0)
         self.minimumLineSpacing = 4.0
         
-        self.messageBubbleFont = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        self.messageBubbleFont = GGConfig.messageBubbleFont // UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         
         if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
             self.messageBubbleLeftRightMargin = 240.0

@@ -67,26 +67,31 @@ class GGModelData {
             Message(
                 senderId: Demo.id_chang,
                 senderDisplayName: Demo.displayName_chang,
+                isOutgoing: true,
                 date: NSDate.distantPast(),
                 text: "Welcome to GG Chat, a chat app for gamers!"),
             Message(
                 senderId: Demo.id_cook,
                 senderDisplayName: Demo.displayName_cook,
+                isOutgoing: false,
                 date: NSDate.distantPast(),
                 text: "GG Chat is awesome!"),
             Message(
                 senderId: Demo.id_chang,
                 senderDisplayName: Demo.displayName_chang,
+                isOutgoing: true,
                 date: NSDate.distantPast(),
                 text: "That's right!"),
             Message(
                 senderId: Demo.id_woz,
                 senderDisplayName: Demo.displayName_woz,
+                isOutgoing: false,
                 date: NSDate.distantPast(),
                 text: "This looks way better than LINE or WeChat or iMessage, I wish Apple built this app."),
             Message(
                 senderId: Demo.id_jobs,
                 senderDisplayName: Demo.displayName_jobs,
+                isOutgoing: false,
                 date: NSDate.distantPast(),
                 text: "This is the world's most beautiful chat app in the world."),
         ]

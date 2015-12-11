@@ -76,9 +76,8 @@ class TappableText: NSObject {
     
     func tappableAttributedString(
         text: String,
-        textColor: UIColor,
-        attributes: [String: NSObject]?,
-        brackets: Bool = false) -> NSAttributedString {
+        textColor: UIColor) -> NSAttributedString {
+            
         let paragraph = NSMutableAttributedString(string: "")
       
         let tokens = text.componentsSeparatedByString(self.delimiter)
@@ -94,21 +93,12 @@ class TappableText: NSObject {
                 assetId = imageAsset.id
                 str = imageAsset.getDisplayName().capitalizedString
             }
-            var attr: [String : NSObject] = [
+            let attr: [String : NSObject] = [
                 TappableText.tapAttributeKey : tappable,
                 TappableText.tapAssetId : assetId,
+                NSFontAttributeName : GGConfig.messageBubbleFont,
                 NSForegroundColorAttributeName : tappable ? UIColor.gg_highlightedColor() : textColor
             ]
-            if let additionalAttr = attributes {
-                for (key, value) in additionalAttr {
-                    attr[key] = value
-                }
-            }
-            /*
-            if tappable && brackets {
-                str = "[\(str.capitalizedString)]"
-            }
-            */
             
             if index < tokens.count - 1 {
                 str += self.delimiter
@@ -118,13 +108,7 @@ class TappableText: NSObject {
                 attributes: attr)
             paragraph.appendAttributedString(attributedString)
         }
-      
-        /*
-        if !brackets {
-            assert(text.characters.count == paragraph.string.characters.count,
-                "Original text \(text.characters.count) and tappable text \(paragraph.string.characters.count) must have same length.")
-        } 
-        */
+
         return paragraph.copy() as! NSAttributedString
     }
     
