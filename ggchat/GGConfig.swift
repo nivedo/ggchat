@@ -49,6 +49,7 @@ struct GGConfig {
     static let springinessEnabled = false
     static let avatarSize: CGFloat = 30.0
     static let messageBubbleFont: UIFont = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+    static let messageComposerFont: UIFont = UIFont.systemFontOfSize(16.0)
 }
 
 struct GGConfig_Dark {
