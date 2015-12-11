@@ -18,12 +18,12 @@ protocol MessageAutocompleteControllerDelegate {
 class AssetAutocompleteSuggestion {
     
     var displayString: String
-    var replaceString: String
+    var replaceIndex: Int
     var id: String
     
-    init(displayString: String, replaceString: String, id: String) {
+    init(displayString: String, replaceIndex: Int, id: String) {
         self.displayString = displayString
-        self.replaceString = replaceString
+        self.replaceIndex = replaceIndex
         self.id = id
     }
    

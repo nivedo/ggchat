@@ -19,7 +19,17 @@ protocol ImageModalAsset {
     
     var delegate: ImageModalAssetDelegate? { get set }
     func getUIImage() -> UIImage?
+    func getDisplayName() -> String
     var id: String { get }
+    var key: String { get }
+    
+}
+
+class AssetManager {
+    
+    class func id(bundleId: Int, assetId: String) -> String {
+        return "&\(bundleId)::\(assetId)"
+    }
     
 }
 
@@ -45,15 +55,25 @@ class GGHearthStoneAsset : ImageModalAsset {
         return self.image
     }
     
-    enum JSONError: String, ErrorType {
-        case NoData = "ERROR: no data"
-        case ConversionFailed = "ERROR: conversion from JSON failed"
+    func getDisplayName() -> String {
+        return "[\(self.name)]"
     }
     
     var id: String {
         get {
-            return "&\(self.bundleId)::\(self.assetId)"
+            return AssetManager.id(self.bundleId, assetId: self.assetId)
         }
+    }
+    
+    var key: String {
+        get {
+            return self.name.lowercaseString
+        }
+    }
+    
+    enum JSONError: String, ErrorType {
+        case NoData = "ERROR: no data"
+        case ConversionFailed = "ERROR: conversion from JSON failed"
     }
     
     func fetchInfo() {
@@ -175,6 +195,7 @@ class GGHearthStone {
     private var cardNames = [String]()
     private var cardMaxTokens: Int = 1
     var cardAssets = [String : GGHearthStoneAsset]()
+    var cardNameToIdMap = [String : String]()
    
     /*
     init() {
@@ -215,14 +236,17 @@ class GGHearthStone {
                     print("Number of hearthstone cards: \(cards.count)")
                     for c in cards {
                         if let card = c as? NSDictionary {
-                            if let cardName = card["name"] as? String, let id = card["id"] as? String {
+                            if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
                                 let lowercaseName = cardName.lowercaseString
-                                self.cardNames.append(lowercaseName)
-                                self.cardAssets[lowercaseName] = GGHearthStoneAsset(name: cardName, bundleId: bundleId, assetId: id)
-                                
+                                let id = AssetManager.id(bundleId, assetId: assetId)
+                                self.cardAssets[id] = GGHearthStoneAsset(name: cardName, bundleId: bundleId, assetId: assetId)
+                                self.cardNameToIdMap[lowercaseName] = id
                                 self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
                             }
                         }
+                    }
+                    for (k, _) in self.cardNameToIdMap {
+                        self.cardNames.append(k)
                     }
                 }
             }
@@ -230,28 +254,51 @@ class GGHearthStone {
             print("Error: Unable to find hearthstone-cards.json")
         }
     }
-    
-    func isCard(name: String) -> Bool {
-        let valid = self.cardNames.contains(name)
+   
+    /*
+    func isCard(id: String) -> Bool {
+        /*
+        let valid = self.cardNames.contains(id)
        
         // Pre-fetch card if valid
         if valid {
-            self.cardAssets[name]!.fetchInfo()
+            self.cardAssets[id]!.fetchInfo()
         }
         
         return valid
+        */
+        // print(id)
+        if (id[id.startIndex] == "&" && id.rangeOfString("::") != nil) {
+            print("is asset id")
+            if let name = self.cardIdToNameMap[id] {
+                self.cardAssets[name]!.fetchInfo()
+                return true
+            }
+        }
+        return false
+    }
+    */
+    
+    func getAsset(id: String) -> ImageModalAsset? {
+        if (id[id.startIndex] == "&" && id.rangeOfString("::") != nil) {
+            if let asset = self.cardAssets[id] {
+                asset.fetchInfo()
+                return asset
+            }
+        }
+        return nil
     }
    
     class AssetSortHelper {
         var str: String
         var id: String
-        var replaceStr: String
+        var replaceIndex: Int
         var score: Float
         
-        init(str: String, id: String, replaceStr: String, score: Float) {
+        init(str: String, id: String, replaceIndex: Int, score: Float) {
             self.str = str
             self.id = id
-            self.replaceStr = replaceStr
+            self.replaceIndex = replaceIndex
             self.score = score
         }
     }
@@ -268,7 +315,8 @@ class GGHearthStone {
             let lastTokens = tokens[startIndex..<tokens.count]
             
             let target = lastTokens.joinWithSeparator(" ")
-            if let s = self.computeCardSuggestion(target, threshold: threshold, matchPrefixAfterChars: 4) {
+            let replaceIndex = name.characters.count - target.characters.count
+            if let s = self.computeCardSuggestion(target, replaceIndex: replaceIndex, threshold: threshold, matchPrefixAfterChars: 4) {
                 suggestions.appendContentsOf(s)
             } else {
                 return nil
@@ -281,7 +329,7 @@ class GGHearthStone {
                 (let helper) -> AssetAutocompleteSuggestion in
                 return AssetAutocompleteSuggestion(
                     displayString: helper.str,
-                    replaceString: helper.replaceStr,
+                    replaceIndex: helper.replaceIndex,
                     id: helper.id)
             }
         }
@@ -291,7 +339,7 @@ class GGHearthStone {
     
     var activeSuggestionJobs: Int = 0
     
-    private func computeCardSuggestion(name: String, threshold: Float, matchPrefixAfterChars: Int) -> [AssetSortHelper]? {
+    private func computeCardSuggestion(name: String, replaceIndex: Int, threshold: Float, matchPrefixAfterChars: Int) -> [AssetSortHelper]? {
         print("compute \(name) (\(self.activeSuggestionJobs))")
         
         if self.activeSuggestionJobs > 0 {
@@ -310,20 +358,22 @@ class GGHearthStone {
         self.activeSuggestionJobs++
         
         let numTokens = name.numTokens
-        let targetName = name.lowercaseString
+        let lowercaseName = name.lowercaseString
         
         for card in self.cardNames {
             if card.numTokens >= numTokens {
-                let score = card.jaroWinklerDistance(targetName)
+                let score = card.jaroWinklerDistance(lowercaseName)
+                /*
                 var matchPrefix = true
-                if name.characters.count >= matchPrefixAfterChars {
-                    matchPrefix = (card.rangeOfString(name) != nil)
+                if lowercaseName.characters.count >= matchPrefixAfterChars {
+                    matchPrefix = (card.rangeOfString(lowercaseName) != nil)
                 }
-                if score > threshold && matchPrefix {
+                */
+                if score > threshold {
                     suggestions.append(AssetSortHelper(
                         str: card,
-                        id: self.cardAssets[card]!.id,
-                        replaceStr: name,
+                        id: self.cardNameToIdMap[card]!,
+                        replaceIndex: replaceIndex,
                         score: score))
                 }
             }

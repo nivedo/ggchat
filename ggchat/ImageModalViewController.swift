@@ -38,8 +38,8 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
     
     func updateModal() {
         var image: UIImage?
-        if let attr = self.attributes, let key = attr[TappableText.tapAssetKey] as? String {
-            if let asset = TappableText.sharedInstance.imageModalAsset(key) {
+        if let attr = self.attributes, let id = attr[TappableText.tapAssetId] as? String {
+            if let asset = TappableText.sharedInstance.imageModalAsset(id) {
                 image = asset.getUIImage()
                 self.imageAsset = asset
                 if image == nil {

@@ -20,7 +20,7 @@ class TappableText: NSObject {
   
     static let tapSelector: String = "textTapped:"
     static let tapAttributeKey: String = "tappable"
-    static let tapAssetKey: String = "tapAsset"
+    static let tapAssetId: String = "tapAssetId"
     
     static let alphaCharSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
     static let punctuationCharSet = NSCharacterSet(charactersInString: ".!?;,")
@@ -37,7 +37,8 @@ class TappableText: NSObject {
         }
         return Singleton.instance
     }
-    
+   
+    /*
     func isTappableToken(token: String) -> (Bool, String) {
         var t = token.lowercaseString
         // t = t.componentsSeparatedByCharactersInSet(TappableText.alphaCharSet).joinWithSeparator("")
@@ -67,9 +68,10 @@ class TappableText: NSObject {
         }
         return (tappable, k)
     }
+    */
     
-    func imageModalAsset(key: String) -> ImageModalAsset? {
-        return GGHearthStone.sharedInstance.cardAssets[key]
+    func imageModalAsset(id: String) -> ImageModalAsset? {
+        return GGHearthStone.sharedInstance.cardAssets[id]
     }
     
     func tappableAttributedString(
@@ -83,10 +85,18 @@ class TappableText: NSObject {
         for (index, token) in tokens.enumerate() {
             var str = token
            
-            let (tappable, assetKey) = self.isTappableToken(token)
+            // let (tappable, assetKey) = self.isTappableToken(token)
+            let asset = GGHearthStone.sharedInstance.getAsset(token)
+            var tappable = false
+            var assetId = str
+            if let imageAsset = asset {
+                tappable = true
+                assetId = imageAsset.id
+                str = imageAsset.getDisplayName().capitalizedString
+            }
             var attr: [String : NSObject] = [
                 TappableText.tapAttributeKey : tappable,
-                TappableText.tapAssetKey : assetKey,
+                TappableText.tapAssetId : assetId,
                 NSForegroundColorAttributeName : tappable ? UIColor.gg_highlightedColor() : textColor
             ]
             if let additionalAttr = attributes {
@@ -94,9 +104,11 @@ class TappableText: NSObject {
                     attr[key] = value
                 }
             }
+            /*
             if tappable && brackets {
                 str = "[\(str.capitalizedString)]"
             }
+            */
             
             if index < tokens.count - 1 {
                 str += self.delimiter
@@ -106,11 +118,13 @@ class TappableText: NSObject {
                 attributes: attr)
             paragraph.appendAttributedString(attributedString)
         }
-       
+      
+        /*
         if !brackets {
             assert(text.characters.count == paragraph.string.characters.count,
                 "Original text \(text.characters.count) and tappable text \(paragraph.string.characters.count) must have same length.")
-        }
+        } 
+        */
         return paragraph.copy() as! NSAttributedString
     }
     
