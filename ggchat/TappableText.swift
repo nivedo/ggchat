@@ -28,7 +28,7 @@ class TappableText: NSObject {
     
     // var lookup: [String] = [String]()
     var lookup: [String] = ["hey", "yo"]
-    let delimiter = " "
+    let delimiter = "&&"
     var delegate: TappableTextDelegate?
     
     class var sharedInstance: TappableText {
@@ -76,37 +76,48 @@ class TappableText: NSObject {
     
     func tappableAttributedString(
         text: String,
-        textColor: UIColor) -> NSAttributedString {
+        textColor: UIColor,
+        highlightColor: Bool = true,
+        textFont: UIFont? = nil,
+        prevAttributedString: NSAttributedString? = nil) -> NSAttributedString {
             
-        let paragraph = NSMutableAttributedString(string: "")
+        var paragraph = NSMutableAttributedString(string: "")
+        if prevAttributedString != nil {
+            paragraph = NSMutableAttributedString(attributedString: prevAttributedString!)
+        }
       
         let tokens = text.componentsSeparatedByString(self.delimiter)
-        for (index, token) in tokens.enumerate() {
-            var str = token
-           
-            // let (tappable, assetKey) = self.isTappableToken(token)
-            let asset = GGHearthStone.sharedInstance.getAsset(token)
-            var tappable = false
-            var assetId = str
-            if let imageAsset = asset {
-                tappable = true
-                assetId = imageAsset.id
-                str = imageAsset.getDisplayName().capitalizedString
+        for (_, token) in tokens.enumerate() {
+            if token.length > 0 {
+                var str = token
+               
+                // let (tappable, assetKey) = self.isTappableToken(token)
+                let id = "\(self.delimiter)\(token)\(self.delimiter)"
+                let asset = GGHearthStone.sharedInstance.getAsset(id)
+                var tappable = false
+                var assetId = str
+                if let imageAsset = asset {
+                    tappable = true
+                    assetId = imageAsset.id
+                    str = imageAsset.getDisplayName().capitalizedString
+                }
+                let attr: [String : NSObject] = [
+                    TappableText.tapAttributeKey : tappable,
+                    TappableText.tapAssetId : assetId,
+                    NSFontAttributeName : (textFont != nil ? textFont! : GGConfig.messageBubbleFont),
+                    NSForegroundColorAttributeName : (tappable && highlightColor) ? UIColor.gg_highlightedColor() : textColor
+                ]
+               
+                /*
+                if index < tokens.count - 1 {
+                    str += self.delimiter
+                }
+                */
+                let attributedString = NSAttributedString(
+                    string: str,
+                    attributes: attr)
+                paragraph.appendAttributedString(attributedString)
             }
-            let attr: [String : NSObject] = [
-                TappableText.tapAttributeKey : tappable,
-                TappableText.tapAssetId : assetId,
-                NSFontAttributeName : GGConfig.messageBubbleFont,
-                NSForegroundColorAttributeName : tappable ? UIColor.gg_highlightedColor() : textColor
-            ]
-            
-            if index < tokens.count - 1 {
-                str += self.delimiter
-            }
-            let attributedString = NSAttributedString(
-                string: str,
-                attributes: attr)
-            paragraph.appendAttributedString(attributedString)
         }
 
         return paragraph.copy() as! NSAttributedString

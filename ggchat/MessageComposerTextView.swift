@@ -46,7 +46,7 @@ class MessageComposerTextView: UITextView {
         self.scrollsToTop = false
         self.userInteractionEnabled = true
         
-        self.font = UIFont.systemFontOfSize(16.0)
+        self.font = GGConfig.messageComposerFont // UIFont.systemFontOfSize(16.0)
         self.textColor = UIColor.blackColor()
         self.textAlignment = NSTextAlignment.Natural
         

@@ -827,7 +827,21 @@ class MessageViewController: UIViewController,
         
         self.inputToolbar.contentView.textView.inputDelegate!.selectionDidChange(self.inputToolbar.contentView.textView)
 
-        return self.inputToolbar.contentView.textView.text.gg_stringByTrimingWhitespace()
+        let currentAttributedText = NSMutableAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
+        currentAttributedText.enumerateAttribute(
+            TappableText.tapAssetId,
+            inRange: NSMakeRange(0, currentAttributedText.length),
+            options: NSAttributedStringEnumerationOptions.LongestEffectiveRangeNotRequired,
+            usingBlock: { (value: AnyObject?, range:NSRange, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
+                if let id = value as? String {
+                    // print(id)
+                    currentAttributedText.replaceCharactersInRange(range, withString: id)
+                }
+            }
+        )
+        // print(currentAttributedText.string)
+        // return self.inputToolbar.contentView.textView.text.gg_stringByTrimingWhitespace()
+        return currentAttributedText.string.gg_stringByTrimingWhitespace()
     }
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -1426,8 +1440,17 @@ class MessageViewController: UIViewController,
             Range<String.Index>(
                 start: originalText.startIndex,
                 end: originalText.startIndex.advancedBy(replaceBy)))
+        /*
         self.inputToolbar.contentView.textView.text = replaceText
         self.inputToolbar.contentView.textView.text.appendContentsOf(assetSuggestion.id)
+        */
+       
+        self.inputToolbar.contentView.textView.attributedText = TappableText.sharedInstance.tappableAttributedString(
+            assetSuggestion.id,
+            textColor: self.inputToolbar.contentView.textView.textColor!,
+            highlightColor: false,
+            textFont: GGConfig.messageComposerFont,
+            prevAttributedString: self.inputToolbar.contentView.textView.attributedText)
         self.autocompleteController?.hide()
     }
 }

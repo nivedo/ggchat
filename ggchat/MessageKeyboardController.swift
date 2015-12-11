@@ -284,6 +284,9 @@ class MessageKeyboardController: NSObject {
             }
         }
 
+        if self.keyboardView == nil {
+            return
+        }
         let keyboardViewHeight: CGFloat = CGRectGetHeight(self.keyboardView!.frame)
 
         let dragThresholdY: CGFloat = (contextViewWindowHeight - keyboardViewHeight - self.keyboardTriggerPoint.y)

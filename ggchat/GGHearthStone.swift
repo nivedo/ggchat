@@ -28,7 +28,7 @@ protocol ImageModalAsset {
 class AssetManager {
     
     class func id(bundleId: Int, assetId: String) -> String {
-        return "&\(bundleId)::\(assetId)"
+        return "&&\(bundleId)::\(assetId)&&"
     }
     
 }
@@ -280,7 +280,7 @@ class GGHearthStone {
     */
     
     func getAsset(id: String) -> ImageModalAsset? {
-        if (id[id.startIndex] == "&" && id.rangeOfString("::") != nil) {
+        if id.rangeOfString("::") != nil {
             if let asset = self.cardAssets[id] {
                 asset.fetchInfo()
                 return asset
