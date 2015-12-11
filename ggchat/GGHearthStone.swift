@@ -19,6 +19,7 @@ protocol ImageModalAsset {
     
     var delegate: ImageModalAssetDelegate? { get set }
     func getUIImage() -> UIImage?
+    var id: String { get }
     
 }
 
@@ -47,6 +48,12 @@ class GGHearthStoneAsset : ImageModalAsset {
     enum JSONError: String, ErrorType {
         case NoData = "ERROR: no data"
         case ConversionFailed = "ERROR: conversion from JSON failed"
+    }
+    
+    var id: String {
+        get {
+            return "&\(self.bundleId)::\(self.assetId)"
+        }
     }
     
     func fetchInfo() {
@@ -235,22 +242,24 @@ class GGHearthStone {
         return valid
     }
    
-    class StringHelper {
+    class AssetSortHelper {
         var str: String
+        var id: String
         var score: Float
         
-        init(str: String, score: Float) {
+        init(str: String, id: String, score: Float) {
             self.str = str
+            self.id = id
             self.score = score
         }
     }
     
-    func getCardSugggestions(name: String, threshold: Float = 0.7) -> [String]? {
+    func getCardSugggestions(name: String, threshold: Float = 0.7) -> [AssetAutocompleteSuggestion]? {
         
         let numTokens = min(name.numTokens, self.cardMaxTokens)
         let tokens = name.componentsSeparatedByCharactersInSet(
             NSCharacterSet.whitespaceCharacterSet())
-        var suggestions = [StringHelper]()
+        var suggestions = [AssetSortHelper]()
         
         for i in 1...numTokens {
             let startIndex: Int = tokens.count - i
@@ -264,11 +273,11 @@ class GGHearthStone {
             }
         }
         
-        var results = [String]()
+        var results = [AssetAutocompleteSuggestion]()
         if suggestions.count > 0 {
             results = suggestions.sort({ $0.score > $1.score }).map {
-                (let helper) -> String in
-                return helper.str
+                (let helper) -> AssetAutocompleteSuggestion in
+                return AssetAutocompleteSuggestion(displayString: helper.str, id: helper.id)
             }
         }
        
@@ -277,12 +286,19 @@ class GGHearthStone {
     
     var activeSuggestionJobs: Int = 0
     
-    private func computeCardSuggestion(name: String, threshold: Float, matchPrefixAfterChars: Int) -> [StringHelper]? {
+    private func computeCardSuggestion(name: String, threshold: Float, matchPrefixAfterChars: Int) -> [AssetSortHelper]? {
+        print("compute \(name) (\(self.activeSuggestionJobs))")
+        
         if self.activeSuggestionJobs > 0 {
             return nil
         }
         
-        var suggestions = [StringHelper]()
+        var suggestions = [AssetSortHelper]()
+        // Short-circuit if asset id
+        if (name.rangeOfString("::") != nil && name.rangeOfString("&") != nil) {
+            return suggestions
+        }
+        
         if name.characters.count <= 1 {
             return suggestions
         }
@@ -299,7 +315,7 @@ class GGHearthStone {
                     matchPrefix = (card.rangeOfString(name) != nil)
                 }
                 if score > threshold && matchPrefix {
-                    suggestions.append(StringHelper(str: card, score: score))
+                    suggestions.append(AssetSortHelper(str: card, id: self.cardAssets[card]!.id, score: score))
                 }
             }
         }

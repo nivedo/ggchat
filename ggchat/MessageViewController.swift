@@ -1389,4 +1389,11 @@ class MessageViewController: UIViewController,
         }
         return true
     }
+    
+    func autocompleteSelect(
+        autocompleteController: MessageAutocompleteController,
+        assetSuggestion: AssetAutocompleteSuggestion) {
+        self.inputToolbar.contentView.textView.text.appendContentsOf(assetSuggestion.id)
+        self.autocompleteController?.hide()
+    }
 }

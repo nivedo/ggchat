@@ -36,6 +36,7 @@ class MessageAutocompleteCell: UITableViewCell {
         self.iconContainer.backgroundColor = UIColor.clearColor()
         self.iconImageView.image = UIImage(named: "hearthstone-icon")
         self.selectionStyle = UITableViewCellSelectionStyle.None
+        // self.cellMainLabel.highlightedTextColor = UIColor.darkGrayColor()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
