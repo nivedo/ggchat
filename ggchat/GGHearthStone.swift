@@ -245,11 +245,13 @@ class GGHearthStone {
     class AssetSortHelper {
         var str: String
         var id: String
+        var replaceStr: String
         var score: Float
         
-        init(str: String, id: String, score: Float) {
+        init(str: String, id: String, replaceStr: String, score: Float) {
             self.str = str
             self.id = id
+            self.replaceStr = replaceStr
             self.score = score
         }
     }
@@ -277,7 +279,10 @@ class GGHearthStone {
         if suggestions.count > 0 {
             results = suggestions.sort({ $0.score > $1.score }).map {
                 (let helper) -> AssetAutocompleteSuggestion in
-                return AssetAutocompleteSuggestion(displayString: helper.str, id: helper.id)
+                return AssetAutocompleteSuggestion(
+                    displayString: helper.str,
+                    replaceString: helper.replaceStr,
+                    id: helper.id)
             }
         }
        
@@ -315,7 +320,11 @@ class GGHearthStone {
                     matchPrefix = (card.rangeOfString(name) != nil)
                 }
                 if score > threshold && matchPrefix {
-                    suggestions.append(AssetSortHelper(str: card, id: self.cardAssets[card]!.id, score: score))
+                    suggestions.append(AssetSortHelper(
+                        str: card,
+                        id: self.cardAssets[card]!.id,
+                        replaceStr: name,
+                        score: score))
                 }
             }
         }

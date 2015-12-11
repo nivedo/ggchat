@@ -1393,6 +1393,13 @@ class MessageViewController: UIViewController,
     func autocompleteSelect(
         autocompleteController: MessageAutocompleteController,
         assetSuggestion: AssetAutocompleteSuggestion) {
+        let replaceCount = assetSuggestion.replaceString.characters.count
+        let originalText = self.inputToolbar.contentView.textView.text
+        let replaceText = self.inputToolbar.contentView.textView.text.substringWithRange(
+            Range<String.Index>(
+                start: originalText.startIndex,
+                end: originalText.endIndex.advancedBy(-replaceCount)))
+        self.inputToolbar.contentView.textView.text = replaceText
         self.inputToolbar.contentView.textView.text.appendContentsOf(assetSuggestion.id)
         self.autocompleteController?.hide()
     }
