@@ -105,6 +105,7 @@ class ChatTableViewController:
         let user = self.dataList.objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
         cell.cellTopLabel.attributedText = NSAttributedString(string: user.displayName)
         cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
+        cell.cellCornerLabel.attributedText = NSAttributedString(string: MessageTimestampFormatter.sharedInstance.timestampForDate(NSDate()))
         
         let needsAvatar: Bool = true
         if (needsAvatar) {
