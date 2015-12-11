@@ -833,7 +833,32 @@ class MessageViewController: UIViewController,
     //////////////////////////////////////////////////////////////////////////////////
     // UITextViewDelegate methods
     //////////////////////////////////////////////////////////////////////////////////
-
+    
+    func textView(_ textView: UITextView,
+        shouldChangeTextInRange range: NSRange,
+        replacementText text: String) -> Bool {
+            
+        // If this is true, then the user just deleted a character by using backspace
+        // print("shouldChangeCharactersInRange")
+        if (range.length == 1 && text.length == 0) {
+            let cursorPosition = range.location //gets cursor current position in the text
+            print("delete, range: \(range), text: \(text), cursorPosition: \(cursorPosition)")
+            
+            // NSRange attrRange //will store the range of the text that holds specific attributes
+            // NSDictionary *attrs = [_content.attributedText attributesAtIndex:cursorPosition effectiveRange:&attrRange]
+            
+            //check if the attributes of the attributed text in the cursor's current position correspond to what you want to delete as a block
+            /*
+            if([attrs objectForKey:NSBackgroundColorAttributeName]){
+                NSAttributedString *newStr = [_content.attributedText attributedSubstringFromRange:NSMakeRange(0, attrRange.location)] //creates a new NSAttributed string without the block of text you wanted to delete
+                _content.attributedText = newStr //substitute the attributed text of your UITextView
+                return false
+            }
+        *   */
+        }
+        return true
+    }
+    
     func textViewDidBeginEditing(textView: UITextView) {
         if (textView != self.inputToolbar.contentView.textView) {
             return
