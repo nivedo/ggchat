@@ -31,6 +31,11 @@ class ContactTableViewController: UITableViewController,
             title: "Cancel",
             style: UIAlertActionStyle.Cancel,
             handler: nil)
+        let actionEnterJID = UIAlertAction(
+            title: "Enter JID",
+            style: UIAlertActionStyle.Default) { action -> Void in
+            self.addContactFromJID()
+        }
         let actionPickFromContacts = UIAlertAction(
             title: "Pick from Your Contacts",
             style: UIAlertActionStyle.Default) { action -> Void in
@@ -42,8 +47,39 @@ class ContactTableViewController: UITableViewController,
             // GGModelData.sharedInstance.addVideoMediaMessage()
             // Crashlytics.sharedInstance().crash()
         }
-        alert.addAction(actionPickFromContacts)
+        alert.addAction(actionEnterJID)
         alert.addAction(actionEnterPhoneNumber)
+        alert.addAction(actionPickFromContacts)
+        alert.addAction(actionCancel)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func addContactFromJID() {
+        let alert: UIAlertController = UIAlertController(
+            title: "Enter JID",
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addTextFieldWithConfigurationHandler({ (textField: UITextField) -> Void in
+            textField.placeholder = NSLocalizedString("JID", comment: "JID")
+        })
+        let actionCancel = UIAlertAction(
+            title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
+        let actionOk = UIAlertAction(
+            title: "Ok",
+            style: UIAlertActionStyle.Default,
+            handler: { (action: UIAlertAction) -> Void in
+                if let jidTextField = alert.textFields?.first {
+                    if let jidStr = jidTextField.text {
+                        print(jidStr)
+                    }
+                }
+            })
+        
+        alert.addAction(actionOk)
         alert.addAction(actionCancel)
         
         self.presentViewController(alert, animated: true, completion: nil)
