@@ -101,12 +101,16 @@ class TappableText: NSObject {
                     assetId = imageAsset.id
                     str = imageAsset.getDisplayName().capitalizedString
                 }
-                let attr: [String : NSObject] = [
-                    TappableText.tapAttributeKey : tappable,
-                    TappableText.tapAssetId : assetId,
+                var attr: [String : NSObject] = [
+                    // TappableText.tapAttributeKey : tappable,
+                    // TappableText.tapAssetId : assetId,
                     NSFontAttributeName : (textFont != nil ? textFont! : GGConfig.messageBubbleFont),
                     NSForegroundColorAttributeName : (tappable && highlightColor) ? UIColor.gg_highlightedColor() : textColor
                 ]
+                if tappable {
+                    attr[TappableText.tapAttributeKey] = tappable
+                    attr[TappableText.tapAssetId] = assetId
+                }
                
                 /*
                 if index < tokens.count - 1 {
