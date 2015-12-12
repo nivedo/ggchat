@@ -304,7 +304,7 @@ class GGHearthStone {
         }
     }
     
-    func getCardSugggestions(name: String, threshold: Float = 0.7) -> [AssetAutocompleteSuggestion]? {
+    func getCardSuggestions(name: String, threshold: Float = 0.7) -> [AssetAutocompleteSuggestion]? {
         
         let numTokens = min(name.numTokens, self.cardMaxTokens)
         let tokens = name.componentsSeparatedByCharactersInSet(
