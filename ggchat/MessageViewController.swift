@@ -858,17 +858,19 @@ class MessageViewController: UIViewController,
             let cursorPosition = range.location //gets cursor current position in the text
             print("delete, range: \(range), text: \(text), cursorPosition: \(cursorPosition)")
             
-            // NSRange attrRange //will store the range of the text that holds specific attributes
-            // NSDictionary *attrs = [_content.attributedText attributesAtIndex:cursorPosition effectiveRange:&attrRange]
+            var attrRange: NSRange = NSMakeRange(0,1) //will store the range of the text that holds specific attributes
+            let attrs: NSDictionary = self.inputToolbar.contentView.textView.attributedText.attributesAtIndex(
+                cursorPosition,
+                effectiveRange: &attrRange)
             
-            //check if the attributes of the attributed text in the cursor's current position correspond to what you want to delete as a block
-            /*
-            if([attrs objectForKey:NSBackgroundColorAttributeName]){
-                NSAttributedString *newStr = [_content.attributedText attributedSubstringFromRange:NSMakeRange(0, attrRange.location)] //creates a new NSAttributed string without the block of text you wanted to delete
-                _content.attributedText = newStr //substitute the attributed text of your UITextView
+            // Check if the attributes of the attributed text in the cursor's current position correspond to what you want to delete as a block
+            if let _ = attrs.objectForKey(TappableText.tapAssetId) {
+                // creates a new NSAttributed string without the block of text you wanted to delete
+                let newStr: NSAttributedString = self.inputToolbar.contentView.textView.attributedText.attributedSubstringFromRange(
+                    NSMakeRange(0, attrRange.location))
+                self.inputToolbar.contentView.textView.attributedText = newStr  // substitute the attributed text of your UITextView
                 return false
             }
-        *   */
         }
         return true
     }
