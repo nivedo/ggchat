@@ -227,7 +227,8 @@ class GGHearthStone {
     
     init() {
         print("**************** HEARTHSTONE ******************")
-        if let asset = NSDataAsset(name: "hearthstone_en", bundle: NSBundle.mainBundle()) {
+        let assetJsonName = "hearthstone_en"
+        if let asset = NSDataAsset(name: assetJsonName, bundle: NSBundle.mainBundle()) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
                 asset.data,
                 options: NSJSONReadingOptions.AllowFragments)
@@ -251,7 +252,7 @@ class GGHearthStone {
                 }
             }
         } else {
-            print("Error: Unable to find hearthstone-cards.json")
+            print("Error: Unable to find \(assetJsonName)")
         }
     }
    
