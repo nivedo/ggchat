@@ -841,7 +841,31 @@ class MessageViewController: UIViewController,
         )
         // print(currentAttributedText.string)
         // return self.inputToolbar.contentView.textView.text.gg_stringByTrimingWhitespace()
+        print(currentAttributedText.string.gg_stringByTrimingWhitespace())
         return currentAttributedText.string.gg_stringByTrimingWhitespace()
+    }
+    
+    func gg_currentlyTypedMessageText() -> String {
+        var index: Int = 0
+        
+        let currentAttributedText = NSAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
+        currentAttributedText.enumerateAttribute(
+            TappableText.tapAttributeKey,
+            inRange: NSMakeRange(0, currentAttributedText.length),
+            options: NSAttributedStringEnumerationOptions.LongestEffectiveRangeNotRequired,
+            usingBlock: { (value: AnyObject?, range:NSRange, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
+                if let tappable = value as? Bool {
+                    if tappable {
+                        index = max(index, range.location + range.length)
+                    }
+                }
+            }
+        )
+        
+        let length = currentAttributedText.length - index
+        let validAttributedText = currentAttributedText.attributedSubstringFromRange(NSMakeRange(index, length))
+        // print("\(currentAttributedText.string) --> \(validAttributedText.string)")
+        return validAttributedText.string
     }
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -874,6 +898,12 @@ class MessageViewController: UIViewController,
         }
         return true
     }
+  
+    /*
+    func gg_currentlyInputMessageText() -> String {
+        return self.inputToolbar.contentView.textView.text
+    }
+    */
     
     func textViewDidBeginEditing(textView: UITextView) {
         if (textView != self.inputToolbar.contentView.textView) {
@@ -886,15 +916,13 @@ class MessageViewController: UIViewController,
             self.scrollToBottomAnimated(true)
         }
         
-        if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
-            NSCharacterSet.whitespaceCharacterSet()).last {
-            if lastWord.characters.count > 1 {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                    let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(lastWord)
-                    if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
-                        }
+        let word = self.gg_currentlyTypedMessageText()
+        if word.characters.count > 1 {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word)
+                if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
                     }
                 }
             }
@@ -907,10 +935,11 @@ class MessageViewController: UIViewController,
         }
         // if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
         //     NSCharacterSet.whitespaceCharacterSet()).last {
-        if let word = textView.text {
-            print("editing text \"\(textView.text)\" -->  \"\(word)\"")
-            
-            // if word.characters.count > 1 {
+        
+        let word = self.gg_currentlyTypedMessageText()
+        print("editing text \"\(textView.text)\" -->  \"\(word)\"")
+        
+        if word.characters.count > 1 {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                 let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word)
                 dispatch_async(dispatch_get_main_queue()) {
