@@ -1436,12 +1436,10 @@ class MessageViewController: UIViewController,
     func autocompleteSelect(
         autocompleteController: MessageAutocompleteController,
         assetSuggestion: AssetAutocompleteSuggestion) {
-        let originalText = self.inputToolbar.contentView.textView.text
+        let originalText = self.inputToolbar.contentView.textView.attributedText.string
         let replaceBy = min(assetSuggestion.replaceIndex, originalText.characters.count)
-        let replaceText = self.inputToolbar.contentView.textView.text.substringWithRange(
-            Range<String.Index>(
-                start: originalText.startIndex,
-                end: originalText.startIndex.advancedBy(replaceBy)))
+        let replaceText = self.inputToolbar.contentView.textView.attributedText.attributedSubstringFromRange(
+            NSMakeRange(0, replaceBy))
         /*
         self.inputToolbar.contentView.textView.text = replaceText
         self.inputToolbar.contentView.textView.text.appendContentsOf(assetSuggestion.id)
@@ -1452,7 +1450,7 @@ class MessageViewController: UIViewController,
             textColor: self.inputToolbar.contentView.textView.textColor!,
             highlightColor: false,
             textFont: GGConfig.messageComposerFont,
-            prevAttributedString: self.inputToolbar.contentView.textView.attributedText)
+            prevAttributedString: replaceText) // self.inputToolbar.contentView.textView.attributedText)
         self.autocompleteController?.hide()
     }
 }
