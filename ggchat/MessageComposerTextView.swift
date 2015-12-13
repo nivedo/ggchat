@@ -26,6 +26,14 @@ class MessageComposerTextView: UITextView {
 
     // pragma mark - Initialization
     var pasteDelegate: MessageComposerTextViewPasteDelegate?
+    let normalAttributes: [String: AnyObject] = [
+        NSFontAttributeName: GGConfig.messageComposerFont,
+        NSForegroundColorAttributeName: UIColor.blackColor()
+    ]
+    
+    func setNormalAttributes() {
+        self.typingAttributes = self.normalAttributes
+    }
 
     func gg_configureTextView() {
         self.translatesAutoresizingMaskIntoConstraints = false

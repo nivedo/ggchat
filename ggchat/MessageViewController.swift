@@ -895,6 +895,9 @@ class MessageViewController: UIViewController,
                 self.inputToolbar.contentView.textView.attributedText = newStr  // substitute the attributed text of your UITextView
                 return false
             }
+        } else if (text.length > 0) {
+            print("insert, range: \(range), text: \(text)")
+            self.inputToolbar.contentView.textView.setNormalAttributes()
         }
         return true
     }
@@ -1476,7 +1479,7 @@ class MessageViewController: UIViewController,
         self.inputToolbar.contentView.textView.attributedText = TappableText.sharedInstance.tappableAttributedString(
             assetSuggestion.id,
             textColor: self.inputToolbar.contentView.textView.textColor!,
-            highlightColor: false,
+            highlightColor: true,
             textFont: GGConfig.messageComposerFont,
             prevAttributedString: replaceText) // self.inputToolbar.contentView.textView.attributedText)
         self.autocompleteController?.hide()
