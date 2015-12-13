@@ -29,7 +29,7 @@ class MessageBubbleSizeCalculator {
         
         // this extra inset value is needed because `boundingRectWithSize:` is slightly off
         // see comment below
-        self.additionalInset = 0
+        self.additionalInset = 2
     }
     
     convenience init() {

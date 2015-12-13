@@ -30,7 +30,8 @@ class Message {
     
     var displayText: String {
         get {
-            return self.text!
+            // return self.text!
+            return self.attributedText!.string
         }
     }
     
