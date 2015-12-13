@@ -926,6 +926,8 @@ class MessageViewController: UIViewController,
                     }
                 }
             }
+        } else {
+            self.autocompleteController?.hide()
         }
     }
 
@@ -952,11 +954,8 @@ class MessageViewController: UIViewController,
                     }
                 }
             }
-            /*
-            } else {
-                self.autocompleteController?.hide()
-            }
-            */
+        } else {
+            self.autocompleteController?.hide()
         }
         
         self.inputToolbar.toggleSendButtonEnabled()
