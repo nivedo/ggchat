@@ -63,6 +63,8 @@
 		D44A033E1C114ECA0059E530 /* AWSS3DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44A033B1C114ECA0059E530 /* AWSS3DownloadManager.swift */; };
 		D44A033F1C114ECA0059E530 /* AWSS3Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44A033C1C114ECA0059E530 /* AWSS3Manager.swift */; };
 		D44A03401C114ECA0059E530 /* AWSS3UploadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44A033D1C114ECA0059E530 /* AWSS3UploadManager.swift */; };
+		D45034C11C1CFCD50025E29C /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45034C01C1CFCD50025E29C /* Trie.swift */; };
+		D45034C51C1CFE7F0025E29C /* TrieNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45034C41C1CFE7F0025E29C /* TrieNode.swift */; };
 		D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F5A91BFC48BC00FA4444 /* MessageToolbarContentView.xib */; };
 		D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */; };
 		D45FBD431BFDB1B300E79B4E /* GGConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD421BFDB1B300E79B4E /* GGConfig.swift */; };
@@ -380,6 +382,8 @@
 		D44A033B1C114ECA0059E530 /* AWSS3DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSS3DownloadManager.swift; sourceTree = "<group>"; };
 		D44A033C1C114ECA0059E530 /* AWSS3Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSS3Manager.swift; sourceTree = "<group>"; };
 		D44A033D1C114ECA0059E530 /* AWSS3UploadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSS3UploadManager.swift; sourceTree = "<group>"; };
+		D45034C01C1CFCD50025E29C /* Trie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
+		D45034C41C1CFE7F0025E29C /* TrieNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrieNode.swift; sourceTree = "<group>"; };
 		D45FBD401BFD654100E79B4E /* MessageKeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKeyboardController.swift; sourceTree = "<group>"; };
 		D45FBD421BFDB1B300E79B4E /* GGConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGConfig.swift; sourceTree = "<group>"; };
 		D45FBD441BFE894F00E79B4E /* MediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
@@ -1001,6 +1005,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		D45034BF1C1CFCC40025E29C /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				D45034C01C1CFCD50025E29C /* Trie.swift */,
+				D45034C41C1CFE7F0025E29C /* TrieNode.swift */,
+			);
+			name = DataStructures;
+			sourceTree = "<group>";
+		};
 		D4683E491BF0486F00E02886 = {
 			isa = PBXGroup;
 			children = (
@@ -1030,6 +1043,7 @@
 		D4683E541BF0486F00E02886 /* ggchat */ = {
 			isa = PBXGroup;
 			children = (
+				D45034BF1C1CFCC40025E29C /* DataStructures */,
 				D43B28AC1C0688E300B3F367 /* XMPPFramework */,
 				D42B01801C154ACB00643835 /* Algorithms */,
 				D4A9F5051BF476BC00FA4444 /* Layouts */,
@@ -2150,6 +2164,7 @@
 				D43B28C81C06894100B3F367 /* DDFileLogger.m in Sources */,
 				D45FBD511BFED00500E79B4E /* VideoMediaItem.swift in Sources */,
 				D43B28DD1C06894D00B3F367 /* DDXMLDocument.m in Sources */,
+				D45034C51C1CFE7F0025E29C /* TrieNode.swift in Sources */,
 				D45FBD491BFE9AB700E79B4E /* MessageMediaViewBubbleImageMasker.swift in Sources */,
 				D43B292B1C06897300B3F367 /* XMPPElement.m in Sources */,
 				D4C8FDE71C06AA2300992801 /* XMPPIQ+JabberRPC.m in Sources */,
@@ -2226,6 +2241,7 @@
 				D43B292E1C06897300B3F367 /* XMPPMessage.m in Sources */,
 				D4C8FE3D1C08421100992801 /* XMPPRosterManager.swift in Sources */,
 				D4C8FDE51C06AA2300992801 /* XMPPRoster.m in Sources */,
+				D45034C11C1CFCD50025E29C /* Trie.swift in Sources */,
 				D4C8FE2B1C06AA2300992801 /* XMPPPing.m in Sources */,
 				D42B01821C154AF700643835 /* JaroWinklerDistance.swift in Sources */,
 				D43B28CD1C06894100B3F367 /* DDMultiFormatter.m in Sources */,

@@ -193,6 +193,7 @@ class GGHearthStone {
     }
   
     private var cardNames = [String]()
+    private var cardNamesTrie = Trie()
     private var cardMaxTokens: Int = 1
     var cardAssets = [String : GGHearthStoneAsset]()
     var cardNameToIdMap = [String : String]()
@@ -242,12 +243,14 @@ class GGHearthStone {
                                 let id = AssetManager.id(bundleId, assetId: assetId)
                                 self.cardAssets[id] = GGHearthStoneAsset(name: cardName, bundleId: bundleId, assetId: assetId)
                                 self.cardNameToIdMap[lowercaseName] = id
+                                
                                 self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
                             }
                         }
                     }
                     for (k, _) in self.cardNameToIdMap {
                         self.cardNames.append(k)
+                        self.cardNamesTrie.addWord(k)
                     }
                 }
             }
@@ -361,7 +364,8 @@ class GGHearthStone {
         
         let numTokens = name.numTokens
         let lowercaseName = name.lowercaseString
-        
+       
+        /*
         for card in self.cardNames {
             if card.numTokens >= numTokens {
                 let score = card.jaroWinklerDistance(lowercaseName)
@@ -380,7 +384,17 @@ class GGHearthStone {
                 }
             }
         }
-        
+        */
+        if let cardList = self.cardNamesTrie.findWord(lowercaseName) {
+            for card in cardList {
+                let score = 1.0 / Float(card.characters.count)
+                suggestions.append(AssetSortHelper(
+                    str: card,
+                    id: self.cardNameToIdMap[card]!,
+                    replaceIndex: replaceIndex,
+                    score: score))
+            }
+        }
         self.activeSuggestionJobs--
         return suggestions
     }

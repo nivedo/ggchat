@@ -79,6 +79,7 @@ class MessageAutocompleteController: NSObject,
     }
     
     func hide() {
+        self.suggestions.removeAll()
         self.tableView.hidden = true
     }
     
@@ -102,7 +103,7 @@ class MessageAutocompleteController: NSObject,
         let cards = self.suggestions.map{ (var asset) in
             return asset.displayString
         }
-        print(cards)
+        // print(cards)
         
         cell.cellMainLabel.text = suggestion.displayString.capitalizedString
             
