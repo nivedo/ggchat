@@ -170,6 +170,14 @@ extension String {
             return tokens.count
         }
     }
+    
+    var tokens: [String] {
+        get {
+            let tokens = self.componentsSeparatedByCharactersInSet(
+                NSCharacterSet.whitespaceCharacterSet())
+            return tokens
+        }
+    }
 }
 
 class GGHearthStone {
@@ -251,6 +259,12 @@ class GGHearthStone {
                     for (k, _) in self.cardNameToIdMap {
                         self.cardNames.append(k)
                         self.cardNamesTrie.addWord(k)
+                        
+                        for (index, word) in k.tokens.enumerate() {
+                            if index > 0 && word.length >= 4 {
+                                self.cardNamesTrie.addPrefix(word, finalWord: k)
+                            }
+                        }
                     }
                 }
             }
@@ -362,30 +376,9 @@ class GGHearthStone {
         }
         self.activeSuggestionJobs++
         
-        let numTokens = name.numTokens
         let lowercaseName = name.lowercaseString
        
-        /*
-        for card in self.cardNames {
-            if card.numTokens >= numTokens {
-                let score = card.jaroWinklerDistance(lowercaseName)
-                /*
-                var matchPrefix = true
-                if lowercaseName.characters.count >= matchPrefixAfterChars {
-                    matchPrefix = (card.rangeOfString(lowercaseName) != nil)
-                }
-                */
-                if score > threshold {
-                    suggestions.append(AssetSortHelper(
-                        str: card,
-                        id: self.cardNameToIdMap[card]!,
-                        replaceIndex: replaceIndex,
-                        score: score))
-                }
-            }
-        }
-        */
-        if let cardList = self.cardNamesTrie.findWord(lowercaseName) {
+        if let cardList = self.cardNamesTrie.findWordAndPrefix(lowercaseName) {
             for card in cardList {
                 let score = 1.0 / Float(card.characters.count)
                 suggestions.append(AssetSortHelper(

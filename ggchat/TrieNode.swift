@@ -14,7 +14,7 @@ public class TrieNode {
     var children: Array<TrieNode>
     var isFinal: Bool
     var level: Int
-    
+    var terminalKeys = [String]()
     
     init() {
         self.children = Array<TrieNode>()
