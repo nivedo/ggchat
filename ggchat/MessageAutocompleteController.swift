@@ -37,7 +37,7 @@ class MessageAutocompleteController: NSObject,
     UITableViewDataSource {
  
     static let defaultRowHeight = CGFloat(44.0)
-    static let defaultHeight = CGFloat(44.0 * 4.5)
+    static let defaultHeight = CGFloat(44.0 * 3.5)
     
     var tableView: UITableView
     var delegate: MessageAutocompleteControllerDelegate

@@ -49,9 +49,11 @@ public class Trie {
         } //end while
         
         //retrieve the keyword and any decendants
+        /*
         if ((current.key == keyword) && (current.isFinal)) {
             wordList.append(current.key)
         }
+        */
         
         //include only children that are words
         /*
@@ -67,11 +69,10 @@ public class Trie {
     
     func getChildrenWord(node: TrieNode, inout wordList: [String]) {
         if node.isFinal {
-            return wordList.append(node.key)
-        } else {
-            for child in node.children {
-                self.getChildrenWord(child, wordList: &wordList)
-            }
+            wordList.append(node.key)
+        }
+        for child in node.children {
+            self.getChildrenWord(child, wordList: &wordList)
         }
     }
     
