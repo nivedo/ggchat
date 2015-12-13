@@ -898,6 +898,19 @@ class MessageViewController: UIViewController,
         } else if (text.length > 0) {
             print("insert, range: \(range), text: \(text)")
             self.inputToolbar.contentView.textView.setNormalAttributes()
+            
+            let cursorPosition = range.location //gets cursor current position in the text
+            if cursorPosition < self.inputToolbar.contentView.textView.attributedText.length {
+                var attrRange: NSRange = NSMakeRange(0,1) //will store the range of the text that holds specific attributes
+                
+                let attrs: NSDictionary = self.inputToolbar.contentView.textView.attributedText.attributesAtIndex(
+                    cursorPosition,
+                    effectiveRange: &attrRange)
+                
+                if let _ = attrs.objectForKey(TappableText.tapAssetId) {
+                    return false
+                }
+            }
         }
         return true
     }
