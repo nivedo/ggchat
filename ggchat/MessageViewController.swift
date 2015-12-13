@@ -845,7 +845,7 @@ class MessageViewController: UIViewController,
         return currentAttributedText.string.gg_stringByTrimingWhitespace()
     }
     
-    func gg_currentlyTypedMessageText() -> String {
+    func gg_currentlyTypedMessageText() -> (String, Int) {
         var index: Int = 0
         
         let currentAttributedText = NSAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
@@ -865,7 +865,7 @@ class MessageViewController: UIViewController,
         let length = currentAttributedText.length - index
         let validAttributedText = currentAttributedText.attributedSubstringFromRange(NSMakeRange(index, length))
         // print("\(currentAttributedText.string) --> \(validAttributedText.string)")
-        return validAttributedText.string
+        return (validAttributedText.string, currentAttributedText.length)
     }
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -916,10 +916,10 @@ class MessageViewController: UIViewController,
             self.scrollToBottomAnimated(true)
         }
         
-        let word = self.gg_currentlyTypedMessageText()
+        let (word, len) = self.gg_currentlyTypedMessageText()
         if word.characters.count > 1 {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word)
+                let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word, inputLength: len)
                 if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
@@ -936,12 +936,12 @@ class MessageViewController: UIViewController,
         // if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
         //     NSCharacterSet.whitespaceCharacterSet()).last {
         
-        let word = self.gg_currentlyTypedMessageText()
+        let (word, len) = self.gg_currentlyTypedMessageText()
         print("editing text \"\(textView.text)\" -->  \"\(word)\"")
         
         if word.characters.count > 1 {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word)
+                let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word, inputLength: len)
                 dispatch_async(dispatch_get_main_queue()) {
                     if let s = suggestions {
                         if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {

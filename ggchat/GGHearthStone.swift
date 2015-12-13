@@ -304,7 +304,7 @@ class GGHearthStone {
         }
     }
     
-    func getCardSuggestions(name: String, threshold: Float = 0.7) -> [AssetAutocompleteSuggestion]? {
+    func getCardSuggestions(name: String, inputLength: Int, threshold: Float = 0.7) -> [AssetAutocompleteSuggestion]? {
         
         let numTokens = min(name.numTokens, self.cardMaxTokens)
         let tokens = name.componentsSeparatedByCharactersInSet(
@@ -316,7 +316,8 @@ class GGHearthStone {
             let lastTokens = tokens[startIndex..<tokens.count]
             
             let target = lastTokens.joinWithSeparator(" ")
-            let replaceIndex = name.characters.count - target.characters.count
+            // let replaceIndex = name.characters.count - target.characters.count
+            let replaceIndex = inputLength - target.characters.count
             if let s = self.computeCardSuggestion(target, replaceIndex: replaceIndex, threshold: threshold, matchPrefixAfterChars: 4) {
                 suggestions.appendContentsOf(s)
             } else {
