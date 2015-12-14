@@ -117,6 +117,11 @@ public class XMPPRosterManager: NSObject, NSFetchedResultsControllerDelegate {
         print("controllerDidChangeContent")
 		delegate?.onRosterContentChanged(controller)
 	}
+    
+    public class func addUser(jidStr: String, nickname: String) {
+        let jid = XMPPJID.jidWithString(jidStr)
+        XMPPManager.sharedInstance.roster.addUser(jid, withNickname: nickname)
+    }
 }
 
 extension XMPPRosterManager: XMPPRosterDelegate {

@@ -75,6 +75,7 @@ class ContactTableViewController: UITableViewController,
                 if let jidTextField = alert.textFields?.first {
                     if let jidStr = jidTextField.text {
                         print(jidStr)
+                        XMPPRosterManager.addUser(jidStr, nickname: "")
                     }
                 }
             })
@@ -115,6 +116,14 @@ class ContactTableViewController: UITableViewController,
         })()
         
         XMPPRosterManager.sharedInstance.delegate = self
+        self.tableView.reloadData()
+        
+        self.refreshControl?.addTarget(self,
+            action: "handleRefresh:",
+            forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableView.reloadData()
     }
     
