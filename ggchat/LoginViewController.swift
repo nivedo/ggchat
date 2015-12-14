@@ -31,19 +31,8 @@ class LoginViewController: UIViewController {
         self.welcomeLabel.font = UIFont.boldSystemFontOfSize(CGFloat(30))
         
         // Initialize username and password
-        if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
-            self.usernameTextField.placeholder = previousUsername
-        } else {
-        }
-        if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
-            self.passwordTextField.placeholder = previousPassword
-        } else {
-        }
+        self.loadUserDefaults()
         
-        
-        if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
-            self.usernameTextField.text = previousUsername
-        }
         self.usernameTextField.placeholder = "Username"
         self.usernameTextField.autocorrectionType = UITextAutocorrectionType.No
         self.usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
@@ -51,9 +40,6 @@ class LoginViewController: UIViewController {
         self.usernameTextField.layer.borderWidth = 1
         self.usernameTextField.layer.cornerRadius = CGFloat(5.0)
         
-        if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
-            self.passwordTextField.text = previousPassword
-        }
         self.passwordTextField.placeholder = "Password"
         self.passwordTextField.secureTextEntry = true
         self.passwordTextField.autocorrectionType = UITextAutocorrectionType.No;
@@ -70,6 +56,21 @@ class LoginViewController: UIViewController {
         self.loginButton.layer.borderWidth = 1
         self.loginButton.layer.borderColor = UIColor.darkGrayColor().CGColor
         self.loginButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal);
+    }
+    
+    func loadUserDefaults() {
+        if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
+            self.usernameTextField.placeholder = previousUsername
+            self.usernameTextField.text = previousUsername
+        }
+        if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
+            self.passwordTextField.placeholder = previousPassword
+            self.passwordTextField.text = previousPassword
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.loadUserDefaults()
     }
 
     @IBAction func loginAction(sender: AnyObject) {
