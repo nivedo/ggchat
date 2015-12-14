@@ -55,7 +55,18 @@ class LoginViewController: UIViewController {
         self.loginButton.layer.cornerRadius = 5
         self.loginButton.layer.borderWidth = 1
         self.loginButton.layer.borderColor = UIColor.darkGrayColor().CGColor
-        self.loginButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal);
+        self.loginButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: Selector("dismissKeyboard"))
+        
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        self.usernameTextField.resignFirstResponder()
+        self.passwordTextField.resignFirstResponder()
     }
     
     func loadUserDefaults() {
