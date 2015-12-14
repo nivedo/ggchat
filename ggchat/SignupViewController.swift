@@ -34,6 +34,8 @@ class SignupViewController: UIViewController {
         
         self.errorTextView.textColor = UIColor.redColor()
         self.errorTextView.text = ""
+        self.errorTextView.editable = false
+        self.errorTextView.userInteractionEnabled = false
         
         self.submitButton.setTitle("Submit", forState: .Normal);
         self.submitButton.backgroundColor = UIColor.clearColor();
@@ -41,6 +43,17 @@ class SignupViewController: UIViewController {
         self.submitButton.layer.borderWidth = 1
         self.submitButton.layer.borderColor = UIColor.darkGrayColor().CGColor
         self.submitButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal);
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: Selector("dismissKeyboard"))
+        
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        self.usernameTextField.resignFirstResponder()
+        self.passwordTextField.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
