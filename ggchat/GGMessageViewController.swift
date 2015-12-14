@@ -371,4 +371,19 @@ class GGMessageViewController:
         let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
         self.imageModelViewController = storyboard.instantiateViewControllerWithIdentifier("Message Image Model View Controller") as? ImageModalViewController
     }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let range: NSRange = textView.selectedRange
+        let cursorPosition = range.location
+        if range.length == 0 && cursorPosition < self.inputToolbar.contentView.textView.attributedText.length {
+            var attrRange: NSRange = NSMakeRange(0,1)
+            let attrs = self.inputToolbar.contentView.textView.attributedText.attributesAtIndex(
+                cursorPosition,
+                effectiveRange: &attrRange)
+            
+            if let _ = attrs[TappableText.tapAssetId] {
+                self.onTap(attrs)
+            }
+        }
+    }
 }
