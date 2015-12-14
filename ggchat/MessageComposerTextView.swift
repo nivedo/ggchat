@@ -69,6 +69,8 @@ class MessageComposerTextView: UITextView {
         self.placeHolder = nil
         self.placeHolderTextColor = UIColor.lightGrayColor()
         
+        self.spellCheckingType = UITextSpellCheckingType.No
+        
     }
  
     override init(frame: CGRect, textContainer: NSTextContainer?) {
