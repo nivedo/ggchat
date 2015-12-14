@@ -823,9 +823,9 @@ class MessageViewController: UIViewController,
 
     func gg_currentlyComposedMessageText() -> String {
         //  auto-accept any auto-correct suggestions
-        self.inputToolbar.contentView.textView.inputDelegate!.selectionWillChange(self.inputToolbar.contentView.textView)
+        self.inputToolbar.contentView.textView.inputDelegate?.selectionWillChange(self.inputToolbar.contentView.textView)
         
-        self.inputToolbar.contentView.textView.inputDelegate!.selectionDidChange(self.inputToolbar.contentView.textView)
+        self.inputToolbar.contentView.textView.inputDelegate?.selectionDidChange(self.inputToolbar.contentView.textView)
 
         let currentAttributedText = NSMutableAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
         currentAttributedText.enumerateAttribute(
