@@ -134,6 +134,11 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @IBAction func signupAction(sender: AnyObject) {
+        self.performSegueWithIdentifier("login.to.signup",
+            sender: sender)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

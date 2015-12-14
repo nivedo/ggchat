@@ -295,7 +295,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kK5-vJ-ibZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4551" y="1118"/>
+            <point key="canvasLocation" x="5363" y="1118"/>
         </scene>
         <!--Chats-->
         <scene sceneID="BbW-23-qYx">
@@ -388,7 +388,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="3920" y="1517"/>
+            <point key="canvasLocation" x="4732" y="1517"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="dNo-Rj-KBr">
@@ -457,6 +457,9 @@
                                     <constraint firstAttribute="width" constant="55" id="q3x-qa-MXz"/>
                                 </constraints>
                                 <state key="normal" title="Sign Up"/>
+                                <connections>
+                                    <action selector="signupAction:" destination="UL9-IJ-cUh" eventType="touchUpInside" id="unG-Ie-z8K"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdd-2B-ds4">
                                 <rect key="frame" x="103" y="460" width="115" height="30"/>
@@ -491,6 +494,7 @@
                         <outlet property="usernameTextField" destination="Cjv-HM-0X7" id="Qnx-oM-VSV"/>
                         <outlet property="welcomeLabel" destination="L3j-Oo-Wsb" id="l15-kn-kV2"/>
                         <segue destination="S31-Hi-fhB" kind="show" identifier="login.to.chats" id="td0-iI-Ota"/>
+                        <segue destination="J2l-62-wjX" kind="show" identifier="login.to.signup" id="ECQ-FX-muQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQ4-zU-o9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -540,7 +544,28 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zlz-yK-COi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2368.5" y="1521"/>
+            <point key="canvasLocation" x="2111.5" y="1565"/>
+        </scene>
+        <!--Signup View Controller-->
+        <scene sceneID="I2q-CP-ZOf">
+            <objects>
+                <viewController id="faT-V0-YcV" customClass="SignupViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5F5-o2-8hz"/>
+                        <viewControllerLayoutGuide type="bottom" id="XsH-yD-vwP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iNu-Wr-lIE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="r9k-1h-DFa"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vy4-gh-KEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3088" y="1572"/>
         </scene>
         <!--Settings-->
         <scene sceneID="2Ss-Jf-au6">
@@ -582,15 +607,35 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xbq-mg-vLJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3469" y="1517"/>
+            <point key="canvasLocation" x="4281" y="1517"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="AqG-vD-EST">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="J2l-62-wjX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="g4s-z8-wK8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="faT-V0-YcV" kind="relationship" relationship="rootViewController" id="mRg-qo-fvW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bJy-qX-pwR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2679" y="1572"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Chat-Bubble" width="150" height="113"/>
+        <image name="Chat-Bubble" width="25" height="25"/>
         <image name="Edit" width="25" height="25"/>
         <image name="Plus" width="25" height="25"/>
         <image name="Settings" width="25" height="25"/>
-        <image name="User" width="40" height="40"/>
+        <image name="User" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="opv-3B-fXB"/>

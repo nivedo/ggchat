@@ -109,6 +109,7 @@
 		D47840AA1BF1B67800441A2D /* UIImage+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840A91BF1B67800441A2D /* UIImage+Messages.swift */; };
 		D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */; };
 		D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */; };
+		D49447261C1EE3BA0008C582 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49447251C1EE3BA0008C582 /* SignupViewController.swift */; };
 		D4A7864E1C0A7CF900C37427 /* XMPPvCardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */; };
 		D4A786501C0A93EF00C37427 /* SettingTextFieldTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */; };
 		D4A786531C0A9BB000C37427 /* SettingTableMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */; };
@@ -434,6 +435,7 @@
 		D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GGMessagesAssets.bundle; sourceTree = "<group>"; };
 		D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+Messages.swift"; sourceTree = "<group>"; };
 		D485F18A3E4F03D00C056737 /* Pods-ggchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.debug.xcconfig"; sourceTree = "<group>"; };
+		D49447251C1EE3BA0008C582 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPvCardManager.swift; sourceTree = "<group>"; };
 		D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTextFieldTableViewController.swift; sourceTree = "<group>"; };
 		D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableMenuCell.swift; sourceTree = "<group>"; };
@@ -1120,6 +1122,7 @@
 				D42B895D1C05D9EC0043C20A /* LoginViewController.swift */,
 				D45FBD621C04972200E79B4E /* SettingTableViewController.swift */,
 				D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */,
+				D49447251C1EE3BA0008C582 /* SignupViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2111,6 +2114,7 @@
 				D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */,
 				D4C8FDFB1C06AA2300992801 /* XMPPvCard.xcdatamodeld in Sources */,
 				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
+				D49447261C1EE3BA0008C582 /* SignupViewController.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */,
 				D4C8FE2A1C06AA2300992801 /* XMPPAutoPing.m in Sources */,
