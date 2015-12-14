@@ -337,7 +337,7 @@ class GGMessageViewController:
     }
    
     func onTap(attributes: [String: AnyObject] ) {
-        self.dismissKeyboard()
+        // self.dismissKeyboard()
         if let imvc = self.imageModelViewController {
             imvc.attributes = attributes
             // print(attributes)
@@ -346,6 +346,13 @@ class GGMessageViewController:
                 animated: true,
                 completion: nil)
         }
+
+        /*
+        let overlayWindow = UIWindow(frame: self.view.window!.frame)
+        overlayWindow.windowLevel = UIWindowLevelAlert
+        overlayWindow.rootViewController = self.imageModelViewController
+        overlayWindow.makeKeyAndVisible()
+        */
     }
     func onTapCatchAll() {
         self.dismissKeyboard()
