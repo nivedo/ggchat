@@ -47,6 +47,8 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
                     self.imageAsset?.delegate = self
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.labelText = "Downloading card assets"
+                } else {
+                    MBProgressHUD.hideHUDForView(self.view, animated: false)
                 }
             } else {
                 // TEMP: Placeholder for tokens without assets
