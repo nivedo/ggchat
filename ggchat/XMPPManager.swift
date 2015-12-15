@@ -64,6 +64,7 @@ class XMPPManager: NSObject,
         if let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(XMPPJID.jidWithString(jid)) {
             avatar = MessageAvatarImageFactory.avatarImageWithImage(UIImage(data: photoData)!, diameter: GGConfig.avatarSize)
         } else {
+            print("Unable to find avatar for \(jid) on ejabberd server")
             avatar = GGModelData.sharedInstance.getAvatar(jid)
         }
        

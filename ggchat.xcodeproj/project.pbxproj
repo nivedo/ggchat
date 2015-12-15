@@ -110,6 +110,7 @@
 		D47840AD1BF1B99C00441A2D /* GGMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */; };
 		D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */; };
 		D49447261C1EE3BA0008C582 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49447251C1EE3BA0008C582 /* SignupViewController.swift */; };
+		D49447291C1FA5AD0008C582 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49447281C1FA5AD0008C582 /* UserAPI.swift */; };
 		D4A7864E1C0A7CF900C37427 /* XMPPvCardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */; };
 		D4A786501C0A93EF00C37427 /* SettingTextFieldTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */; };
 		D4A786531C0A9BB000C37427 /* SettingTableMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */; };
@@ -436,6 +437,7 @@
 		D47840AF1BF1BA4A00441A2D /* NSBundle+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+Messages.swift"; sourceTree = "<group>"; };
 		D485F18A3E4F03D00C056737 /* Pods-ggchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.debug.xcconfig"; sourceTree = "<group>"; };
 		D49447251C1EE3BA0008C582 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		D49447281C1FA5AD0008C582 /* UserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPvCardManager.swift; sourceTree = "<group>"; };
 		D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTextFieldTableViewController.swift; sourceTree = "<group>"; };
 		D4A786511C0A9BB000C37427 /* SettingTableMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableMenuCell.swift; sourceTree = "<group>"; };
@@ -1045,6 +1047,7 @@
 		D4683E541BF0486F00E02886 /* ggchat */ = {
 			isa = PBXGroup;
 			children = (
+				D49447271C1FA57E0008C582 /* APIs */,
 				D45034BF1C1CFCC40025E29C /* DataStructures */,
 				D43B28AC1C0688E300B3F367 /* XMPPFramework */,
 				D42B01801C154ACB00643835 /* Algorithms */,
@@ -1198,6 +1201,14 @@
 				D47840AC1BF1B99C00441A2D /* GGMessagesAssets.bundle */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		D49447271C1FA57E0008C582 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				D49447281C1FA5AD0008C582 /* UserAPI.swift */,
+			);
+			name = APIs;
 			sourceTree = "<group>";
 		};
 		D4A7866B1C0E90AC00C37427 /* Extensions */ = {
@@ -2116,6 +2127,7 @@
 				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
 				D49447261C1EE3BA0008C582 /* SignupViewController.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
+				D49447291C1FA5AD0008C582 /* UserAPI.swift in Sources */,
 				D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */,
 				D4C8FE2A1C06AA2300992801 /* XMPPAutoPing.m in Sources */,
 				D4C8FDD91C06AA2300992801 /* XMPPOutgoingFileTransfer.m in Sources */,
