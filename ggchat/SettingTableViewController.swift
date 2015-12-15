@@ -43,7 +43,7 @@ class SettingTableViewController:
         picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
-        let newSize: CGFloat = CGFloat(64.0)
+        let newSize: CGFloat = CGFloat(32.0)
         let resizedImage = self.imageWithImage(chosenImage, scaledToSize: CGSize(width: newSize, height: newSize))
         
         GGModelData.sharedInstance.updateAvatar(XMPPManager.sharedInstance.jid, image: resizedImage)
