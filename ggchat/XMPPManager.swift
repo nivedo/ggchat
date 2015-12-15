@@ -50,23 +50,20 @@ class XMPPManager: NSObject,
   
     class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
         var avatar: MessageAvatarImage?
-        
+       
+        print("avatarImageForJID")
         if let user = sharedInstance.rosterStorage.userForJID(
             XMPPJID.jidWithString(jid),
             xmppStream: sharedInstance.stream,
             managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster()) {
-            if user.photo != nil {
-                avatar = MessageAvatarImageFactory.avatarImageWithImage(user.photo!, diameter: GGConfig.avatarSize)
-            } else {
-                let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(user.jid)
-                
-                if let photoData = photoData {
-                    avatar = MessageAvatarImageFactory.avatarImageWithImage(UIImage(data: photoData)!, diameter: GGConfig.avatarSize)
-                }
+            if let photo = user.photo {
+                avatar = MessageAvatarImageFactory.avatarImageWithImage(photo, diameter: GGConfig.avatarSize)
             }
         }
        
-        if avatar == nil {
+        if let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(XMPPJID.jidWithString(jid)) {
+            avatar = MessageAvatarImageFactory.avatarImageWithImage(UIImage(data: photoData)!, diameter: GGConfig.avatarSize)
+        } else {
             avatar = GGModelData.sharedInstance.getAvatar(jid)
         }
        

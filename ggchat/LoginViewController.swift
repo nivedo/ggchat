@@ -71,11 +71,9 @@ class LoginViewController: UIViewController {
     
     func loadUserDefaults() {
         if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
-            self.usernameTextField.placeholder = previousUsername
             self.usernameTextField.text = previousUsername
         }
         if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
-            self.passwordTextField.placeholder = previousPassword
             self.passwordTextField.text = previousPassword
         }
     }

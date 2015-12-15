@@ -31,6 +31,7 @@ class SignupViewController: UIViewController {
         
         self.usernameTextField.placeholder = "Username"
         self.passwordTextField.placeholder = "Password"
+        self.passwordTextField.secureTextEntry = true
         
         self.errorTextView.textColor = UIColor.redColor()
         self.errorTextView.text = ""
