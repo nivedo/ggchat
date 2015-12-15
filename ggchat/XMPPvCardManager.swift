@@ -94,3 +94,10 @@ extension XMPPManager {
         print(vcard.description)
     }
 }
+
+extension XMPPUserCoreDataStorageObject {
+    
+    var nicknameFromvCard: String {
+        return XMPPvCardManager.sharedInstance.getvCardForJID(self.jid).nickname
+    }
+}

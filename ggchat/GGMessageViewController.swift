@@ -97,7 +97,7 @@ class GGMessageViewController:
     
     func loadUserHistory(loadArchiveMessages: Bool, loadLastActivity: Bool) {
         if let recipient = self.recipient {
-            self.navigationItem.title = recipient.displayName
+            self.navigationItem.title = recipient.nicknameFromvCard
          
             if self.recipientDetails == nil || loadLastActivity {
                 XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jidStr,
@@ -111,7 +111,7 @@ class GGMessageViewController:
                             }
                         }
                         self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
-                            lastActivityResponse, displayName: recipient.displayName)
+                            lastActivityResponse, displayName: recipient.nicknameFromvCard)
                         if (self.recipientDetails != nil) {
                             self.navigationItem.title = ""
                             
@@ -165,7 +165,7 @@ class GGMessageViewController:
         self.recipient = recipient
        
         if self.recipientDetails == nil {
-            self.navigationItem.title = recipient.displayName
+            self.navigationItem.title = recipient.nicknameFromvCard
         }
         
         if !XMPPChatManager.knownUserForJid(jidStr: recipient.jidStr) {
