@@ -187,30 +187,14 @@ class ContactTableViewController: UITableViewController,
         let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! ContactTableViewCell
 
-        // Configure the cell...
-        
-        let needsAvatar: Bool = true
-        if (needsAvatar) {
-            let avatarImageDataSource = self.tableView(
-                self.tableView,
-                avatarImageDataForItemAtIndexPath: indexPath)
-            if (avatarImageDataSource != nil) {
-                let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
-                if (avatarImage == nil) {
-                    cell.avatarImageView.image = avatarImageDataSource!.avatarPlaceholderImage
-                    cell.avatarImageView.highlightedImage = nil
-                } else {
-                    cell.avatarImageView.image = avatarImage
-                    cell.avatarImageView.highlightedImage = avatarImageDataSource!.avatarHighlightedImage
-                }
-            }
-        }
-        // let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
         let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
         var displayName = user.jidStr
         if (user.nickname != nil && user.nickname != "") {
             displayName = user.nickname
         }
+        
+        (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)
+        
         cell.cellMainLabel.attributedText = NSAttributedString(string: displayName)
         
         return cell
