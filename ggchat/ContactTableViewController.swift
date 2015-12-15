@@ -192,9 +192,10 @@ class ContactTableViewController: UITableViewController,
         if (user.nickname != nil && user.nickname != "") {
             displayName = user.nickname
         }
-        let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid)
-        if (vcard.nickname != nil && vcard.nickname != "") {
-            displayName = vcard.nickname
+        if let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid) {
+            if (vcard.nickname != nil && vcard.nickname != "") {
+                displayName = vcard.nickname
+            }
         }
         
         (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)

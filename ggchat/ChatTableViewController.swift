@@ -103,10 +103,13 @@ class ChatTableViewController:
 
         // Configure the cell...
         let user = self.dataList.objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
-       
-        let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid)
+      
+        var displayName = user.jidStr
+        if let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid) {
+            displayName = vcard.nickname
+        }
         
-        cell.cellTopLabel.attributedText = NSAttributedString(string: vcard.nickname)
+        cell.cellTopLabel.attributedText = NSAttributedString(string: displayName)
         cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
         cell.cellCornerLabel.attributedText = NSAttributedString(string: MessageTimestampFormatter.sharedInstance.timestampForDate(NSDate()))
         

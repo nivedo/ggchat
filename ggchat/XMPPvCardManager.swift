@@ -61,7 +61,7 @@ public class XMPPvCardManager: NSObject {
         XMPPManager.sharedInstance.vCardTempModule.fetchvCardTempForJID(jid)
     }
     
-    func getvCardForJID(jid: XMPPJID) -> XMPPvCardTemp {
+    func getvCardForJID(jid: XMPPJID) -> XMPPvCardTemp? {
         let vcard = XMPPManager.sharedInstance.vCardStorage.vCardTempForJID(jid,
             xmppStream: XMPPManager.sharedInstance.stream)
         
@@ -98,6 +98,11 @@ extension XMPPManager {
 extension XMPPUserCoreDataStorageObject {
     
     var nicknameFromvCard: String {
-        return XMPPvCardManager.sharedInstance.getvCardForJID(self.jid).nickname
+        if let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(self.jid) {
+            if let nickname = vcard.nickname {
+                return nickname
+            }
+        }
+        return self.jidStr
     }
 }
