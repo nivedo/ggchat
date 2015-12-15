@@ -115,6 +115,17 @@ public class XMPPRosterManager: NSObject, NSFetchedResultsControllerDelegate {
 	
 	public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         print("controllerDidChangeContent")
+       
+        /*
+        // Fetch vcards
+        if let results = self.fetchedResultsController()?.fetchedObjects {
+            for object in results {
+                if let user = object as? XMPPUserCoreDataStorageObject {
+                    XMPPvCardManager.sharedInstance.fetchvCardForJID(user.jid)
+                }
+            }
+        }
+        */
 		delegate?.onRosterContentChanged(controller)
 	}
     
