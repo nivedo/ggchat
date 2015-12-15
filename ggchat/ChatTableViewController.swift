@@ -103,26 +103,14 @@ class ChatTableViewController:
 
         // Configure the cell...
         let user = self.dataList.objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
-        cell.cellTopLabel.attributedText = NSAttributedString(string: user.displayName)
+       
+        let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid)
+        
+        cell.cellTopLabel.attributedText = NSAttributedString(string: vcard.nickname)
         cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
         cell.cellCornerLabel.attributedText = NSAttributedString(string: MessageTimestampFormatter.sharedInstance.timestampForDate(NSDate()))
         
-        let needsAvatar: Bool = true
-        if (needsAvatar) {
-            let avatarImageDataSource = self.tableView(
-                self.tableView,
-                avatarImageDataForItemAtIndexPath: indexPath)
-            if (avatarImageDataSource != nil) {
-                let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
-                if (avatarImage == nil) {
-                    cell.avatarImageView.image = avatarImageDataSource!.avatarPlaceholderImage
-                    cell.avatarImageView.highlightedImage = nil
-                } else {
-                    cell.avatarImageView.image = avatarImage
-                    cell.avatarImageView.highlightedImage = avatarImageDataSource!.avatarHighlightedImage
-                }
-            }
-        }
+        (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)
         
         return cell
     }
@@ -202,12 +190,14 @@ class ChatTableViewController:
         }
     }
     
+    /*
     func tableView(tableView: UITableView,
         avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
         // return GGModelData.sharedInstance.getAvatar(Demo.id_jobs)
         let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
         return GGModelData.sharedInstance.getAvatar(user.jidStr)
     }
+    */
     
     func onRosterContentChanged(controller: NSFetchedResultsController) {
         print("onRosterContentChanged")
