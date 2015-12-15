@@ -342,7 +342,8 @@ class MessageViewController: UIViewController,
             }
         }
         */
-        return GGModelData.sharedInstance.getAvatar(message.senderId)
+        // return GGModelData.sharedInstance.getAvatar(message.senderId)
+        return XMPPManager.avatarForJID(message.senderId)
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {

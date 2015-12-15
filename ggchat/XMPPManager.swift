@@ -48,31 +48,45 @@ class XMPPManager: NSObject,
     // Class helper methods
     //////////////////////////////////////////////////////////////////////////////
   
-    class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
+    class func avatarForJID(jid: String) -> MessageAvatarImage {
         var avatar: MessageAvatarImage?
        
-        print("avatarImageForJID")
+        var xmppUser: XMPPUserCoreDataStorageObject?
         if let user = sharedInstance.rosterStorage.userForJID(
             XMPPJID.jidWithString(jid),
             xmppStream: sharedInstance.stream,
             managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster()) {
+            xmppUser = user
             if let photo = user.photo {
                 avatar = MessageAvatarImageFactory.avatarImageWithImage(photo, diameter: GGConfig.avatarSize)
+                return avatar!
             }
         }
-       
+        
         if let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(XMPPJID.jidWithString(jid)) {
-            avatar = MessageAvatarImageFactory.avatarImageWithImage(UIImage(data: photoData)!, diameter: GGConfig.avatarSize)
+            let photo = UIImage(data: photoData)!
+            avatar = MessageAvatarImageFactory.avatarImageWithImage(photo, diameter: GGConfig.avatarSize)
+            if xmppUser != nil {
+                xmppUser!.photo = photo
+            }
         } else {
             print("Unable to find avatar for \(jid) on ejabberd server")
             avatar = GGModelData.sharedInstance.getAvatar(jid)
+            if xmppUser != nil {
+                xmppUser!.photo = avatar!.avatarImage
+            }
         }
-       
-        let avatarImage: UIImage? = avatar!.avatarImage
+        
+        return avatar!
+    }
+    
+    class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
+        let avatar = self.avatarForJID(jid)
+        let avatarImage: UIImage? = avatar.avatarImage
         if (avatarImage == nil) {
-            return (avatar!.avatarPlaceholderImage, nil)
+            return (avatar.avatarPlaceholderImage, nil)
         } else {
-            return (avatarImage!, avatar!.avatarHighlightedImage)
+            return (avatarImage!, avatar.avatarHighlightedImage)
         }
     }
     
