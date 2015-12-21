@@ -49,9 +49,23 @@ public class XMPPvCardManager: NSObject {
         let queue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         dispatch_async(queue) {
             let vCardTempModule = XMPPManager.sharedInstance.vCardTempModule
-            let myVcardTemp = vCardTempModule.myvCardTemp
-            myVcardTemp.photo = imageData
-            vCardTempModule.updateMyvCardTemp(myVcardTemp)
+            if let myVcardTemp = vCardTempModule.myvCardTemp {
+                myVcardTemp.photo = imageData
+                vCardTempModule.updateMyvCardTemp(myVcardTemp)
+            } else {
+                let vCardXML = DDXMLElement(name: "vCard", xmlns: "vcard-temp")
+                let photoXML: DDXMLElement = DDXMLElement(name: "PHOTO")
+                let typeXML: DDXMLElement = DDXMLElement(name: "TYPE", stringValue: "image/jpeg")
+                let binvalXML: DDXMLElement = DDXMLElement(name: "BINVAL", stringValue: imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength))
+                
+                photoXML.addChild(typeXML)
+                photoXML.addChild(binvalXML)
+                vCardXML.addChild(photoXML)
+                
+                let newvCardTemp: XMPPvCardTemp = XMPPvCardTemp(fromElement: vCardXML)
+                vCardTempModule.updateMyvCardTemp(newvCardTemp)
+                
+            }
         }
     }
     
