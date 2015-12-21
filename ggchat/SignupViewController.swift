@@ -106,6 +106,26 @@ class SignupViewController: UIViewController {
     }
     
     func registerNewUser(username: String, password: String) {
+        UserAPI.sharedInstance.register(username,
+            password: password, completion: { (success: Bool) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                if success {
+                    self.errorTextView.text = ""
+                    
+                    NSUserDefaults.standardUserDefaults().setValue(username, forKey: GGKey.username)
+                    NSUserDefaults.standardUserDefaults().setValue("", forKey: GGKey.password)
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    self.errorTextView.text = "User name \(username) already exists."
+                }
+            }
+        })
+    }
+    
+    /*
+    func registerNewUser(username: String, password: String) {
         let URL: NSURL = NSURL(string: "http://chat.blub.io:5280/rest/")!
         let request: NSMutableURLRequest = NSMutableURLRequest(URL:URL)
         request.HTTPMethod = "POST"
@@ -143,6 +163,7 @@ class SignupViewController: UIViewController {
         }
         task.resume()
     }
+    */
     
     /*
     // MARK: - Navigation
