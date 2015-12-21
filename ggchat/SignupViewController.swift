@@ -113,7 +113,7 @@ class SignupViewController: UIViewController {
                     self.errorTextView.text = ""
                     
                     NSUserDefaults.standardUserDefaults().setValue(username, forKey: GGKey.username)
-                    NSUserDefaults.standardUserDefaults().setValue("", forKey: GGKey.password)
+                    NSUserDefaults.standardUserDefaults().setValue(password, forKey: GGKey.password)
                     NSUserDefaults.standardUserDefaults().synchronize()
                     
                     self.dismissViewControllerAnimated(true, completion: nil)
