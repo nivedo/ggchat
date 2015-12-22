@@ -208,11 +208,12 @@ class ContactTableViewController: UITableViewController,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
-        self.searchResultController.searchBar.resignFirstResponder()
-        self.searchResultController.active = false
-        
-        self.performSegueWithIdentifier("contacts.to.messages", sender: user)
+        if let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as? XMPPUserCoreDataStorageObject {
+            self.searchResultController.searchBar.resignFirstResponder()
+            self.searchResultController.active = false
+            
+            self.performSegueWithIdentifier("contacts.to.messages", sender: user)
+        }
     }
     
     /*

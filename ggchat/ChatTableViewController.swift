@@ -115,6 +115,10 @@ class ChatTableViewController:
             cell.cellCornerLabel.attributedText = NSAttributedString(string: MessageTimestampFormatter.sharedInstance.timestampForDate(NSDate()))
             
             (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)
+        } else {
+            cell.cellTopLabel.text = ""
+            cell.cellBottomLabel.text = ""
+            cell.cellCornerLabel.text = ""
         }
         
         return cell
