@@ -58,6 +58,8 @@ class UserAPI {
                     self.authToken = newToken
                     self.jid = jid
                     self.jpassword = pass
+                    self.password = password
+                    self.email = email
                     completion?(true)
                 } else {
                     completion?(false)
@@ -78,6 +80,8 @@ class UserAPI {
                     self.authToken = newToken
                     self.jid = jid
                     self.jpassword = pass
+                    self.password = password
+                    self.email = email
                     self.sendPushToken()
                     completion?(true)
                 } else {
@@ -167,6 +171,9 @@ class UserAPI {
             NSUserDefaults.standardUserDefaults().setValue(self.jpassword, forKey: GGKey.userApiJabberdPassword)
         }
     }
+    
+    var email: String?
+    var password: String?
     
     private func post(urlPath: String, authToken: String?, jsonBody: [String: AnyObject]?, jsonCompletion: JSONCompletion?) {
         let URL: NSURL = NSURL(string: urlPath)!

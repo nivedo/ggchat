@@ -122,11 +122,15 @@ class XMPPManager: NSObject,
                 return displayName
             }
         }
-        
-        if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.displayName) {
-            return previousJID
+       
+        if let email = UserAPI.sharedInstance.email {
+            return email
         } else {
-            return self.stream.myJID.bare()
+            if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.displayName) {
+                return previousJID
+            } else {
+                return self.stream.myJID.bare()
+            }
         }
     }
 
