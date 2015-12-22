@@ -83,9 +83,9 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginAction(sender: AnyObject) {
-        // self.usernameTextField.text = "admin"
-        // self.passwordTextField.text = "asdf"
-        if (self.usernameTextField.text == "" || self.passwordTextField.text == "") {
+        let username = self.usernameTextField.text!
+        let password = self.passwordTextField.text!
+        if (username == "" || password == "") {
             let alert = UIAlertView()
             alert.title = "Please enter both a username and password!"
             alert.addButtonWithTitle("OK")
@@ -97,13 +97,31 @@ class LoginViewController: UIViewController {
         self.usernameTextField.resignFirstResponder()
         self.passwordTextField.resignFirstResponder()
         
-        print("Logging in with \(self.usernameTextField.text!):\(self.passwordTextField.text!)")
-        
-        XMPPManager.sharedInstance.connect(
-            username: self.usernameTextField.text!,
-            password: self.passwordTextField.text!,
-            connectCompletionHandler: connectCallback,
-            authenticateCompletionHandler: authenticateCallback)
+        print("Logging in with \(username):\(password)")
+        UserAPI.sharedInstance.login(username,
+            password: password,
+            completion: { (success: Bool) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                if success {
+                    NSUserDefaults.standardUserDefaults().setValue(username, forKey: GGKey.username)
+                    NSUserDefaults.standardUserDefaults().setValue(password, forKey: GGKey.password)
+                    NSUserDefaults.standardUserDefaults().synchronize()
+    
+                    print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
+                    XMPPManager.sharedInstance.connectWithJID(
+                        jid: UserAPI.sharedInstance.jid!,
+                        password: UserAPI.sharedInstance.jpassword!,
+                        connectCompletionHandler: self.connectCallback,
+                        authenticateCompletionHandler: self.authenticateCallback)
+                } else {
+                    let alert = UIAlertView()
+                    alert.title = "Login Failed"
+                    alert.message = "Incorrect username or password"
+                    alert.addButtonWithTitle("Retry")
+                    alert.show()
+                }
+            }
+        })
     }
    
     func connectCallback(stream: XMPPStream, error: String?) {

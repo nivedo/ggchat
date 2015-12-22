@@ -25,6 +25,7 @@ class XMPPManager: NSObject,
 
     var username: String!
     var password: String!
+    var jid_: String?
     var domain: String = GGSetting.xmppDomain
     var stream: XMPPStream!
     var roster: XMPPRoster!
@@ -92,15 +93,22 @@ class XMPPManager: NSObject,
     
     var jid: String {
         get {
-            if (self.isConnected()) {
-                return self.stream.myJID.bare()
-            } else {
-                if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.jid) {
-                    return previousJID
+            if self.jid_ == nil {
+                if (self.isConnected()) {
+                    return self.stream.myJID.bare()
                 } else {
-                    return GGKey.jid
+                    if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.jid) {
+                        return previousJID
+                    } else {
+                        return GGKey.jid
+                    }
                 }
+            } else {
+                return self.jid_!
             }
+        }
+        set {
+            self.jid_ = newValue
         }
     }
    
@@ -222,6 +230,64 @@ class XMPPManager: NSObject,
         return jid == self.stream.myJID.bare()
     }
     
+    func connectWithJID(
+        jid jidOrNil: String?,
+        password passwordOrNil: String?,
+        connectCompletionHandler: StreamCompletionHandler?,
+        authenticateCompletionHandler: StreamCompletionHandler?) {
+            
+        self.connectCompletionHandler = connectCompletionHandler
+        self.authenticateCompletionHandler = authenticateCompletionHandler
+            
+        if (self.stream.isConnected()) {
+            // Already connected
+            if !self.stream.isAuthenticated() {
+                self.xmppStreamDidConnect(self.stream)
+            } else {
+                self.xmppStreamDidAuthenticate(self.stream)
+            }
+            return
+        }
+     
+        // Set jid
+        if (jidOrNil == nil) {
+            if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.jid) {
+                self.jid = previousJID
+            } else {
+                print("Error: Please enter jid before trying to connect.")
+                return
+            }
+        } else {
+            self.jid = jidOrNil!
+        }
+            
+        // Set password
+        if (passwordOrNil == nil) {
+            if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
+                self.password = previousPassword
+            } else {
+                print("Error: Please enter password before trying to connect.")
+                return
+            }
+        } else {
+            self.password = passwordOrNil!
+        }
+       
+        self.stream.myJID = XMPPJID.jidWithString(
+            self.jid,
+            resource: "ios")
+        
+        do {
+            print("Connecting with \(jid)")
+            // try self.stream.oldSchoolSecureConnectWithTimeout(30.0)
+            // var error: NSError? = nil
+            try self.stream.connectWithTimeout(5) // XMPPStreamTimeoutNone)
+        }
+        catch {
+            print("ERROR: Unable to connect to \(jid)")
+        }
+    }
+    
     func connect(
         username usernameOrNil: String?,
         password passwordOrNil: String?,
@@ -286,7 +352,6 @@ class XMPPManager: NSObject,
     }
     
     func xmppStreamDidConnect(sender: XMPPStream!) {
-        // print("SUCCESS: Connect to \(self.username)@\(self.domain)")
         print("Attempting to Login")
         do {
             try self.stream.authenticateWithPassword(self.password)
@@ -326,8 +391,8 @@ class XMPPManager: NSObject,
         sender.sendElement(XMPPPresence())
       
         // Save usernmae
-        NSUserDefaults.standardUserDefaults().setValue(self.username, forKey: GGKey.username)
-        NSUserDefaults.standardUserDefaults().setValue(self.password, forKey: GGKey.password)
+        // NSUserDefaults.standardUserDefaults().setValue(self.username, forKey: GGKey.username)
+        // NSUserDefaults.standardUserDefaults().setValue(self.password, forKey: GGKey.password)
         
         // Save jid and displayName
         NSUserDefaults.standardUserDefaults().setValue(self.stream.myJID.bare(),

@@ -70,6 +70,11 @@ struct GGKey {
     static let password = "password"
     static let jid = "jid"
     static let displayName = "displayName"
+    
+    static let userApiAuthToken = "user.api.authToken"
+    static let userApiPushToken = "user.api.pushToken"
+    static let userApiJID = "user.api.jid"
+    static let userApiJabberdPassword = "user.api.jpassword"
 }
 
 struct GGSetting {

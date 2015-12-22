@@ -57,7 +57,7 @@ class UserAPI {
                 {
                     self.authToken = newToken
                     self.jid = jid
-                    self.pass = pass
+                    self.jpassword = pass
                     completion?(true)
                 } else {
                     completion?(false)
@@ -77,7 +77,7 @@ class UserAPI {
                 {
                     self.authToken = newToken
                     self.jid = jid
-                    self.pass = pass
+                    self.jpassword = pass
                     completion?(true)
                 } else {
                     completion?(false)
@@ -98,7 +98,7 @@ class UserAPI {
                     {
                         self.authToken = newToken
                         self.jid = jid
-                        self.pass = pass
+                        self.jpassword = pass
                         completion?(true)
                     } else {
                         completion?(false)
@@ -134,9 +134,26 @@ class UserAPI {
     
     ////////////////////////////////////////////////////////////////////
     
-    private var authToken: String?
-    private var jid: String?
-    private var pass: String?
+    var authToken: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(self.authToken, forKey: GGKey.userApiAuthToken)
+        }
+    }
+    var pushToken: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(self.pushToken, forKey: GGKey.userApiPushToken)
+        }
+    }
+    var jid: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(self.jid, forKey: GGKey.userApiJID)
+        }
+    }
+    var jpassword: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(self.jpassword, forKey: GGKey.userApiJabberdPassword)
+        }
+    }
     
     private func post(urlPath: String, authToken: String?, jsonBody: [String: AnyObject]?, jsonCompletion: JSONCompletion?) {
         let URL: NSURL = NSURL(string: urlPath)!
