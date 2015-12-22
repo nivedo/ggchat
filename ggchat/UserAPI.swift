@@ -78,6 +78,7 @@ class UserAPI {
                     self.authToken = newToken
                     self.jid = jid
                     self.jpassword = pass
+                    self.sendPushToken()
                     completion?(true)
                 } else {
                     completion?(false)
@@ -99,6 +100,7 @@ class UserAPI {
                         self.authToken = newToken
                         self.jid = jid
                         self.jpassword = pass
+                        self.sendPushToken()
                         completion?(true)
                     } else {
                         completion?(false)
@@ -130,6 +132,17 @@ class UserAPI {
             return true
         }
         return false
+    }
+    
+    func sendPushToken() {
+        if let token = self.pushToken {
+            let success = self.editProfile(["pushToken": token] , jsonCompletion: { JSONCompletion in
+                print("Successfully pushed token for \(self.authToken!)")
+            })
+            if !success {
+                print("Unable to push token for \(self.authToken!)")
+            }
+        }
     }
     
     ////////////////////////////////////////////////////////////////////
