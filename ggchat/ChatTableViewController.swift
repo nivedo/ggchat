@@ -108,12 +108,14 @@ class ChatTableViewController:
         if let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid) {
             displayName = vcard.nickname
         }
-        
-        cell.cellTopLabel.attributedText = NSAttributedString(string: displayName)
-        cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
-        cell.cellCornerLabel.attributedText = NSAttributedString(string: MessageTimestampFormatter.sharedInstance.timestampForDate(NSDate()))
-        
-        (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)
+       
+        if displayName != nil {
+            cell.cellTopLabel.attributedText = NSAttributedString(string: displayName)
+            cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
+            cell.cellCornerLabel.attributedText = NSAttributedString(string: MessageTimestampFormatter.sharedInstance.timestampForDate(NSDate()))
+            
+            (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)
+        }
         
         return cell
     }
