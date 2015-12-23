@@ -140,12 +140,16 @@ class GGModelData {
         self.avatars[id] = MessageAvatarImageFactory.avatarImageWithImage(image, diameter: Demo.avatarSize)
     }
     
-    func getAvatar(id: String) -> MessageAvatarImage {
+    func getAvatar(id: String, displayName: String? = nil) -> MessageAvatarImage {
         if let val = self.avatars[id] {
             return val
         } else {
-            let first = id[id.startIndex]
-            let last = id[id.endIndex.advancedBy(-1)]
+            var display = id
+            if displayName != nil {
+                display = displayName!
+            }
+            let first = display[display.startIndex]
+            let last = display[display.endIndex.advancedBy(-1)]
             let initials = "\(first)\(last)".uppercaseString
             
             self.avatars[id] = MessageAvatarImageFactory.avatarImageWithUserInitials(

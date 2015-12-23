@@ -266,7 +266,7 @@ class UserAPI {
                 let avatar = MessageAvatarImageFactory.avatarImageWithImage(image, diameter: GGConfig.avatarSize)
                 return avatar
             } else {
-                return GGModelData.sharedInstance.getAvatar(self.jid!)
+                return GGModelData.sharedInstance.getAvatar(self.jid!, displayName: self.displayName)
             }
         }
     }
