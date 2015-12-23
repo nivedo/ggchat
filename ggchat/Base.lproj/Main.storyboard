@@ -402,7 +402,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ffn-iR-cyl">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ffn-iR-cyl">
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                             </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iHA-sv-CyY">
@@ -414,13 +414,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="E9Q-db-sWd" firstAttribute="top" secondItem="Ffn-iR-cyl" secondAttribute="bottom" id="BY9-tH-0T9"/>
                             <constraint firstItem="iHA-sv-CyY" firstAttribute="leading" secondItem="wbb-6d-Krr" secondAttribute="leading" id="Bn8-bJ-pf0"/>
                             <constraint firstItem="iHA-sv-CyY" firstAttribute="top" secondItem="wlo-D0-Ozo" secondAttribute="bottom" id="IrC-A3-1SH"/>
                             <constraint firstItem="Ffn-iR-cyl" firstAttribute="top" secondItem="wbb-6d-Krr" secondAttribute="top" constant="20" id="JH3-My-3UD"/>
-                            <constraint firstAttribute="trailing" secondItem="Ffn-iR-cyl" secondAttribute="trailing" id="NeQ-a1-QMl"/>
                             <constraint firstAttribute="trailing" secondItem="iHA-sv-CyY" secondAttribute="trailing" id="c4V-F9-f6X"/>
-                            <constraint firstItem="Ffn-iR-cyl" firstAttribute="leading" secondItem="wbb-6d-Krr" secondAttribute="leading" id="h9G-dC-WOJ"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
