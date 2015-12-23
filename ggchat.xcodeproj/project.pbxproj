@@ -15,6 +15,7 @@
 		D42B017F1C153FAD00643835 /* MessageAutocompleteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */; };
 		D42B01821C154AF700643835 /* JaroWinklerDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01811C154AF700643835 /* JaroWinklerDistance.swift */; };
 		D42B895E1C05D9EC0043C20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B895D1C05D9EC0043C20A /* LoginViewController.swift */; };
+		D433B1471C2A6EA30003E100 /* MessageImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1461C2A6EA30003E100 /* MessageImageViewController.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -285,6 +286,7 @@
 		D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAutocompleteCell.xib; sourceTree = "<group>"; };
 		D42B01811C154AF700643835 /* JaroWinklerDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JaroWinklerDistance.swift; sourceTree = "<group>"; };
 		D42B895D1C05D9EC0043C20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D433B1461C2A6EA30003E100 /* MessageImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageImageViewController.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -1126,6 +1128,7 @@
 				D45FBD621C04972200E79B4E /* SettingTableViewController.swift */,
 				D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */,
 				D49447251C1EE3BA0008C582 /* SignupViewController.swift */,
+				D433B1461C2A6EA30003E100 /* MessageImageViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2157,6 +2160,7 @@
 				D4C8FE1C1C06AA2300992801 /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				D4A9F5121BF9731300FA4444 /* MessageInputToolbar.swift in Sources */,
 				D4C8FDDF1C06AA2300992801 /* XMPPRoster.xcdatamodel in Sources */,
+				D433B1471C2A6EA30003E100 /* MessageImageViewController.swift in Sources */,
 				D4A786691C0D5A7E00C37427 /* SettingTableSwitchCell.swift in Sources */,
 				D4C8FDEF1C06AA2300992801 /* XMPPRoomMessageCoreDataStorageObject.m in Sources */,
 				D4C8FDF11C06AA2300992801 /* XMPPRoomHybrid.xcdatamodeld in Sources */,

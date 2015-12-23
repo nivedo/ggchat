@@ -41,6 +41,7 @@ class MessageViewController: UIViewController,
     var textViewWasFirstResponderDuringInteractivePop: Bool = false
     var overrideNavBackButtonToRootViewController: Bool = false
     var snapshotView: UIView?
+    var messageImageViewController: MessageImageViewController?
     
     var messages: [Message] = [Message]()
     
@@ -87,6 +88,12 @@ class MessageViewController: UIViewController,
     var selectedIndexPathForMenu: NSIndexPath?
     
     ///////////////////////////////////////////////////////////////////////////////
+    
+    func initMessageImageViewController() {
+        let storyboardName: String = "Main"
+        let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
+        self.messageImageViewController = storyboard.instantiateViewControllerWithIdentifier("Message Image View Controller") as? MessageImageViewController
+    }
     
     func setup() {
         self.view.backgroundColor = UIColor.whiteColor()
@@ -205,6 +212,7 @@ class MessageViewController: UIViewController,
         // Do any additional setup after loading the view.
         self.setup()
         self.tabBarController?.tabBar.hidden = true
+        self.initMessageImageViewController()
     }
 
     override func didReceiveMemoryWarning() {
@@ -1418,6 +1426,14 @@ class MessageViewController: UIViewController,
     func collectionView(collectionView: MessagesCollectionView,
         didTapMessageBubbleAtIndexPath indexPath: NSIndexPath) {
         print("MVC::didTapMessageBubbleAtIndexPath")
+        
+        let message = self.messages[indexPath.row]
+        if message.isMediaMessage {
+            if let mivc = self.messageImageViewController, let photoMedia = message.media as? PhotoMediaItem {
+                mivc.image = photoMedia.image
+                self.presentViewController(mivc, animated: true, completion: nil)
+            }
+        }
         self.dismissKeyboard()
     }
 
