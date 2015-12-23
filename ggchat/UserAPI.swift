@@ -45,10 +45,13 @@ class UserAPI {
     
     ////////////////////////////////////////////////////////////////////
     
-    func register(email: String, password: String, completion: ((Bool) -> Void)?) {
+    func register(username: String, email: String, password: String, completion: ((Bool) -> Void)?) {
         self.post(UserAPI.registerUrl,
             authToken: nil,
-            jsonBody: [ "email": email, "password": password ],
+            jsonBody: [
+                "username": username,
+                "email": email,
+                "password": password ],
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                 if let json = jsonDict,
                 let newToken = json["token"] as? String,
@@ -60,6 +63,7 @@ class UserAPI {
                     self.jpassword = pass
                     self.password = password
                     self.email = email
+                    self.username = username
                     completion?(true)
                 } else {
                     completion?(false)
@@ -144,7 +148,14 @@ class UserAPI {
         self.getProfile({ (jsonResponse: [String: AnyObject]?) -> Void in
             if let json = jsonResponse {
                 if let nickname = json["nickname"] as? String {
-                    self.nickname = nickname
+                    if nickname.length > 0 {
+                        self.nickname = nickname
+                    }
+                }
+                if let username = json["username"] as? String {
+                    if username.length > 0 {
+                        self.username = username
+                    }
                 }
                 if let avatarPath = json["avatar"] as? String {
                     print("Downloading avatar at \(avatarPath)")
@@ -227,7 +238,8 @@ class UserAPI {
             NSUserDefaults.standardUserDefaults().setValue(self.jpassword, forKey: GGKey.userApiJabberdPassword)
         }
     }
-    
+   
+    var username: String?
     var email: String?
     var password: String?
     var nickname: String?
@@ -236,14 +248,14 @@ class UserAPI {
     
     var displayName: String {
         get {
-            if let displayName = self.nickname {
-                return displayName
+            if let nickname = self.nickname {
+                return nickname
+            } else if let username = self.username {
+                return username
+            } else if let email = self.email {
+                return email
             } else {
-                if let email = self.email {
-                    return email
-                } else {
-                    return XMPPManager.sharedInstance.jid
-                }
+                return XMPPManager.sharedInstance.jid
             }
         }
     }

@@ -13,6 +13,7 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var signupContainer: UIView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var errorTextView: UITextView!
     @IBOutlet weak var submitButton: UIButton!
@@ -30,6 +31,7 @@ class SignupViewController: UIViewController {
         self.navigationItem.title = "Sign up"
         
         self.usernameTextField.placeholder = "Username"
+        self.emailTextField.placeholder = "Email"
         self.passwordTextField.placeholder = "Password"
         self.passwordTextField.secureTextEntry = true
         
@@ -54,11 +56,13 @@ class SignupViewController: UIViewController {
     
     func dismissKeyboard() {
         self.usernameTextField.resignFirstResponder()
+        self.emailTextField.resignFirstResponder()
         self.passwordTextField.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
         self.formatTextField(self.usernameTextField)
+        self.formatTextField(self.emailTextField)
         self.formatTextField(self.passwordTextField)
     }
     
@@ -88,31 +92,35 @@ class SignupViewController: UIViewController {
     
 
     @IBAction func submitPressed(sender: AnyObject) {
-        if let username = self.usernameTextField.text, let password = self.passwordTextField.text {
-            if (username == "" || password == "") {
+        if let username = self.usernameTextField.text, let email = self.emailTextField.text, let password = self.passwordTextField.text {
+            if (username == "" || password == "" || email == "") {
                 let alert = UIAlertView()
-                alert.title = "Please enter both a username and password!"
+                alert.title = "Please enter username, email, and password!"
                 alert.addButtonWithTitle("OK")
                 alert.show()
                 return
             }
             
             self.usernameTextField.resignFirstResponder()
+            self.emailTextField.resignFirstResponder()
             self.passwordTextField.resignFirstResponder()
             
             self.registerNewUser(self.usernameTextField.text!,
+                email: self.emailTextField.text!,
                 password: self.passwordTextField.text!)
         }
     }
     
-    func registerNewUser(username: String, password: String) {
+    func registerNewUser(username: String, email: String, password: String) {
         UserAPI.sharedInstance.register(username,
-            password: password, completion: { (success: Bool) -> Void in
+            email: email,
+            password: password,
+            completion: { (success: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 if success {
                     self.errorTextView.text = ""
                     
-                    NSUserDefaults.standardUserDefaults().setValue(username, forKey: GGKey.username)
+                    NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
                     NSUserDefaults.standardUserDefaults().setValue(password, forKey: GGKey.password)
                     NSUserDefaults.standardUserDefaults().synchronize()
                     

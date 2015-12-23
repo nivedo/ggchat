@@ -603,7 +603,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bES-Cd-2Jq" userLabel="Signup container">
-                                <rect key="frame" x="0.0" y="112" width="320" height="300"/>
+                                <rect key="frame" x="0.0" y="112" width="320" height="400"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DO9-wJ-XlR">
                                         <rect key="frame" x="30" y="10" width="260" height="40"/>
@@ -611,7 +611,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bB-fg-tgM">
-                                        <rect key="frame" x="30" y="240" width="260" height="40"/>
+                                        <rect key="frame" x="30" y="304" width="260" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="HNu-Bh-TBO"/>
                                         </constraints>
@@ -621,12 +621,12 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZHE-q4-QIH">
-                                        <rect key="frame" x="30" y="70" width="260" height="40"/>
+                                        <rect key="frame" x="30" y="150" width="260" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aRt-fQ-Yad">
-                                        <rect key="frame" x="30" y="150" width="260" height="60"/>
+                                        <rect key="frame" x="30" y="214" width="260" height="60"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="ew8-Sq-yte"/>
@@ -634,6 +634,11 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NNP-mm-elW" userLabel="Email Text Field">
+                                        <rect key="frame" x="30" y="80" width="260" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -641,15 +646,18 @@
                                     <constraint firstItem="aRt-fQ-Yad" firstAttribute="top" secondItem="ZHE-q4-QIH" secondAttribute="bottom" constant="40" id="98w-0S-lw0"/>
                                     <constraint firstAttribute="trailing" secondItem="aRt-fQ-Yad" secondAttribute="trailing" constant="30" id="CAc-S8-9cq"/>
                                     <constraint firstItem="ZHE-q4-QIH" firstAttribute="leading" secondItem="bES-Cd-2Jq" secondAttribute="leading" constant="30" id="Ccw-DD-7uk"/>
+                                    <constraint firstAttribute="trailing" secondItem="NNP-mm-elW" secondAttribute="trailing" constant="30" id="GDO-t8-sCz"/>
+                                    <constraint firstItem="NNP-mm-elW" firstAttribute="leading" secondItem="bES-Cd-2Jq" secondAttribute="leading" constant="30" id="Kwi-zK-NBd"/>
                                     <constraint firstItem="aRt-fQ-Yad" firstAttribute="leading" secondItem="bES-Cd-2Jq" secondAttribute="leading" constant="30" id="LHe-h9-az5"/>
                                     <constraint firstItem="9bB-fg-tgM" firstAttribute="top" secondItem="aRt-fQ-Yad" secondAttribute="bottom" constant="30" id="OqR-ug-HD7"/>
                                     <constraint firstItem="9bB-fg-tgM" firstAttribute="leading" secondItem="bES-Cd-2Jq" secondAttribute="leading" constant="30" id="Pmu-18-dG3"/>
+                                    <constraint firstItem="NNP-mm-elW" firstAttribute="top" secondItem="DO9-wJ-XlR" secondAttribute="bottom" constant="30" id="RTC-2s-mvx"/>
                                     <constraint firstAttribute="trailing" secondItem="DO9-wJ-XlR" secondAttribute="trailing" constant="30" id="Ubk-G3-9PK"/>
-                                    <constraint firstItem="ZHE-q4-QIH" firstAttribute="top" secondItem="DO9-wJ-XlR" secondAttribute="bottom" constant="20" id="Zmm-KW-TkC"/>
+                                    <constraint firstItem="ZHE-q4-QIH" firstAttribute="top" secondItem="NNP-mm-elW" secondAttribute="bottom" constant="30" id="VkW-TJ-qdw"/>
                                     <constraint firstAttribute="trailing" secondItem="ZHE-q4-QIH" secondAttribute="trailing" constant="30" id="iBr-jb-vXK"/>
                                     <constraint firstItem="DO9-wJ-XlR" firstAttribute="leading" secondItem="bES-Cd-2Jq" secondAttribute="leading" constant="30" id="niz-oK-dat"/>
                                     <constraint firstItem="DO9-wJ-XlR" firstAttribute="top" secondItem="bES-Cd-2Jq" secondAttribute="top" constant="10" id="u65-kq-CM9"/>
-                                    <constraint firstAttribute="height" constant="300" id="ydp-LL-Kix"/>
+                                    <constraint firstAttribute="height" constant="400" id="ydp-LL-Kix"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -664,6 +672,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
+                        <outlet property="emailTextField" destination="NNP-mm-elW" id="gy3-c2-xb0"/>
                         <outlet property="errorTextView" destination="aRt-fQ-Yad" id="Ihc-s4-m0s"/>
                         <outlet property="passwordTextField" destination="ZHE-q4-QIH" id="t5d-R4-fOV"/>
                         <outlet property="signupContainer" destination="bES-Cd-2Jq" id="F2v-CV-SOf"/>

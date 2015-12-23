@@ -291,7 +291,8 @@ class XMPPManager: NSObject,
             print("ERROR: Unable to connect to \(jid)")
         }
     }
-    
+   
+    /*
     func connect(
         username usernameOrNil: String?,
         password passwordOrNil: String?,
@@ -349,6 +350,7 @@ class XMPPManager: NSObject,
             print("ERROR: Unable to connect to \(self.username)@\(self.domain)")
         }
     }
+    */
    
     func xmppStream(sender: XMPPStream, willSecureWithSettings settings:NSMutableDictionary) {
         print("willSecureWithSettings")

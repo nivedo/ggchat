@@ -92,8 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
 
-        XMPPManager.sharedInstance.connect(
-            username: nil,
+        XMPPManager.sharedInstance.connectWithJID(
+            jid: nil,
             password: nil,
             connectCompletionHandler: nil,
             authenticateCompletionHandler: nil)

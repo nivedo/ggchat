@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
         // Initialize username and password
         self.loadUserDefaults()
         
-        self.usernameTextField.placeholder = "Username"
+        self.usernameTextField.placeholder = "Email"
         self.usernameTextField.autocorrectionType = UITextAutocorrectionType.No
         self.usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         self.usernameTextField.layer.borderColor = UIColor.darkGrayColor().CGColor
@@ -70,8 +70,8 @@ class LoginViewController: UIViewController {
     }
     
     func loadUserDefaults() {
-        if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
-            self.usernameTextField.text = previousUsername
+        if let previousEmail = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.email) {
+            self.usernameTextField.text = previousEmail
         }
         if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
             self.passwordTextField.text = previousPassword
@@ -83,11 +83,11 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginAction(sender: AnyObject) {
-        let username = self.usernameTextField.text!
+        let email = self.usernameTextField.text!
         let password = self.passwordTextField.text!
-        if (username == "" || password == "") {
+        if (email == "" || password == "") {
             let alert = UIAlertView()
-            alert.title = "Please enter both a username and password!"
+            alert.title = "Please enter both an email and password!"
             alert.addButtonWithTitle("OK")
             alert.show()
             return
@@ -97,13 +97,13 @@ class LoginViewController: UIViewController {
         self.usernameTextField.resignFirstResponder()
         self.passwordTextField.resignFirstResponder()
         
-        print("Logging in with \(username):\(password)")
-        UserAPI.sharedInstance.login(username,
+        print("Logging in with \(email):\(password)")
+        UserAPI.sharedInstance.login(email,
             password: password,
             completion: { (success: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 if success {
-                    NSUserDefaults.standardUserDefaults().setValue(username, forKey: GGKey.username)
+                    NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
                     NSUserDefaults.standardUserDefaults().setValue(password, forKey: GGKey.password)
                     NSUserDefaults.standardUserDefaults().synchronize()
     
@@ -136,13 +136,6 @@ class LoginViewController: UIViewController {
     
     func authenticateCallback(stream: XMPPStream, error: String?) {
         if (error == nil) {
-            /*
-            // Save usernmae
-            NSUserDefaults.standardUserDefaults().setValue(self.usernameTextField.text, forKey: GGKey.username)
-            NSUserDefaults.standardUserDefaults().setValue(self.passwordTextField.text, forKey: GGKey.password)
-            NSUserDefaults.standardUserDefaults().synchronize()
-            */
-            
             // Send notification
             let notification = NSNotification(name: "loginSuccessful", object: self)
             NSNotificationCenter.defaultCenter().postNotification(notification)

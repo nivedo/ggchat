@@ -41,11 +41,13 @@ class ChatTableViewController:
         })()
         
         XMPPRosterManager.sharedInstance.delegate = self
+        /*
         XMPPManager.sharedInstance.connect(
             username: nil,
             password: nil,
             connectCompletionHandler: nil,
             authenticateCompletionHandler: nil)
+        */
         self.tableView.reloadData()
     }
     
