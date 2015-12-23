@@ -82,7 +82,8 @@ class UserAPI {
                     self.jpassword = pass
                     self.password = password
                     self.email = email
-                    self.sendPushToken()
+                    self.cacheProfile(nil)
+                    self.updatePushToken()
                     completion?(true)
                 } else {
                     completion?(false)
@@ -104,7 +105,8 @@ class UserAPI {
                         self.authToken = newToken
                         self.jid = jid
                         self.jpassword = pass
-                        self.sendPushToken()
+                        self.cacheProfile(nil)
+                        self.updatePushToken()
                         completion?(true)
                     } else {
                         completion?(false)
@@ -126,7 +128,7 @@ class UserAPI {
         return false
     }
     
-    func editProfile(jsonBody: [String: AnyObject], jsonCompletion: JSONCompletion) -> Bool {
+    func editProfile(jsonBody: [String: AnyObject], jsonCompletion: JSONCompletion?) -> Bool {
         if let token = self.authToken {
             self.post(UserAPI.profileUrl,
                 authToken: token,
@@ -138,7 +140,22 @@ class UserAPI {
         return false
     }
     
-    func sendPushToken() {
+    func cacheProfile(completion: ((Bool) -> Void)?) {
+        self.getProfile({ (jsonResponse: [String: AnyObject]?) -> Void in
+            if let json = jsonResponse {
+                if let nickname = json["nickname"] as? String {
+                    self.nickname = nickname
+                }
+                if let avatarPath = json["avatarPath"] as? String {
+                    self.avatarPath = avatarPath
+                }
+                completion?(true)
+            }
+        })
+        completion?(false)
+    }
+    
+    func updatePushToken() {
         if let token = self.pushToken {
             let success = self.editProfile(["pushToken": token] , jsonCompletion: { JSONCompletion in
                 print("Successfully pushed token for \(self.authToken!)")
@@ -147,6 +164,19 @@ class UserAPI {
                 print("Unable to push token for \(self.authToken!)")
             }
         }
+    }
+    
+    func updateAvatarImage(image: UIImage) {
+
+    }
+    
+    func updateNickname(nickname: String, jsonCompletion: JSONCompletion?) -> Bool {
+        return self.editProfile(["nickname": nickname], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+            if let _ = jsonBody {
+                self.nickname = nickname
+            }
+            jsonCompletion?(json: jsonBody)
+        })
     }
     
     ////////////////////////////////////////////////////////////////////
@@ -174,6 +204,22 @@ class UserAPI {
     
     var email: String?
     var password: String?
+    var nickname: String?
+    var avatarPath: String?
+    
+    var displayName: String {
+        get {
+            if let displayName = self.nickname {
+                return displayName
+            } else {
+                if let email = self.email {
+                    return email
+                } else {
+                    return XMPPManager.sharedInstance.jid
+                }
+            }
+        }
+    }
     
     private func post(urlPath: String, authToken: String?, jsonBody: [String: AnyObject]?, jsonCompletion: JSONCompletion?) {
         let URL: NSURL = NSURL(string: urlPath)!
