@@ -46,9 +46,11 @@ class GGHearthStoneAsset : ImageModalAsset {
     
     init(name: String, bundleId: Int, assetId: String) {
         self.name = name
+        self.fullName = name
         self.bundleId = bundleId
         self.assetId = assetId
         self.apiURL = GGHearthStone.apiURL(name)
+        self.imageURL = "\(GGHearthStone.s3url)/\(bundleId)/\(assetId).png"
     }
     
     func getUIImage() -> UIImage? {
@@ -75,7 +77,8 @@ class GGHearthStoneAsset : ImageModalAsset {
         case NoData = "ERROR: no data"
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
-    
+   
+    /*
     func fetchInfo() {
         guard let endpoint = NSURL(string: self.apiURL) else { print("Error creating endpoint");return }
         let request = NSMutableURLRequest(URL:endpoint)
@@ -100,7 +103,13 @@ class GGHearthStoneAsset : ImageModalAsset {
             }
             }.resume()
         }
-   
+    */
+    
+    func fetchInfo() {
+        print(self.imageURL)
+        self.downloadImage()
+    }
+    
     func downloadImage() {
         if let urlImage = self.imageURL, let url = NSURL(string: urlImage) {
             // print("Started downloading \"\(url.URLByDeletingPathExtension!.lastPathComponent!)\".")
@@ -183,7 +192,8 @@ extension String {
 class GGHearthStone {
    
     private static let host = "http://45.33.39.21:1235"
-   
+    private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
+    
     class func apiURL(cardName: String) -> String {
         let urlName = cardName.stringByReplacingOccurrencesOfString(
             " ",
@@ -236,8 +246,12 @@ class GGHearthStone {
     
     init() {
         print("**************** HEARTHSTONE ******************")
-        let assetJsonName = "hearthstone_en"
-        if let asset = NSDataAsset(name: assetJsonName, bundle: NSBundle.mainBundle()) {
+        self.loadAsset("hearthstone_en")
+        // self.loadAsset("mtg_en")
+    }
+    
+    func loadAsset(json: String) {
+        if let asset = NSDataAsset(name: json, bundle: NSBundle.mainBundle()) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
                 asset.data,
                 options: NSJSONReadingOptions.AllowFragments)
@@ -269,7 +283,7 @@ class GGHearthStone {
                 }
             }
         } else {
-            print("Error: Unable to find \(assetJsonName)")
+            print("Error: Unable to find \(json)")
         }
     }
    

@@ -47,7 +47,14 @@ class SettingTableViewController:
         let resizedImage = self.imageWithImage(chosenImage, scaledToSize: CGSize(width: newSize, height: newSize))
         
         GGModelData.sharedInstance.updateAvatar(XMPPManager.sharedInstance.jid, image: resizedImage)
-        XMPPvCardManager.sharedInstance.updateAvatarImage(resizedImage)
+        // XMPPvCardManager.sharedInstance.updateAvatarImage(resizedImage)
+        UserAPI.sharedInstance.updateAvatarImage(resizedImage, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+            if let _ = jsonBody {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tableView.reloadData()
+                }
+            }
+        })
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -179,8 +186,11 @@ class SettingTableViewController:
                 
                 let status = XMPPManager.sharedInstance.isConnected() ? "online" : "offline"
                 cell.cellBottomLabel.attributedText = NSAttributedString(string: status)
-                
-                (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(XMPPManager.sharedInstance.jid)
+               
+                let avatar = UserAPI.sharedInstance.avatar
+                cell.avatarImageView.image = avatar.avatarImage
+                cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
+                // XMPPManager.avatarImageForJID(XMPPManager.sharedInstance.jid)
                 
                 let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
                 cell.avatarContainer.addGestureRecognizer(gesture)

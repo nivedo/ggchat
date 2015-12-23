@@ -146,8 +146,20 @@ class UserAPI {
                 if let nickname = json["nickname"] as? String {
                     self.nickname = nickname
                 }
-                if let avatarPath = json["avatarPath"] as? String {
+                if let avatarPath = json["avatar"] as? String {
+                    print("Downloading avatar at \(avatarPath)")
                     self.avatarPath = avatarPath
+                    
+                    AWSS3DownloadManager.sharedInstance.download(
+                        avatarPath,
+                        userData: nil,
+                        completion: { (fileURL: NSURL) -> Void in
+                            let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                            let image = UIImage(data: data)
+                            self.avatarImage = image
+                        },
+                        bucket: GGSetting.awsS3AvatarsBucketName
+                    )
                 }
                 completion?(true)
             }
@@ -166,8 +178,22 @@ class UserAPI {
         }
     }
     
-    func updateAvatarImage(image: UIImage) {
-
+    func updateAvatarImage(image: UIImage, jsonCompletion: JSONCompletion?) -> Bool {
+        let uniquePath = "\(NSProcessInfo.processInfo().globallyUniqueString).jpg"
+        return self.editProfile(["avatar": uniquePath], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+            if let _ = jsonBody {
+                // print(json)
+                AWSS3UploadManager.sharedInstance.upload(image,
+                    fileName: uniquePath,
+                    userData: nil,
+                    bucket: GGSetting.awsS3AvatarsBucketName,
+                    completion: { (success: Bool) -> Void in
+                        self.avatarPath = uniquePath
+                        self.avatarImage = image
+                        jsonCompletion?(json: jsonBody)
+                })
+            }
+        })
     }
     
     func updateNickname(nickname: String, jsonCompletion: JSONCompletion?) -> Bool {
@@ -206,6 +232,7 @@ class UserAPI {
     var password: String?
     var nickname: String?
     var avatarPath: String?
+    var avatarImage: UIImage?
     
     var displayName: String {
         get {
@@ -217,6 +244,17 @@ class UserAPI {
                 } else {
                     return XMPPManager.sharedInstance.jid
                 }
+            }
+        }
+    }
+    
+    var avatar: MessageAvatarImage {
+        get {
+            if let image = self.avatarImage {
+                let avatar = MessageAvatarImageFactory.avatarImageWithImage(image, diameter: GGConfig.avatarSize)
+                return avatar
+            } else {
+                return GGModelData.sharedInstance.getAvatar(self.jid!)
             }
         }
     }

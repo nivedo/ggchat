@@ -66,7 +66,7 @@ class AWSS3DownloadManager {
     var downloads = Array<S3Download?>()
     var delegate: S3DownloadDelegate?
    
-    func download(fileName: String, userData: [String: AnyObject]?, completion: S3DownloadCompletion?) {
+    func download(fileName: String, userData: [String: AnyObject]?, completion: S3DownloadCompletion?, bucket: String = GGSetting.awsS3BucketName) {
         let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
        
         /*
@@ -78,7 +78,7 @@ class AWSS3DownloadManager {
         
         let downloadRequest = AWSS3TransferManagerDownloadRequest()
         downloadRequest.key = fileName
-        downloadRequest.bucket = GGSetting.awsS3BucketName
+        downloadRequest.bucket = bucket
         downloadRequest.downloadingFileURL = fileURL
         
         self.downloads.append(S3Download(request: downloadRequest, userData: userData))

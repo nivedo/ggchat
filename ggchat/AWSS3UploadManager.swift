@@ -212,7 +212,7 @@ class AWSS3UploadManager {
     var uploads = Array<S3Upload?>()
     var delegate: S3UploadDelegate?
    
-    func upload(image: UIImage, fileName: String, userData: [String: AnyObject]? = nil) {
+    func upload(image: UIImage, fileName: String, userData: [String: AnyObject]? = nil, bucket: String = GGSetting.awsS3BucketName, completion: ((Bool) -> Void)? = nil) {
         let fileURL = self.tempFolderURL.URLByAppendingPathComponent(fileName)
         let filePath = fileURL.path!
         let imageData = UIImageJPEGRepresentation(image, 1.0)
@@ -221,13 +221,13 @@ class AWSS3UploadManager {
         let uploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.body = fileURL
         uploadRequest.key = fileName
-        uploadRequest.bucket = GGSetting.awsS3BucketName
+        uploadRequest.bucket = bucket // GGSetting.awsS3BucketName
         
         self.uploads.append(S3Upload(request: uploadRequest, userData: userData))
-        self.upload(uploadRequest)
+        self.upload(uploadRequest, completion: completion)
     }
     
-    func upload(uploadRequest: AWSS3TransferManagerUploadRequest) {
+    func upload(uploadRequest: AWSS3TransferManagerUploadRequest, completion: ((Bool) -> Void)? = nil) {
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
         
         transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
@@ -244,21 +244,25 @@ class AWSS3UploadManager {
                         default:
                             print("upload() failed: [\(error)]")
                             self.delegate?.onUploadFailure()
+                            completion?(false)
                             break;
                         }
                     } else {
                         print("upload() failed: [\(error)]")
                         self.delegate?.onUploadFailure()
+                        completion?(false)
                     }
                 } else {
                     print("upload() failed: [\(error)]")
                     self.delegate?.onUploadFailure()
+                    completion?(false)
                 }
             }
             
             if let exception = task.exception {
                 print("upload() failed: [\(exception)]")
                 self.delegate?.onUploadFailure()
+                completion?(false)
             }
             
             if task.result != nil {
@@ -267,6 +271,7 @@ class AWSS3UploadManager {
                         let key = uploadRequest.key!
                         self.uploads[index]!.onSuccess(uploadRequest.body)
                         self.delegate?.onUploadSuccess(key, userData: self.uploads[index]!.userData)
+                        completion?(true)
                     }
                 })
             }
