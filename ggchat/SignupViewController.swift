@@ -41,7 +41,7 @@ class SignupViewController: UIViewController {
         self.errorTextView.editable = false
         self.errorTextView.userInteractionEnabled = false
         
-        self.submitButton.setTitle("Submit", forState: .Normal);
+        self.submitButton.setTitle("Sign Up", forState: .Normal);
         self.submitButton.backgroundColor = UIColor.clearColor();
         self.submitButton.layer.cornerRadius = 5
         self.submitButton.layer.borderWidth = 1

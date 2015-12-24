@@ -45,7 +45,7 @@ class ProfileViewController: UIViewController,
         self.helpTextView.userInteractionEnabled = false
         self.helpTextView.text = "Please enter a display name and upload a photo that will help your friends find you. Profile names and photos are visible to other users."
         
-        self.submitButton.setTitle("Submit", forState: .Normal);
+        self.submitButton.setTitle("Ok", forState: .Normal);
         self.submitButton.backgroundColor = UIColor.clearColor();
         self.submitButton.layer.cornerRadius = 5
         self.submitButton.layer.borderWidth = 1

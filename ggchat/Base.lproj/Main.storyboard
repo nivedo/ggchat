@@ -615,7 +615,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="HNu-Bh-TBO"/>
                                         </constraints>
-                                        <state key="normal" title="Submit"/>
+                                        <state key="normal" title="Sign Up"/>
                                         <connections>
                                             <action selector="submitPressed:" destination="faT-V0-YcV" eventType="touchUpInside" id="wUZ-tE-Guw"/>
                                         </connections>
@@ -738,7 +738,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="QID-4v-Rty"/>
                                     <constraint firstAttribute="height" constant="40" id="s2c-Hd-yaZ"/>
                                 </constraints>
-                                <state key="normal" title="Submit"/>
+                                <state key="normal" title="Ok"/>
                                 <connections>
                                     <action selector="submitPressed:" destination="3iw-mD-Aso" eventType="touchUpInside" id="nw3-LV-giE"/>
                                 </connections>
