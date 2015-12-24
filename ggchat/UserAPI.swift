@@ -10,6 +10,28 @@ import Foundation
 
 public typealias JSONCompletion = (json: [String: AnyObject]?) -> Void
 
+class RosterUser {
+    var nickname: String
+    var jid: String
+    var avatar: String
+    
+    init(profile: [String: AnyObject]) {
+        self.jid = profile["jid"] as! String
+        self.nickname = profile["nickname"] as! String
+        self.avatar = profile["avatar"] as! String
+    }
+    
+    var displayName: String {
+        get {
+            if self.nickname.length > 0 {
+                return self.nickname
+            } else {
+                return self.jid
+            }
+        }
+    }
+}
+
 class UserAPI {
     
     class var sharedInstance: UserAPI {
@@ -43,14 +65,10 @@ class UserAPI {
         return self.route("auth")
     }
     
-    class func userinfoWithUsernameUrl(username: String) -> String {
+    class func userinfoUrl(username: String) -> String {
         return "\(self.route("userinfo"))?username=\(username)"
     }
 
-    class func userinfoWithJIDUrl(jid: String) -> String {
-        return "\(self.route("userinfo"))?jid=\(jid)"
-    }
-    
     class func rosterWithJIDUrl(jid: String) -> String {
         return "\(self.route("roster"))?jid=\(jid)"
     }
@@ -99,6 +117,7 @@ class UserAPI {
                     self.password = password
                     self.email = email
                     self.cacheProfile(nil)
+                    self.cacheRoster()
                     self.updatePushToken()
                     completion?(true)
                 } else {
@@ -106,10 +125,10 @@ class UserAPI {
                 }
             })
     }
-    
+   
     func authenticate(completion: ((Bool) -> Void)?) -> Bool {
         if let token = self.authToken {
-            self.post(UserAPI.loginUrl,
+            self.post(UserAPI.authUrl,
                 authToken: token,
                 jsonBody: nil,
                 jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
@@ -122,6 +141,7 @@ class UserAPI {
                         self.jid = jid
                         self.jpassword = pass
                         self.cacheProfile(nil)
+                        self.cacheRoster()
                         self.updatePushToken()
                         completion?(true)
                     } else {
@@ -133,18 +153,12 @@ class UserAPI {
         return false
     }
    
-    func getUserinfoWithUsername(username: String, jsonCompletion: JSONCompletion) {
-        self.get(UserAPI.userinfoWithUsernameUrl(username),
+    func getUserinfo(username: String, jsonCompletion: JSONCompletion) {
+        self.get(UserAPI.userinfoUrl(username),
             authToken: nil,
             jsonCompletion: jsonCompletion)
     }
 
-    func getUserinfoWithJID(jid: String, jsonCompletion: JSONCompletion) {
-        self.get(UserAPI.userinfoWithJIDUrl(jid),
-            authToken: nil,
-            jsonCompletion: jsonCompletion)
-    }
-    
     func getRosterWithJID(jid: String, jsonCompletion: JSONCompletion) {
         self.get(UserAPI.rosterWithJIDUrl(jid),
             authToken: nil,
@@ -188,19 +202,21 @@ class UserAPI {
                     }
                 }
                 if let avatarPath = json["avatar"] as? String {
-                    print("Downloading avatar at \(avatarPath)")
-                    self.avatarPath = avatarPath
-                    
-                    AWSS3DownloadManager.sharedInstance.download(
-                        avatarPath,
-                        userData: nil,
-                        completion: { (fileURL: NSURL) -> Void in
-                            let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-                            let image = UIImage(data: data)
-                            self.avatarImage = image
-                        },
-                        bucket: GGSetting.awsS3AvatarsBucketName
-                    )
+                    if avatarPath.length > 0 {
+                        print("Downloading avatar at \(avatarPath)")
+                        self.avatarPath = avatarPath
+                        
+                        AWSS3DownloadManager.sharedInstance.download(
+                            avatarPath,
+                            userData: nil,
+                            completion: { (fileURL: NSURL) -> Void in
+                                let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                                let image = UIImage(data: data)
+                                self.avatarImage = image
+                            },
+                            bucket: GGSetting.awsS3AvatarsBucketName
+                        )
+                    }
                 }
                 completion?(true)
             }
@@ -208,16 +224,25 @@ class UserAPI {
         completion?(false)
     }
     
-    func cacheRoster() {
+    func cacheRoster(completion: ((Bool) -> Void)? = nil) {
+        self.rosterList.removeAll()
         if let jid = self.jid {
             UserAPI.sharedInstance.getRosterWithJID(jid,
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
-                    if let json = jsonBody {
-                        print(json)
+                    if let json = jsonBody, let profiles = json["profiles"] as? NSArray {
+                        print(profiles)
+                        for profile in profiles {
+                            self.rosterList.append(RosterUser(profile: profile as! [String: AnyObject]))
+                        }
+                        completion?(true)
+                        return
                     }
+                    completion?(false)
+                    return
                 }
             )
         }
+        completion?(false)
     }
     
     func updatePushToken() {
@@ -287,6 +312,7 @@ class UserAPI {
     var nickname: String?
     var avatarPath: String?
     var avatarImage: UIImage?
+    var rosterList: [RosterUser] = [RosterUser]()
     
     var displayName: String {
         get {

@@ -123,7 +123,9 @@ class GGHearthStoneAsset : ImageModalAsset {
                     }
                     // print("Finished downloading \"\(url)\".")
                     self.image = UIImage(data: data)
-                    self.delegate?.onDownloadSuccess(self.image!)
+                    if let image = self.image {
+                        self.delegate?.onDownloadSuccess(image)
+                    }
                 }
             }
         }
@@ -246,8 +248,8 @@ class GGHearthStone {
     
     init() {
         print("**************** HEARTHSTONE ******************")
-        self.loadAsset("hearthstone_en")
-        // self.loadAsset("mtg_en")
+        // self.loadAsset("hearthstone_en")
+        self.loadAsset("mtg_en_clean")
     }
     
     func loadAsset(json: String) {
