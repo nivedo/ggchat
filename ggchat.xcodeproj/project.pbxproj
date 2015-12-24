@@ -16,6 +16,8 @@
 		D42B01821C154AF700643835 /* JaroWinklerDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01811C154AF700643835 /* JaroWinklerDistance.swift */; };
 		D42B895E1C05D9EC0043C20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B895D1C05D9EC0043C20A /* LoginViewController.swift */; };
 		D433B1471C2A6EA30003E100 /* MessageImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1461C2A6EA30003E100 /* MessageImageViewController.swift */; };
+		D433B1491C2B951A0003E100 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1481C2B951A0003E100 /* ProfileViewController.swift */; };
+		D433B14C1C2BAD670003E100 /* PopToRootSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B14B1C2BAD670003E100 /* PopToRootSegue.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -287,6 +289,8 @@
 		D42B01811C154AF700643835 /* JaroWinklerDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JaroWinklerDistance.swift; sourceTree = "<group>"; };
 		D42B895D1C05D9EC0043C20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D433B1461C2A6EA30003E100 /* MessageImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageImageViewController.swift; sourceTree = "<group>"; };
+		D433B1481C2B951A0003E100 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D433B14B1C2BAD670003E100 /* PopToRootSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopToRootSegue.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -757,6 +761,14 @@
 			name = Algorithms;
 			sourceTree = "<group>";
 		};
+		D433B14A1C2BACD90003E100 /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				D433B14B1C2BAD670003E100 /* PopToRootSegue.swift */,
+			);
+			name = Segues;
+			sourceTree = "<group>";
+		};
 		D43B28AC1C0688E300B3F367 /* XMPPFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1049,6 +1061,7 @@
 		D4683E541BF0486F00E02886 /* ggchat */ = {
 			isa = PBXGroup;
 			children = (
+				D433B14A1C2BACD90003E100 /* Segues */,
 				D49447271C1FA57E0008C582 /* APIs */,
 				D45034BF1C1CFCC40025E29C /* DataStructures */,
 				D43B28AC1C0688E300B3F367 /* XMPPFramework */,
@@ -1129,6 +1142,7 @@
 				D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */,
 				D49447251C1EE3BA0008C582 /* SignupViewController.swift */,
 				D433B1461C2A6EA30003E100 /* MessageImageViewController.swift */,
+				D433B1481C2B951A0003E100 /* ProfileViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2126,6 +2140,7 @@
 				D4A9F5AE1BFC51C000FA4444 /* MessageComposerTextView.swift in Sources */,
 				D43B28CA1C06894100B3F367 /* DDTTYLogger.m in Sources */,
 				D45FBD411BFD654100E79B4E /* MessageKeyboardController.swift in Sources */,
+				D433B14C1C2BAD670003E100 /* PopToRootSegue.swift in Sources */,
 				D4C8FDFB1C06AA2300992801 /* XMPPvCard.xcdatamodeld in Sources */,
 				D4A9F5B21BFCEE7900FA4444 /* MessageToolbarButtonFactory.swift in Sources */,
 				D49447261C1EE3BA0008C582 /* SignupViewController.swift in Sources */,
@@ -2314,6 +2329,7 @@
 				D4C8FE1D1C06AA2300992801 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				D4C8FE031C06AA2300992801 /* XMPPvCardTempBase.m in Sources */,
 				D4C8FDF51C06AA2300992801 /* XMPPRoomMemoryStorage.m in Sources */,
+				D433B1491C2B951A0003E100 /* ProfileViewController.swift in Sources */,
 				D4C8FE291C06AA2300992801 /* XMPPStreamManagement.m in Sources */,
 				D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */,
 			);

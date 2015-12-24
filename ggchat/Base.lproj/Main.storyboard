@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Message View Controller-->
@@ -678,11 +679,102 @@
                         <outlet property="signupContainer" destination="bES-Cd-2Jq" id="F2v-CV-SOf"/>
                         <outlet property="submitButton" destination="9bB-fg-tgM" id="rkc-di-H7F"/>
                         <outlet property="usernameTextField" destination="DO9-wJ-XlR" id="cmL-Pg-gES"/>
+                        <segue destination="3iw-mD-Aso" kind="show" identifier="signup.to.profile" id="gda-S4-y6p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vy4-gh-KEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2921" y="1565"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="guY-mY-hiu">
+            <objects>
+                <viewController id="3iw-mD-Aso" customClass="ProfileViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ezu-qx-GxY"/>
+                        <viewControllerLayoutGuide type="bottom" id="goG-ti-vY8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hkv-7S-09F">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EDP-JS-fRm" userLabel="Avatar container">
+                                <rect key="frame" x="110" y="79" width="100" height="100"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L7X-Qm-lrO" userLabel="Avatar image">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="L7X-Qm-lrO" secondAttribute="bottom" id="PhS-RA-Bv8"/>
+                                    <constraint firstItem="L7X-Qm-lrO" firstAttribute="leading" secondItem="EDP-JS-fRm" secondAttribute="leading" id="TBO-AX-2fN"/>
+                                    <constraint firstAttribute="trailing" secondItem="L7X-Qm-lrO" secondAttribute="trailing" id="Y7V-Xy-8M2"/>
+                                    <constraint firstAttribute="width" constant="100" id="eLH-6U-3wc"/>
+                                    <constraint firstItem="L7X-Qm-lrO" firstAttribute="top" secondItem="EDP-JS-fRm" secondAttribute="top" id="oiS-ap-bgx"/>
+                                    <constraint firstAttribute="height" constant="100" id="rnM-Si-tGD"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZxG-Nc-D5k">
+                                <rect key="frame" x="30" y="210" width="260" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="pKs-SK-bjS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TSt-xW-N4e">
+                                <rect key="frame" x="30" y="273" width="260" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="APe-HM-5Nm"/>
+                                    <constraint firstAttribute="height" constant="100" id="Kb9-I6-Fgo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NT6-h7-dWQ">
+                                <rect key="frame" x="30" y="395" width="260" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="QID-4v-Rty"/>
+                                    <constraint firstAttribute="height" constant="40" id="s2c-Hd-yaZ"/>
+                                </constraints>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitPressed:" destination="3iw-mD-Aso" eventType="touchUpInside" id="nw3-LV-giE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NT6-h7-dWQ" firstAttribute="top" secondItem="TSt-xW-N4e" secondAttribute="bottom" constant="30" id="62F-M2-xA7"/>
+                            <constraint firstItem="TSt-xW-N4e" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leading" constant="30" id="K4N-Sw-hqP"/>
+                            <constraint firstAttribute="trailing" secondItem="ZxG-Nc-D5k" secondAttribute="trailing" constant="30" id="MEC-Hm-WBG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EDP-JS-fRm" secondAttribute="trailing" constant="90" id="V7M-DP-S5k"/>
+                            <constraint firstAttribute="trailing" secondItem="NT6-h7-dWQ" secondAttribute="trailing" constant="30" id="Vx6-ax-jLq"/>
+                            <constraint firstItem="NT6-h7-dWQ" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leading" constant="30" id="XmO-A4-ldd"/>
+                            <constraint firstItem="ZxG-Nc-D5k" firstAttribute="top" secondItem="EDP-JS-fRm" secondAttribute="bottom" constant="30" id="a5O-87-0lK"/>
+                            <constraint firstItem="EDP-JS-fRm" firstAttribute="top" secondItem="hkv-7S-09F" secondAttribute="top" constant="60" id="ilW-kp-UMz"/>
+                            <constraint firstItem="ZxG-Nc-D5k" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leading" constant="30" id="j94-co-czQ"/>
+                            <constraint firstAttribute="trailing" secondItem="TSt-xW-N4e" secondAttribute="trailing" constant="30" id="lUK-Cx-ph5"/>
+                            <constraint firstItem="EDP-JS-fRm" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leadingMargin" constant="90" id="r5y-ik-mIQ"/>
+                            <constraint firstItem="TSt-xW-N4e" firstAttribute="top" secondItem="ZxG-Nc-D5k" secondAttribute="bottom" constant="20" id="vgy-X6-R02"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="avatarContainer" destination="EDP-JS-fRm" id="euj-cw-3jk"/>
+                        <outlet property="avatarImage" destination="L7X-Qm-lrO" id="9Xq-Tp-ijU"/>
+                        <outlet property="displayNameTextField" destination="ZxG-Nc-D5k" id="exS-LN-6GU"/>
+                        <outlet property="helpTextView" destination="TSt-xW-N4e" id="P1T-p9-bBh"/>
+                        <outlet property="submitButton" destination="NT6-h7-dWQ" id="JHR-bG-1tK"/>
+                        <segue destination="S31-Hi-fhB" kind="presentation" identifier="profile.to.home" id="lsQ-Ec-9mw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VE7-cf-IYx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3387" y="1767"/>
         </scene>
         <!--Settings-->
         <scene sceneID="2Ss-Jf-au6">
@@ -755,6 +847,7 @@
         <image name="User" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="lsQ-Ec-9mw"/>
         <segue reference="opv-3B-fXB"/>
     </inferredMetricsTieBreakers>
 </document>

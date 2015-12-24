@@ -28,7 +28,7 @@ class SignupViewController: UIViewController {
             target: self,
             action: Selector("backPressed:"))
         self.navigationItem.leftBarButtonItem = back
-        self.navigationItem.title = "Sign up"
+        self.navigationItem.title = "Sign Up"
         
         self.usernameTextField.placeholder = "Username"
         self.emailTextField.placeholder = "Email"
@@ -124,63 +124,59 @@ class SignupViewController: UIViewController {
                     NSUserDefaults.standardUserDefaults().setValue(password, forKey: GGKey.password)
                     NSUserDefaults.standardUserDefaults().synchronize()
                     
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    // self.dismissViewControllerAnimated(true, completion: nil)
+                    // self.performSegueWithIdentifier("signup.to.profile", sender: self)
+                    print("Logging in with \(email):\(password)")
+                        UserAPI.sharedInstance.login(email,
+                            password: password,
+                            completion: { (success: Bool) -> Void in
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    if success {
+                                        NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
+                                        NSUserDefaults.standardUserDefaults().setValue(password, forKey: GGKey.password)
+                                        NSUserDefaults.standardUserDefaults().synchronize()
+    
+                                        print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
+                                        XMPPManager.sharedInstance.connectWithJID(
+                                            jid: UserAPI.sharedInstance.jid!,
+                                            password: UserAPI.sharedInstance.jpassword!,
+                                            connectCompletionHandler: self.connectCallback,
+                                            authenticateCompletionHandler: self.authenticateCallback)
+                                    } else {
+                                        let alert = UIAlertView()
+                                        alert.title = "Login Failed"
+                                        alert.message = "Incorrect username or password"
+                                        alert.addButtonWithTitle("Retry")
+                                        alert.show()
+                                    }
+                                }
+                    })
                 } else {
                     self.errorTextView.text = "User name \(username) already exists."
                 }
             }
         })
     }
-    
-    /*
-    func registerNewUser(username: String, password: String) {
-        let URL: NSURL = NSURL(string: "http://chat.blub.io:5280/rest/")!
-        let request: NSMutableURLRequest = NSMutableURLRequest(URL:URL)
-        request.HTTPMethod = "POST"
-        
-        let bodyData = "register \(username) chat.blub.io \(password)"
-        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding)
-       
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
-            guard error == nil && data != nil else { // check for fundamental networking error
-                print("error=\(error)")
-                return
-            }
-            
-            if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
-            }
-           
-            dispatch_async(dispatch_get_main_queue()) {
-                if let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
-                    print("responseString = \(responseString)")
-                    if responseString.rangeOfString("success") != nil {
-                        self.errorTextView.text = ""
-                        
-                        NSUserDefaults.standardUserDefaults().setValue(username, forKey: GGKey.username)
-                        NSUserDefaults.standardUserDefaults().setValue("", forKey: GGKey.password)
-                        NSUserDefaults.standardUserDefaults().synchronize()
-                        
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    } else {
-                        self.errorTextView.text = responseString
-                    }
-                }
-            }
+
+    func connectCallback(stream: XMPPStream, error: String?) {
+        if (error != nil) {
+            let alert = UIAlertView()
+            alert.title = "Login Failed"
+            alert.message = error!
+            alert.addButtonWithTitle("Retry")
+            alert.show()
         }
-        task.resume()
     }
-    */
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func authenticateCallback(stream: XMPPStream, error: String?) {
+        if (error == nil) {
+            self.performSegueWithIdentifier("signup.to.profile", sender: self)
+        } else {
+            let alert = UIAlertView()
+            alert.title = "Login Failed"
+            alert.message = "Wrong password."
+            alert.addButtonWithTitle("Retry")
+            alert.show()
+        }
     }
-    */
-
 }
