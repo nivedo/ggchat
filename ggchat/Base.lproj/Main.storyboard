@@ -727,7 +727,7 @@
                                 <rect key="frame" x="30" y="273" width="260" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="APe-HM-5Nm"/>
+                                    <constraint firstAttribute="height" constant="100" id="APe-HM-5Nm"/>
                                     <constraint firstAttribute="height" constant="100" id="Kb9-I6-Fgo"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>

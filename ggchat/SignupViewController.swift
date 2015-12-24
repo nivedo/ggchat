@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class SignupViewController: UIViewController {
 
@@ -118,6 +119,8 @@ class SignupViewController: UIViewController {
             completion: { (success: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 if success {
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.labelText = "Success! Logging in."
                     self.errorTextView.text = ""
                     
                     NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
@@ -152,6 +155,7 @@ class SignupViewController: UIViewController {
                                 }
                     })
                 } else {
+                    MBProgressHUD.hideHUDForView(self.view, animated: false)
                     self.errorTextView.text = "User name \(username) already exists."
                 }
             }
@@ -160,6 +164,7 @@ class SignupViewController: UIViewController {
 
     func connectCallback(stream: XMPPStream, error: String?) {
         if (error != nil) {
+            MBProgressHUD.hideHUDForView(self.view, animated: false)
             let alert = UIAlertView()
             alert.title = "Login Failed"
             alert.message = error!
@@ -169,6 +174,7 @@ class SignupViewController: UIViewController {
     }
 
     func authenticateCallback(stream: XMPPStream, error: String?) {
+        MBProgressHUD.hideHUDForView(self.view, animated: false)
         if (error == nil) {
             self.performSegueWithIdentifier("signup.to.profile", sender: self)
         } else {
