@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class ProfileViewController: UIViewController {
-
+class ProfileViewController: UIViewController,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate {
+    
+    let photoPicker = UIImagePickerController()
+    
     @IBOutlet weak var avatarContainer: UIView!
     @IBOutlet weak var avatarImage: UIImageView!
     
@@ -46,12 +51,21 @@ class ProfileViewController: UIViewController {
         self.submitButton.layer.borderWidth = 1
         self.submitButton.layer.borderColor = UIColor.darkGrayColor().CGColor
         self.submitButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal);
+     
+        let avatar = GGModelData.sharedInstance.getAvatar(UserAPI.sharedInstance.jid!, displayName: UserAPI.sharedInstance.username!)
+        self.avatarImage.image = avatar.avatarImage
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: Selector("dismissKeyboard"))
         
         self.view.addGestureRecognizer(tap)
+        
+        let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
+        self.avatarContainer.addGestureRecognizer(gesture)
+        
+        // Initialize photo and camera delegates
+        self.photoPicker.delegate = self
     }
     
     func dismissKeyboard() {
@@ -104,4 +118,65 @@ class ProfileViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func selectAvatarImage() {
+        let alert: UIAlertController = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionCancel = UIAlertAction(
+            title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
+        let actionTakePhoto = UIAlertAction(
+            title: "Take Photo",
+            style: UIAlertActionStyle.Default) { action -> Void in
+                self.photoPicker.allowsEditing = true
+                self.photoPicker.sourceType = .Camera
+                self.presentViewController(self.photoPicker, animated: true, completion: nil)
+        }
+        let actionChoosePhoto = UIAlertAction(
+            title: "Choose Photo",
+            style: UIAlertActionStyle.Default) { action -> Void in
+                self.photoPicker.allowsEditing = true
+                self.photoPicker.sourceType = .PhotoLibrary
+                self.presentViewController(self.photoPicker, animated: true, completion: nil)
+        }
+        alert.addAction(actionTakePhoto)
+        alert.addAction(actionChoosePhoto)
+        alert.addAction(actionCancel)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////////
+    // UIImagePickerControllerDelegate
+    
+    func imagePickerController(
+        picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+            let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
+            let newSize: CGFloat = self.avatarContainer.frame.width // CGFloat(100.0)
+            let resizedImage = chosenImage.gg_imageScaledToSize(CGSize(width: newSize, height: newSize), isOpaque: true)
+           
+            let jid = UserAPI.sharedInstance.jid!
+            GGModelData.sharedInstance.updateAvatar(jid, image: resizedImage)
+            let avatar = GGModelData.sharedInstance.getAvatar(jid)
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "Uploading avatar."
+            UserAPI.sharedInstance.updateAvatarImage(resizedImage, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let _ = jsonBody {
+                        self.avatarImage.image = avatar.avatarImage
+                    }
+                    MBProgressHUD.hideHUDForView(self.view, animated: false)
+                }
+            })
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

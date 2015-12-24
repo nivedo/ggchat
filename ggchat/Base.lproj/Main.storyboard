@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Message View Controller-->
@@ -747,17 +746,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NT6-h7-dWQ" firstAttribute="top" secondItem="TSt-xW-N4e" secondAttribute="bottom" constant="30" id="62F-M2-xA7"/>
+                            <constraint firstItem="NT6-h7-dWQ" firstAttribute="top" secondItem="TSt-xW-N4e" secondAttribute="bottom" constant="20" id="62F-M2-xA7"/>
+                            <constraint firstItem="EDP-JS-fRm" firstAttribute="centerX" secondItem="hkv-7S-09F" secondAttribute="centerX" id="AYU-HL-KS0"/>
                             <constraint firstItem="TSt-xW-N4e" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leading" constant="30" id="K4N-Sw-hqP"/>
                             <constraint firstAttribute="trailing" secondItem="ZxG-Nc-D5k" secondAttribute="trailing" constant="30" id="MEC-Hm-WBG"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="EDP-JS-fRm" secondAttribute="trailing" constant="90" id="V7M-DP-S5k"/>
                             <constraint firstAttribute="trailing" secondItem="NT6-h7-dWQ" secondAttribute="trailing" constant="30" id="Vx6-ax-jLq"/>
                             <constraint firstItem="NT6-h7-dWQ" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leading" constant="30" id="XmO-A4-ldd"/>
                             <constraint firstItem="ZxG-Nc-D5k" firstAttribute="top" secondItem="EDP-JS-fRm" secondAttribute="bottom" constant="30" id="a5O-87-0lK"/>
-                            <constraint firstItem="EDP-JS-fRm" firstAttribute="top" secondItem="hkv-7S-09F" secondAttribute="top" constant="60" id="ilW-kp-UMz"/>
+                            <constraint firstItem="EDP-JS-fRm" firstAttribute="top" secondItem="hkv-7S-09F" secondAttribute="top" constant="80" id="ilW-kp-UMz"/>
                             <constraint firstItem="ZxG-Nc-D5k" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leading" constant="30" id="j94-co-czQ"/>
                             <constraint firstAttribute="trailing" secondItem="TSt-xW-N4e" secondAttribute="trailing" constant="30" id="lUK-Cx-ph5"/>
-                            <constraint firstItem="EDP-JS-fRm" firstAttribute="leading" secondItem="hkv-7S-09F" secondAttribute="leadingMargin" constant="90" id="r5y-ik-mIQ"/>
                             <constraint firstItem="TSt-xW-N4e" firstAttribute="top" secondItem="ZxG-Nc-D5k" secondAttribute="bottom" constant="20" id="vgy-X6-R02"/>
                         </constraints>
                     </view>
