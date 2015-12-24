@@ -31,10 +31,10 @@ class ContactTableViewController: UITableViewController,
             title: "Cancel",
             style: UIAlertActionStyle.Cancel,
             handler: nil)
-        let actionEnterJID = UIAlertAction(
-            title: "Enter JID",
+        let actionEnterUsername = UIAlertAction(
+            title: "Enter Username",
             style: UIAlertActionStyle.Default) { action -> Void in
-            self.addContactFromJID()
+            self.addContactFromUsername()
         }
         let actionPickFromContacts = UIAlertAction(
             title: "Pick from Your Contacts",
@@ -47,7 +47,7 @@ class ContactTableViewController: UITableViewController,
             // GGModelData.sharedInstance.addVideoMediaMessage()
             // Crashlytics.sharedInstance().crash()
         }
-        alert.addAction(actionEnterJID)
+        alert.addAction(actionEnterUsername)
         alert.addAction(actionEnterPhoneNumber)
         alert.addAction(actionPickFromContacts)
         alert.addAction(actionCancel)
@@ -55,14 +55,14 @@ class ContactTableViewController: UITableViewController,
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func addContactFromJID() {
+    func addContactFromUsername() {
         let alert: UIAlertController = UIAlertController(
-            title: "Enter JID",
+            title: "Enter Username",
             message: nil,
             preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addTextFieldWithConfigurationHandler({ (textField: UITextField) -> Void in
-            textField.placeholder = NSLocalizedString("JID", comment: "JID")
+            textField.placeholder = NSLocalizedString("Username", comment: "Username")
         })
         let actionCancel = UIAlertAction(
             title: "Cancel",
@@ -72,10 +72,14 @@ class ContactTableViewController: UITableViewController,
             title: "Ok",
             style: UIAlertActionStyle.Default,
             handler: { (action: UIAlertAction) -> Void in
-                if let jidTextField = alert.textFields?.first {
-                    if let jidStr = jidTextField.text {
-                        print(jidStr)
-                        XMPPRosterManager.addUser(jidStr, nickname: "")
+                if let usernameTextField = alert.textFields?.first {
+                    if let username = usernameTextField.text {
+                        print(username)
+                        UserAPI.sharedInstance.getUserinfo(username, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                            if let json = jsonBody, let jidStr = json["jid"] as? String {
+                                XMPPRosterManager.addUser(jidStr, nickname: "")
+                            }
+                        })
                     }
                 }
             })
