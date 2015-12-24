@@ -43,6 +43,18 @@ class UserAPI {
         return self.route("auth")
     }
     
+    class func userinfoWithUsernameUrl(username: String) -> String {
+        return "\(self.route("userinfo"))?username=\(username)"
+    }
+
+    class func userinfoWithJIDUrl(jid: String) -> String {
+        return "\(self.route("userinfo"))?jid=\(jid)"
+    }
+    
+    class func rosterWithJIDUrl(jid: String) -> String {
+        return "\(self.route("roster"))?jid=\(jid)"
+    }
+    
     ////////////////////////////////////////////////////////////////////
     
     func register(username: String, email: String, password: String, completion: ((Bool) -> Void)?) {
@@ -120,6 +132,24 @@ class UserAPI {
         }
         return false
     }
+   
+    func getUserinfoWithUsername(username: String, jsonCompletion: JSONCompletion) {
+        self.get(UserAPI.userinfoWithUsernameUrl(username),
+            authToken: nil,
+            jsonCompletion: jsonCompletion)
+    }
+
+    func getUserinfoWithJID(jid: String, jsonCompletion: JSONCompletion) {
+        self.get(UserAPI.userinfoWithJIDUrl(jid),
+            authToken: nil,
+            jsonCompletion: jsonCompletion)
+    }
+    
+    func getRosterWithJID(jid: String, jsonCompletion: JSONCompletion) {
+        self.get(UserAPI.rosterWithJIDUrl(jid),
+            authToken: nil,
+            jsonCompletion: jsonCompletion)
+    }
     
     func getProfile(jsonCompletion: JSONCompletion) -> Bool {
         if let token = self.authToken {
@@ -176,6 +206,18 @@ class UserAPI {
             }
         })
         completion?(false)
+    }
+    
+    func cacheRoster() {
+        if let jid = self.jid {
+            UserAPI.sharedInstance.getRosterWithJID(jid,
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    if let json = jsonBody {
+                        print(json)
+                    }
+                }
+            )
+        }
     }
     
     func updatePushToken() {
