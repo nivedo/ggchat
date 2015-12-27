@@ -285,8 +285,8 @@ class MessagesCollectionViewCell: UICollectionViewCell {
                 self.avatarContainerViewHeightConstraint.constant)
         }
         set {
-            self.avatarContainerViewWidthConstraint.constant = avatarViewSize.width
-            self.avatarContainerViewHeightConstraint.constant = avatarViewSize.height
+            self.avatarContainerViewWidthConstraint.constant = newValue.width
+            self.avatarContainerViewHeightConstraint.constant = newValue.height
         }
     }
     

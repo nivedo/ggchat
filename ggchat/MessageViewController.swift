@@ -107,6 +107,7 @@ class MessageViewController: UIViewController,
         self.inputToolbar.delegate = self
         self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")
         self.inputToolbar.contentView.textView.delegate = self
+        self.messageCollectionView.messageCollectionViewLayout.outgoingAvatarViewSize = CGSizeZero
         
         // NOTE: let this behavior be opt-in for now
         MessagesCollectionViewCell.registerMenuAction(Selector("delete:"))
@@ -337,19 +338,10 @@ class MessageViewController: UIViewController,
         */
         // let message: Message = self.messages[indexPath.item]
         let message: Message = self.messages[indexPath.item]
-        /*
-        let defaults = NSUserDefaults.standardUserDefaults()
         if (message.senderId == self.senderId) {
-            if (!defaults.boolForKey("outgoingAvatarSetting")) {
-                return nil;
-            }
+            return nil
         }
-        else {
-            if (!defaults.boolForKey("incomingAvatarSetting")) {
-                return nil;
-            }
-        }
-        */
+
         // return GGModelData.sharedInstance.getAvatar(message.senderId)
         return XMPPManager.avatarForJID(message.senderId)
     }
