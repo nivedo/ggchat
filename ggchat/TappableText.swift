@@ -37,38 +37,6 @@ class TappableText: NSObject {
         }
         return Singleton.instance
     }
-   
-    /*
-    func isTappableToken(token: String) -> (Bool, String) {
-        var t = token.lowercaseString
-        // t = t.componentsSeparatedByCharactersInSet(TappableText.alphaCharSet).joinWithSeparator("")
-      
-        // This will be temporary
-        if let first = t.unicodeScalars.first {
-            if TappableText.bracketCharSet.longCharacterIsMember(first.value) {
-                t.removeAtIndex(t.startIndex)
-            }
-        }
-        if let last = t.unicodeScalars.last {
-            if TappableText.bracketCharSet.longCharacterIsMember(last.value) {
-                t.removeAtIndex(t.endIndex.predecessor())
-            }
-        }
-        
-        if let last = t.unicodeScalars.last {
-            if TappableText.punctuationCharSet.longCharacterIsMember(last.value) {
-                t.removeAtIndex(t.endIndex.predecessor())
-            }
-        }
-        
-        let k: String = t
-        var tappable = self.lookup.contains(t)
-        if !tappable {
-            tappable = GGHearthStone.sharedInstance.isCard(t)
-        }
-        return (tappable, k)
-    }
-    */
     
     func imageModalAsset(id: String) -> ImageModalAsset? {
         return GGWiki.sharedInstance.cardAssets[id]

@@ -76,6 +76,8 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
         
         self.attributes = nil
         self.imageAsset?.delegate = nil
+        self.imageView.image = nil
+        MBProgressHUD.hideHUDForView(self.view, animated: false)
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
@@ -83,6 +85,8 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
         
         self.attributes = nil
         self.imageAsset?.delegate = nil
+        self.imageView.image = nil
+        MBProgressHUD.hideHUDForView(self.view, animated: false)
     }
 
     override func didReceiveMemoryWarning() {

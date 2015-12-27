@@ -191,31 +191,34 @@ class GGWiki {
     
     init() {
         print("**************** HEARTHSTONE ******************")
-        self.loadAsset("hearthstone_en")
-        // self.loadAsset("mtg_en_clean")
+        self.loadAsset("hearthstone_en", forAutocomplete: true)
+        self.loadAsset("mtg_en_clean", forAutocomplete: false)
     }
     
-    func loadAsset(json: String) {
+    func loadAsset(json: String, forAutocomplete: Bool) {
         if let asset = NSDataAsset(name: json, bundle: NSBundle.mainBundle()) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
                 asset.data,
                 options: NSJSONReadingOptions.AllowFragments)
             if let dict = json as? NSDictionary {
                 if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int {
-                    print("Number of hearthstone cards: \(cards.count)")
+                    print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
+                    var nameToIdMap = [String: String]()
                     for c in cards {
                         if let card = c as? NSDictionary {
                             if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
                                 let lowercaseName = cardName.lowercaseString
                                 let id = AssetManager.id(bundleId, assetId: assetId)
                                 self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId)
-                                self.cardNameToIdMap[lowercaseName] = id
-                                
-                                self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
+                                if forAutocomplete {
+                                    nameToIdMap[lowercaseName] = id
+                                    self.cardNameToIdMap[lowercaseName] = id
+                                    self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
+                                }
                             }
                         }
                     }
-                    for (k, _) in self.cardNameToIdMap {
+                    for (k, _) in nameToIdMap {     // self.cardNameToIdMap {
                         self.cardNames.append(k)
                         self.cardNamesTrie.addWord(k)
                         
