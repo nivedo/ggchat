@@ -1,5 +1,5 @@
 //
-//  GGHearthStone.swift
+//  GGWiki.swift
 //  ggchat
 //
 //  Created by Gary Chang on 12/4/15.
@@ -33,7 +33,7 @@ class AssetManager {
     
 }
 
-class GGHearthStoneAsset : ImageModalAsset {
+class GGWikiAsset : ImageModalAsset {
     var name: String
     var bundleId: Int
     var assetId: String
@@ -49,8 +49,8 @@ class GGHearthStoneAsset : ImageModalAsset {
         self.fullName = name
         self.bundleId = bundleId
         self.assetId = assetId
-        self.apiURL = GGHearthStone.apiURL(name)
-        self.imageURL = "\(GGHearthStone.s3url)/\(bundleId)/\(assetId).png"
+        self.apiURL = GGWiki.apiURL(name)
+        self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).png"
     }
     
     func getUIImage() -> UIImage? {
@@ -77,33 +77,6 @@ class GGHearthStoneAsset : ImageModalAsset {
         case NoData = "ERROR: no data"
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
-   
-    /*
-    func fetchInfo() {
-        guard let endpoint = NSURL(string: self.apiURL) else { print("Error creating endpoint");return }
-        let request = NSMutableURLRequest(URL:endpoint)
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
-            do {
-                guard let dat = data else { throw JSONError.NoData }
-                guard let json = try NSJSONSerialization.JSONObjectWithData(dat, options: []) as? NSDictionary else { throw JSONError.ConversionFailed }
-                // print(json)
-                if let fullName = json["card"] as? String {
-                    // print(fullName)
-                    self.fullName = fullName
-                }
-                if let imageURL = json["image"] as? String {
-                    // print(imageURL)
-                    self.imageURL = imageURL
-                    self.downloadImage()
-                } 
-            } catch let error as JSONError {
-                print(error.rawValue)
-            } catch {
-                print(error)
-            }
-            }.resume()
-        }
-    */
     
     func fetchInfo() {
         print(self.imageURL)
@@ -112,8 +85,6 @@ class GGHearthStoneAsset : ImageModalAsset {
     
     func downloadImage() {
         if let urlImage = self.imageURL, let url = NSURL(string: urlImage) {
-            // print("Started downloading \"\(url.URLByDeletingPathExtension!.lastPathComponent!)\".")
-            // print("Started downloading \"\(url)\".")
             getDataFromUrl(url) { (data, response, error)  in
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
                     guard let data = data where error == nil else {
@@ -191,7 +162,7 @@ extension String {
     }
 }
 
-class GGHearthStone {
+class GGWiki {
    
     private static let host = "http://45.33.39.21:1235"
     private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
@@ -205,9 +176,9 @@ class GGHearthStone {
         return "\(self.host)/images/\(urlName)"
     }
     
-    class var sharedInstance: GGHearthStone {
+    class var sharedInstance: GGWiki {
         struct Singleton {
-            static let instance = GGHearthStone()
+            static let instance = GGWiki()
         }
         return Singleton.instance
     }
@@ -215,41 +186,13 @@ class GGHearthStone {
     private var cardNames = [String]()
     private var cardNamesTrie = Trie()
     private var cardMaxTokens: Int = 1
-    var cardAssets = [String : GGHearthStoneAsset]()
+    var cardAssets = [String : GGWikiAsset]()
     var cardNameToIdMap = [String : String]()
-   
-    /*
-    init() {
-        print("**************** HEARTHSTONE ******************")
-        if let asset = NSDataAsset(name: "hearthstone-cards", bundle: NSBundle.mainBundle()) {
-            let json = try? NSJSONSerialization.JSONObjectWithData(
-                asset.data,
-                options: NSJSONReadingOptions.AllowFragments)
-            if let dict = json as? NSDictionary {
-                if let cards = dict["data"] as? NSArray {
-                    print("Number of hearthstone cards: \(cards.count)")
-                    for c in cards {
-                        if let card = c as? NSDictionary {
-                            if let cardName = card["name"] as? String {
-                                self.cardNames.append(cardName)
-                                self.cardAssets[cardName] = GGHearthStoneAsset(name: cardName)
-                                
-                                self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            print("Error: Unable to find hearthstone-cards.json")
-        }
-    }
-    */
     
     init() {
         print("**************** HEARTHSTONE ******************")
-        // self.loadAsset("hearthstone_en")
-        self.loadAsset("mtg_en_clean")
+        self.loadAsset("hearthstone_en")
+        // self.loadAsset("mtg_en_clean")
     }
     
     func loadAsset(json: String) {
@@ -265,7 +208,7 @@ class GGHearthStone {
                             if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
                                 let lowercaseName = cardName.lowercaseString
                                 let id = AssetManager.id(bundleId, assetId: assetId)
-                                self.cardAssets[id] = GGHearthStoneAsset(name: cardName, bundleId: bundleId, assetId: assetId)
+                                self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId)
                                 self.cardNameToIdMap[lowercaseName] = id
                                 
                                 self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
@@ -288,30 +231,6 @@ class GGHearthStone {
             print("Error: Unable to find \(json)")
         }
     }
-   
-    /*
-    func isCard(id: String) -> Bool {
-        /*
-        let valid = self.cardNames.contains(id)
-       
-        // Pre-fetch card if valid
-        if valid {
-            self.cardAssets[id]!.fetchInfo()
-        }
-        
-        return valid
-        */
-        // print(id)
-        if (id[id.startIndex] == "&" && id.rangeOfString("::") != nil) {
-            print("is asset id")
-            if let name = self.cardIdToNameMap[id] {
-                self.cardAssets[name]!.fetchInfo()
-                return true
-            }
-        }
-        return false
-    }
-    */
     
     func getAsset(id: String) -> ImageModalAsset? {
         if id.rangeOfString("::") != nil {

@@ -944,7 +944,7 @@ class MessageViewController: UIViewController,
         let (word, len) = self.gg_currentlyTypedMessageText()
         if word.characters.count > 1 {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word, inputLength: len)
+                let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
                 if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
@@ -968,7 +968,7 @@ class MessageViewController: UIViewController,
         
         if word.characters.count > 1 {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                let suggestions = GGHearthStone.sharedInstance.getCardSuggestions(word, inputLength: len)
+                let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
                 dispatch_async(dispatch_get_main_queue()) {
                     if let s = suggestions {
                         if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {

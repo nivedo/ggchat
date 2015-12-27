@@ -71,7 +71,7 @@ class TappableText: NSObject {
     */
     
     func imageModalAsset(id: String) -> ImageModalAsset? {
-        return GGHearthStone.sharedInstance.cardAssets[id]
+        return GGWiki.sharedInstance.cardAssets[id]
     }
     
     func tappableAttributedString(
@@ -93,7 +93,7 @@ class TappableText: NSObject {
                
                 // let (tappable, assetKey) = self.isTappableToken(token)
                 let id = "\(self.delimiter)\(token)\(self.delimiter)"
-                let asset = GGHearthStone.sharedInstance.getAsset(id)
+                let asset = GGWiki.sharedInstance.getAsset(id)
                 var tappable = false
                 var assetId = str
                 if let imageAsset = asset {

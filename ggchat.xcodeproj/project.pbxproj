@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */; };
 		D411D51B1C194F310089C90B /* LevenshteinDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D411D51A1C194F310089C90B /* LevenshteinDistance.swift */; };
-		D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01781C11B85F00643835 /* GGHearthStone.swift */; };
+		D42B01791C11B85F00643835 /* GGWiki.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01781C11B85F00643835 /* GGWiki.swift */; };
 		D42B017B1C1531A500643835 /* MessageAutocompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */; };
 		D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */; };
 		D42B017F1C153FAD00643835 /* MessageAutocompleteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */; };
@@ -282,7 +282,7 @@
 		01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ggchat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8E9355FD23FDCD3C4BF6982 /* Pods-ggchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ggchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ggchat/Pods-ggchat.release.xcconfig"; sourceTree = "<group>"; };
 		D411D51A1C194F310089C90B /* LevenshteinDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistance.swift; sourceTree = "<group>"; };
-		D42B01781C11B85F00643835 /* GGHearthStone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGHearthStone.swift; sourceTree = "<group>"; };
+		D42B01781C11B85F00643835 /* GGWiki.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGWiki.swift; sourceTree = "<group>"; };
 		D42B017A1C1531A500643835 /* MessageAutocompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteController.swift; sourceTree = "<group>"; };
 		D42B017C1C153FAD00643835 /* MessageAutocompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteCell.swift; sourceTree = "<group>"; };
 		D42B017D1C153FAD00643835 /* MessageAutocompleteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAutocompleteCell.xib; sourceTree = "<group>"; };
@@ -747,7 +747,7 @@
 		D42B01771C11B81C00643835 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				D42B01781C11B85F00643835 /* GGHearthStone.swift */,
+				D42B01781C11B85F00643835 /* GGWiki.swift */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -2146,7 +2146,7 @@
 				D49447261C1EE3BA0008C582 /* SignupViewController.swift in Sources */,
 				D4A9F4EF1BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.swift in Sources */,
 				D49447291C1FA5AD0008C582 /* UserAPI.swift in Sources */,
-				D42B01791C11B85F00643835 /* GGHearthStone.swift in Sources */,
+				D42B01791C11B85F00643835 /* GGWiki.swift in Sources */,
 				D4C8FE2A1C06AA2300992801 /* XMPPAutoPing.m in Sources */,
 				D4C8FDD91C06AA2300992801 /* XMPPOutgoingFileTransfer.m in Sources */,
 				D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */,
