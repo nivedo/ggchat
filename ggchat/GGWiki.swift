@@ -44,13 +44,13 @@ class GGWikiAsset : ImageModalAsset {
     var image: UIImage?
     var delegate: ImageModalAssetDelegate?
     
-    init(name: String, bundleId: Int, assetId: String) {
+    init(name: String, bundleId: Int, assetId: String, fileType: String) {
         self.name = name
         self.fullName = name
         self.bundleId = bundleId
         self.assetId = assetId
         self.apiURL = GGWiki.apiURL(name)
-        self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).png"
+        self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).\(fileType)"
     }
     
     func getUIImage() -> UIImage? {
@@ -191,11 +191,11 @@ class GGWiki {
     
     init() {
         print("**************** HEARTHSTONE ******************")
-        self.loadAsset("hearthstone_en", forAutocomplete: true)
-        self.loadAsset("mtg_en_clean", forAutocomplete: false)
+        self.loadAsset("hearthstone_en", fileType: "png", forAutocomplete: true)
+        self.loadAsset("mtg_en_clean", fileType: "jpg", forAutocomplete: false)
     }
     
-    func loadAsset(json: String, forAutocomplete: Bool) {
+    func loadAsset(json: String, fileType: String, forAutocomplete: Bool) {
         if let asset = NSDataAsset(name: json, bundle: NSBundle.mainBundle()) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
                 asset.data,
@@ -209,7 +209,7 @@ class GGWiki {
                             if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
                                 let lowercaseName = cardName.lowercaseString
                                 let id = AssetManager.id(bundleId, assetId: assetId)
-                                self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId)
+                                self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: fileType)
                                 if forAutocomplete {
                                     nameToIdMap[lowercaseName] = id
                                     self.cardNameToIdMap[lowercaseName] = id

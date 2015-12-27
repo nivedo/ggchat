@@ -112,6 +112,9 @@ class UserAPI {
                 let pass = json["pass"] as? String
                 {
                     self.authToken = newToken
+                    print("------------------------------")
+                    print(self.authToken)
+                    print("------------------------------")
                     self.jid = jid
                     self.jpassword = pass
                     self.password = password

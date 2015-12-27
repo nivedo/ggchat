@@ -77,6 +77,7 @@ class ContactTableViewController: UITableViewController,
                         print(username)
                         UserAPI.sharedInstance.getUserinfo(username, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                             if let json = jsonBody, let jidStr = json["jid"] as? String {
+                                print("Adding \(jidStr)")
                                 XMPPRosterManager.addUser(jidStr, nickname: "")
                             }
                         })
