@@ -213,12 +213,14 @@ class GGMessageViewController:
             style: UIAlertActionStyle.Cancel,
             handler: nil)
         for (k,v) in GGWiki.sharedInstance.wikis {
-            let action = UIAlertAction(
-                title: v.name,
-                style: UIAlertActionStyle.Default) { action -> Void in
-                GGWiki.sharedInstance.loadAutocompleteAsync(k)
+            if v.language == UserAPI.sharedInstance.settings.language {
+                let action = UIAlertAction(
+                    title: v.name,
+                    style: UIAlertActionStyle.Default) { action -> Void in
+                    GGWiki.sharedInstance.loadAutocompleteAsync(k)
+                }
+                alert.addAction(action)
             }
-            alert.addAction(action)
         }
         alert.addAction(actionCancel)
         self.presentViewController(alert, animated: true, completion: nil)

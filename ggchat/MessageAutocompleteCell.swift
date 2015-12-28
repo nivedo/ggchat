@@ -33,7 +33,7 @@ class MessageAutocompleteCell: UITableViewCell {
         self.cellMainLabel.font = UIFont.boldSystemFontOfSize(CGFloat(16.0))
         self.separatorInset = UIEdgeInsetsMake(0.0, 40.0, 0.0, 0.0)
   
-        if let resource = GGWiki.sharedInstance.wikis[GGWiki.sharedInstance.autocompleteWiki] {
+        if let resource = GGWiki.sharedInstance.getAutocompleteResource() {
             self.iconImageView.image = resource.iconImage
         }
         
