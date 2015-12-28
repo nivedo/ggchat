@@ -308,48 +308,6 @@ class GGWiki {
         }
     }
     
-    /*
-    func loadAsset(json: String, fileType: String, forAutocomplete: Bool) {
-        if let asset = NSDataAsset(name: json, bundle: NSBundle.mainBundle()) {
-            let json = try? NSJSONSerialization.JSONObjectWithData(
-                asset.data,
-                options: NSJSONReadingOptions.AllowFragments)
-            if let dict = json as? NSDictionary {
-                if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int {
-                    print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
-                    var nameToIdMap = [String: String]()
-                    for c in cards {
-                        if let card = c as? NSDictionary {
-                            if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
-                                let lowercaseName = cardName.lowercaseString
-                                let id = AssetManager.id(bundleId, assetId: assetId)
-                                self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: fileType)
-                                if forAutocomplete {
-                                    nameToIdMap[lowercaseName] = id
-                                    self.cardNameToIdMap[lowercaseName] = id
-                                    self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
-                                }
-                            }
-                        }
-                    }
-                    for (k, _) in nameToIdMap {     // self.cardNameToIdMap {
-                        self.cardNames.append(k)
-                        self.cardNamesTrie.addWord(k)
-                        
-                        for (index, word) in k.tokens.enumerate() {
-                            if index > 0 && word.length >= 4 {
-                                self.cardNamesTrie.addPrefix(word, finalWord: k)
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            print("Error: Unable to find \(json)")
-        }
-    }
-    */
-    
     func getAsset(id: String) -> ImageModalAsset? {
         if id.rangeOfString("::") != nil {
             if let asset = self.cardAssets[id] {
