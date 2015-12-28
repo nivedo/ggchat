@@ -173,15 +173,13 @@ class GGWiki {
     class WikiResource {
         var title: String
         var name: String
-        var fileType: String
         var icon: String
         var jsonURL: String
         var jsonData: NSData
         
-        init(title: String, name: String, fileType: String, icon: String) {
+        init(title: String, name: String, icon: String) {
             self.title = title
             self.name = name
-            self.fileType = fileType
             self.icon = icon
             self.jsonURL = "\(GGWiki.s3url)/config/\(name).json"
             self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
@@ -219,12 +217,10 @@ class GGWiki {
         self.wikis[WikiSet.HearthStone] = WikiResource(
             title: "HearthStone",
             name: "hearthstone_en",
-            fileType: "png",
             icon: "hearthstone-icon")
         self.wikis[WikiSet.MagicTheGathering] = WikiResource(
             title: "Magic The Gathering",
-            name: "mtg_en_v2",
-            fileType: "jpg",
+            name: "mtg_en_v3",
             icon: "mtg-icon")
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
@@ -273,7 +269,7 @@ class GGWiki {
         if let array = json as? NSArray {
             for bundle in array {
                 if let dict = bundle as? NSDictionary {
-                    if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int {
+                    if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int, let fileType = dict["ext"] as? String {
                         // print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
                         var nameToIdMap = [String: String]()
                         for c in cards {
@@ -282,7 +278,7 @@ class GGWiki {
                                     let lowercaseName = cardName.lowercaseString
                                     let id = AssetManager.id(bundleId, assetId: assetId)
                                     if self.cardAssets[id] == nil {
-                                        self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: resource.fileType)
+                                        self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: fileType)
                                     }
                                     if forAutocomplete {
                                         nameToIdMap[lowercaseName] = id
