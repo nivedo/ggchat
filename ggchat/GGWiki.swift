@@ -219,16 +219,6 @@ class GGWiki {
     var autocompleteWiki: WikiSet = WikiSet.None
     
     init() {
-        /*
-        self.wikis[WikiSet.HearthStone] = WikiResource(
-            title: "HearthStone",
-            name: "hearthstone_en",
-            icon: "hearthstone-icon")
-        self.wikis[WikiSet.MagicTheGathering] = WikiResource(
-            title: "Magic The Gathering",
-            name: "mtg_en_v3",
-            icon: "mtg-icon")
-        */
         self.loadConfig()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             self.loadAutocomplete(WikiSet.HearthStone)
