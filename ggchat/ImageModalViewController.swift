@@ -67,26 +67,30 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.updateModal()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
+    func reset() {
         self.attributes = nil
         self.imageAsset?.delegate = nil
         self.imageView.image = nil
         MBProgressHUD.hideHUDForView(self.view, animated: false)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.updateModal()
+    }
+   
+    /*
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
         super.willMoveToParentViewController(parent)
-        
-        self.attributes = nil
-        self.imageAsset?.delegate = nil
-        self.imageView.image = nil
-        MBProgressHUD.hideHUDForView(self.view, animated: false)
+    }
+    */
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.reset()
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,6 +100,7 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
     
     func gg_handleTapGesture(recognizer: UITapGestureRecognizer) {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        // self.reset()
     }
     
     /*
