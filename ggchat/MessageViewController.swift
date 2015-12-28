@@ -944,7 +944,7 @@ class MessageViewController: UIViewController,
         }
         
         let (word, len) = self.gg_currentlyTypedMessageText()
-        if word.characters.count > 1 {
+        if word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                 let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
                 if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
@@ -966,11 +966,12 @@ class MessageViewController: UIViewController,
         //     NSCharacterSet.whitespaceCharacterSet()).last {
         
         let (word, len) = self.gg_currentlyTypedMessageText()
-        print("editing text \"\(textView.text)\" -->  \"\(word)\"")
+        print("editing text \"\(word)\" length: \(word.length), count: \(word.characters.count), min: \(UserAPI.sharedInstance.settings.minAutocompleteCharacters)")
         
-        if word.characters.count > 1 {
+        if word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                 let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
+                print("Suggestions: \(suggestions?.count)")
                 dispatch_async(dispatch_get_main_queue()) {
                     if let s = suggestions {
                         if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {

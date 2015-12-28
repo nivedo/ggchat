@@ -82,12 +82,23 @@ enum Language {
 
 class UserSetting {
     
-    var language: Language
+    var minAutocompleteCharacters: Int = 2
+    var language: Language {
+        didSet {
+            if self.language == Language.English {
+                self.minAutocompleteCharacters = 2
+            } else {
+                self.minAutocompleteCharacters = 1
+            }
+        }
+    }
 
     // Default settings
     init() {
         self.language = Language.English
+        self.minAutocompleteCharacters = 2
         // self.language = Language.ChineseTraditional
+        // self.minAutocompleteCharacters = 1
     }
     
 }

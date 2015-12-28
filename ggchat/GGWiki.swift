@@ -370,7 +370,7 @@ class GGWiki {
         }
     }
     
-    func getCardSuggestions(name: String, inputLength: Int, threshold: Float = 0.7) -> [AssetAutocompleteSuggestion]? {
+    func getCardSuggestions(name: String, inputLength: Int) -> [AssetAutocompleteSuggestion]? {
         
         let numTokens = min(name.numTokens, self.cardMaxTokens)
         let tokens = name.componentsSeparatedByCharactersInSet(
@@ -384,7 +384,7 @@ class GGWiki {
             let target = lastTokens.joinWithSeparator(" ")
             // let replaceIndex = name.characters.count - target.characters.count
             let replaceIndex = inputLength - target.characters.count
-            if let s = self.computeCardSuggestion(target, replaceIndex: replaceIndex, threshold: threshold, matchPrefixAfterChars: 4) {
+            if let s = self.computeCardSuggestion(target, replaceIndex: replaceIndex) {
                 suggestions.appendContentsOf(s)
             } else {
                 return nil
@@ -407,8 +407,8 @@ class GGWiki {
     
     var activeSuggestionJobs: Int = 0
     
-    private func computeCardSuggestion(name: String, replaceIndex: Int, threshold: Float, matchPrefixAfterChars: Int) -> [AssetSortHelper]? {
-        print("compute \(name) (\(self.activeSuggestionJobs))")
+    private func computeCardSuggestion(name: String, replaceIndex: Int) -> [AssetSortHelper]? {
+        print("compute \(name), lower: \(name.lowercaseString), count: \(name.characters.count), (\(self.activeSuggestionJobs))")
         
         if self.activeSuggestionJobs > 0 {
             return nil
@@ -420,7 +420,7 @@ class GGWiki {
             return suggestions
         }
         
-        if name.characters.count <= 1 {
+        if name.characters.count < UserAPI.sharedInstance.settings.minAutocompleteCharacters {
             return suggestions
         }
         self.activeSuggestionJobs++
