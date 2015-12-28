@@ -219,39 +219,45 @@ class GGWiki {
             name: "mtg_en_clean",
             fileType: "jpg")
         
-        self.loadAsync(WikiSet.HearthStone)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            self.loadAutocompleteAsync(WikiSet.HearthStone)
+            self.loadAssets()
+        }
     }
    
-    func loadAsync(wiki: WikiSet) {
+    func loadAutocompleteAsync(wiki: WikiSet) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-            self.load(wiki)
+            self.loadAutocomplete(wiki)
         }
     }
     
-    func load(wiki: WikiSet) {
+    func loadAutocomplete(wiki: WikiSet) {
         if wiki != self.autocompleteWiki {
-            self.reset()
+            self.resetAutocomplete()
             if let autocompleteResource = self.wikis[wiki] {
                 self.loadAsset(autocompleteResource.name,
                     fileType: autocompleteResource.fileType,
                     forAutocomplete: true)
             }
-            for (k, v) in self.wikis {
-                if wiki != k {
-                    self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: false)
-                }
-            }
             self.autocompleteWiki = wiki
         }
     }
     
-    func reset() {
+    func loadAssets() {
+        for (k, v) in self.wikis {
+            if k != self.autocompleteWiki {
+                self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: false)
+            }
+        }
+    }
+    
+    func resetAutocomplete() {
         self.autocompleteWiki = WikiSet.None
         self.cardNames = [String]()
         self.cardNamesTrie = Trie()
         self.cardMaxTokens = 1
-        self.cardAssets = [String: GGWikiAsset]()
         self.cardNameToIdMap = [String: String]()
+        // self.cardAssets = [String: GGWikiAsset]()
     }
     
     func loadAsset(json: String, fileType: String, forAutocomplete: Bool) {
@@ -377,12 +383,14 @@ class GGWiki {
        
         if let cardList = self.cardNamesTrie.findWordAndPrefix(lowercaseName) {
             for card in cardList {
-                let score = 1.0 / Float(card.characters.count)
-                suggestions.append(AssetSortHelper(
-                    str: card,
-                    id: self.cardNameToIdMap[card]!,
-                    replaceIndex: replaceIndex,
-                    score: score))
+                if let id = self.cardNameToIdMap[card] {
+                    let score = 1.0 / Float(card.characters.count)
+                    suggestions.append(AssetSortHelper(
+                        str: card,
+                        id: id,
+                        replaceIndex: replaceIndex,
+                        score: score))
+                }
             }
         }
         self.activeSuggestionJobs--

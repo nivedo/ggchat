@@ -225,7 +225,7 @@ class GGMessageViewController:
             let action = UIAlertAction(
                 title: v.title,
                 style: UIAlertActionStyle.Default) { action -> Void in
-                GGWiki.sharedInstance.loadAsync(k)
+                GGWiki.sharedInstance.loadAutocompleteAsync(k)
             }
             alert.addAction(action)
         }
