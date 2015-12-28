@@ -9,7 +9,19 @@
 import UIKit
 
 class SettingLanguageTableViewController: UITableViewController {
-
+    
+    class LanguageChoice {
+        var nativeLabel: String
+        var englishLabel: String
+        var languageEnum: Language
+       
+        init(nativeLabel: String, englishLabel: String, languageEnum: Language) {
+            self.nativeLabel = nativeLabel
+            self.englishLabel = englishLabel
+            self.languageEnum = languageEnum
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
