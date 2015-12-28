@@ -26,6 +26,22 @@ class MessageToolbarButtonFactory {
 
         return accessoryButton
     }
+    
+    class func defaultKeyboardButtonItem() -> UIButton {
+        let keyboardImage: UIImage = UIImage.gg_defaultKeyboardImage()
+        let normalImage: UIImage = keyboardImage.gg_imageMaskedWithColor(UIColor.lightGrayColor())
+        let highlightedImage: UIImage = keyboardImage.gg_imageMaskedWithColor(UIColor.darkGrayColor())
+
+        let keyboardButton: UIButton = UIButton(frame: CGRectMake(0.0, 0.0, keyboardImage.size.width, 32.0))
+        keyboardButton.setImage(normalImage, forState: UIControlState.Normal)
+        keyboardButton.setImage(highlightedImage, forState: UIControlState.Highlighted)
+
+        keyboardButton.contentMode = UIViewContentMode.ScaleAspectFit
+        keyboardButton.backgroundColor = UIColor.clearColor()
+        keyboardButton.tintColor = UIColor.lightGrayColor()
+
+        return keyboardButton
+    }
 
     class func defaultSendButtonItem() -> UIButton {
         let sendTitle: String = NSBundle.gg_localizedStringForKey("send")

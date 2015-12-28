@@ -27,6 +27,9 @@ protocol MessageInputToolbarDelegate: UIToolbarDelegate {
      */
     func messagesInputToolbar(toolbar: MessageInputToolbar,
            didPressLeftBarButton sender: UIButton)
+
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+           didPressLeftInnerBarButton sender: UIButton)
 }
 
 class MessageInputToolbar: UIToolbar {
@@ -64,6 +67,7 @@ class MessageInputToolbar: UIToolbar {
         self.gg_addObservers()
 
         self.contentView.leftBarButtonItem = MessageToolbarButtonFactory.defaultAccessoryButtonItem()
+        self.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.defaultKeyboardButtonItem()
         self.contentView.rightBarButtonItem = MessageToolbarButtonFactory.defaultSendButtonItem()
 
         self.toggleSendButtonEnabled()
@@ -103,8 +107,11 @@ class MessageInputToolbar: UIToolbar {
     // pragma mark - Actions
 
     func gg_leftBarButtonPressed(sender: UIButton) {
-        // print("gg_leftBarButtonPressed")
         self.messageDelegate.messagesInputToolbar(self, didPressLeftBarButton: sender)
+    }
+    
+    func gg_leftInnerBarButtonPressed(sender: UIButton) {
+        self.messageDelegate.messagesInputToolbar(self, didPressLeftInnerBarButton: sender)
     }
 
     func gg_rightBarButtonPressed(sender: UIButton) {
@@ -143,6 +150,16 @@ class MessageInputToolbar: UIToolbar {
                         action: "gg_leftBarButtonPressed:",
                         forControlEvents: UIControlEvents.TouchUpInside)
                 }
+                else if (keyPath! == NSStringFromSelector(Selector("leftInnerBarButtonItem"))) {
+
+                    self.contentView.leftInnerBarButtonItem!.removeTarget(self,
+                        action: nil,
+                        forControlEvents: UIControlEvents.TouchUpInside)
+
+                    self.contentView.leftInnerBarButtonItem!.addTarget(self,
+                        action: "gg_leftInnerBarButtonPressed:",
+                        forControlEvents: UIControlEvents.TouchUpInside)
+                }
                 else if (keyPath! == NSStringFromSelector(Selector("rightBarButtonItem"))) {
                     self.contentView.rightBarButtonItem!.removeTarget(self,
                         action: nil,
@@ -172,6 +189,12 @@ class MessageInputToolbar: UIToolbar {
 
         self.contentView.addObserver(
             self,
+            forKeyPath: NSStringFromSelector(Selector("leftInnerBarButtonItem")),
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.addObserver(
+            self,
             forKeyPath: NSStringFromSelector(Selector("rightBarButtonItem")),
             options: NSKeyValueObservingOptions(rawValue: 0),
             context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
@@ -187,6 +210,11 @@ class MessageInputToolbar: UIToolbar {
         self.contentView.removeObserver(
             self,
             forKeyPath: NSStringFromSelector(Selector("leftBarButtonItem")),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.removeObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("leftInnerBarButtonItem")),
             context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
 
         self.contentView.removeObserver(

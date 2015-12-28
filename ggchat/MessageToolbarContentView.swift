@@ -20,10 +20,12 @@ class MessageToolbarContentView: UIView {
 
     static let kMessagesToolbarContentViewHorizontalSpacingDefault: CGFloat = 8.0
     @IBOutlet weak var leftBarButtonContainerView: UIView!
+    @IBOutlet weak var leftInnerBarButtonContainerView: UIView!
     @IBOutlet weak var rightBarButtonContainerView: UIView!
     @IBOutlet weak var textView: MessageComposerTextView!
     
     @IBOutlet weak var leftBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leftInnerBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftHorizontalSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightHorizontalSpacingConstraint: NSLayoutConstraint!
@@ -66,6 +68,9 @@ class MessageToolbarContentView: UIView {
             if (self.leftBarButtonContainerView != nil) {
                 self.leftBarButtonContainerView.backgroundColor = backgroundColor
             }
+            if (self.leftInnerBarButtonContainerView != nil) {
+                self.leftInnerBarButtonContainerView.backgroundColor = backgroundColor
+            }
             if (self.rightBarButtonContainerView != nil) {
                 self.rightBarButtonContainerView.backgroundColor = backgroundColor
             }
@@ -102,6 +107,36 @@ class MessageToolbarContentView: UIView {
         }
     }
     
+    dynamic var leftInnerBarButtonItem: UIButton? {
+        willSet (leftInnerBarButtonItem) {
+            if (self.leftInnerBarButtonItem != nil) {
+                self.leftInnerBarButtonItem!.removeFromSuperview()
+            }
+
+            if (leftInnerBarButtonItem == nil) {
+                self.leftInnerBarButtonItem = nil
+                self.leftHorizontalSpacingConstraint.constant = 0.0
+                self.leftInnerBarButtonItemWidth = 0.0
+                self.leftInnerBarButtonContainerView.hidden = true
+                return
+            }
+
+            if (CGRectEqualToRect(leftInnerBarButtonItem!.frame, CGRectZero)) {
+                leftInnerBarButtonItem!.frame = self.leftInnerBarButtonContainerView.bounds
+            }
+
+            self.leftInnerBarButtonContainerView.hidden = false
+            self.leftHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
+            self.leftInnerBarButtonItemWidth = CGRectGetWidth(leftInnerBarButtonItem!.frame)
+
+            leftInnerBarButtonItem!.translatesAutoresizingMaskIntoConstraints = false
+
+            self.leftInnerBarButtonContainerView.addSubview(leftInnerBarButtonItem!)
+            self.leftInnerBarButtonContainerView.gg_pinAllEdgesOfSubview(leftInnerBarButtonItem!)
+            self.setNeedsUpdateConstraints()
+        }
+    }
+    
     var leftBarButtonItemWidth: CGFloat {
         set {
             self.leftBarButtonContainerViewWidthConstraint.constant = leftBarButtonItemWidth
@@ -109,6 +144,16 @@ class MessageToolbarContentView: UIView {
         }
         get {
             return self.leftBarButtonContainerViewWidthConstraint.constant
+        }
+    }
+    
+    var leftInnerBarButtonItemWidth: CGFloat {
+        set {
+            self.leftInnerBarButtonContainerViewWidthConstraint.constant = leftInnerBarButtonItemWidth
+            self.setNeedsUpdateConstraints()
+        }
+        get {
+            return self.leftInnerBarButtonContainerViewWidthConstraint.constant
         }
     }
     

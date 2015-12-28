@@ -123,6 +123,10 @@ extension UIImage {
         return UIImage.gg_bubbleImageFromBundleWithName("clip")
     }
     
+    class func gg_defaultKeyboardImage() -> UIImage {
+        return UIImage(named: "Keyboard")!
+    }
+    
     class func gg_defaultTypingIndicatorImage() -> UIImage {
         return UIImage.gg_bubbleImageFromBundleWithName("typing")
     }

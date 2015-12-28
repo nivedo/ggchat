@@ -487,6 +487,10 @@ class MessageViewController: UIViewController,
     func didPressAccessoryButton(sender: UIButton) {
         assert(false, "Error! required method not implemented in subclass. Need to implement didPressAccessoryButton")
     }
+    
+    func didPressInnerButton(sender: UIButton) {
+        assert(false, "Error! required method not implemented in subclass. Need to implement didPressInnerButton")
+    }
 
     func finishSendingMessage() {
         self.finishSendingMessageAnimated(true)
@@ -806,6 +810,12 @@ class MessageViewController: UIViewController,
                 senderDisplayName: self.senderDisplayName,
                 date: NSDate())
         }
+    }
+    
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+        didPressLeftInnerBarButton sender: UIButton) {
+        print("MVC::didPressLeftInnerBarButton")
+        self.didPressInnerButton(sender)
     }
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,

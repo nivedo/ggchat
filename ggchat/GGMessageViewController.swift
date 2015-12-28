@@ -212,6 +212,10 @@ class GGMessageViewController:
         }
     }
 
+    override func didPressInnerButton(sender: UIButton) {
+        
+    }
+    
     override func didPressAccessoryButton(sender: UIButton) {
         let alert: UIAlertController = UIAlertController(
             title: "Media messages",
