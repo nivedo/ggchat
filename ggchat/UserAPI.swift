@@ -73,6 +73,23 @@ class RosterUser {
 
 }
 
+enum Language {
+    case English
+    case ChineseTraditional
+    case ChineseSimplified
+}
+
+class UserSetting {
+    
+    var language: Language
+
+    // Default settings
+    init() {
+        self.language = Language.English
+    }
+    
+}
+
 class UserAPI {
     
     class var sharedInstance: UserAPI {
@@ -361,6 +378,7 @@ class UserAPI {
     var avatarPath: String?
     var avatarImage: UIImage?
     var rosterList: [RosterUser] = [RosterUser]()
+    var settings: UserSetting = UserSetting()
     
     var displayName: String {
         get {

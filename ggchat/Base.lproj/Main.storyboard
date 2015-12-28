@@ -260,6 +260,7 @@
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <segue destination="crw-fH-LXf" kind="show" identifier="settings.to.settings_textfield" id="gSi-wr-qvu"/>
+                        <segue destination="JxT-rj-XU3" kind="show" identifier="settings.to.settings_language" id="Lvg-FJ-O62"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oz-tK-uqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -389,6 +390,36 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="4732" y="1517"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="Gfv-L5-J11">
+            <objects>
+                <tableViewController id="JxT-rj-XU3" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bNR-Wr-nUV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="qFf-YC-hVg">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qFf-YC-hVg" id="Zvm-hP-Eai">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="JxT-rj-XU3" id="FfZ-xm-0bj"/>
+                            <outlet property="delegate" destination="JxT-rj-XU3" id="uan-e0-aKH"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O3f-Bq-MAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5284" y="1791"/>
         </scene>
         <!--Message Image View Controller-->
         <scene sceneID="6cH-Lg-7Kp">
@@ -846,6 +877,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lsQ-Ec-9mw"/>
-        <segue reference="opv-3B-fXB"/>
+        <segue reference="Aln-Pk-2fu"/>
     </inferredMetricsTieBreakers>
 </document>

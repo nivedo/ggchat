@@ -41,9 +41,9 @@ class GGSettingData {
                     displayName: "Notifications and Sounds",
                     segueName: ""),
                 SettingMenu(
-                    id: "privacy",
-                    displayName: "Privacy and Security",
-                    segueName: ""),
+                    id: "language",
+                    displayName: "Language",
+                    segueName: "settings.to.settings_language"),
                 SettingMenu(
                     id: "chat",
                     displayName: "Chat Settings",
