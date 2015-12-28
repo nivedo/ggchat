@@ -69,8 +69,8 @@ class UserAPI {
         return "\(self.route("userinfo"))?username=\(username)"
     }
 
-    class func rosterWithJIDUrl(jid: String) -> String {
-        return "\(self.route("roster"))?jid=\(jid)"
+    class var rosterUrl: String {
+        return "\(self.route("rosterv2"))"
     }
     
     ////////////////////////////////////////////////////////////////////
@@ -162,10 +162,12 @@ class UserAPI {
             jsonCompletion: jsonCompletion)
     }
 
-    func getRosterWithJID(jid: String, jsonCompletion: JSONCompletion) {
-        self.get(UserAPI.rosterWithJIDUrl(jid),
-            authToken: nil,
-            jsonCompletion: jsonCompletion)
+    func getRoster(jid: String, jsonCompletion: JSONCompletion) {
+        if let token = self.authToken {
+            self.get(UserAPI.rosterUrl,
+                authToken: token,
+                jsonCompletion: jsonCompletion)
+        }
     }
     
     func getProfile(jsonCompletion: JSONCompletion) -> Bool {
@@ -230,10 +232,10 @@ class UserAPI {
     func cacheRoster(completion: ((Bool) -> Void)? = nil) {
         self.rosterList.removeAll()
         if let jid = self.jid {
-            UserAPI.sharedInstance.getRosterWithJID(jid,
+            UserAPI.sharedInstance.getRoster(jid,
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                     if let json = jsonBody, let profiles = json["profiles"] as? NSArray {
-                        print(profiles)
+                        // print(profiles)
                         for profile in profiles {
                             self.rosterList.append(RosterUser(profile: profile as! [String: AnyObject]))
                         }
