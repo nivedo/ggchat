@@ -163,7 +163,22 @@ extension String {
 }
 
 class GGWiki {
-   
+  
+    enum WikiSet {
+        case HearthStone
+        case MagicTheGathering
+    }
+    
+    class WikiResource {
+        var name: String
+        var fileType: String
+        
+        init(name: String, fileType: String) {
+            self.name = name
+            self.fileType = fileType
+        }
+    }
+    
     private static let host = "http://45.33.39.21:1235"
     private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
     
@@ -188,11 +203,31 @@ class GGWiki {
     private var cardMaxTokens: Int = 1
     var cardAssets = [String : GGWikiAsset]()
     var cardNameToIdMap = [String : String]()
+    private var wikis = [WikiSet: WikiResource]()
     
     init() {
-        print("**************** HEARTHSTONE ******************")
-        self.loadAsset("hearthstone_en", fileType: "png", forAutocomplete: true)
-        self.loadAsset("mtg_en_clean", fileType: "jpg", forAutocomplete: false)
+        self.wikis[WikiSet.HearthStone] = WikiResource(name: "hearthstone_en", fileType: "png")
+        self.wikis[WikiSet.MagicTheGathering] = WikiResource(name: "mtg_en_clean", fileType: "jpg")
+        
+        self.load(WikiSet.HearthStone)
+        // self.loadAsset("hearthstone_en", fileType: "png", forAutocomplete: true)
+        // self.loadAsset("mtg_en_clean", fileType: "jpg", forAutocomplete: false)
+    }
+    
+    func load(wiki: WikiSet) {
+        self.reset()
+        for (k, v) in self.wikis {
+            let autocomplete = (wiki == k)
+            self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: autocomplete)
+        }
+    }
+    
+    func reset() {
+        self.cardNames = [String]()
+        self.cardNamesTrie = Trie()
+        self.cardMaxTokens = 1
+        self.cardAssets = [String: GGWikiAsset]()
+        self.cardNameToIdMap = [String: String]()
     }
     
     func loadAsset(json: String, fileType: String, forAutocomplete: Bool) {
