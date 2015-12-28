@@ -79,7 +79,7 @@ class GGWikiAsset : ImageModalAsset {
     }
     
     func fetchInfo() {
-        print(self.imageURL)
+        // print(self.imageURL)
         self.downloadImage()
     }
     

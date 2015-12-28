@@ -175,10 +175,12 @@ class ContactTableViewController: UITableViewController,
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.frc()!.sections!.count
+        // return self.frc()!.sections!.count
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        /*
         let sections: NSArray = self.frc()!.sections!
         
         if (section < sections.count) {
@@ -186,12 +188,15 @@ class ContactTableViewController: UITableViewController,
         }
         
         return 0
+        */
+        return UserAPI.sharedInstance.rosterList.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! ContactTableViewCell
 
+        /*
         let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
         var displayName = user.jidStr
         if (user.nickname != nil && user.nickname != "") {
@@ -202,10 +207,13 @@ class ContactTableViewController: UITableViewController,
                 displayName = vcard.nickname
             }
         }
+        */
+        let user = UserAPI.sharedInstance.rosterList[indexPath.row]
+        let avatar = user.messageAvatarImage
         
-        (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)
-        
-        cell.cellMainLabel.attributedText = NSAttributedString(string: displayName)
+        cell.avatarImageView.image = avatar.avatarImage
+        cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
+        cell.cellMainLabel.attributedText = NSAttributedString(string: user.displayName)
         
         return cell
     }
