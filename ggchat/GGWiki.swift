@@ -176,6 +176,7 @@ class GGWiki {
         var ref: String
         var jsonURL: String
         var jsonData: NSData
+        var iconImage: UIImage?
        
         init(json: [String: String]) {
             self.name = json["name"]!
@@ -183,6 +184,9 @@ class GGWiki {
             self.ref = json["ref"]!
             self.jsonURL = "\(GGWiki.s3url)/config/\(json["bundle"]!)"
             self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
+            
+            let iconURL = "\(GGWiki.s3url)/assets/\(self.icon)"
+            self.iconImage = UIImage(data: NSData(contentsOfURL: NSURL(string: iconURL)!)!)
         }
     }
     
@@ -219,8 +223,8 @@ class GGWiki {
     var autocompleteWiki: WikiSet = WikiSet.None
     
     init() {
-        self.loadConfig()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            self.loadConfig()
             self.loadAutocomplete(WikiSet.HearthStone)
             self.loadAssets()
         }
@@ -264,7 +268,7 @@ class GGWiki {
                     for wikiJson in bundles {
                         let resource = WikiResource(json: wikiJson as! [String: String])
                         let resourceKey = self.configWikiKey(resource.ref)
-                        self.wikis[resourceKey] = WikiResource(json: wikiJson as! [String: String])
+                        self.wikis[resourceKey] = resource
                     }
                 }
             }

@@ -107,8 +107,8 @@ class MessageAutocompleteController: NSObject,
         
         cell.cellMainLabel.text = suggestion.displayString.capitalizedString
             
-        if let icon = GGWiki.sharedInstance.wikis[GGWiki.sharedInstance.autocompleteWiki] {
-            cell.iconImageView.image = UIImage(named: icon.icon)
+        if let resource = GGWiki.sharedInstance.wikis[GGWiki.sharedInstance.autocompleteWiki] {
+            cell.iconImageView.image = resource.iconImage
         }
             
         return cell

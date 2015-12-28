@@ -33,13 +33,11 @@ class MessageAutocompleteCell: UITableViewCell {
         self.cellMainLabel.font = UIFont.boldSystemFontOfSize(CGFloat(16.0))
         self.separatorInset = UIEdgeInsetsMake(0.0, 40.0, 0.0, 0.0)
   
-        var iconName = "hearthstone-icon"
-        if let icon = GGWiki.sharedInstance.wikis[GGWiki.sharedInstance.autocompleteWiki] {
-            iconName = icon.icon
+        if let resource = GGWiki.sharedInstance.wikis[GGWiki.sharedInstance.autocompleteWiki] {
+            self.iconImageView.image = resource.iconImage
         }
         
         self.iconContainer.backgroundColor = UIColor.clearColor()
-        self.iconImageView.image = UIImage(named: iconName)
         self.selectionStyle = UITableViewCellSelectionStyle.None
         // self.cellMainLabel.highlightedTextColor = UIColor.darkGrayColor()
     }
