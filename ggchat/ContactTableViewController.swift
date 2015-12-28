@@ -13,13 +13,12 @@ protocol ContactPickerDelegate{
     func didSelectContact(recipient: RosterUser)
 }
 
-class ContactTableViewController: UITableViewController,
-    UISearchResultsUpdating,
-    NSFetchedResultsControllerDelegate,
-    XMPPRosterManagerDelegate {
-    
+class ContactTableViewController: UITableViewController, UISearchResultsUpdating {
+
     var searchResultController = UISearchController()
-    var searchFetchController: NSFetchedResultsController?
+    // var searchFetchController: NSFetchedResultsController?
+    
+    var filteredRosterList = [RosterUser]()
 
     @IBAction func addContactAction(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(
@@ -120,7 +119,7 @@ class ContactTableViewController: UITableViewController,
             return controller
         })()
         
-        XMPPRosterManager.sharedInstance.delegate = self
+        // XMPPRosterManager.sharedInstance.delegate = self
         self.tableView.reloadData()
        
         self.refreshControl = UIRefreshControl()
@@ -142,25 +141,33 @@ class ContactTableViewController: UITableViewController,
         super.viewWillDisappear(animated)
         self.searchResultController.view.removeFromSuperview()
         
-        XMPPRosterManager.sharedInstance.delegate = nil
+        // XMPPRosterManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
-            let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
+            let searchString = searchController.searchBar.text!.lowercaseString
+            self.filteredRosterList = UserAPI.sharedInstance.rosterList.filter { user in
+                user.displayName.lowercaseString.containsString(searchString)
+            }
+            /*
+            let searchPredicate = NSPredicate(format: "self.displayName CONTAINS[cd] %@",
                 searchController.searchBar.text!)
            
             self.searchFetchController = XMPPRosterManager.sharedInstance.newFetchedResultsController(searchPredicate)
             self.searchFetchController?.delegate = self
             
             print("updateSearch, active: \(self.searchResultController.active)")
+            */
         }
         self.tableView.reloadData()
     }
-   
+  
+    /*
 	func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.reloadData()
     }
+    */
     
     var inSearchMode: Bool {
         get {
@@ -168,12 +175,6 @@ class ContactTableViewController: UITableViewController,
                 && self.searchResultController.searchBar.text!.characters.count > 0
         }
     }
-
-    /*
-    func frc() -> NSFetchedResultsController? {
-        return self.inSearchMode ? self.searchFetchController : XMPPRosterManager.sharedInstance.fetchedResultsController()
-    }
-    */
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -184,16 +185,24 @@ class ContactTableViewController: UITableViewController,
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return UserAPI.sharedInstance.rosterList.count
+        if self.inSearchMode {
+            return self.filteredRosterList.count
+        } else {
+            return UserAPI.sharedInstance.rosterList.count
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! ContactTableViewCell
 
-        let user = UserAPI.sharedInstance.rosterList[indexPath.row]
+        let user: RosterUser
+        if self.inSearchMode {
+            user = self.filteredRosterList[indexPath.row]
+        } else {
+            user = UserAPI.sharedInstance.rosterList[indexPath.row]
+        }
         let avatar = user.messageAvatarImage
-        
         cell.avatarImageView.image = avatar.avatarImage
         cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
         cell.cellMainLabel.attributedText = NSAttributedString(string: user.displayName)
@@ -204,10 +213,15 @@ class ContactTableViewController: UITableViewController,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
+        let user: RosterUser
+        if self.inSearchMode {
+            user = self.filteredRosterList[indexPath.row]
+        } else {
+            user = UserAPI.sharedInstance.rosterList[indexPath.row]
+        }
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
         
-        let user = UserAPI.sharedInstance.rosterList[indexPath.row]
         self.performSegueWithIdentifier("contacts.to.messages", sender: user)
     }
     
@@ -252,14 +266,9 @@ class ContactTableViewController: UITableViewController,
         if (segue.identifier == "contacts.to.messages") {
             let user = sender as! RosterUser
             if let cpd = segue.destinationViewController as? ContactPickerDelegate {
-                print("ContactPickerDelege!")
+                // print("ContactPickerDelege!")
                 cpd.didSelectContact(user)
             }
         }
-    }
-    
-    func onRosterContentChanged(controller: NSFetchedResultsController) {
-        print("onRosterContentChanged")
-        self.tableView.reloadData()
     }
 }
