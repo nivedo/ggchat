@@ -132,6 +132,7 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         print("handleRefresh")
         UserAPI.sharedInstance.cacheRoster({ (success: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
+                refreshControl.endRefreshing()
                 self.tableView.reloadData()
             }
         })
