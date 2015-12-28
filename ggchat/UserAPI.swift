@@ -75,6 +75,7 @@ class RosterUser {
 
 enum Language {
     case English
+    case Japanese
     case ChineseTraditional
     case ChineseSimplified
 }

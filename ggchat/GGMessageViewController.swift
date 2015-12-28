@@ -205,7 +205,7 @@ class GGMessageViewController:
 
     override func didPressInnerButton(sender: UIButton) {
         let alert: UIAlertController = UIAlertController(
-            title: "Autocomplete selector",
+            title: "Autocomplete",
             message: "Choose game",
             preferredStyle: UIAlertControllerStyle.ActionSheet)
         let actionCancel = UIAlertAction(
@@ -214,7 +214,7 @@ class GGMessageViewController:
             handler: nil)
         for (k,v) in GGWiki.sharedInstance.wikis {
             let action = UIAlertAction(
-                title: v.title,
+                title: v.name,
                 style: UIAlertActionStyle.Default) { action -> Void in
                 GGWiki.sharedInstance.loadAutocompleteAsync(k)
             }

@@ -169,19 +169,19 @@ class GGWiki {
         case HearthStone
         case MagicTheGathering
     }
-    
+   
     class WikiResource {
-        var title: String
         var name: String
         var icon: String
+        var ref: String
         var jsonURL: String
         var jsonData: NSData
-        
-        init(title: String, name: String, icon: String) {
-            self.title = title
-            self.name = name
-            self.icon = icon
-            self.jsonURL = "\(GGWiki.s3url)/config/\(name).json"
+       
+        init(json: [String: String]) {
+            self.name = json["name"]!
+            self.icon = json["icon"]!
+            self.ref = json["ref"]!
+            self.jsonURL = "\(GGWiki.s3url)/config/\(json["bundle"]!)"
             self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
         }
     }
@@ -196,6 +196,11 @@ class GGWiki {
             options: NSStringCompareOptions.LiteralSearch,
             range: nil)
         return "\(self.host)/images/\(urlName)"
+    }
+    
+    class var configURL: String {
+        let url = "\(self.s3url)/config/config.json"
+        return url
     }
     
     class var sharedInstance: GGWiki {
@@ -214,6 +219,7 @@ class GGWiki {
     var autocompleteWiki: WikiSet = WikiSet.None
     
     init() {
+        /*
         self.wikis[WikiSet.HearthStone] = WikiResource(
             title: "HearthStone",
             name: "hearthstone_en",
@@ -222,11 +228,58 @@ class GGWiki {
             title: "Magic The Gathering",
             name: "mtg_en_v3",
             icon: "mtg-icon")
-        
+        */
+        self.loadConfig()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             self.loadAutocomplete(WikiSet.HearthStone)
             self.loadAssets()
         }
+    }
+   
+    var configLanguageKey: String {
+        get {
+            var key: String = "en"
+            switch UserAPI.sharedInstance.settings.language {
+            case Language.English:
+                key = "en"
+            case Language.ChineseSimplified:
+                key = "cn"
+            case Language.ChineseTraditional:
+                key = "tw"
+            case Language.Japanese:
+                key = "jp"
+            }
+            return key
+        }
+    }
+    
+    func configWikiKey(ref: String) -> WikiSet {
+        if ref == "hearthstone" {
+            return WikiSet.HearthStone
+        } else if ref == "mtg" {
+            return WikiSet.MagicTheGathering
+        } else {
+            return WikiSet.None
+        }
+    }
+    
+    func loadConfig() {
+        if let configData = NSData(contentsOfURL: NSURL(string: GGWiki.configURL)!) {
+            let json = try? NSJSONSerialization.JSONObjectWithData(
+            configData,
+            options: NSJSONReadingOptions.AllowFragments)
+            if let dict = json as? NSDictionary {
+                let languageKey = self.configLanguageKey
+                if let bundles = dict[languageKey] as? NSArray {
+                    for wikiJson in bundles {
+                        let resource = WikiResource(json: wikiJson as! [String: String])
+                        let resourceKey = self.configWikiKey(resource.ref)
+                        self.wikis[resourceKey] = WikiResource(json: wikiJson as! [String: String])
+                    }
+                }
+            }
+        }
+        
     }
    
     func loadAutocompleteAsync(wiki: WikiSet) {
