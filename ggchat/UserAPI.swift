@@ -87,6 +87,7 @@ class UserSetting {
     // Default settings
     init() {
         self.language = Language.English
+        // self.language = Language.ChineseTraditional
     }
     
 }

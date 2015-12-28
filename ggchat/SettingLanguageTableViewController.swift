@@ -10,18 +10,6 @@ import UIKit
 
 class SettingLanguageTableViewController: UITableViewController {
     
-    class LanguageChoice {
-        var nativeLabel: String
-        var englishLabel: String
-        var languageEnum: Language
-       
-        init(nativeLabel: String, englishLabel: String, languageEnum: Language) {
-            self.nativeLabel = nativeLabel
-            self.englishLabel = englishLabel
-            self.languageEnum = languageEnum
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +18,11 @@ class SettingLanguageTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.tableView.registerNib(SettingTableLabelCell.nib(),
+            forCellReuseIdentifier: SettingTableLabelCell.cellReuseIdentifier())
+        
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,24 +34,31 @@ class SettingLanguageTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return GGSettingData.sharedInstance.languages.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableLabelCell.cellReuseIdentifier(), forIndexPath: indexPath) as! SettingTableLabelCell
 
         // Configure the cell...
+        let language = GGSettingData.sharedInstance.languages[indexPath.row]
+        cell.cellTopLabel.text = language.native
+        cell.cellBottomLabel.text = language.english
 
         return cell
     }
-    */
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let language = GGSettingData.sharedInstance.languages[indexPath.row]
+        UserAPI.sharedInstance.settings.language = language.language
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

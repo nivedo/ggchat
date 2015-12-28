@@ -10,8 +10,8 @@ import UIKit
 
 class SettingTableLabelCell: UITableViewCell {
     
-    @IBOutlet weak var cellTopLabel: UIView!
-    @IBOutlet weak var cellBottomLabel: UIView!
+    @IBOutlet weak var cellTopLabel: UILabel!
+    @IBOutlet weak var cellBottomLabel: UILabel!
     
     class func nib() -> UINib {
         let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String

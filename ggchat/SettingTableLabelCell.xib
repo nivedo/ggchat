@@ -14,20 +14,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMp-Gi-gTh" userLabel="Cell bottom label">
-                        <rect key="frame" x="20" y="34" width="260" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="20" id="b9S-Oa-XWg"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAe-1N-jb3" userLabel="Cell top label">
+                        <rect key="frame" x="20" y="8" width="260" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAe-1N-jb3" userLabel="Cell top label">
-                        <rect key="frame" x="20" y="8" width="260" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="20" id="V9x-Vw-JQx"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMp-Gi-gTh" userLabel="Cell bottom label">
+                        <rect key="frame" x="20" y="36" width="260" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -42,8 +36,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="cellBottomLabel" destination="H2p-sc-9uM" id="VnW-2P-Xpa"/>
-                <outlet property="cellTopLabel" destination="H2p-sc-9uM" id="TGR-9e-nTh"/>
+                <outlet property="cellBottomLabel" destination="CMp-Gi-gTh" id="h0a-kR-STs"/>
+                <outlet property="cellTopLabel" destination="dAe-1N-jb3" id="Vjt-9A-oOj"/>
             </connections>
             <point key="canvasLocation" x="332" y="483"/>
         </tableViewCell>

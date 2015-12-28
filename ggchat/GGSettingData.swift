@@ -8,6 +8,18 @@
 
 import Foundation
 
+class LanguageChoice {
+    var native: String
+    var english: String
+    var language: Language
+    
+    init(native: String, english: String, language: Language) {
+        self.native = native
+        self.english = english
+        self.language = language
+    }
+}
+
 class GGSettingData {
     
     class var sharedInstance: GGSettingData {
@@ -18,9 +30,11 @@ class GGSettingData {
     }
    
     var menus: [[SettingMenu]]!
+    var languages: [LanguageChoice]!
     
     init() {
         self.loadMenus()
+        self.loadLanguages()
     }
     
     func loadMenus() {
@@ -59,6 +73,23 @@ class GGSettingData {
                     displayName: "Help",
                     segueName: ""),
             ],
+        ]
+    }
+    
+    func loadLanguages() {
+        self.languages = [
+            LanguageChoice(
+                native: "English",
+                english: "English",
+                language: Language.English),
+            LanguageChoice(
+                native: "Chinese Traditional",
+                english: "Chinese Traditional",
+                language: Language.ChineseTraditional),
+            LanguageChoice(
+                native: "Chinese Simplified",
+                english: "Chinese Simplified",
+                language: Language.ChineseSimplified)
         ]
     }
 }
