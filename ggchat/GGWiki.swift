@@ -175,12 +175,16 @@ class GGWiki {
         var name: String
         var fileType: String
         var icon: String
+        var jsonURL: String
+        var jsonData: NSData
         
         init(title: String, name: String, fileType: String, icon: String) {
             self.title = title
             self.name = name
             self.fileType = fileType
             self.icon = icon
+            self.jsonURL = "\(GGWiki.s3url)/config/\(name).json"
+            self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
         }
     }
     
@@ -219,7 +223,7 @@ class GGWiki {
             icon: "hearthstone-icon")
         self.wikis[WikiSet.MagicTheGathering] = WikiResource(
             title: "Magic The Gathering",
-            name: "mtg_en_clean",
+            name: "mtg_en_v2",
             fileType: "jpg",
             icon: "mtg-icon")
         
@@ -240,9 +244,7 @@ class GGWiki {
             self.resetAutocomplete()
             self.autocompleteWiki = wiki
             if let autocompleteResource = self.wikis[wiki] {
-                self.loadAsset(autocompleteResource.name,
-                    fileType: autocompleteResource.fileType,
-                    forAutocomplete: true)
+                self.loadAsset(autocompleteResource, forAutocomplete: true)
             }
         }
     }
@@ -250,7 +252,7 @@ class GGWiki {
     func loadAssets() {
         for (k, v) in self.wikis {
             if k != self.autocompleteWiki {
-                self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: false)
+                self.loadAsset(v, forAutocomplete: false)
             }
         }
     }
@@ -263,7 +265,48 @@ class GGWiki {
         self.cardNameToIdMap = [String: String]()
         // self.cardAssets = [String: GGWikiAsset]()
     }
+   
+    func loadAsset(resource: WikiResource, forAutocomplete: Bool) {
+        let json = try? NSJSONSerialization.JSONObjectWithData(
+            resource.jsonData,
+            options: NSJSONReadingOptions.AllowFragments)
+        if let array = json as? NSArray {
+            for bundle in array {
+                if let dict = bundle as? NSDictionary {
+                    if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int {
+                        // print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
+                        var nameToIdMap = [String: String]()
+                        for c in cards {
+                            if let card = c as? NSDictionary {
+                                if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
+                                    let lowercaseName = cardName.lowercaseString
+                                    let id = AssetManager.id(bundleId, assetId: assetId)
+                                    self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: resource.fileType)
+                                    if forAutocomplete {
+                                        nameToIdMap[lowercaseName] = id
+                                        self.cardNameToIdMap[lowercaseName] = id
+                                        self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
+                                    }
+                                }
+                            }
+                        }
+                        for (k, _) in nameToIdMap {     // self.cardNameToIdMap {
+                            self.cardNames.append(k)
+                            self.cardNamesTrie.addWord(k)
+                            
+                            for (index, word) in k.tokens.enumerate() {
+                                if index > 0 && word.length >= 4 {
+                                    self.cardNamesTrie.addPrefix(word, finalWord: k)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     
+    /*
     func loadAsset(json: String, fileType: String, forAutocomplete: Bool) {
         if let asset = NSDataAsset(name: json, bundle: NSBundle.mainBundle()) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
@@ -303,6 +346,7 @@ class GGWiki {
             print("Error: Unable to find \(json)")
         }
     }
+    */
     
     func getAsset(id: String) -> ImageModalAsset? {
         if id.rangeOfString("::") != nil {
