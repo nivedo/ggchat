@@ -165,6 +165,7 @@ extension String {
 class GGWiki {
   
     enum WikiSet {
+        case None
         case HearthStone
         case MagicTheGathering
     }
@@ -204,25 +205,28 @@ class GGWiki {
     var cardAssets = [String : GGWikiAsset]()
     var cardNameToIdMap = [String : String]()
     private var wikis = [WikiSet: WikiResource]()
+    private var autocompleteWiki: WikiSet = WikiSet.None
     
     init() {
         self.wikis[WikiSet.HearthStone] = WikiResource(name: "hearthstone_en", fileType: "png")
         self.wikis[WikiSet.MagicTheGathering] = WikiResource(name: "mtg_en_clean", fileType: "jpg")
         
         self.load(WikiSet.HearthStone)
-        // self.loadAsset("hearthstone_en", fileType: "png", forAutocomplete: true)
-        // self.loadAsset("mtg_en_clean", fileType: "jpg", forAutocomplete: false)
     }
     
     func load(wiki: WikiSet) {
-        self.reset()
-        for (k, v) in self.wikis {
-            let autocomplete = (wiki == k)
-            self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: autocomplete)
+        if wiki != self.autocompleteWiki {
+            self.reset()
+            for (k, v) in self.wikis {
+                let autocomplete = (wiki == k)
+                self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: autocomplete)
+            }
+            self.autocompleteWiki = wiki
         }
     }
     
     func reset() {
+        self.autocompleteWiki = WikiSet.None
         self.cardNames = [String]()
         self.cardNamesTrie = Trie()
         self.cardMaxTokens = 1
