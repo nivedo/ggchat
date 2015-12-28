@@ -88,7 +88,7 @@ class GGWikiAsset : ImageModalAsset {
             getDataFromUrl(url) { (data, response, error)  in
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
                     guard let data = data where error == nil else {
-                        // print("Image download failed: \(error)")
+                        print("Image download failed: \(error)")
                         self.delegate?.onDownloadError()
                         return
                     }
@@ -281,7 +281,9 @@ class GGWiki {
                                 if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
                                     let lowercaseName = cardName.lowercaseString
                                     let id = AssetManager.id(bundleId, assetId: assetId)
-                                    self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: resource.fileType)
+                                    if self.cardAssets[id] == nil {
+                                        self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: resource.fileType)
+                                    }
                                     if forAutocomplete {
                                         nameToIdMap[lowercaseName] = id
                                         self.cardNameToIdMap[lowercaseName] = id
