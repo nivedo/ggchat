@@ -78,11 +78,6 @@ class GGWikiAsset : ImageModalAsset {
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
     
-    func fetchInfo() {
-        // print(self.imageURL)
-        self.downloadImage()
-    }
-    
     func downloadImage() {
         if let urlImage = self.imageURL, let url = NSURL(string: urlImage) {
             getDataFromUrl(url) { (data, response, error)  in
@@ -354,7 +349,7 @@ class GGWiki {
     func getAsset(id: String) -> ImageModalAsset? {
         if id.rangeOfString("::") != nil {
             if let asset = self.cardAssets[id] {
-                asset.fetchInfo()
+                asset.downloadImage()
                 return asset
             }
         }

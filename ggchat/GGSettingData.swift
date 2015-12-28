@@ -89,7 +89,11 @@ class GGSettingData {
             LanguageChoice(
                 native: "Chinese Simplified",
                 english: "Chinese Simplified",
-                language: Language.ChineseSimplified)
+                language: Language.ChineseSimplified),
+            LanguageChoice(
+                native: "Japanese",
+                english: "Japanese",
+                language: Language.Japanese)
         ]
     }
 }
