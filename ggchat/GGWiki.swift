@@ -171,10 +171,12 @@ class GGWiki {
     }
     
     class WikiResource {
+        var title: String
         var name: String
         var fileType: String
         
-        init(name: String, fileType: String) {
+        init(title: String, name: String, fileType: String) {
+            self.title = title
             self.name = name
             self.fileType = fileType
         }
@@ -204,22 +206,40 @@ class GGWiki {
     private var cardMaxTokens: Int = 1
     var cardAssets = [String : GGWikiAsset]()
     var cardNameToIdMap = [String : String]()
-    private var wikis = [WikiSet: WikiResource]()
+    var wikis = [WikiSet: WikiResource]()
     private var autocompleteWiki: WikiSet = WikiSet.None
     
     init() {
-        self.wikis[WikiSet.HearthStone] = WikiResource(name: "hearthstone_en", fileType: "png")
-        self.wikis[WikiSet.MagicTheGathering] = WikiResource(name: "mtg_en_clean", fileType: "jpg")
+        self.wikis[WikiSet.HearthStone] = WikiResource(
+            title: "HearthStone",
+            name: "hearthstone_en",
+            fileType: "png")
+        self.wikis[WikiSet.MagicTheGathering] = WikiResource(
+            title: "Magic The Gathering",
+            name: "mtg_en_clean",
+            fileType: "jpg")
         
-        self.load(WikiSet.HearthStone)
+        self.loadAsync(WikiSet.HearthStone)
+    }
+   
+    func loadAsync(wiki: WikiSet) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            self.load(wiki)
+        }
     }
     
     func load(wiki: WikiSet) {
         if wiki != self.autocompleteWiki {
             self.reset()
+            if let autocompleteResource = self.wikis[wiki] {
+                self.loadAsset(autocompleteResource.name,
+                    fileType: autocompleteResource.fileType,
+                    forAutocomplete: true)
+            }
             for (k, v) in self.wikis {
-                let autocomplete = (wiki == k)
-                self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: autocomplete)
+                if wiki != k {
+                    self.loadAsset(v.name, fileType: v.fileType, forAutocomplete: false)
+                }
             }
             self.autocompleteWiki = wiki
         }

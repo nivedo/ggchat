@@ -213,7 +213,24 @@ class GGMessageViewController:
     }
 
     override func didPressInnerButton(sender: UIButton) {
-        
+        let alert: UIAlertController = UIAlertController(
+            title: "Autocomplete selector",
+            message: "Choose game",
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionCancel = UIAlertAction(
+            title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
+        for (k,v) in GGWiki.sharedInstance.wikis {
+            let action = UIAlertAction(
+                title: v.title,
+                style: UIAlertActionStyle.Default) { action -> Void in
+                GGWiki.sharedInstance.loadAsync(k)
+            }
+            alert.addAction(action)
+        }
+        alert.addAction(actionCancel)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func didPressAccessoryButton(sender: UIButton) {
