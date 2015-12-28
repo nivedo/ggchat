@@ -174,11 +174,13 @@ class GGWiki {
         var title: String
         var name: String
         var fileType: String
+        var icon: String
         
-        init(title: String, name: String, fileType: String) {
+        init(title: String, name: String, fileType: String, icon: String) {
             self.title = title
             self.name = name
             self.fileType = fileType
+            self.icon = icon
         }
     }
     
@@ -207,20 +209,22 @@ class GGWiki {
     var cardAssets = [String : GGWikiAsset]()
     var cardNameToIdMap = [String : String]()
     var wikis = [WikiSet: WikiResource]()
-    private var autocompleteWiki: WikiSet = WikiSet.None
+    var autocompleteWiki: WikiSet = WikiSet.None
     
     init() {
         self.wikis[WikiSet.HearthStone] = WikiResource(
             title: "HearthStone",
             name: "hearthstone_en",
-            fileType: "png")
+            fileType: "png",
+            icon: "hearthstone-icon")
         self.wikis[WikiSet.MagicTheGathering] = WikiResource(
             title: "Magic The Gathering",
             name: "mtg_en_clean",
-            fileType: "jpg")
+            fileType: "jpg",
+            icon: "mtg-icon")
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-            self.loadAutocompleteAsync(WikiSet.HearthStone)
+            self.loadAutocomplete(WikiSet.HearthStone)
             self.loadAssets()
         }
     }
@@ -234,12 +238,12 @@ class GGWiki {
     func loadAutocomplete(wiki: WikiSet) {
         if wiki != self.autocompleteWiki {
             self.resetAutocomplete()
+            self.autocompleteWiki = wiki
             if let autocompleteResource = self.wikis[wiki] {
                 self.loadAsset(autocompleteResource.name,
                     fileType: autocompleteResource.fileType,
                     forAutocomplete: true)
             }
-            self.autocompleteWiki = wiki
         }
     }
     
