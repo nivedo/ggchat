@@ -18,7 +18,7 @@ class GGMessageViewController:
     UINavigationControllerDelegate,
     UIActionSheetDelegate {
 
-    var recipient: XMPPUserCoreDataStorageObject?
+    var recipient: RosterUser?
     var recipientDetails: UIView?
     var photoPicker = UIImagePickerController()
     var imageModelViewController: ImageModalViewController?
@@ -72,7 +72,7 @@ class GGMessageViewController:
             
                 self.messages.append(message)
                
-                S3PhotoManager.sharedInstance.sendPhoto(chosenImage, to: recipient.jidStr)
+                S3PhotoManager.sharedInstance.sendPhoto(chosenImage, to: recipient.jid)
                 
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
@@ -97,10 +97,10 @@ class GGMessageViewController:
     
     func loadUserHistory(loadArchiveMessages: Bool, loadLastActivity: Bool) {
         if let recipient = self.recipient {
-            self.navigationItem.title = recipient.nicknameFromvCard
+            self.navigationItem.title = recipient.displayName
          
             if self.recipientDetails == nil || loadLastActivity {
-                XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jidStr,
+                XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jid,
                     sender: XMPPManager.sharedInstance.lastActivity) { (response, forJID, error) -> Void in
                     if let lastActivitySeconds = response?.lastActivitySeconds() {
                         let lastActivityResponse = XMPPLastActivityManager.sharedInstance.getLastActivityFrom(lastActivitySeconds)
@@ -111,7 +111,7 @@ class GGMessageViewController:
                             }
                         }
                         self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
-                            lastActivityResponse, displayName: recipient.nicknameFromvCard)
+                            lastActivityResponse, displayName: recipient.displayName)
                         if (self.recipientDetails != nil) {
                             self.navigationItem.title = ""
                             
@@ -127,7 +127,7 @@ class GGMessageViewController:
             if loadArchiveMessages {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
-                        jid: recipient.jidStr,
+                        jid: recipient.jid,
                         mediaCompletion: { (Void) -> Void in
                         self.messageCollectionView.reloadData()
                     })
@@ -161,20 +161,11 @@ class GGMessageViewController:
     }
     */
    
-    func didSelectContact(recipient: XMPPUserCoreDataStorageObject) {
+    func didSelectContact(recipient: RosterUser) {
         self.recipient = recipient
        
         if self.recipientDetails == nil {
-            self.navigationItem.title = recipient.nicknameFromvCard
-        }
-        
-        if !XMPPChatManager.knownUserForJid(jidStr: recipient.jidStr) {
-            XMPPChatManager.addUserToChatList(jidStr: recipient.jidStr)
-        } else {
-            /*
-            self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr) as NSArray as! [Message]
-            finishReceivingMessageAnimated(true)
-            */
+            self.navigationItem.title = recipient.displayName
         }
     }
     
@@ -205,7 +196,7 @@ class GGMessageViewController:
             self.messages.append(message)
                 
             XMPPMessageManager.sendMessage(text,
-                to: recipient.jidStr,
+                to: recipient.jid,
                 completionHandler: nil)
         
             self.finishSendingMessageAnimated(true)
@@ -280,8 +271,8 @@ class GGMessageViewController:
         if let msg: String = message.elementForName("body")?.stringValue() {
             if let from: String = message.attributeForName("from")?.stringValue() {
                 let tokens = from.componentsSeparatedByString("/")
-                // print("\(tokens[0]) ? \(self.recipient!.jidStr)")
-                if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
+                // print("\(tokens[0]) ? \(self.recipient!.jid)")
+                if self.recipient == nil || self.recipient!.jid == tokens[0] {
                     
                     JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                     
@@ -310,7 +301,7 @@ class GGMessageViewController:
             
             if let from: String = xmppMessage.attributeForName("from")?.stringValue() {
                 let tokens = from.componentsSeparatedByString("/")
-                if self.recipient == nil || self.recipient!.jidStr == tokens[0] {
+                if self.recipient == nil || self.recipient!.jid == tokens[0] {
                 
                 // Right recipient
                 print("Downloading thumbnail \(thumbnailKey)")

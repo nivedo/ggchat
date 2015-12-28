@@ -196,7 +196,7 @@ class ChatTableViewController:
             let user = sender as! XMPPUserCoreDataStorageObject
             if let cpd = segue.destinationViewController as? ContactPickerDelegate {
                 print("ContactPickerDelege!")
-                cpd.didSelectContact(user)
+                // cpd.didSelectContact(user)
             }
         }
     }

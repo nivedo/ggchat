@@ -16,7 +16,7 @@ class RosterUser {
     var avatar: String
     var avatarImage: UIImage?
     
-    init(profile: [String: AnyObject]) {
+    init(profile: [String: AnyObject], avatarCompletion: ((Bool) -> Void)?) {
         self.jid = profile["jid"] as! String
         self.nickname = profile["nickname"] as! String
         self.avatar = profile["avatar"] as! String
@@ -31,9 +31,12 @@ class RosterUser {
                     let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                     let image = UIImage(data: data)
                     self.avatarImage = image
+                    avatarCompletion?(true)
                 },
                 bucket: GGSetting.awsS3AvatarsBucketName
             )
+        } else {
+            avatarCompletion?(false)
         }
     }
     
@@ -275,7 +278,9 @@ class UserAPI {
                     if let json = jsonBody, let profiles = json["profiles"] as? NSArray {
                         // print(profiles)
                         for profile in profiles {
-                            self.rosterList.append(RosterUser(profile: profile as! [String: AnyObject]))
+                            self.rosterList.append(RosterUser(
+                                profile: profile as! [String: AnyObject],
+                                avatarCompletion: completion))
                         }
                         completion?(true)
                         return

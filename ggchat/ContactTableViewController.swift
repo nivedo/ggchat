@@ -10,7 +10,7 @@ import UIKit
 import Crashlytics
 
 protocol ContactPickerDelegate{
-    func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
+    func didSelectContact(recipient: RosterUser)
 }
 
 class ContactTableViewController: UITableViewController,
@@ -122,14 +122,20 @@ class ContactTableViewController: UITableViewController,
         
         XMPPRosterManager.sharedInstance.delegate = self
         self.tableView.reloadData()
-        
+       
+        self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self,
             action: "handleRefresh:",
             forControlEvents: UIControlEvents.ValueChanged)
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
-        self.tableView.reloadData()
+        print("handleRefresh")
+        UserAPI.sharedInstance.cacheRoster({ (success: Bool) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        })
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -162,33 +168,22 @@ class ContactTableViewController: UITableViewController,
                 && self.searchResultController.searchBar.text!.characters.count > 0
         }
     }
-    
+
+    /*
     func frc() -> NSFetchedResultsController? {
         return self.inSearchMode ? self.searchFetchController : XMPPRosterManager.sharedInstance.fetchedResultsController()
     }
+    */
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // return self.frc()!.sections!.count
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*
-        let sections: NSArray = self.frc()!.sections!
-        
-        if (section < sections.count) {
-            return sections[section].numberOfObjects
-        }
-        
-        return 0
-        */
         return UserAPI.sharedInstance.rosterList.count
     }
 
@@ -196,18 +191,6 @@ class ContactTableViewController: UITableViewController,
         let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! ContactTableViewCell
 
-        /*
-        let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
-        var displayName = user.jidStr
-        if (user.nickname != nil && user.nickname != "") {
-            displayName = user.nickname
-        }
-        if let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid) {
-            if (vcard.nickname != nil && vcard.nickname != "") {
-                displayName = vcard.nickname
-            }
-        }
-        */
         let user = UserAPI.sharedInstance.rosterList[indexPath.row]
         let avatar = user.messageAvatarImage
         
@@ -221,12 +204,11 @@ class ContactTableViewController: UITableViewController,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        if let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as? XMPPUserCoreDataStorageObject {
-            self.searchResultController.searchBar.resignFirstResponder()
-            self.searchResultController.active = false
-            
-            self.performSegueWithIdentifier("contacts.to.messages", sender: user)
-        }
+        self.searchResultController.searchBar.resignFirstResponder()
+        self.searchResultController.active = false
+        
+        let user = UserAPI.sharedInstance.rosterList[indexPath.row]
+        self.performSegueWithIdentifier("contacts.to.messages", sender: user)
     }
     
     /*
@@ -268,20 +250,12 @@ class ContactTableViewController: UITableViewController,
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.identifier == "contacts.to.messages") {
-            let user = sender as! XMPPUserCoreDataStorageObject
+            let user = sender as! RosterUser
             if let cpd = segue.destinationViewController as? ContactPickerDelegate {
                 print("ContactPickerDelege!")
                 cpd.didSelectContact(user)
             }
         }
-    }
-    
-    func tableView(tableView: UITableView,
-        avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        // let id = GGModelData.sharedInstance.contacts[indexPath.row].id
-        // return GGModelData.sharedInstance.getAvatar(id)
-        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
-        return GGModelData.sharedInstance.getAvatar(user.jidStr)
     }
     
     func onRosterContentChanged(controller: NSFetchedResultsController) {

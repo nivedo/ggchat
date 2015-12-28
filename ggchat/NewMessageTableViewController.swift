@@ -203,7 +203,7 @@ class NewMessageTableViewController:
             let user = sender as! XMPPUserCoreDataStorageObject
             if let cpd = segue.destinationViewController as? ContactPickerDelegate {
                 print("ContactPickerDelege!")
-                cpd.didSelectContact(user)
+                // cpd.didSelectContact(user)
             }
             if let mvc = segue.destinationViewController as? MessageViewController {
                 mvc.overrideNavBackButtonToRootViewController = true
