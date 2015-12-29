@@ -64,6 +64,7 @@ class SettingLanguageTableViewController: UITableViewController {
         let language = GGSettingData.sharedInstance.languages[indexPath.row].language
         if language != UserAPI.sharedInstance.settings.language {
             UserAPI.sharedInstance.updateLanguage(language, jsonCompletion: nil)
+            GGWiki.sharedInstance.autocompleteWiki = nil
         }
     }
     

@@ -100,10 +100,12 @@ class MessageAutocompleteController: NSObject,
             forIndexPath: indexPath) as! MessageAutocompleteCell
      
         let suggestion = self.suggestions[indexPath.row]
+        /*
         let cards = self.suggestions.map{ (var asset) in
             return asset.displayString
         }
-        // print(cards)
+        print(cards)
+        */
         
         cell.cellMainLabel.text = suggestion.displayString // .capitalizedString
             
