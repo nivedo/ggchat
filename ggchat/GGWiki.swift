@@ -58,7 +58,8 @@ class GGWikiAsset : ImageModalAsset {
     }
     
     func getDisplayName() -> String {
-        return "[\(self.name)]"
+        // return "[\(self.name)]"
+        return self.name
     }
     
     var id: String {

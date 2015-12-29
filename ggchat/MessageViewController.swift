@@ -838,20 +838,24 @@ class MessageViewController: UIViewController,
         self.inputToolbar.contentView.textView.inputDelegate?.selectionDidChange(self.inputToolbar.contentView.textView)
 
         let currentAttributedText = NSMutableAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
+        // print("Initial send string: \(currentAttributedText)")
         currentAttributedText.enumerateAttribute(
             TappableText.tapAssetId,
             inRange: NSMakeRange(0, currentAttributedText.length),
             options: NSAttributedStringEnumerationOptions.LongestEffectiveRangeNotRequired,
             usingBlock: { (value: AnyObject?, range:NSRange, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
                 if let id = value as? String {
-                    // print(id)
+                    // Non-english strings will have different font-family for the [], which results in 3 different
+                    // attributes
+                    // if range.length > 1 {
+                    // }
                     currentAttributedText.replaceCharactersInRange(range, withString: id)
                 }
             }
         )
         // print(currentAttributedText.string)
         // return self.inputToolbar.contentView.textView.text.gg_stringByTrimingWhitespace()
-        print(currentAttributedText.string.gg_stringByTrimingWhitespace())
+        // print("Final string to send: \(currentAttributedText.string.gg_stringByTrimingWhitespace())")
         return currentAttributedText.string.gg_stringByTrimingWhitespace()
     }
     
