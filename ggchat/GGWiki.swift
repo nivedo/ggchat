@@ -79,18 +79,20 @@ class GGWikiAsset : ImageModalAsset {
     }
     
     func downloadImage() {
-        if let urlImage = self.imageURL, let url = NSURL(string: urlImage) {
-            getDataFromUrl(url) { (data, response, error)  in
-                dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                    guard let data = data where error == nil else {
-                        print("Image download failed: \(error)")
-                        self.delegate?.onDownloadError()
-                        return
-                    }
-                    // print("Finished downloading \"\(url)\".")
-                    self.image = UIImage(data: data)
-                    if let image = self.image {
-                        self.delegate?.onDownloadSuccess(image)
+        if self.image == nil {
+            if let urlImage = self.imageURL, let url = NSURL(string: urlImage) {
+                getDataFromUrl(url) { (data, response, error)  in
+                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                        guard let data = data where error == nil else {
+                            print("Image download failed: \(error)")
+                            self.delegate?.onDownloadError()
+                            return
+                        }
+                        // print("Finished downloading \"\(url)\".")
+                        self.image = UIImage(data: data)
+                        if let image = self.image {
+                            self.delegate?.onDownloadSuccess(image)
+                        }
                     }
                 }
             }

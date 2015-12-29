@@ -42,6 +42,7 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
             if let asset = TappableText.sharedInstance.imageModalAsset(id) {
                 image = asset.getUIImage()
                 self.imageAsset = asset
+                
                 if image == nil {
                     // Image not downloaded yet
                     self.imageAsset?.delegate = self
