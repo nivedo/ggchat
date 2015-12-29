@@ -336,14 +336,12 @@ class MessageViewController: UIViewController,
         *
         *  Override the defaults in `viewDidLoad`
         */
-        // let message: Message = self.messages[indexPath.item]
         let message: Message = self.messages[indexPath.item]
         if (message.senderId == self.senderId) {
             return nil
         }
 
-        // return GGModelData.sharedInstance.getAvatar(message.senderId)
-        return XMPPManager.avatarForJID(message.senderId)
+        return UserAPI.sharedInstance.getAvatarImage(message.senderId)
     }
     
     func collectionView(collectionView: MessagesCollectionView, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> NSAttributedString? {

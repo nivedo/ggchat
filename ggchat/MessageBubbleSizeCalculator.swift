@@ -104,9 +104,9 @@ class MessageBubbleSizeCalculator {
     
     func gg_avatarSizeForMessageData(messageData: Message,
         withLayout layout: MessagesCollectionViewFlowLayout) -> CGSize {
-        let messageSender: String = messageData.senderId
-        
-        if (messageSender == layout.messageCollectionView.messageDataSource.senderId) {
+        // let messageSender: String = messageData.senderId
+        // if (messageSender == layout.messageCollectionView.messageDataSource.senderId) {
+        if (messageData.isOutgoing) {
             return layout.outgoingAvatarViewSize
         }
         

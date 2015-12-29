@@ -377,6 +377,22 @@ class UserAPI {
         })
     }
     
+    func getAvatarImage(jid: String) -> MessageAvatarImage {
+        for user in self.rosterList {
+            if user.jid == jid {
+                return user.messageAvatarImage
+            }
+        }
+        let tokens = jid.tokens
+        let initials = tokens[0].substringToIndex(tokens[0].startIndex.advancedBy(1))
+        return MessageAvatarImageFactory.avatarImageWithUserInitials(
+            initials,
+            backgroundColor: UIColor(white: 0.85, alpha: 1.0),
+            textColor: UIColor(white: 0.60, alpha: 1.0),
+            font: UIFont.systemFontOfSize(14.0),
+            diameter: GGConfig.avatarSize)
+    }
+    
     ////////////////////////////////////////////////////////////////////
     
     var authToken: String? {

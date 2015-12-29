@@ -177,10 +177,10 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         self.cellTopLabelHeightConstraint.constant = customAttributes.cellTopLabelHeight
         self.messageBubbleTopLabelHeightConstraint.constant = customAttributes.messageBubbleTopLabelHeight
         self.cellBottomLabelHeightConstraint.constant = customAttributes.cellBottomLabelHeight
-        
-        if (self.isKindOfClass(IncomingMessagesCollectionViewCell.self)) {
+       
+        if (self is IncomingMessagesCollectionViewCell) {
             self.avatarViewSize = customAttributes.incomingAvatarViewSize
-        } else if (self.isKindOfClass(OutgoingMessagesCollectionViewCell.self)) {
+        } else if (self is OutgoingMessagesCollectionViewCell) {
             self.avatarViewSize = customAttributes.outgoingAvatarViewSize
         }
     }
