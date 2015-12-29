@@ -407,8 +407,10 @@ class GGMessageViewController:
                 cursorPosition,
                 effectiveRange: &attrRange)
             
-            if let _ = attrs[TappableText.tapAssetId] {
-                self.onTap(attrs)
+            if let _ = attrs[TappableText.tapAssetId], let tappable = attrs[TappableText.tapAttributeKey] as? Bool {
+                if tappable {
+                    self.onTap(attrs)
+                }
             }
         }
     }
