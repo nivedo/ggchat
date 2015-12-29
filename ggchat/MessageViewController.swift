@@ -815,6 +815,7 @@ class MessageViewController: UIViewController,
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftInnerBarButton sender: UIButton) {
         print("MVC::didPressLeftInnerBarButton")
+        self.autocompleteController?.hide()
         self.didPressInnerButton(sender)
     }
 
