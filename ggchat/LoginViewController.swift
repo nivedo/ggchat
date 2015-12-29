@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -98,6 +99,9 @@ class LoginViewController: UIViewController {
         self.passwordTextField.resignFirstResponder()
         
         print("Logging in with \(email):\(password)")
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Logging in"
+        
         UserAPI.sharedInstance.login(email,
             password: password,
             completion: { (success: Bool) -> Void in
@@ -114,6 +118,7 @@ class LoginViewController: UIViewController {
                         connectCompletionHandler: self.connectCallback,
                         authenticateCompletionHandler: self.authenticateCallback)
                 } else {
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
                     let alert = UIAlertView()
                     alert.title = "Login Failed"
                     alert.message = "Incorrect username or password"
@@ -126,6 +131,7 @@ class LoginViewController: UIViewController {
    
     func connectCallback(stream: XMPPStream, error: String?) {
         if (error != nil) {
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
             let alert = UIAlertView()
             alert.title = "Login Failed"
             alert.message = error!
@@ -135,6 +141,7 @@ class LoginViewController: UIViewController {
     }
     
     func authenticateCallback(stream: XMPPStream, error: String?) {
+        MBProgressHUD.hideHUDForView(self.view, animated: true)
         if (error == nil) {
             // Send notification
             let notification = NSNotification(name: "loginSuccessful", object: self)

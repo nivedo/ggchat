@@ -72,6 +72,10 @@ class GGSettingData {
                     id: "help",
                     displayName: "Help",
                     segueName: ""),
+                SettingMenu(
+                    id: "logout",
+                    displayName: "Log Out",
+                    segueName: "settings.to.login"),
             ],
         ]
     }

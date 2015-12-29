@@ -291,6 +291,8 @@ class SettingTableViewController:
                     }
                 }
             }
+        } else if (segue.identifier == "settings.to.login") {
+            XMPPManager.stop()
         }
     }
 
