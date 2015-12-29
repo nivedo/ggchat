@@ -389,6 +389,11 @@ class GGMessageViewController:
         let storyboardName: String = "Main"
         let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
         self.imageModelViewController = storyboard.instantiateViewControllerWithIdentifier("Message Image Model View Controller") as? ImageModalViewController
+        
+        self.imageModelViewController?.onDismiss = { (sender: AnyObject?) -> Void in
+            // print("image modal onDismiss")
+            self.scrollToBottomAnimated(false)
+        }
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
