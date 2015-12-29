@@ -364,8 +364,9 @@ class GGWiki {
         let tokens = name.componentsSeparatedByCharactersInSet(
             NSCharacterSet.whitespaceCharacterSet())
         var suggestions = [AssetSortHelper]()
+        var suggestionIds = Set<String>()
         
-        for i in 1...numTokens {
+        for i in (1...numTokens).reverse() {
             let startIndex: Int = tokens.count - i
             let lastTokens = tokens[startIndex..<tokens.count]
             
@@ -373,7 +374,13 @@ class GGWiki {
             // let replaceIndex = name.characters.count - target.characters.count
             let replaceIndex = inputLength - target.characters.count
             if let s = self.computeCardSuggestion(target, replaceIndex: replaceIndex) {
-                suggestions.appendContentsOf(s)
+                for h in s {
+                    if !suggestionIds.contains(h.id) {
+                        suggestions.append(h)
+                    }
+                    suggestionIds.insert(h.id)
+                }
+                // suggestions.appendContentsOf(s)
             } else {
                 return nil
             }
