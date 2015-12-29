@@ -396,6 +396,15 @@ class UserAPI {
             diameter: GGConfig.avatarSize)
     }
     
+    func getDisplayName(jid: String) -> String {
+        if let user = self.rosterMap[jid] {
+            if user.jid == jid {
+                return user.displayName
+            }
+        }
+        return jid
+    }
+    
     ////////////////////////////////////////////////////////////////////
     
     var authToken: String? {

@@ -167,7 +167,7 @@ public class XMPPMessageManager: NSObject {
                 } else {
                     let fullMessage = Message(
                         senderId: sender,
-                        senderDisplayName: sender,
+                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(sender),
                         isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(sender),
                         date: date,
                         text: body)

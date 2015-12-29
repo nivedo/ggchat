@@ -31,10 +31,8 @@ class GGMessageViewController:
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        // self.senderId = Demo.id_chang
-        // self.senderDisplayName = Demo.displayName_chang
         self.senderId = XMPPManager.sharedInstance.jid
-        self.senderDisplayName = XMPPManager.sharedInstance.displayName
+        self.senderDisplayName = UserAPI.sharedInstance.displayName
         
         // self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
         
@@ -280,7 +278,7 @@ class GGMessageViewController:
                     
                     let message = Message(
                         senderId: from,
-                        senderDisplayName: from,
+                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
                         isOutgoing: false,
                         date: NSDate(),
                         text: msg)
@@ -317,7 +315,7 @@ class GGMessageViewController:
                     let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!)
                     let message: Message = Message(
                             senderId: from,
-                            senderDisplayName: from,
+                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
                             isOutgoing: false,
                             date: NSDate(),
                             media: photoMedia)
@@ -351,7 +349,6 @@ class GGMessageViewController:
     }
    
     func onTap(attributes: [String: AnyObject] ) {
-        // self.dismissKeyboard()
         if let imvc = self.imageModelViewController {
             imvc.attributes = attributes
             // print(attributes)
@@ -360,6 +357,7 @@ class GGMessageViewController:
                 animated: true,
                 completion: nil)
         }
+        // self.dismissKeyboard()
 
         /*
         let overlayWindow = UIWindow(frame: self.view.window!.frame)
