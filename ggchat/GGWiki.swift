@@ -219,7 +219,8 @@ class GGWiki {
     
     init() {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-            if let autocomplete = self.loadConfig() {
+            self.loadConfig()
+            if let autocomplete = self.autocompleteWiki {
                 print("Autocomplete \(autocomplete)")
                 self.loadAutocomplete(autocomplete)
             }
@@ -227,8 +228,7 @@ class GGWiki {
         }
     }
    
-    func loadConfig() -> String? {
-        var autocomplete: String? = nil
+    func loadConfig() {
         if let configData = NSData(contentsOfURL: NSURL(string: GGWiki.configURL)!) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
             configData,
@@ -242,15 +242,11 @@ class GGWiki {
                                 json: wikiJson as! [String: String],
                                 language: language as! String)
                             self.wikis[resource.bundle] = resource
-                            if resource.language == Language.English && resource.ref == "hearthstone" {
-                                autocomplete = resource.bundle
-                            }
                         }
                     }
                 }
             }
         }
-        return autocomplete
     }
     
     func getAutocompleteResource() -> WikiResource? {

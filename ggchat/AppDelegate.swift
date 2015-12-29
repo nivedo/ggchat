@@ -65,6 +65,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func initializeViewController(animated: Bool) {
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        /*
+        let identifier = AppManager.sharedInstance.isLoggedIn() ? "mainView" : "loginView"
+        
+        if let viewController = storyboard.instantiateViewControllerWithIdentifier(identifier) as? UIViewController {
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController = viewController
+        }
+        */
+    }
+    
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         print("didRegisterUserNotficationSettings")
         UIApplication.sharedApplication().registerForRemoteNotifications()
