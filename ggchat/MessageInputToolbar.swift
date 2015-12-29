@@ -67,8 +67,13 @@ class MessageInputToolbar: UIToolbar {
         self.gg_addObservers()
 
         self.contentView.leftBarButtonItem = MessageToolbarButtonFactory.defaultAccessoryButtonItem()
-        self.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.defaultKeyboardButtonItem()
         self.contentView.rightBarButtonItem = MessageToolbarButtonFactory.defaultSendButtonItem()
+
+        var keyboardImage: UIImage? = nil
+        if let resource = GGWiki.sharedInstance.getAutocompleteResource() {
+            keyboardImage = resource.iconImage
+        }
+        self.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(keyboardImage)
 
         self.toggleSendButtonEnabled()
         

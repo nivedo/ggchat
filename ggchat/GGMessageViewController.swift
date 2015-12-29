@@ -216,6 +216,8 @@ class GGMessageViewController:
                     title: v.name,
                     style: UIAlertActionStyle.Default) { action -> Void in
                     GGWiki.sharedInstance.loadAutocompleteAsync(k)
+                        
+                    self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
                 }
                 alert.addAction(action)
             }
