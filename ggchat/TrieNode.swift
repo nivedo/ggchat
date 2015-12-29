@@ -14,6 +14,7 @@ public class TrieNode {
     var children: Array<TrieNode>
     var isFinal: Bool
     var level: Int
+    var finalKey: String?
     var terminalKeys = [String]()
     
     init() {

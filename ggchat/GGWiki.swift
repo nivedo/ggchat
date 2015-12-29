@@ -209,7 +209,6 @@ class GGWiki {
         return Singleton.instance
     }
   
-    private var cardNames = [String]()
     private var cardNamesTrie = Trie()
     private var cardMaxTokens: Int = 1
     var cardAssets = [String : GGWikiAsset]()
@@ -294,7 +293,6 @@ class GGWiki {
     
     func resetAutocomplete() {
         self.autocompleteWiki = nil
-        self.cardNames = [String]()
         self.cardNamesTrie = Trie()
         self.cardMaxTokens = 1
         self.cardNameToIdMap = [String: String]()
@@ -310,25 +308,23 @@ class GGWiki {
                 if let dict = bundle as? NSDictionary {
                     if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int, let fileType = dict["ext"] as? String {
                         // print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
-                        var nameToIdMap = [String: String]()
+                        var cardNamesSet = Set<String>()
                         for c in cards {
                             if let card = c as? NSDictionary {
                                 if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
-                                    let lowercaseName = cardName.lowercaseString
                                     let id = AssetManager.id(bundleId, assetId: assetId)
                                     if self.cardAssets[id] == nil {
                                         self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: fileType)
                                     }
                                     if forAutocomplete {
-                                        nameToIdMap[lowercaseName] = id
-                                        self.cardNameToIdMap[lowercaseName] = id
+                                        cardNamesSet.insert(cardName)
+                                        self.cardNameToIdMap[cardName] = id
                                         self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
                                     }
                                 }
                             }
                         }
-                        for (k, _) in nameToIdMap {     // self.cardNameToIdMap {
-                            self.cardNames.append(k)
+                        for k in cardNamesSet {
                             self.cardNamesTrie.addWord(k)
                             
                             for (index, word) in k.tokens.enumerate() {
@@ -429,9 +425,7 @@ class GGWiki {
         }
         self.activeSuggestionJobs++
         
-        let lowercaseName = name.lowercaseString
-       
-        if let cardList = self.cardNamesTrie.findWordAndPrefix(lowercaseName) {
+        if let cardList = self.cardNamesTrie.findWordAndPrefix(name) {
             for card in cardList {
                 if let id = self.cardNameToIdMap[card] {
                     let score = 1.0 / Float(card.characters.count)

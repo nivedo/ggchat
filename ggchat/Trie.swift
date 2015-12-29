@@ -17,6 +17,7 @@ public class Trie {
     }
     
     //finds all words based on the prefix
+    /*
     func findWord(keyword: String) -> Array<String>! {
         
         if (keyword.length == 0){
@@ -75,8 +76,10 @@ public class Trie {
             self.getChildrenWord(child, wordList: &wordList)
         }
     }
+    */
     
-    func findWordAndPrefix(keyword: String) -> Array<String>! {
+    func findWordAndPrefix(word: String) -> Array<String>! {
+        let keyword = word.lowercaseString
         
         if (keyword.length == 0){
             return nil
@@ -90,12 +93,13 @@ public class Trie {
             let index = keyword.startIndex.advancedBy(current.level + 1)
             let searchKey: String = keyword.substringToIndex(index)
             
-            // print("looking for prefix: \(searchKey) in \(current.children.count) child nodes")
+            // print("Looking for prefix: \(searchKey) in \(current.children.count) child nodes")
             
-            //iterate through any children
+            // Iterate through any children
             for child in current.children {
                 // print(child.key)
                 if (child.key == searchKey) {
+                    // print("Matched \(child.key)")
                     childToUse = child
                     current = childToUse
                     break
@@ -110,10 +114,10 @@ public class Trie {
         self.getChildrenAndTerminalWord(current, wordList: &wordList)
         return wordList
     }
-    
+
     func getChildrenAndTerminalWord(node: TrieNode, inout wordList: [String]) {
         if node.isFinal {
-            wordList.append(node.key)
+            wordList.append(node.finalKey!)
         }
         wordList.appendContentsOf(node.terminalKeys)
         
@@ -123,7 +127,8 @@ public class Trie {
     }
     
     //builds a iterative tree of dictionary content
-    func addWord(keyword: String) {
+    func addWord(word: String) {
+        let keyword = word.lowercaseString
         
         if keyword.length == 0 {
             return
@@ -160,12 +165,14 @@ public class Trie {
         //add final end of word check
         if (keyword.length == current.level) {
             current.isFinal = true
-            // print("end of word reached!")
+            current.finalKey = word
+            // print("Added \"\(word)\" to trie, key=\(current.key)")
             return
         }
     }
     
-    func addPrefix(keyword: String, finalWord: String) {
+    func addPrefix(word: String, finalWord: String) {
+        let keyword = word.lowercaseString
         
         if keyword.length == 0 {
             return

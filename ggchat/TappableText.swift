@@ -67,7 +67,7 @@ class TappableText: NSObject {
                 if let imageAsset = asset {
                     tappable = true
                     assetId = imageAsset.id
-                    str = imageAsset.getDisplayName().capitalizedString
+                    str = imageAsset.getDisplayName() // .capitalizedString
                 }
                 var attr: [String : NSObject] = [
                     // TappableText.tapAttributeKey : tappable,
