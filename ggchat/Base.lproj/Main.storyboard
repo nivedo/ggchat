@@ -261,7 +261,7 @@
                     <connections>
                         <segue destination="crw-fH-LXf" kind="show" identifier="settings.to.settings_textfield" id="gSi-wr-qvu"/>
                         <segue destination="JxT-rj-XU3" kind="show" identifier="settings.to.settings_language" id="Lvg-FJ-O62"/>
-                        <segue destination="UL9-IJ-cUh" kind="custom" identifier="settings.to.login" customClass="PopToRootSegue" customModule="ggchat" customModuleProvider="target" id="bL7-l3-dHd"/>
+                        <segue destination="UL9-IJ-cUh" kind="presentation" identifier="settings.to.login" id="bL7-l3-dHd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oz-tK-uqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
