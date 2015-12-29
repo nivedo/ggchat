@@ -309,15 +309,18 @@ class UserAPI {
     
     func cacheRoster(completion: ((Bool) -> Void)? = nil) {
         self.rosterList.removeAll()
+        self.rosterMap.removeAll()
         if let jid = self.jid {
             UserAPI.sharedInstance.getRoster(jid,
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                     if let json = jsonBody, let profiles = json["profiles"] as? NSArray {
                         // print(profiles)
                         for profile in profiles {
-                            self.rosterList.append(RosterUser(
+                            let user = RosterUser(
                                 profile: profile as! [String: AnyObject],
-                                avatarCompletion: completion))
+                                avatarCompletion: completion)
+                            self.rosterList.append(user)
+                            self.rosterMap[user.jid] = user
                         }
                         completion?(true)
                         return
@@ -378,7 +381,7 @@ class UserAPI {
     }
     
     func getAvatarImage(jid: String) -> MessageAvatarImage {
-        for user in self.rosterList {
+        if let user = self.rosterMap[jid] {
             if user.jid == jid {
                 return user.messageAvatarImage
             }
@@ -423,6 +426,7 @@ class UserAPI {
     var avatarPath: String?
     var avatarImage: UIImage?
     var rosterList: [RosterUser] = [RosterUser]()
+    var rosterMap: [String: RosterUser] = [String: RosterUser]()
     var settings: UserSetting = UserSetting()
     
     var displayName: String {
