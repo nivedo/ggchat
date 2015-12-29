@@ -80,18 +80,18 @@ class GGSettingData {
         self.languages = [
             LanguageChoice(
                 native: "English",
-                english: "English",
+                english: "English (US)",
                 language: Language.English),
             LanguageChoice(
-                native: "Chinese Traditional",
+                native: "繁體中文",
                 english: "Chinese Traditional",
                 language: Language.ChineseTraditional),
             LanguageChoice(
-                native: "Chinese Simplified",
+                native: "简体中文",
                 english: "Chinese Simplified",
                 language: Language.ChineseSimplified),
             LanguageChoice(
-                native: "Japanese",
+                native: "日本語",
                 english: "Japanese",
                 language: Language.Japanese)
         ]

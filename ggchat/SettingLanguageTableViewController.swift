@@ -18,6 +18,7 @@ class SettingLanguageTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.title = "Language"
         
         self.tableView.registerNib(SettingTableLabelCell.nib(),
             forCellReuseIdentifier: SettingTableLabelCell.cellReuseIdentifier())
@@ -49,14 +50,21 @@ class SettingLanguageTableViewController: UITableViewController {
         let language = GGSettingData.sharedInstance.languages[indexPath.row]
         cell.cellTopLabel.text = language.native
         cell.cellBottomLabel.text = language.english
-
+        
+        if language.language == UserAPI.sharedInstance.settings.language {
+            self.tableView.selectRowAtIndexPath(indexPath,
+                animated: true,
+                scrollPosition: UITableViewScrollPosition.None)
+        }
+        
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         let language = GGSettingData.sharedInstance.languages[indexPath.row].language
-        UserAPI.sharedInstance.updateLanguage(language, jsonCompletion: nil)
+        if language != UserAPI.sharedInstance.settings.language {
+            UserAPI.sharedInstance.updateLanguage(language, jsonCompletion: nil)
+        }
     }
     
     /*
