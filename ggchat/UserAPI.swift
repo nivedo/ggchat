@@ -112,11 +112,11 @@ class UserSetting {
             self.bracketOpen = "["
             self.bracketClose = "]"
         } else if language == Language.ChineseTraditional || language == Language.ChineseSimplified {
-            self.bracketOpen = "〈"
-            self.bracketClose = "〉"
+            self.bracketOpen = "［"  // "〈"
+            self.bracketClose = "］" // "〉"
         } else if language == Language.Japanese {
-            self.bracketOpen = "〈"
-            self.bracketClose = "〉"
+            self.bracketOpen = "［"  // "〈"
+            self.bracketClose = "］" // "〉"
         }
     }
     
