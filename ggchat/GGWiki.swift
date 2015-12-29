@@ -277,9 +277,18 @@ class GGWiki {
     }
     
     func loadAssets() {
+        // Load asset bundles in the user's language first
         for (_, v) in self.wikis {
-            print("Load asset \(v.bundle)")
-            self.loadAsset(v, forAutocomplete: false)
+            if v.language == UserAPI.sharedInstance.settings.language {
+                print("Load asset \(v.bundle)")
+                self.loadAsset(v, forAutocomplete: false)
+            }
+        }
+        for (_, v) in self.wikis {
+            if v.language != UserAPI.sharedInstance.settings.language {
+                print("Load asset \(v.bundle)")
+                self.loadAsset(v, forAutocomplete: false)
+            }
         }
     }
     
