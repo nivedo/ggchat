@@ -323,7 +323,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="QPw-Ws-fEj">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="S31-Hi-fhB" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" id="S31-Hi-fhB" sceneMemberID="viewController">
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
@@ -469,7 +469,7 @@
         <!--Login View Controller-->
         <scene sceneID="dNo-Rj-KBr">
             <objects>
-                <viewController id="UL9-IJ-cUh" customClass="LoginViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="UL9-IJ-cUh" customClass="LoginViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="knx-PE-gyz"/>
                         <viewControllerLayoutGuide type="bottom" id="IfE-ac-A6E"/>
@@ -877,7 +877,7 @@
         <image name="User" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lsQ-Ec-9mw"/>
+        <segue reference="td0-iI-Ota"/>
         <segue reference="Aln-Pk-2fu"/>
     </inferredMetricsTieBreakers>
 </document>

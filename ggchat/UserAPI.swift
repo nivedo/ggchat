@@ -81,7 +81,9 @@ struct Language {
 }
 
 class UserSetting {
-    
+   
+    var bracketOpen: String = "["
+    var bracketClose: String = "]"
     var minAutocompleteCharacters: Int = 1
     var language: String! {
         didSet {
@@ -90,6 +92,7 @@ class UserSetting {
             } else {
                 self.minAutocompleteCharacters = 1
             }
+            self.updateBrackets(self.language)
         }
     }
 
@@ -97,10 +100,24 @@ class UserSetting {
     init() {
         self.language = Language.English
         self.minAutocompleteCharacters = 2
+        self.updateBrackets(self.language)
         /*
         self.language = Language.ChineseTraditional
         self.minAutocompleteCharacters = 1
         */
+    }
+    
+    func updateBrackets(language: String) {
+        if language == Language.English {
+            self.bracketOpen = "["
+            self.bracketClose = "]"
+        } else if language == Language.ChineseTraditional || language == Language.ChineseSimplified {
+            self.bracketOpen = "〈"
+            self.bracketClose = "〉"
+        } else if language == Language.Japanese {
+            self.bracketOpen = "〈"
+            self.bracketClose = "〉"
+        }
     }
     
 }
@@ -203,6 +220,9 @@ class UserAPI {
     }
    
     func authenticate(completion: ((Bool) -> Void)?) -> Bool {
+        if self.authToken == nil {
+            self.authToken = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.userApiAuthToken)
+        }
         if let token = self.authToken {
             self.post(UserAPI.authUrl,
                 authToken: token,

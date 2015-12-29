@@ -21,6 +21,7 @@
 		D433B14E1C311E100003E100 /* SettingLanguageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B14D1C311E100003E100 /* SettingLanguageTableViewController.swift */; };
 		D433B1511C312AF50003E100 /* SettingTableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B14F1C312AF50003E100 /* SettingTableLabelCell.swift */; };
 		D433B1521C312AF50003E100 /* SettingTableLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D433B1501C312AF50003E100 /* SettingTableLabelCell.xib */; };
+		D433B1551C3282DD0003E100 /* WikiMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1541C3282DD0003E100 /* WikiMediaItem.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -297,6 +298,7 @@
 		D433B14D1C311E100003E100 /* SettingLanguageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLanguageTableViewController.swift; sourceTree = "<group>"; };
 		D433B14F1C312AF50003E100 /* SettingTableLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableLabelCell.swift; sourceTree = "<group>"; };
 		D433B1501C312AF50003E100 /* SettingTableLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableLabelCell.xib; sourceTree = "<group>"; };
+		D433B1541C3282DD0003E100 /* WikiMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiMediaItem.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -1125,6 +1127,7 @@
 				D45FBD441BFE894F00E79B4E /* MediaItem.swift */,
 				D45FBD501BFED00500E79B4E /* VideoMediaItem.swift */,
 				D45FBD461BFE910D00E79B4E /* PhotoMediaItem.swift */,
+				D433B1541C3282DD0003E100 /* WikiMediaItem.swift */,
 				D45FBD4E1BFEB4A600E79B4E /* LocationMediaItem.swift */,
 				D45FBD5B1BFFC9B100E79B4E /* Chat.swift */,
 				D45FBD6D1C05525200E79B4E /* Contact.swift */,
@@ -2224,6 +2227,7 @@
 				D4C8FDEE1C06AA2300992801 /* XMPPRoomCoreDataStorage.m in Sources */,
 				D43B28DE1C06894D00B3F367 /* DDXMLElement.m in Sources */,
 				D4C8FE101C06AA2300992801 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
+				D433B1551C3282DD0003E100 /* WikiMediaItem.swift in Sources */,
 				D43B29051C06896200B3F367 /* XMPPDigestMD5Authentication.m in Sources */,
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,

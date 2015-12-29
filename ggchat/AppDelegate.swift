@@ -57,24 +57,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         
         // Load assets
-        // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-        // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-        // }
         GGWiki.sharedInstance
+        
+        // Load root view
+        self.initializeRootView(true)
         
         return true
     }
     
-    func initializeViewController(animated: Bool) {
+    func initializeRootView(animated: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        /*
-        let identifier = AppManager.sharedInstance.isLoggedIn() ? "mainView" : "loginView"
+        let loginIdentifier = "LoginViewController"
         
-        if let viewController = storyboard.instantiateViewControllerWithIdentifier(identifier) as? UIViewController {
-            self.window?.makeKeyAndVisible()
-            self.window?.rootViewController = viewController
-        }
-        */
+        let isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
+            if success {
+                
+            } else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let loginController = storyboard.instantiateViewControllerWithIdentifier(loginIdentifier)
+                    self.window?.makeKeyAndVisible()
+                    self.window?.rootViewController = loginController
+                }
+            }
+        })
+        
+        let identifier = isAuthenticated ? "TabBarController" : loginIdentifier
+        let viewController = storyboard.instantiateViewControllerWithIdentifier(identifier)
+        self.window?.makeKeyAndVisible()
+        self.window?.rootViewController = viewController
     }
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {

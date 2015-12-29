@@ -77,25 +77,11 @@ class TappableText: NSObject {
                     attr[TappableText.tapAttributeKey] = tappable
                     attr[TappableText.tapAssetId] = assetId
                 }
-                var attrNonTappable = attr
-                attrNonTappable[TappableText.tapAttributeKey] = false
-                attrNonTappable[TappableText.tapAssetId] = ""
-               
-                /*
-                if index < tokens.count - 1 {
-                    str += self.delimiter
-                }
-                */
+                
                 let attributedString = NSAttributedString(
                     string: str,
                     attributes: attr)
-                if tappable {
-                    paragraph.appendAttributedString(NSAttributedString(string: "[", attributes: attrNonTappable))
-                }
                 paragraph.appendAttributedString(attributedString)
-                if tappable {
-                    paragraph.appendAttributedString(NSAttributedString(string: "]", attributes: attrNonTappable))
-                }
             }
         }
 

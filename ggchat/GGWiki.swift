@@ -58,8 +58,8 @@ class GGWikiAsset : ImageModalAsset {
     }
     
     func getDisplayName() -> String {
-        // return "[\(self.name)]"
-        return self.name
+        return "\(UserAPI.sharedInstance.settings.bracketOpen)\(self.name)\(UserAPI.sharedInstance.settings.bracketClose)"
+        // return self.name
     }
     
     var id: String {

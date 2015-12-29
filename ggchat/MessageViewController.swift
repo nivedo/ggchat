@@ -838,7 +838,7 @@ class MessageViewController: UIViewController,
         self.inputToolbar.contentView.textView.inputDelegate?.selectionDidChange(self.inputToolbar.contentView.textView)
 
         let currentAttributedText = NSMutableAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
-        // print("Initial send string: \(currentAttributedText)")
+        print("Initial send string: \(currentAttributedText)")
         currentAttributedText.enumerateAttribute(
             TappableText.tapAssetId,
             inRange: NSMakeRange(0, currentAttributedText.length),
