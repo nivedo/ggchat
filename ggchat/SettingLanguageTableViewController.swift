@@ -55,8 +55,8 @@ class SettingLanguageTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let language = GGSettingData.sharedInstance.languages[indexPath.row]
-        UserAPI.sharedInstance.settings.language = language.language
+        let language = GGSettingData.sharedInstance.languages[indexPath.row].language
+        UserAPI.sharedInstance.updateLanguage(language, jsonCompletion: nil)
     }
     
     /*

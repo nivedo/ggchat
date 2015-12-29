@@ -167,9 +167,9 @@ class GGWiki {
         var jsonURL: String
         var jsonData: NSData
         var iconImage: UIImage?
-        var language: Language
+        var language: String
        
-        init(json: [String: String], language: Language) {
+        init(json: [String: String], language: String) {
             self.name = json["name"]!
             self.icon = json["icon"]!
             self.ref = json["ref"]!
@@ -225,20 +225,6 @@ class GGWiki {
         }
     }
    
-    func languageToKey(lang: String) -> Language {
-        if lang == "en" {
-            return Language.English
-        } else if lang == "cn" {
-            return Language.ChineseSimplified
-        } else if lang == "tw" {
-            return Language.ChineseTraditional
-        } else if lang == "jp" {
-            return Language.Japanese
-        } else {
-            return Language.English
-        }
-    }
-    
     func loadConfig() -> String? {
         var autocomplete: String? = nil
         if let configData = NSData(contentsOfURL: NSURL(string: GGWiki.configURL)!) {
@@ -252,7 +238,7 @@ class GGWiki {
                         for wikiJson in bundles {
                             let resource = WikiResource(
                                 json: wikiJson as! [String: String],
-                                language: self.languageToKey(language as! String))
+                                language: language as! String)
                             self.wikis[resource.bundle] = resource
                             if resource.language == Language.English && resource.ref == "hearthstone" {
                                 autocomplete = resource.bundle

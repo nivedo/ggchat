@@ -73,17 +73,17 @@ class RosterUser {
 
 }
 
-enum Language {
-    case English
-    case Japanese
-    case ChineseTraditional
-    case ChineseSimplified
+struct Language {
+    static let English = "en"
+    static let Japanese = "jp"
+    static let ChineseTraditional = "tw"
+    static let ChineseSimplified = "cn"
 }
 
 class UserSetting {
     
-    var minAutocompleteCharacters: Int = 2
-    var language: Language {
+    var minAutocompleteCharacters: Int = 1
+    var language: String! {
         didSet {
             if self.language == Language.English {
                 self.minAutocompleteCharacters = 2
@@ -97,8 +97,10 @@ class UserSetting {
     init() {
         self.language = Language.English
         self.minAutocompleteCharacters = 2
-        // self.language = Language.ChineseTraditional
-        // self.minAutocompleteCharacters = 1
+        /*
+        self.language = Language.ChineseTraditional
+        self.minAutocompleteCharacters = 1
+        */
     }
     
 }
@@ -277,6 +279,11 @@ class UserAPI {
                         self.username = username
                     }
                 }
+                if let language = json["lang"] as? String {
+                    if language.length > 0 {
+                        self.settings.language = language
+                    }
+                }
                 if let avatarPath = json["avatar"] as? String {
                     if avatarPath.length > 0 {
                         print("Downloading avatar at \(avatarPath)")
@@ -356,6 +363,15 @@ class UserAPI {
         return self.editProfile(["nickname": nickname], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
                 self.nickname = nickname
+            }
+            jsonCompletion?(json: jsonBody)
+        })
+    }
+    
+    func updateLanguage(language: String, jsonCompletion: JSONCompletion?) -> Bool {
+        return self.editProfile(["lang": language], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+            if let _ = jsonBody {
+                self.settings.language = language
             }
             jsonCompletion?(json: jsonBody)
         })

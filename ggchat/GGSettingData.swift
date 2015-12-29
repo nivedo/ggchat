@@ -11,9 +11,9 @@ import Foundation
 class LanguageChoice {
     var native: String
     var english: String
-    var language: Language
+    var language: String
     
-    init(native: String, english: String, language: Language) {
+    init(native: String, english: String, language: String) {
         self.native = native
         self.english = english
         self.language = language
