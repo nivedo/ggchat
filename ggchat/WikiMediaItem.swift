@@ -64,7 +64,13 @@ class WikiMediaItem: MediaItem {
     
     override func mediaViewDisplaySize() -> CGSize {
         if let img = self.image_ {
-            return img.size
+            let size = CGSizeMake(210.0, UIScreen.mainScreen().bounds.size.height)
+            let aspect: CGFloat = img.size.width / img.size.height
+            if size.width / aspect <= size.height {
+                return CGSizeMake(size.width, size.width / aspect)
+            } else {
+                return CGSizeMake(size.height * aspect, size.height)
+            }
         } else {
             if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 return CGSizeMake(315.0, 225.0)
@@ -85,9 +91,11 @@ class WikiMediaItem: MediaItem {
             imageView.frame = CGRectMake(0.0, 0.0, size.width, size.height)
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             imageView.clipsToBounds = true
+            /*
             MessageMediaViewBubbleImageMasker.applyBubbleImageMaskToMediaView(
                 imageView,
                 isOutgoing: self.appliesMediaViewMaskAsOutgoing)
+            */
             self.cachedImageView_ = imageView
         }
         
