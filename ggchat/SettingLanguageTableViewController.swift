@@ -25,6 +25,12 @@ class SettingLanguageTableViewController: UITableViewController {
         
         self.tableView.reloadData()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
