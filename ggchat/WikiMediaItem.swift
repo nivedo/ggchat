@@ -62,6 +62,18 @@ class WikiMediaItem: MediaItem {
         self.cachedImageView_?.setNeedsDisplay()
     }
     
+    override func mediaViewDisplaySize() -> CGSize {
+        if let img = self.image_ {
+            return img.size
+        } else {
+            if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+                return CGSizeMake(315.0, 225.0)
+            } else {
+                return CGSizeMake(210.0, 150.0)
+            }
+        }
+    }
+    
     override func mediaView() -> UIView? {
         if (self.image_ == nil) {
             return nil
