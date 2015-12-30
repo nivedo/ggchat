@@ -25,6 +25,11 @@ protocol ImageModalAsset {
     
 }
 
+protocol GGWikiDelegate {
+    
+    func onDownloadAsset(id: String, success: Bool)
+}
+
 class AssetManager {
     
     class func id(bundleId: Int, assetId: String) -> String {
@@ -106,6 +111,7 @@ class GGWikiAsset : ImageModalAsset {
                         self.image = UIImage(data: data)
                         if let image = self.image {
                             self.delegate?.onDownloadSuccess(image)
+                            GGWiki.sharedInstance.delegate?.onDownloadAsset(self.id, success: true)
                         }
                     }
                 }
@@ -229,6 +235,7 @@ class GGWiki {
     var cardNameToIdMap = [String : String]()
     var wikis = [String: WikiResource]()
     var autocompleteWiki: String? = nil
+    var delegate: GGWikiDelegate?
     
     init() {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {

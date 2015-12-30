@@ -16,7 +16,8 @@ class GGMessageViewController:
     TappableTextDelegate,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
-    UIActionSheetDelegate {
+    UIActionSheetDelegate,
+    GGWikiDelegate {
 
     var recipient: RosterUser?
     var recipientDetails: UIView?
@@ -40,6 +41,7 @@ class GGMessageViewController:
         XMPPMessageManager.sharedInstance.delegate = self
        
         self.photoPicker.delegate = self
+        GGWiki.sharedInstance.delegate = self
        
         self.loadUserHistory(true, loadLastActivity: true)
         self.messageCollectionView.reloadData()
@@ -130,6 +132,7 @@ class GGMessageViewController:
                         self.messageCollectionView.reloadData()
                     })
                     self.messages = archiveMessages as NSArray as! [Message]
+                    self.refreshMessages(false)
                     self.finishReceivingMessageAnimated(false)
                 })
             }
@@ -149,6 +152,7 @@ class GGMessageViewController:
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = nil
         }
+        GGWiki.sharedInstance.delegate = nil
         
         super.viewWillDisappear(animated)
     }
@@ -295,12 +299,29 @@ class GGMessageViewController:
                     
                     JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                     
-                    let message = Message(
-                        senderId: from,
-                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                        isOutgoing: false,
-                        date: NSDate(),
-                        text: msg)
+                    var message: Message!
+                    if AssetManager.isSingleId(msg) {
+                        if let asset = GGWiki.sharedInstance.getAsset(msg) {
+                            if let image = asset.getUIImage() {
+                                let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
+                                message = Message(
+                                    senderId: from,
+                                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
+                                    isOutgoing: false,
+                                    date: NSDate(),
+                                    media: wikiMedia)        
+                            }
+                        }
+                    }
+            
+                    if message == nil {
+                        message = Message(
+                            senderId: from,
+                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
+                            isOutgoing: false,
+                            date: NSDate(),
+                            text: msg)
+                    }
                     self.messages.append(message)
                     
                     self.finishReceivingMessageAnimated(true)
@@ -389,8 +410,47 @@ class GGMessageViewController:
         overlayWindow.makeKeyAndVisible()
         */
     }
+    
     func onTapCatchAll() {
         self.dismissKeyboard()
+    }
+    
+    func onDownloadAsset(id: String, success: Bool) {
+        if success {
+            self.refreshMessages(true)
+        }
+    }
+    
+    func refreshMessages(reload: Bool) {
+        var refreshed = false
+        for i in 0..<self.messages.count {
+            let m = self.messages[i]
+            if !m.isMediaMessage {
+                if let text = m.rawText {
+                    if AssetManager.isSingleId(text) {
+                        if let asset = GGWiki.sharedInstance.getAsset(text) {
+                            if let image = asset.getUIImage() {
+                                let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
+                                let message = Message(
+                                    senderId: m.senderId,
+                                    senderDisplayName: m.senderDisplayName,
+                                    isOutgoing: m.isOutgoing,
+                                    date: m.date,
+                                    media: wikiMedia)
+                                self.messages[i] = message
+                                refreshed = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if refreshed && reload {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.messageCollectionView.reloadData()
+                self.scrollToBottomAnimated(false)
+            }
+        }
     }
     
     func presentTransparentViewController(

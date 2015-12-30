@@ -14,23 +14,14 @@ class Message {
     var senderDisplayName: String
     var date: NSDate
     private var text: String?
+    var rawText: String?
     var attributedText: NSAttributedString?
     var isMediaMessage: Bool
     var isOutgoing: Bool
     var media: MessageMediaData?
-   
-    /*
-    func textAsAttributedStringForView(
-        textColor: UIColor,
-        attributes: [String: NSObject]?) -> NSAttributedString {
-        return TappableText.sharedInstance.tappableAttributedString(
-            self.text!, textColor: textColor, attributes: attributes)
-    }
-    */
     
     var displayText: String {
         get {
-            // return self.text!
             return self.attributedText!.string
         }
     }
@@ -43,6 +34,7 @@ class Message {
             text,
             textColor: isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
         self.text = self.attributedText!.string
+        self.rawText = text
         self.isMediaMessage = false
         self.isOutgoing = isOutgoing
     }
