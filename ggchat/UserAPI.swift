@@ -10,13 +10,20 @@ import Foundation
 
 public typealias JSONCompletion = (json: [String: AnyObject]?) -> Void
 
+protocol UserDelegate {
+    
+    func onAvatarUpdate(jid: String, success: Bool)
+    func onRosterUpdate(success: Bool)
+}
+
 class RosterUser {
     var nickname: String
     var jid: String
     var avatar: String
     var avatarImage: UIImage?
     
-    init(profile: [String: AnyObject], avatarCompletion: ((Bool) -> Void)?) {
+    init(profile: [String: AnyObject],
+        avatarCompletion: ((Bool) -> Void)?) {
         self.jid = profile["jid"] as! String
         self.nickname = profile["nickname"] as! String
         self.avatar = profile["avatar"] as! String
@@ -32,11 +39,13 @@ class RosterUser {
                     let image = UIImage(data: data)
                     self.avatarImage = image
                     avatarCompletion?(true)
+                    UserAPI.sharedInstance.delegate?.onAvatarUpdate(self.jid, success: true)
                 },
                 bucket: GGSetting.awsS3AvatarsBucketName
             )
         } else {
             avatarCompletion?(false)
+            UserAPI.sharedInstance.delegate?.onAvatarUpdate(self.jid, success: false)
         }
     }
     
@@ -130,6 +139,8 @@ class UserAPI {
         }
         return Singleton.instance
     }
+    
+    var delegate: UserDelegate?
 
     ////////////////////////////////////////////////////////////////////
     // Routes
@@ -343,14 +354,17 @@ class UserAPI {
                             self.rosterMap[user.jid] = user
                         }
                         completion?(true)
+                        self.delegate?.onRosterUpdate(true)
                         return
                     }
                     completion?(false)
+                    self.delegate?.onRosterUpdate(false)
                     return
                 }
             )
         }
         completion?(false)
+        self.delegate?.onRosterUpdate(false)
     }
     
     func updatePushToken() {

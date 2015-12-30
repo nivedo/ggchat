@@ -13,11 +13,9 @@ protocol ContactPickerDelegate{
     func didSelectContact(recipient: RosterUser)
 }
 
-class ContactTableViewController: UITableViewController, UISearchResultsUpdating {
+class ContactTableViewController: UITableViewController, UISearchResultsUpdating, UserDelegate {
 
     var searchResultController = UISearchController()
-    // var searchFetchController: NSFetchedResultsController?
-    
     var filteredRosterList = [RosterUser]()
 
     @IBAction func addContactAction(sender: AnyObject) {
@@ -119,7 +117,7 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
             return controller
         })()
         
-        // XMPPRosterManager.sharedInstance.delegate = self
+        UserAPI.sharedInstance.delegate = self
         self.tableView.reloadData()
        
         self.refreshControl = UIRefreshControl()
@@ -131,11 +129,31 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
     func handleRefresh(refreshControl: UIRefreshControl) {
         print("handleRefresh")
         UserAPI.sharedInstance.cacheRoster({ (success: Bool) -> Void in
+            // print("cacheRoster completion")
             dispatch_async(dispatch_get_main_queue()) {
                 refreshControl.endRefreshing()
-                self.tableView.reloadData()
             }
         })
+    }
+    
+    func onAvatarUpdate(jid: String, success: Bool) {
+        if success {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func onRosterUpdate(success: Bool) {
+        // Don't reloadData on roster update, wait for avatar update. 
+        // Otherwise, avatars will appear blank.
+        /*
+        if success {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
+        */
     }
     
     override func viewWillDisappear(animated: Bool) {
