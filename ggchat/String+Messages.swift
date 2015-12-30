@@ -13,4 +13,8 @@ extension String {
         return self.stringByTrimmingCharactersInSet(
             NSCharacterSet.whitespaceAndNewlineCharacterSet())
     }
+    
+    var gg_containsAsianCharacters: Bool {
+        return self.rangeOfString("\\p{Han}", options: .RegularExpressionSearch) != nil
+    }
 }

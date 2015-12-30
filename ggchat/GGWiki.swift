@@ -76,8 +76,11 @@ class GGWikiAsset : ImageModalAsset {
     }
     
     func getDisplayName() -> String {
-        return "\(UserAPI.sharedInstance.settings.bracketOpen)\(self.name)\(UserAPI.sharedInstance.settings.bracketClose)"
-        // return self.name
+        if self.name.gg_containsAsianCharacters {
+            return "［\(self.name)］"
+        } else {
+            return "[\(self.name)]"
+        }
     }
     
     var id: String {
