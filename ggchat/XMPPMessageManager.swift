@@ -152,8 +152,9 @@ public class XMPPMessageManager: NSObject {
 				}
 				
 				if element.attributeStringValueForName("to") == jid {
-					let displayName = XMPPManager.sharedInstance.stream.myJID
-					sender = displayName!.bare()
+					// let displayName = XMPPManager.sharedInstance.stream.myJID
+					// sender = displayName!.bare()
+                    sender = UserAPI.sharedInstance.jidStr
 				} else {
 					sender = jid
 				}

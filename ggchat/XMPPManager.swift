@@ -231,7 +231,7 @@ class XMPPManager: NSObject,
     }
     
     func isOutgoingJID(jid: String) -> Bool {
-        return jid == self.stream.myJID.bare()
+        return jid == UserAPI.sharedInstance.jidStr // self.stream.myJID.bare()
     }
     
     func connectWithJID(

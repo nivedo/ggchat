@@ -432,16 +432,29 @@ class UserAPI {
             NSUserDefaults.standardUserDefaults().setValue(self.authToken, forKey: GGKey.userApiAuthToken)
         }
     }
+    
     var pushToken: String? {
         didSet {
             NSUserDefaults.standardUserDefaults().setValue(self.pushToken, forKey: GGKey.userApiPushToken)
         }
     }
+    
     var jid: String? {
         didSet {
             NSUserDefaults.standardUserDefaults().setValue(self.jid, forKey: GGKey.userApiJID)
         }
     }
+    
+    var jidStr: String {
+        get {
+            if let jid = self.jid {
+                return jid
+            } else {
+                return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.userApiJID) as! String
+            }
+        }
+    }
+    
     var jpassword: String? {
         didSet {
             NSUserDefaults.standardUserDefaults().setValue(self.jpassword, forKey: GGKey.userApiJabberdPassword)
