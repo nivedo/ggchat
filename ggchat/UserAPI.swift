@@ -223,10 +223,10 @@ class UserAPI {
         if self.authToken == nil {
             self.authToken = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.userApiAuthToken)
         }
+        // print("Authenticate with \(self.authToken)")
         if let token = self.authToken {
-            self.post(UserAPI.authUrl,
+            self.get(UserAPI.authUrl,
                 authToken: token,
-                jsonBody: nil,
                 jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                     if let json = jsonDict,
                     let newToken = json["token"] as? String,
