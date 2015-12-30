@@ -103,7 +103,7 @@ class GGWikiAsset : ImageModalAsset {
                 getDataFromUrl(url) { (data, response, error)  in
                     dispatch_async(dispatch_get_main_queue()) { () -> Void in
                         guard let data = data where error == nil else {
-                            print("Image download failed: \(error)")
+                            print("Image download failed: \(error?.description)")
                             self.delegate?.onDownloadError()
                             return
                         }
