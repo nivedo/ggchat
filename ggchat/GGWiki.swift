@@ -31,6 +31,19 @@ class AssetManager {
         return "&&\(bundleId)::\(assetId)&&"
     }
     
+    class func isSingleId(str: String) -> Bool {
+        let tokens = str.tokens
+        if tokens.count == 1 {
+            let id = tokens[0]
+            if id.length > 6 {
+                if ((id[0...1] == "&&") && (id[id.length-2..<id.length] == "&&") && id.rangeOfString("::") != nil) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
 }
 
 class GGWikiAsset : ImageModalAsset {

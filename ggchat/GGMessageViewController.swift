@@ -184,15 +184,32 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
-            let message: Message = Message(
-                senderId: senderId,
-                senderDisplayName: senderDisplayName,
-                isOutgoing: true,
-                date: date,
-                text: text)
+            var message: Message!
+            if AssetManager.isSingleId(text) {
+                if let asset = GGWiki.sharedInstance.getAsset(text) {
+                    if let image = asset.getUIImage() {
+                        let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
+                        message = Message(
+                            senderId: senderId,
+                            senderDisplayName: senderDisplayName,
+                            isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
+                            date: NSDate(),
+                            media: wikiMedia)        
+                    }
+                }
+            }
+            
+            if message == nil {
+                message = Message(
+                    senderId: senderId,
+                    senderDisplayName: senderDisplayName,
+                    isOutgoing: true,
+                    date: date,
+                    text: text)
+            }
             
             self.messages.append(message)
-                
+            
             XMPPMessageManager.sendMessage(text,
                 to: recipient.jid,
                 completionHandler: nil)
