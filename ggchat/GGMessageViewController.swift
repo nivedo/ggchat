@@ -353,7 +353,11 @@ class GGMessageViewController:
     func onTap(attributes: [String: AnyObject] ) {
         if let imvc = self.imageModelViewController {
             imvc.attributes = attributes
-            // print(attributes)
+            
+            if self.inputToolbar.contentView.textView.isFirstResponder() {
+                imvc.callDismiss = true
+            }
+            
             self.presentTransparentViewController(
                 imvc,
                 animated: true,

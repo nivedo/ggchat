@@ -16,6 +16,7 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
    
     var attributes: [String: AnyObject]?
     var imageAsset: ImageModalAsset?
+    var callDismiss: Bool = false
     var onDismiss: ((sender: AnyObject?) -> Void)?
     
     override func viewDidLoad() {
@@ -70,6 +71,7 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
     }
     
     func reset() {
+        self.callDismiss = false
         self.attributes = nil
         self.imageAsset?.delegate = nil
         self.imageView.image = nil
@@ -102,8 +104,9 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
     
     func gg_handleTapGesture(recognizer: UITapGestureRecognizer) {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        self.onDismiss?(sender: self)
-        // self.reset()
+        if self.callDismiss {
+            self.onDismiss?(sender: self)
+        }
     }
     
     /*
