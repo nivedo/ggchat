@@ -143,9 +143,9 @@ class GGWikiAsset : ImageModalAsset {
                             self.delegate?.onDownloadError()
                             return
                         }
-                        print("Finished downloading \"\(url)\".")
                         self.image = UIImage(data: data)
                         if let image = self.image {
+                            print("Finished downloading \"\(url)\".")
                             self.delegate?.onDownloadSuccess(image)
                             GGWiki.sharedInstance.delegate?.onDownloadAsset(self.id, success: true)
                             self.saveImage()
