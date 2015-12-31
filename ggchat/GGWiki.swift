@@ -72,6 +72,19 @@ class GGWikiAsset : ImageModalAsset {
         let imageName = "\(bundleId)/\(assetId).\(fileType)"
         self.imageURL = "\(GGWiki.s3url)/\(imageName)"
         self.imageLocalURL = "\(GGWiki.cacheFolderURL)/\(imageName)"
+       
+        if let bundleURL = NSURL(string: "\(GGWiki.cacheFolderURL)/\(bundleId)") {
+            let error = NSErrorPointer()
+            do {
+                try NSFileManager.defaultManager().createDirectoryAtURL(
+                    bundleURL,
+                    withIntermediateDirectories: true,
+                    attributes: nil)
+            } catch let error1 as NSError {
+                error.memory = error1
+                print("Creating '\(bundleURL)' directory failed. Error: \(error)")
+            }
+        }
     }
     
     func getUIImage() -> UIImage? {
@@ -113,11 +126,12 @@ class GGWikiAsset : ImageModalAsset {
                             self.delegate?.onDownloadError()
                             return
                         }
-                        // print("Finished downloading \"\(url)\".")
+                        print("Finished downloading \"\(url)\".")
                         self.image = UIImage(data: data)
                         if let image = self.image {
                             self.delegate?.onDownloadSuccess(image)
                             GGWiki.sharedInstance.delegate?.onDownloadAsset(self.id, success: true)
+                            self.saveImage()
                         }
                     }
                 }
@@ -134,18 +148,16 @@ class GGWikiAsset : ImageModalAsset {
                 data = UIImageJPEGRepresentation(image, 1.0)
             }
            
-            if let imageData = data {
-                if !imageData.writeToURL(NSURL(fileURLWithPath: self.imageLocalURL), atomically: false) {
-                    print("Asset not saved")
-                } else {
-                    print("Asset saved at \(self.imageLocalURL)")
+            if let imageData = data, let url = NSURL(string: self.imageLocalURL) {
+                if !imageData.writeToURL(url, atomically: false) {
+                    print("Asset not saved \(self.imageLocalURL)")
                 }
             }
         }
     }
     
     func loadSavedImage() {
-        if let imageData = NSData(contentsOfURL: NSURL(fileURLWithPath: self.imageLocalURL)) {
+        if let url = NSURL(string: self.imageLocalURL), let imageData = NSData(contentsOfURL: url) {
             self.image = UIImage(data: imageData)
         }
     }
@@ -387,6 +399,7 @@ class GGWiki {
     func getAsset(id: String) -> ImageModalAsset? {
         if id.rangeOfString("::") != nil {
             if let asset = self.cardAssets[id] {
+                asset.loadSavedImage()
                 asset.downloadImage()
                 return asset
             }
