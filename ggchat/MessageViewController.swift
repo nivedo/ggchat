@@ -847,11 +847,9 @@ class MessageViewController: UIViewController,
             options: NSAttributedStringEnumerationOptions.LongestEffectiveRangeNotRequired,
             usingBlock: { (value: AnyObject?, range:NSRange, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
                 if let id = value as? String {
-                    // Non-english strings will have different font-family for the [], which results in 3 different
-                    // attributes
-                    // if range.length > 1 {
-                    // }
-                    currentAttributedText.replaceCharactersInRange(range, withString: id)
+                    let displayText = (currentAttributedText.string as NSString).substringWithRange(range) as String
+                    let replaceText = "||\(id)|\(GGWiki.sharedInstance.getAssetImageURL(id))|\(displayText)||"
+                    currentAttributedText.replaceCharactersInRange(range, withString: replaceText)
                 }
             }
         )

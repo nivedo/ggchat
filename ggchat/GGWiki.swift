@@ -32,7 +32,7 @@ protocol GGWikiDelegate {
 
 class AssetManager {
     
-    class func id(bundleId: Int, assetId: String) -> String {
+    class func id(bundleId: String, assetId: String) -> String {
         return "&&\(bundleId)::\(assetId)&&"
     }
     
@@ -49,11 +49,26 @@ class AssetManager {
         return false
     }
     
+    class func getSingleEncodedAsset(str: String) -> String? {
+        if str.length > 6 {
+            if ((str[0...1] == "||") && (str[str.length-2..<str.length] == "||")) {
+                let info = str[2..<str.length-2]
+                let params = info.componentsSeparatedByString("|")
+                if params.count == 3 {
+                    if self.isSingleId(params[0]) {
+                        return params[0]
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
 }
 
 class GGWikiAsset : ImageModalAsset {
     var name: String
-    var bundleId: Int
+    var bundleId: String
     var assetId: String
     var apiURL: String
     var fileType: String
@@ -62,8 +77,8 @@ class GGWikiAsset : ImageModalAsset {
     var image: UIImage?
     var delegate: ImageModalAssetDelegate?
     var downloadAttempts: Int = 0
-    
-    init(name: String, bundleId: Int, assetId: String, fileType: String) {
+   
+    init(name: String, bundleId: String, assetId: String, fileType: String) {
         self.name = name
         self.bundleId = bundleId
         self.assetId = assetId
@@ -277,7 +292,7 @@ class GGWiki {
                 print("Autocomplete \(autocomplete)")
                 self.loadAutocomplete(autocomplete)
             }
-            self.loadAssets()
+            // self.loadAssets()
         }
     }
    
@@ -369,7 +384,8 @@ class GGWiki {
         if let array = json as? NSArray {
             for bundle in array {
                 if let dict = bundle as? NSDictionary {
-                    if let cards = dict["assets"] as? NSArray, let bundleId = dict["bundleId"] as? Int, let fileType = dict["ext"] as? String {
+                    if let cards = dict["assets"] as? NSArray, let bundleIdInt = dict["bundleId"] as? Int, let fileType = dict["ext"] as? String {
+                        let bundleId = "\(bundleIdInt)"
                         // print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
                         var cardNamesSet = Set<String>()
                         for c in cards {
@@ -411,6 +427,35 @@ class GGWiki {
             }
         }
         return nil
+    }
+    
+    func addAsset(id: String, url: String, displayName: String) {
+        if id.rangeOfString("::") != nil && id.length > 6 && url.length > 0{
+           
+            let idStrip = id[2...id.length-2]
+            let idTokens = idStrip.componentsSeparatedByString("::")
+            if idTokens.count == 2 {
+                let bundleId = idTokens[0]
+                let assetId = idTokens[1]
+                
+                let urlTokens = url.componentsSeparatedByString(".")
+                let fileType = urlTokens[urlTokens.count-1]
+                
+                let name = displayName[1...displayName.length-1]
+                if self.cardAssets[id] == nil {
+                    self.cardAssets[id] = GGWikiAsset(name: name, bundleId: bundleId, assetId: assetId, fileType: fileType)
+                }
+            }
+        }
+    }
+    
+    func getAssetImageURL(id: String) -> String {
+        if id.rangeOfString("::") != nil {
+            if let asset = self.cardAssets[id] {
+                return asset.imageURL
+            }
+        }
+        return ""
     }
    
     class AssetSortHelper {

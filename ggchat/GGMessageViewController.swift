@@ -189,8 +189,8 @@ class GGMessageViewController:
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
             var message: Message!
-            if AssetManager.isSingleId(text) {
-                if let asset = GGWiki.sharedInstance.getAsset(text) {
+            if let id = AssetManager.getSingleEncodedAsset(text) {
+                if let asset = GGWiki.sharedInstance.getAsset(id) {
                     if let image = asset.getUIImage() {
                         let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
                         message = Message(
@@ -300,8 +300,8 @@ class GGMessageViewController:
                     JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                     
                     var message: Message!
-                    if AssetManager.isSingleId(msg) {
-                        if let asset = GGWiki.sharedInstance.getAsset(msg) {
+                    if let id = AssetManager.getSingleEncodedAsset(msg) {
+                        if let asset = GGWiki.sharedInstance.getAsset(id) {
                             if let image = asset.getUIImage() {
                                 let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
                                 message = Message(
@@ -427,8 +427,8 @@ class GGMessageViewController:
             let m = self.messages[i]
             if !m.isMediaMessage {
                 if let text = m.rawText {
-                    if AssetManager.isSingleId(text) {
-                        if let asset = GGWiki.sharedInstance.getAsset(text) {
+                    if let id = AssetManager.getSingleEncodedAsset(text) {
+                        if let asset = GGWiki.sharedInstance.getAsset(id) {
                             if let image = asset.getUIImage() {
                                 let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
                                 let message = Message(

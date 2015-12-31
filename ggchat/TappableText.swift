@@ -88,6 +88,40 @@ class TappableText: NSObject {
         return paragraph.copy() as! NSAttributedString
     }
     
+    func tappableEncodedString(
+        text: String,
+        textColor: UIColor) -> NSAttributedString {
+        
+        var paragraph = NSMutableAttributedString(string: "")
+        let tokens = text.componentsSeparatedByString("||")
+        for (_, token) in tokens.enumerate() {
+            if token.length > 0 {
+                let elements = token.componentsSeparatedByString("|")
+                var str = token
+                var attr: [String : NSObject] = [
+                    NSFontAttributeName : GGConfig.messageBubbleFont,
+                    NSForegroundColorAttributeName : textColor
+                ]
+                if elements.count == 3 {
+                    let id = elements[0]
+                    str = elements[2]
+                    
+                    attr[TappableText.tapAttributeKey] = true
+                    attr[TappableText.tapAssetId] = id
+                    attr[NSForegroundColorAttributeName] = UIColor.gg_highlightedColor()
+                    
+                    GGWiki.sharedInstance.addAsset(id, url: elements[2], displayName: str)
+                }
+                let attributedString = NSAttributedString(
+                    string: str,
+                    attributes: attr)
+                paragraph.appendAttributedString(attributedString)
+            }
+        }
+
+        return paragraph.copy() as! NSAttributedString
+    }
+    
     func textTapped(recognizer: UITapGestureRecognizer) {
         let textView: UITextView = recognizer.view as! UITextView
         
