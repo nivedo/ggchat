@@ -56,19 +56,22 @@ class GGWikiAsset : ImageModalAsset {
     var bundleId: Int
     var assetId: String
     var apiURL: String
-    var fullName: String?
-    var imageURL: String?
-    var imageLocalURL: NSURL?
+    var fileType: String
+    var imageURL: String
+    var imageLocalURL: String
     var image: UIImage?
     var delegate: ImageModalAssetDelegate?
     
     init(name: String, bundleId: Int, assetId: String, fileType: String) {
         self.name = name
-        self.fullName = name
         self.bundleId = bundleId
         self.assetId = assetId
         self.apiURL = GGWiki.apiURL(name)
-        self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).\(fileType)"
+        self.fileType = fileType
+        
+        let imageName = "\(bundleId)/\(assetId).\(fileType)"
+        self.imageURL = "\(GGWiki.s3url)/\(imageName)"
+        self.imageLocalURL = "\(GGWiki.cacheFolderURL)/\(imageName)"
     }
     
     func getUIImage() -> UIImage? {
@@ -102,8 +105,8 @@ class GGWikiAsset : ImageModalAsset {
     
     func downloadImage() {
         if self.image == nil {
-            if let urlImage = self.imageURL, let url = NSURL(string: urlImage) {
-                getDataFromUrl(url) { (data, response, error)  in
+            if let url = NSURL(string: self.imageURL) {
+                self.getDataFromUrl(url) { (data, response, error)  in
                     dispatch_async(dispatch_get_main_queue()) { () -> Void in
                         guard let data = data where error == nil else {
                             print("Image download failed: \(error?.description)")
@@ -124,34 +127,36 @@ class GGWikiAsset : ImageModalAsset {
     
     func saveImage() {
         if let image = self.image {
-            let imageData = UIImagePNGRepresentation(image)
-            let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-            let imageURL = documentsURL.URLByAppendingPathComponent("\(self.name).png")
-            
-            if !imageData!.writeToURL(imageURL, atomically: false) {
-                print("Asset not saved")
-            } else {
-                print("Asset saved at \(imageLocalURL)")
-                // NSUserDefaults.standardUserDefaults().setObject(imageURL, forKey: "imagePath")
-                self.imageLocalURL = imageURL
+            var data: NSData?
+            if self.fileType == "png" {
+                data = UIImagePNGRepresentation(image)
+            } else if self.fileType == "jpg" {
+                data = UIImageJPEGRepresentation(image, 1.0)
+            }
+           
+            if let imageData = data {
+                if !imageData.writeToURL(NSURL(fileURLWithPath: self.imageLocalURL), atomically: false) {
+                    print("Asset not saved")
+                } else {
+                    print("Asset saved at \(self.imageLocalURL)")
+                }
             }
         }
     }
     
     func loadSavedImage() {
-        if let localUrl = self.imageLocalURL, let imageData = NSData(contentsOfURL: localUrl) {
+        if let imageData = NSData(contentsOfURL: NSURL(fileURLWithPath: self.imageLocalURL)) {
             self.image = UIImage(data: imageData)
         }
     }
     
     func deleteSavedImage() {
-        if let localUrl = self.imageLocalURL {
-            let fileManager = NSFileManager.defaultManager()
-            do {
-                try fileManager.removeItemAtURL(localUrl)
-            } catch {
-                print("Cannot delete file at \(localUrl)")
-            }
+        let localUrl = NSURL(fileURLWithPath: self.imageLocalURL)
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            try fileManager.removeItemAtURL(localUrl)
+        } catch {
+            print("Cannot delete file at \(localUrl)")
         }
     }
     
@@ -210,6 +215,12 @@ class GGWiki {
     
     private static let host = "http://45.33.39.21:1235"
     private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
+    private static let cacheFolderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("wiki")
+ 
+    class func fileCacheURL(fileName: String) -> NSURL {
+        let fileURL = self.cacheFolderURL.URLByAppendingPathComponent(fileName)
+        return fileURL
+    }
     
     class func apiURL(cardName: String) -> String {
         let urlName = cardName.stringByReplacingOccurrencesOfString(
@@ -241,6 +252,7 @@ class GGWiki {
     var delegate: GGWikiDelegate?
     
     init() {
+        self.createCacheFolder()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             self.loadConfig()
             if let autocomplete = self.autocompleteWiki {
@@ -251,6 +263,19 @@ class GGWiki {
         }
     }
    
+    func createCacheFolder() {
+        let error = NSErrorPointer()
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(
+                GGWiki.cacheFolderURL,
+                withIntermediateDirectories: true,
+                attributes: nil)
+        } catch let error1 as NSError {
+            error.memory = error1
+            print("Creating 'wiki' directory failed. Error: \(error)")
+        }
+    }
+
     func loadConfig() {
         if let configData = NSData(contentsOfURL: NSURL(string: GGWiki.configURL)!) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
