@@ -1086,8 +1086,8 @@ class MessageViewController: UIViewController,
     
     func keyboardController(keyboardController: MessageKeyboardController,
         keyboardDidChangeFrame keyboardFrame: CGRect) {
-        print("****************************************************")
-        print("MVC::keyboardDidChangeFrame")
+        // print("****************************************************")
+        // print("MVC::keyboardDidChangeFrame")
         if (!self.inputToolbar.contentView.textView.isFirstResponder() && self.toolbarBottomLayoutGuide.constant == 0.0) {
             return
         }

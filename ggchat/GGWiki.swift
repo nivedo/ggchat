@@ -61,6 +61,7 @@ class GGWikiAsset : ImageModalAsset {
     var imageLocalURL: String
     var image: UIImage?
     var delegate: ImageModalAssetDelegate?
+    var downloadAttempts: Int = 0
     
     init(name: String, bundleId: Int, assetId: String, fileType: String) {
         self.name = name
@@ -117,8 +118,9 @@ class GGWikiAsset : ImageModalAsset {
     }
     
     func downloadImage() {
-        if self.image == nil {
+        if self.image == nil && self.downloadAttempts <= GGWiki.maxDownloadAttempts {
             if let url = NSURL(string: self.imageURL) {
+                self.downloadAttempts++
                 self.getDataFromUrl(url) { (data, response, error)  in
                     dispatch_async(dispatch_get_main_queue()) { () -> Void in
                         guard let data = data where error == nil else {
@@ -157,8 +159,11 @@ class GGWikiAsset : ImageModalAsset {
     }
     
     func loadSavedImage() {
-        if let url = NSURL(string: self.imageLocalURL), let imageData = NSData(contentsOfURL: url) {
-            self.image = UIImage(data: imageData)
+        if self.image == nil {
+            if let url = NSURL(string: self.imageLocalURL), let imageData = NSData(contentsOfURL: url) {
+                // print("Loaded file \(url)")
+                self.image = UIImage(data: imageData)
+            }
         }
     }
     
@@ -228,6 +233,7 @@ class GGWiki {
     private static let host = "http://45.33.39.21:1235"
     private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
     private static let cacheFolderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("wiki")
+    static let maxDownloadAttempts = 2
  
     class func fileCacheURL(fileName: String) -> NSURL {
         let fileURL = self.cacheFolderURL.URLByAppendingPathComponent(fileName)

@@ -145,7 +145,7 @@ class MessageKeyboardController: NSObject {
     }
 
     func gg_didReceiveKeyboardDidShowNotification(notification: NSNotification) {
-        print("keyboard::didReceiveKeyboardDidShow")
+        // print("keyboard::didReceiveKeyboardDidShow")
         self.keyboardView = self.textView.inputAccessoryView!.superview
         self.gg_setKeyboardViewHidden(false)
 
@@ -156,19 +156,19 @@ class MessageKeyboardController: NSObject {
     }
 
      func gg_didReceiveKeyboardWillChangeFrameNotification(notification: NSNotification) {
-        print("keyboard::didReceiveKeyboardWillChangeFrame")
+        // print("keyboard::didReceiveKeyboardWillChangeFrame")
         self.gg_handleKeyboardNotification(notification, completion:nil)
     }
 
      func gg_didReceiveKeyboardDidChangeFrameNotification(notification: NSNotification) {
-        print("keyboard::didReceiveKeyboardDidChangeFrame")
+        // print("keyboard::didReceiveKeyboardDidChangeFrame")
         self.gg_setKeyboardViewHidden(false)
 
         self.gg_handleKeyboardNotification(notification, completion: nil)
     }
 
      func gg_didReceiveKeyboardDidHideNotification(notification: NSNotification) {
-        print("keyboard::didReceiveKeyboardDidHide")
+        // print("keyboard::didReceiveKeyboardDidHide")
         self.keyboardView = nil
 
         self.gg_handleKeyboardNotification(notification, completion: { (finished: Bool) in
