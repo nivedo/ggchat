@@ -853,9 +853,7 @@ class MessageViewController: UIViewController,
                 }
             }
         )
-        // print(currentAttributedText.string)
-        // return self.inputToolbar.contentView.textView.text.gg_stringByTrimingWhitespace()
-        // print("Final string to send: \(currentAttributedText.string.gg_stringByTrimingWhitespace())")
+        print("Final string to send: \(currentAttributedText.string.gg_stringByTrimingWhitespace())")
         return currentAttributedText.string.gg_stringByTrimingWhitespace()
     }
     
@@ -1511,13 +1509,15 @@ class MessageViewController: UIViewController,
         self.inputToolbar.contentView.textView.text = replaceText
         self.inputToolbar.contentView.textView.text.appendContentsOf(assetSuggestion.id)
         */
-       
+      
+        assert(GGWiki.sharedInstance.getAsset(assetSuggestion.id) != nil, "Asset \(assetSuggestion.id) not loaded.")
         self.inputToolbar.contentView.textView.attributedText = TappableText.sharedInstance.tappableAttributedString(
             assetSuggestion.id,
             textColor: self.inputToolbar.contentView.textView.textColor!,
             highlightColor: true,
             textFont: GGConfig.messageComposerFont,
-            prevAttributedString: replaceText) // self.inputToolbar.contentView.textView.attributedText)
+            prevAttributedString: replaceText)
+        // print(self.inputToolbar.contentView.textView.attributedText)
         self.autocompleteController?.hide()
     }
 }

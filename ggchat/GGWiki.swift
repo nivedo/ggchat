@@ -432,7 +432,7 @@ class GGWiki {
     func addAsset(id: String, url: String, displayName: String) {
         if id.rangeOfString("::") != nil && id.length > 6 && url.length > 0{
            
-            let idStrip = id[2...id.length-2]
+            let idStrip = id[2..<id.length-2]
             let idTokens = idStrip.componentsSeparatedByString("::")
             if idTokens.count == 2 {
                 let bundleId = idTokens[0]
