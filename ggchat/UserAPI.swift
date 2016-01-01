@@ -8,7 +8,8 @@
 
 import Foundation
 
-public typealias JSONCompletion = (json: [String: AnyObject]?) -> Void
+public typealias HTTPJsonCompletion = (json: [String: AnyObject]?) -> Void
+public typealias HTTPArrayCompletion = (array: [AnyObject]?) -> Void
 
 protocol UserDelegate {
     
@@ -272,13 +273,13 @@ class UserAPI {
         return false
     }
    
-    func getUserinfo(username: String, jsonCompletion: JSONCompletion) {
+    func getUserinfo(username: String, jsonCompletion: HTTPJsonCompletion) {
         self.get(UserAPI.userinfoUrl(username),
             authToken: nil,
             jsonCompletion: jsonCompletion)
     }
 
-    func getRoster(jid: String, jsonCompletion: JSONCompletion) {
+    func getRoster(jid: String, jsonCompletion: HTTPJsonCompletion) {
         if let token = self.authToken {
             self.get(UserAPI.rosterUrl,
                 authToken: token,
@@ -286,7 +287,7 @@ class UserAPI {
         }
     }
     
-    func getProfile(jsonCompletion: JSONCompletion) -> Bool {
+    func getProfile(jsonCompletion: HTTPJsonCompletion) -> Bool {
         if let token = self.authToken {
             self.get(UserAPI.profileUrl,
                 authToken: token,
@@ -297,7 +298,7 @@ class UserAPI {
         return false
     }
     
-    func editProfile(jsonBody: [String: AnyObject], jsonCompletion: JSONCompletion?) -> Bool {
+    func editProfile(jsonBody: [String: AnyObject], jsonCompletion: HTTPJsonCompletion?) -> Bool {
         if let token = self.authToken {
             self.post(UserAPI.profileUrl,
                 authToken: token,
@@ -398,7 +399,7 @@ class UserAPI {
     
     func updatePushToken() {
         if let token = self.pushToken {
-            let success = self.editProfile(["pushToken": token] , jsonCompletion: { JSONCompletion in
+            let success = self.editProfile(["pushToken": token] , jsonCompletion: { HTTPJsonCompletion in
                 print("Successfully pushed token for \(self.authToken!)")
             })
             if !success {
@@ -407,7 +408,7 @@ class UserAPI {
         }
     }
     
-    func updateAvatarImage(image: UIImage, jsonCompletion: JSONCompletion?) -> Bool {
+    func updateAvatarImage(image: UIImage, jsonCompletion: HTTPJsonCompletion?) -> Bool {
         let uniquePath = "\(NSProcessInfo.processInfo().globallyUniqueString).jpg"
         return self.editProfile(["avatar": uniquePath], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
@@ -425,7 +426,7 @@ class UserAPI {
         })
     }
     
-    func updateNickname(nickname: String, jsonCompletion: JSONCompletion?) -> Bool {
+    func updateNickname(nickname: String, jsonCompletion: HTTPJsonCompletion?) -> Bool {
         return self.editProfile(["nickname": nickname], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
                 self.nickname = nickname
@@ -434,7 +435,7 @@ class UserAPI {
         })
     }
     
-    func updateLanguage(language: String, jsonCompletion: JSONCompletion?) -> Bool {
+    func updateLanguage(language: String, jsonCompletion: HTTPJsonCompletion?) -> Bool {
         return self.editProfile(["lang": language], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
                 self.settings.language = language
@@ -539,7 +540,7 @@ class UserAPI {
         }
     }
     
-    private func post(urlPath: String, authToken: String?, jsonBody: [String: AnyObject]?, jsonCompletion: JSONCompletion?) {
+    private func post(urlPath: String, authToken: String?, jsonBody: [String: AnyObject]?, jsonCompletion: HTTPJsonCompletion?) {
         let URL: NSURL = NSURL(string: urlPath)!
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: URL)
         request.HTTPMethod = "POST"
@@ -587,7 +588,7 @@ class UserAPI {
         task.resume()
     }
     
-    private func get(urlPath: String, authToken: String?, jsonCompletion: JSONCompletion?) {
+    private func get(urlPath: String, authToken: String?, jsonCompletion: HTTPJsonCompletion?) {
         let URL: NSURL = NSURL(string: urlPath)!
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: URL)
         request.HTTPMethod = "GET"
