@@ -110,7 +110,7 @@ class TappableText: NSObject {
                     attr[TappableText.tapAssetId] = id
                     attr[NSForegroundColorAttributeName] = UIColor.gg_highlightedColor()
                     
-                    GGWiki.sharedInstance.addAsset(id, url: elements[2], displayName: str)
+                    GGWiki.sharedInstance.addAsset(id, url: elements[1], displayName: str)
                 }
                 let attributedString = NSAttributedString(
                     string: str,

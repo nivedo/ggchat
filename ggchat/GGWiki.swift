@@ -437,7 +437,7 @@ class GGWiki {
             if idTokens.count == 2 {
                 let bundleId = idTokens[0]
                 let assetId = idTokens[1]
-                
+               
                 let urlTokens = url.componentsSeparatedByString(".")
                 let fileType = urlTokens[urlTokens.count-1]
                 
@@ -453,7 +453,11 @@ class GGWiki {
         if id.rangeOfString("::") != nil {
             if let asset = self.cardAssets[id] {
                 return asset.imageURL
+            } else {
+                print("NOT FOUND \(id)")
             }
+        } else {
+            print("ERROR \(id)")
         }
         return ""
     }
