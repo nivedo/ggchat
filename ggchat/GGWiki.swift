@@ -430,7 +430,7 @@ class GGWiki {
     }
     
     func addAsset(id: String, url: String, displayName: String) {
-        if id.rangeOfString("::") != nil && id.length > 6 && url.length > 0{
+        if id.rangeOfString("::") != nil && id.length > 6 && url.length > 0 && displayName.length > 2 {
            
             let idStrip = id[2..<id.length-2]
             let idTokens = idStrip.componentsSeparatedByString("::")
@@ -441,7 +441,7 @@ class GGWiki {
                 let urlTokens = url.componentsSeparatedByString(".")
                 let fileType = urlTokens[urlTokens.count-1]
                 
-                let name = displayName[1...displayName.length-1]
+                let name = displayName[1..<displayName.length-1]
                 if self.cardAssets[id] == nil {
                     self.cardAssets[id] = GGWikiAsset(name: name, bundleId: bundleId, assetId: assetId, fileType: fileType)
                 }

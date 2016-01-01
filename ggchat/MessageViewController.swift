@@ -853,7 +853,7 @@ class MessageViewController: UIViewController,
                 }
             }
         )
-        print("Final string to send: \(currentAttributedText.string.gg_stringByTrimingWhitespace())")
+        // print("Final string to send: \(currentAttributedText.string.gg_stringByTrimingWhitespace())")
         return currentAttributedText.string.gg_stringByTrimingWhitespace()
     }
     
