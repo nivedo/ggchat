@@ -183,7 +183,6 @@ class UserAPI {
         if let messageLimit = limit {
             url = "\(url)&limit=\(messageLimit)"
         }
-        print(url)
         return url
     }
     
@@ -383,15 +382,14 @@ class UserAPI {
     func getHistory(peerJID: String, limit: Int? = nil) {
         var messages = [Message]()
        
-        print("getHistory")
         if let token = self.authToken {
             self.get(UserAPI.historyUrl(peerJID, limit: limit),
                 authToken: token,
-                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
-                    if let json = jsonBody {
-                        print(json)
+                arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
+                    if let array = arrayBody {
+                        print(array)
                     } else {
-                        print("history failed")
+                        print("Failed to load history for \(peerJID)")
                     }
                 })
         }
@@ -623,5 +621,42 @@ class UserAPI {
             }
         }
         task.resume()
-    }   
+    }
+    
+    private func get(urlPath: String, authToken: String?, arrayCompletion: HTTPArrayCompletion?) {
+        let URL: NSURL = NSURL(string: urlPath)!
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: URL)
+        request.HTTPMethod = "GET"
+        
+        if let token = authToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
+            guard error == nil && data != nil else { // check for fundamental networking error
+                print("Error=\(error)")
+                arrayCompletion?(array: nil)
+                return
+            }
+            
+            if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 { // check for http errors
+                print("StatusCode should be 200, but is \(httpStatus.statusCode)")
+                print("Response = \(response)")
+                arrayCompletion?(array: nil)
+            } else {
+                do {
+                    if let response = try NSJSONSerialization.JSONObjectWithData(
+                        data!,
+                        options: NSJSONReadingOptions.AllowFragments) as? [AnyObject] {
+                        arrayCompletion?(array: response)
+                    } else {
+                        arrayCompletion?(array: nil)
+                    }
+                } catch {
+                    arrayCompletion?(array: nil)
+                }
+            }
+        }
+        task.resume()
+    } 
 }
