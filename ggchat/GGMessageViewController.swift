@@ -19,7 +19,13 @@ class GGMessageViewController:
     UIActionSheetDelegate,
     GGWikiDelegate {
 
-    var recipient: RosterUser?
+    var recipient: RosterUser? {
+        didSet {
+            if let recipient = self.recipient {
+                UserAPI.sharedInstance.getHistory(recipient.jid)
+            }
+        }
+    }
     var recipientDetails: UIView?
     var photoPicker = UIImagePickerController()
     var imageModelViewController: ImageModalViewController?

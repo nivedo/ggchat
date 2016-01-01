@@ -174,6 +174,18 @@ class UserAPI {
         return "\(self.route("rosterv2"))"
     }
     
+    class func historyUrl(peerJID: String, limit: Int? = nil) -> String {
+        let tokens = peerJID.componentsSeparatedByString("@")
+        let peerUUID = tokens[0]
+        let path = "history?peer=\(peerUUID)"
+        var url = "\(self.route(path))"
+        if let messageLimit = limit {
+            url = "\(url)&limit=\(messageLimit)"
+        }
+        print(url)
+        return url
+    }
+    
     ////////////////////////////////////////////////////////////////////
     
     func register(username: String, email: String, password: String, completion: ((Bool) -> Void)?) {
@@ -365,6 +377,23 @@ class UserAPI {
         }
         completion?(false)
         self.delegate?.onRosterUpdate(false)
+    }
+    
+    func getHistory(peerJID: String, limit: Int? = nil) {
+        var messages = [Message]()
+       
+        print("getHistory")
+        if let token = self.authToken {
+            self.get(UserAPI.historyUrl(peerJID, limit: limit),
+                authToken: token,
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    if let json = jsonBody {
+                        print(json)
+                    } else {
+                        print("history failed")
+                    }
+                })
+        }
     }
     
     func updatePushToken() {
