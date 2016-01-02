@@ -91,6 +91,8 @@ class WikiMediaItem: MediaItem {
             imageView.frame = CGRectMake(0.0, 0.0, size.width, size.height)
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             imageView.clipsToBounds = true
+            imageView.layer.masksToBounds = true
+            imageView.layer.cornerRadius = 8.0
             /*
             MessageMediaViewBubbleImageMasker.applyBubbleImageMaskToMediaView(
                 imageView,
