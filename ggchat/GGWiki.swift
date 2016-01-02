@@ -419,6 +419,7 @@ class GGWiki {
     }
     
     func getAsset(id: String) -> ImageModalAsset? {
+        // print("getAsset: \(id)")
         if id.rangeOfString("::") != nil {
             if let asset = self.cardAssets[id] {
                 asset.loadSavedImage()
@@ -443,7 +444,10 @@ class GGWiki {
                 
                 let name = displayName[1..<displayName.length-1]
                 if self.cardAssets[id] == nil {
-                    self.cardAssets[id] = GGWikiAsset(name: name, bundleId: bundleId, assetId: assetId, fileType: fileType)
+                    let asset = GGWikiAsset(name: name, bundleId: bundleId, assetId: assetId, fileType: fileType)
+                    asset.loadSavedImage()
+                    asset.downloadImage()
+                    self.cardAssets[id] = asset
                 }
             }
         }

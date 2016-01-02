@@ -403,6 +403,7 @@ class UserAPI {
             } else {
                 // print("\(fromBare) vs \(self.jidBareStr)")
                 if let id = AssetManager.getSingleEncodedAsset(body) {
+                    // print("single encoded asset \(id)")
                     if let asset = GGWiki.sharedInstance.getAsset(id) {
                         if let image = asset.getUIImage() {
                             let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
