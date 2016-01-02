@@ -402,7 +402,20 @@ class UserAPI {
                 }
             } else {
                 // print("\(fromBare) vs \(self.jidBareStr)")
-                
+                if let id = AssetManager.getSingleEncodedAsset(body) {
+                    if let asset = GGWiki.sharedInstance.getAsset(id) {
+                        if let image = asset.getUIImage() {
+                            let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
+                            let message = Message(
+                                senderId: fromBare,
+                                senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                                isOutgoing: self.isOutgoingJID(fromBare),
+                                date: date,
+                                media: wikiMedia)
+                            return message
+                        }
+                    }
+                }
                 let fullMessage = Message(
                     senderId: fromBare,
                     senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
