@@ -71,11 +71,11 @@ public class XMPPMessageManager: NSObject {
     		completeMessage.addChild(body)
     		
     		sharedInstance.didSendMessageCompletionBlock = completion
-    		XMPPManager.sharedInstance.stream.sendElement(completeMessage)
             if XMPPManager.sharedInstance.isConnected() {
-                print("XMPP send message: \(message)")
+                print("XMPP connected, send message: \(message)")
+                XMPPManager.sharedInstance.stream.sendElement(completeMessage)
             } else {
-                print("XMPP not connected")
+                print("XMPP not connected, message not sent and queued.")
             }
         } else {
             print("ERROR: Empty message not sent.")
