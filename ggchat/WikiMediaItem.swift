@@ -11,25 +11,26 @@ import UIKit
 
 class WikiMediaItem: MediaItem {
     
-    var cachedImageView_: UIImageView?
+    var cachedView_: UIView?
     var image_: UIImage?
+    let inset: CGFloat = CGFloat(6.0)
 
     // pragma mark - Initialization
 
     init(image: UIImage) {
         super.init()
         self.image_ = image.copy() as? UIImage
-        self.cachedImageView_ = nil
+        self.cachedView_ = nil
     }
 
     deinit {
         self.image = nil
-        self.cachedImageView_ = nil
+        self.cachedView_ = nil
     }
     
     override func clearCachedMediaViews() {
         super.clearCachedMediaViews()
-        self.cachedImageView_ = nil
+        self.cachedView_ = nil
     }
 
     // pragma mark - Setters
@@ -41,7 +42,7 @@ class WikiMediaItem: MediaItem {
             } else {
                 self.image_ = nil
             }
-            self.cachedImageView_ = nil
+            self.cachedView_ = nil
         }
         get {
             return self.image_
@@ -51,7 +52,7 @@ class WikiMediaItem: MediaItem {
     override var appliesMediaViewMaskAsOutgoing: Bool {
         didSet {
             if oldValue != self.appliesMediaViewMaskAsOutgoing {
-                self.cachedImageView_ = nil
+                self.cachedView_ = nil
             }
         }
     }
@@ -59,7 +60,7 @@ class WikiMediaItem: MediaItem {
     // pragma mark - MessageMediaData protocol
     override func setNeedsDisplay() {
         super.setNeedsDisplay()
-        self.cachedImageView_?.setNeedsDisplay()
+        self.cachedView_?.setNeedsDisplay()
     }
     
     override func mediaViewDisplaySize() -> CGSize {
@@ -85,23 +86,20 @@ class WikiMediaItem: MediaItem {
             return nil
         }
         
-        if (self.cachedImageView_ == nil) {
+        if (self.cachedView_ == nil) {
             let size: CGSize = self.mediaViewDisplaySize()
+            let view: UIView = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
             let imageView: UIImageView = UIImageView(image: self.image_)
-            imageView.frame = CGRectMake(0.0, 0.0, size.width, size.height)
+            imageView.frame = CGRectMake(0.0, 0.0, size.width - self.inset, size.height - self.inset)
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             imageView.clipsToBounds = true
             imageView.layer.masksToBounds = true
             imageView.layer.cornerRadius = 8.0
-            /*
-            MessageMediaViewBubbleImageMasker.applyBubbleImageMaskToMediaView(
-                imageView,
-                isOutgoing: self.appliesMediaViewMaskAsOutgoing)
-            */
-            self.cachedImageView_ = imageView
+            view.addSubview(imageView)
+            self.cachedView_ = view
         }
         
-        return self.cachedImageView_
+        return self.cachedView_
     }
 
     override func mediaHash() -> Int {
