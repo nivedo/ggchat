@@ -22,7 +22,7 @@ class GGMessageViewController:
     var recipient: RosterUser? {
         didSet {
             if let recipient = self.recipient {
-                UserAPI.sharedInstance.getHistory(recipient.jid)
+                UserAPI.sharedInstance.getHistory(recipient.jid, limit: 10)
             }
         }
     }

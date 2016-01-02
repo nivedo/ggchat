@@ -10,6 +10,7 @@ import Foundation
 
 public typealias HTTPJsonCompletion = (json: [String: AnyObject]?) -> Void
 public typealias HTTPArrayCompletion = (array: [AnyObject]?) -> Void
+typealias HTTPMessagesCompletion = (messages: [Message]?) -> Void
 
 protocol UserDelegate {
     
@@ -378,18 +379,61 @@ class UserAPI {
         completion?(false)
         self.delegate?.onRosterUpdate(false)
     }
-    
-    func getHistory(peerJID: String, limit: Int? = nil) {
-        var messages = [Message]()
+   
+    func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval) -> Message? {
+        let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
+        
+        var element: DDXMLElement?
+        do {
+            element = try DDXMLElement(XMLString: xmlString)
+        } catch _ {
+            element = nil
+        }
        
+        // let to = element.attributeStringValueForName("to")
+        
+        if let bodyElement = element?.elementForName("body"), let from = element?.attributeStringValueForName("from") {
+            let body = bodyElement.stringValue()
+            // print(body)
+            
+            if let _ = bodyElement.elementForName("photo") {
+                if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(bodyElement, completion: nil) {
+                    return photoMessage
+                }
+            } else {
+                let fullMessage = Message(
+                    senderId: from,
+                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
+                    isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(from),
+                    date: date,
+                    text: body)
+                return fullMessage
+            }
+        }
+        return nil
+    }
+    
+    func getHistory(peerJID: String, limit: Int?, completion: HTTPMessagesCompletion? = nil) {
         if let token = self.authToken {
             self.get(UserAPI.historyUrl(peerJID, limit: limit),
                 authToken: token,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {
                         print(array)
+                        var messages = [Message]()
+                        for element in array {
+                            if let json = element as? [String: AnyObject] {
+                                if let xmlStr = json["xml"] as? String, let timestamp = json["time"] as? NSTimeInterval {
+                                    if let msg = self.parseMessageFromString(xmlStr, timestamp: timestamp) {
+                                        messages.append(msg)
+                                    }
+                                }
+                            }
+                        }
+                        completion?(messages: messages)
                     } else {
                         print("Failed to load history for \(peerJID)")
+                        completion?(messages: nil)
                     }
                 })
         }
