@@ -116,10 +116,12 @@ class GGMessageViewController:
                     sender: XMPPManager.sharedInstance.lastActivity) { (response, forJID, error) -> Void in
                     if let lastActivitySeconds = response?.lastActivitySeconds() {
                         let lastActivityResponse = XMPPLastActivityManager.sharedInstance.getLastActivityFrom(lastActivitySeconds)
-                        
-                        for subview: UIView in self.navigationController!.view.subviews as [UIView] {
-                            if subview == self.recipientDetails {
-                                subview.removeFromSuperview()
+                       
+                        if let navController = self.navigationController {
+                            for subview: UIView in navController.view.subviews as [UIView] {
+                                if subview == self.recipientDetails {
+                                    subview.removeFromSuperview()
+                                }
                             }
                         }
                         self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
