@@ -382,6 +382,7 @@ class UserAPI {
    
     func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
+        // print(MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(date))
         
         var element: DDXMLElement?
         do {
@@ -450,7 +451,7 @@ class UserAPI {
                         for element in array {
                             if let json = element as? [String: AnyObject] {
                                 if let xmlStr = json["xml"] as? String, let timestamp = json["time"] as? NSTimeInterval {
-                                    if let msg = self.parseMessageFromString(xmlStr, timestamp: timestamp) {
+                                    if let msg = self.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6) {
                                         messages.append(msg)
                                     }
                                 }
