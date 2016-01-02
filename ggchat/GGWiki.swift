@@ -77,6 +77,12 @@ class GGWikiAsset : ImageModalAsset {
     var image: UIImage?
     var delegate: ImageModalAssetDelegate?
     var downloadAttempts: Int = 0
+    
+    var url: NSURL {
+        get {
+            return NSURL(string: self.imageURL)!
+        }
+    }
    
     init(name: String, bundleId: String, assetId: String, fileType: String) {
         self.name = name

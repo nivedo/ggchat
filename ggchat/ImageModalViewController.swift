@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import Kingfisher
 
 class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
 
@@ -39,9 +40,9 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
     }
     
     func updateModal() {
-        var image: UIImage?
         if let attr = self.attributes, let id = attr[TappableText.tapAssetId] as? String {
-            if let asset = TappableText.sharedInstance.imageModalAsset(id) {
+            if let asset = GGWiki.sharedInstance.cardAssets[id] {
+                /*
                 image = asset.getUIImage()
                 self.imageAsset = asset
                 
@@ -53,12 +54,38 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
                 } else {
                     MBProgressHUD.hideHUDForView(self.view, animated: false)
                 }
+                */
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.AnnularDeterminate
+                hud.labelText = "Downloading"
+                
+                self.imageView.kf_setImageWithURL(asset.url,
+                    placeholderImage: nil,
+                    optionsInfo: nil,
+                    progressBlock: { (receivedSize, totalSize) -> () in
+                        // print("Download Progress: \(receivedSize)/\(totalSize)")
+                        hud.progress = Float(receivedSize) / Float(totalSize)
+                    },
+                    completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
+                        // print("Downloaded")
+                        if let img = image {
+                            let screenSize = UIScreen.mainScreen().bounds
+                            let xTarget = screenSize.width * 0.8
+                            let scaleFactor = xTarget / img.size.width
+                            let yTarget = scaleFactor * img.size.height
+                            let newSize = CGSizeMake(xTarget, yTarget)
+                            
+                            self.imageView.image = img.gg_imageScaledToSize(newSize, isOpaque: false)
+                        }
+                        hud.hide(true)
+                })
             } else {
-                // TEMP: Placeholder for tokens without assets
-                image = UIImage(named: "zorbo")
+                assert(false, "Cannot find asset id \(id)")
             }
         }
-        
+       
+        /*
         if image != nil {
             let screenSize = UIScreen.mainScreen().bounds
             let xTarget = screenSize.width * 0.8
@@ -68,6 +95,7 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
             
             self.imageView.image = image?.gg_imageScaledToSize(newSize, isOpaque: false)
         }
+        */
     }
     
     func reset() {

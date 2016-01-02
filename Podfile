@@ -25,6 +25,7 @@ target 'ggchat' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'MBProgressHUD', '~> 0.9.1'
+  pod 'Kingfisher', '~> 1.9'
 end
 
 target 'ggchatTests' do
