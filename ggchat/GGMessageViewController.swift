@@ -233,7 +233,8 @@ class GGMessageViewController:
             }
             
             self.messages.append(message)
-            
+           
+            print("send message to \(recipient.jid): \(text)")
             XMPPMessageManager.sendMessage(text,
                 to: recipient.jid,
                 completionHandler: nil)

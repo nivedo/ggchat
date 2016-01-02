@@ -71,13 +71,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
             if success {
-                
+                print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
+                XMPPManager.sharedInstance.connectWithJID(
+                    jid: UserAPI.sharedInstance.jid!,
+                    password: UserAPI.sharedInstance.jpassword!,
+                    connectCompletionHandler: self.xmppConnectCallback,
+                    authenticateCompletionHandler: self.xmppAuthenticateCallback)
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let loginController = storyboard.instantiateViewControllerWithIdentifier(loginIdentifier)
-                    self.window?.makeKeyAndVisible()
-                    self.window?.rootViewController = loginController
-                }
+                self.segueToLoginViewController()
             }
         })
         
@@ -85,6 +86,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = storyboard.instantiateViewControllerWithIdentifier(identifier)
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = viewController
+    }
+    
+    func segueToLoginViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let loginIdentifier = "LoginViewController"
+        dispatch_async(dispatch_get_main_queue()) {
+            let loginController = storyboard.instantiateViewControllerWithIdentifier(loginIdentifier)
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController = loginController
+        }
+    }
+    
+    func xmppConnectCallback(stream: XMPPStream, error: String?) {
+        if (error != nil) {
+            self.segueToLoginViewController()
+        }
+    }
+    
+    func xmppAuthenticateCallback(stream: XMPPStream, error: String?) {
+        if (error != nil) {
+            self.segueToLoginViewController()
+        }
     }
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
