@@ -30,7 +30,6 @@ class Message {
         self.senderId = senderId
         self.senderDisplayName = senderDisplayName
         self.date = date
-        // self.attributedText = TappableText.sharedInstance.tappableAttributedString(
         self.attributedText = TappableText.sharedInstance.tappableEncodedString(
             text,
             textColor: isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
