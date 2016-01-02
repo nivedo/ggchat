@@ -89,8 +89,9 @@ class WikiMediaItem: MediaItem {
         if (self.cachedView_ == nil) {
             let size: CGSize = self.mediaViewDisplaySize()
             let view: UIView = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
+            view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
             let imageView: UIImageView = UIImageView(image: self.image_)
-            imageView.frame = CGRectMake(0.0, 0.0, size.width - self.inset, size.height - self.inset)
+            imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             imageView.clipsToBounds = true
             imageView.layer.masksToBounds = true
