@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: Protocol
 public protocol XMPPPresenceManagerDelegate {
-	func onePresenceDidReceivePresence()
+	func onPresenceDidReceivePresence()
 }
 
 public class XMPPPresenceManager: NSObject {
@@ -49,11 +49,12 @@ public class XMPPPresenceManager: NSObject {
 extension XMPPManager {
 	
     func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
-        print("didReceivePresence from \(presence.fromStr())")
         let presenceType = presence.type()
         let presenceFromJID = presence.fromStr()
         
-        if (self.stream.myJID.bare() != presenceFromJID) {
+        if !UserAPI.sharedInstance.isOutgoingJID(presenceFromJID) {
+            print("******************************************")
+            print("didReceivePresence from \(presenceFromJID)")
             if (presenceType == "available") {
                 print("\(presenceFromJID) is \(presenceType)")
             } else if (presenceType == "unavailable") {
