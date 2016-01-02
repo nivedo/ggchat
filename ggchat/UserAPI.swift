@@ -425,6 +425,7 @@ class UserAPI {
     }
     
     func getHistory(peerJID: String, limit: Int?, completion: HTTPMessagesCompletion? = nil) {
+        print("getHistory")
         if let token = self.authToken {
             self.get(UserAPI.historyUrl(peerJID, limit: limit),
                 authToken: token,

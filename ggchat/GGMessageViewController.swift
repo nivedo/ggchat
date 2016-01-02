@@ -156,18 +156,12 @@ class GGMessageViewController:
                         self.messages = msgs
                         self.refreshMessages(false)
                         dispatch_async(dispatch_get_main_queue()) {
-                            self.messageCollectionView.reloadData()
                             self.finishReceivingMessageAnimated(false)
+                            self.scrollToBottomAnimated(false)
                         }
                     }
                 })
             }
-        } else {
-            if self.recipientDetails == nil {
-                self.navigationItem.title = "New Message"
-            }
-            self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
-            self.finishReceivingMessageAnimated(false)
         }
     }
     
