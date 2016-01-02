@@ -21,12 +21,14 @@ protocol UserDelegate {
 class RosterUser {
     var nickname: String
     var jid: String
+    var jidBare: String
     var avatar: String
     var avatarImage: UIImage?
     
     init(profile: [String: AnyObject],
         avatarCompletion: ((Bool) -> Void)?) {
         self.jid = profile["jid"] as! String
+        self.jidBare = UserAPI.stripResourceFromJID(self.jid)
         self.nickname = profile["nickname"] as! String
         self.avatar = profile["avatar"] as! String
         

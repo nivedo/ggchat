@@ -314,38 +314,40 @@ class GGMessageViewController:
         from user: XMPPUserCoreDataStorageObject) {
         if let msg: String = message.elementForName("body")?.stringValue() {
             if let from: String = message.attributeForName("from")?.stringValue() {
-                let tokens = from.componentsSeparatedByString("/")
+                let fromBare = UserAPI.stripResourceFromJID(from)
                 // print("\(tokens[0]) ? \(self.recipient!.jid)")
-                if self.recipient == nil || self.recipient!.jid == tokens[0] {
+                if let recipient = self.recipient {
+                    if recipient.jidBare == fromBare {
                     
-                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                    
-                    var message: Message!
-                    if let id = AssetManager.getSingleEncodedAsset(msg) {
-                        if let asset = GGWiki.sharedInstance.getAsset(id) {
-                            if let image = asset.getUIImage() {
-                                let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
-                                message = Message(
-                                    senderId: from,
-                                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                                    isOutgoing: false,
-                                    date: NSDate(),
-                                    media: wikiMedia)        
+                        JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                        
+                        var message: Message!
+                        if let id = AssetManager.getSingleEncodedAsset(msg) {
+                            if let asset = GGWiki.sharedInstance.getAsset(id) {
+                                if let image = asset.getUIImage() {
+                                    let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
+                                    message = Message(
+                                        senderId: fromBare,
+                                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                                        isOutgoing: false,
+                                        date: NSDate(),
+                                        media: wikiMedia)        
+                                }
                             }
                         }
+                
+                        if message == nil {
+                            message = Message(
+                                senderId: fromBare,
+                                senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                                isOutgoing: false,
+                                date: NSDate(),
+                                text: msg)
+                        }
+                        self.messages.append(message)
+                        
+                        self.finishReceivingMessageAnimated(true)
                     }
-            
-                    if message == nil {
-                        message = Message(
-                            senderId: from,
-                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                            isOutgoing: false,
-                            date: NSDate(),
-                            text: msg)
-                    }
-                    self.messages.append(message)
-                    
-                    self.finishReceivingMessageAnimated(true)
                 }
             }
         }
