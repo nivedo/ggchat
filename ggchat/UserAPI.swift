@@ -394,23 +394,34 @@ class UserAPI {
         
         if let bodyElement = element?.elementForName("body"), let from = element?.attributeStringValueForName("from") {
             let body = bodyElement.stringValue()
-            // print(body)
+            let fromBare = UserAPI.stripResourceFromJID(from)
             
             if let _ = bodyElement.elementForName("photo") {
                 if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(bodyElement, completion: nil) {
                     return photoMessage
                 }
             } else {
+                // print("\(fromBare) vs \(self.jidBareStr)")
+                
                 let fullMessage = Message(
-                    senderId: from,
-                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                    isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(from),
+                    senderId: fromBare,
+                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                    isOutgoing: self.isOutgoingJID(fromBare),
                     date: date,
                     text: body)
                 return fullMessage
             }
         }
         return nil
+    }
+   
+    class func stripResourceFromJID(jid: String) -> String {
+        let tokens = jid.componentsSeparatedByString("/")
+        return tokens[0]
+    }
+    
+    func isOutgoingJID(jid: String) -> Bool {
+        return self.jidBareStr == UserAPI.stripResourceFromJID(jid)
     }
     
     func getHistory(peerJID: String, limit: Int?, completion: HTTPMessagesCompletion? = nil) {
@@ -419,7 +430,7 @@ class UserAPI {
                 authToken: token,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {
-                        print(array)
+                        // print(array)
                         var messages = [Message]()
                         for element in array {
                             if let json = element as? [String: AnyObject] {
@@ -538,6 +549,12 @@ class UserAPI {
             } else {
                 return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.userApiJID) as! String
             }
+        }
+    }
+    
+    var jidBareStr: String {
+        get {
+            return UserAPI.stripResourceFromJID(self.jidStr)
         }
     }
     

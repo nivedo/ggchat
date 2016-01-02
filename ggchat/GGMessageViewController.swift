@@ -22,7 +22,13 @@ class GGMessageViewController:
     var recipient: RosterUser? {
         didSet {
             if let recipient = self.recipient {
-                UserAPI.sharedInstance.getHistory(recipient.jid, limit: 10)
+                UserAPI.sharedInstance.getHistory(recipient.jid,
+                    limit: 10,
+                    completion: { (messages: [Message]?) -> Void in
+                    if let msgs = messages {
+                        self.messages = msgs
+                    }
+                })
             }
         }
     }
@@ -131,6 +137,7 @@ class GGMessageViewController:
             
             // Load archive messages
             if loadArchiveMessages {
+                /*
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
                         jid: recipient.jid,
@@ -140,6 +147,19 @@ class GGMessageViewController:
                     self.messages = archiveMessages as NSArray as! [Message]
                     self.refreshMessages(false)
                     self.finishReceivingMessageAnimated(false)
+                })
+                */
+                UserAPI.sharedInstance.getHistory(recipient.jid,
+                    limit: 10,
+                    completion: { (messages: [Message]?) -> Void in
+                    if let msgs = messages {
+                        self.messages = msgs
+                        self.refreshMessages(false)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.messageCollectionView.reloadData()
+                            self.finishReceivingMessageAnimated(false)
+                        }
+                    }
                 })
             }
         } else {
