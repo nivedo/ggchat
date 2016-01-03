@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 import Kingfisher
 
-class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
+class ImageModalViewController: UIViewController {
 
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var imageView: UIImageView!
@@ -102,7 +102,7 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
     func reset() {
         self.callDismiss = false
         self.attributes = nil
-        self.imageAsset?.delegate = nil
+        // self.imageAsset?.delegate = nil
         self.imageView.image = nil
         MBProgressHUD.hideHUDForView(self.view, animated: false)
     }
@@ -147,13 +147,4 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func onDownloadError() {
-        // Download error
-    }
-    
-    func onDownloadSuccess(image: UIImage) {
-        MBProgressHUD.hideHUDForView(self.view, animated: true)
-        updateModal()
-    }
 }

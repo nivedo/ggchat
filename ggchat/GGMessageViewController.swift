@@ -16,8 +16,7 @@ class GGMessageViewController:
     TappableTextDelegate,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
-    UIActionSheetDelegate,
-    GGWikiDelegate {
+    UIActionSheetDelegate {
 
     var recipient: RosterUser? {
         didSet {
@@ -54,7 +53,7 @@ class GGMessageViewController:
         XMPPMessageManager.sharedInstance.delegate = self
        
         self.photoPicker.delegate = self
-        GGWiki.sharedInstance.delegate = self
+        // GGWiki.sharedInstance.delegate = self
        
         self.loadUserHistory(true, loadLastActivity: true)
         self.messageCollectionView.reloadData()
@@ -158,7 +157,7 @@ class GGMessageViewController:
                     completion: { (messages: [Message]?) -> Void in
                     if let msgs = messages {
                         self.messages = msgs
-                        self.refreshMessages(false)
+                        // self.refreshMessages(false)
                         dispatch_async(dispatch_get_main_queue()) {
                             self.finishReceivingMessageAnimated(false)
                             self.scrollToBottomAnimated(false)
@@ -176,7 +175,7 @@ class GGMessageViewController:
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = nil
         }
-        GGWiki.sharedInstance.delegate = nil
+        // GGWiki.sharedInstance.delegate = nil
         
         super.viewWillDisappear(animated)
     }
@@ -436,13 +435,8 @@ class GGMessageViewController:
     func onTapCatchAll() {
         self.dismissKeyboard()
     }
-    
-    func onDownloadAsset(id: String, success: Bool) {
-        if success {
-            self.refreshMessages(true)
-        }
-    }
-    
+   
+    /*
     func refreshMessages(reload: Bool) {
         var refreshed = false
         for i in 0..<self.messages.count {
@@ -472,6 +466,7 @@ class GGMessageViewController:
             }
         }
     }
+    */
     
     func presentTransparentViewController(
         viewControllerToPresent: UIViewController,

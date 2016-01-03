@@ -8,6 +8,7 @@
 
 import Foundation
 
+/*
 protocol ImageModalAssetDelegate {
     
     func onDownloadSuccess(image: UIImage)
@@ -15,22 +16,11 @@ protocol ImageModalAssetDelegate {
     
 }
 
-/*
-protocol ImageModalAsset {
-    
-    var delegate: ImageModalAssetDelegate? { get set }
-    func getUIImage() -> UIImage?
-    func getDisplayName() -> String
-    var id: String { get }
-    var key: String { get }
-    
-}
-*/
-
 protocol GGWikiDelegate {
     
     func onDownloadAsset(id: String, success: Bool)
 }
+*/
 
 class AssetManager {
     
@@ -75,10 +65,10 @@ class GGWikiAsset {
     var apiURL: String
     var fileType: String
     var imageURL: String
-    var imageLocalURL: String
-    var image: UIImage?
-    var delegate: ImageModalAssetDelegate?
-    var downloadAttempts: Int = 0
+    // var imageLocalURL: String
+    // var image: UIImage?
+    // var delegate: ImageModalAssetDelegate?
+    // var downloadAttempts: Int = 0
     
     var url: NSURL {
         get {
@@ -93,9 +83,8 @@ class GGWikiAsset {
         self.apiURL = GGWiki.apiURL(name)
         self.fileType = fileType
         
-        let imageName = "\(bundleId)/\(assetId).\(fileType)"
-        self.imageURL = "\(GGWiki.s3url)/\(imageName)"
-        self.imageLocalURL = "\(GGWiki.cacheFolderURL)/\(imageName)"
+        self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).\(fileType)"
+        // self.imageLocalURL = "\(GGWiki.cacheFolderURL)/\(imageName)"
        
         if let bundleURL = NSURL(string: "\(GGWiki.cacheFolderURL)/\(bundleId)") {
             let error = NSErrorPointer()
@@ -135,7 +124,8 @@ class GGWikiAsset {
         case NoData = "ERROR: no data"
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
-    
+   
+    /*
     func downloadImage() {
         if self.image == nil && self.downloadAttempts <= GGWiki.maxDownloadAttempts {
             if let url = NSURL(string: self.imageURL) {
@@ -202,6 +192,7 @@ class GGWikiAsset {
             completion(data: data, response: response, error: error)
             }.resume()
     }
+    */
 }
 
 extension String {
@@ -286,7 +277,7 @@ class GGWiki {
     var cardNameToIdMap = [String : String]()
     var wikis = [String: WikiResource]()
     var autocompleteWiki: String? = nil
-    var delegate: GGWikiDelegate?
+    // var delegate: GGWikiDelegate?
     
     init() {
         self.createCacheFolder()
