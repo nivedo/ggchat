@@ -26,7 +26,9 @@ class GGMessageViewController:
                     delegate: self,
                     completion: { (messages: [Message]?) -> Void in
                     if let msgs = messages {
-                        self.messages = msgs
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.messages = msgs
+                        }
                     }
                 })
             }
@@ -156,9 +158,8 @@ class GGMessageViewController:
                     delegate: self,
                     completion: { (messages: [Message]?) -> Void in
                     if let msgs = messages {
-                        self.messages = msgs
-                        // self.refreshMessages(false)
                         dispatch_async(dispatch_get_main_queue()) {
+                            self.messages = msgs
                             self.finishReceivingMessageAnimated(false)
                             self.scrollToBottomAnimated(false)
                         }
