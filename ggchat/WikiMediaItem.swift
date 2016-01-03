@@ -60,21 +60,27 @@ class WikiMediaItem: MediaItem {
     
     func initViewWithHUD() {
         if !self.downloaded {
-            let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
-            hud.mode = MBProgressHUDMode.AnnularDeterminate
-            hud.labelText = "Downloading"
-            
-            self.cachedImageView_!.kf_setImageWithURL(imageURL,
-                placeholderImage: nil,
-                optionsInfo: nil,
-                progressBlock: { (receivedSize, totalSize) -> () in
-                    hud.progress = Float(receivedSize) / Float(totalSize)
-                },
-                completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
-                    self.downloaded = true
-                    hud.hide(true)
-                    self.delegate?.redrawMessageMedia()
-            })
+            if !KingfisherManager.sharedManager.cache.isImageCachedForKey(self.imageURL.absoluteString).cached {
+                let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
+                hud.mode = MBProgressHUDMode.AnnularDeterminate
+                hud.labelText = "Downloading"
+                
+                // self.cachedImageView_!.kf_showIndicatorWhenLoading = true
+                self.cachedImageView_!.kf_setImageWithURL(imageURL,
+                    placeholderImage: nil,
+                    optionsInfo: nil,
+                    progressBlock: { (receivedSize, totalSize) -> () in
+                        hud.progress = Float(receivedSize) / Float(totalSize)
+                    },
+                    completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
+                        self.downloaded = true
+                        hud.hide(true)
+                        self.delegate?.redrawMessageMedia()
+                })
+            } else {
+                self.cachedImageView_!.kf_setImageWithURL(imageURL)
+                self.delegate?.redrawMessageMedia()
+            }
         }
     }
 
