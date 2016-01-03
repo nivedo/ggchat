@@ -11,7 +11,7 @@ import UIKit
 class ChatTableViewController:
     UITableViewController,
     UISearchResultsUpdating,
-    XMPPRosterManagerDelegate {
+    UserDelegate {
 
     var searchResultController = UISearchController()
     var filteredChatsList = NSArray()
@@ -39,23 +39,43 @@ class ChatTableViewController:
             
             return controller
         })()
-        
-        XMPPRosterManager.sharedInstance.delegate = self
+   
+        UserAPI.sharedInstance.delegate = self
+        self.tableView.reloadData()
+    }
+    
+    func onAvatarUpdate(jid: String, success: Bool) {
+        if success {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func onRosterUpdate(success: Bool) {
+        // Don't reloadData on roster update, wait for avatar update.
+        // Otherwise, avatars will appear blank.
         /*
-        XMPPManager.sharedInstance.connect(
-            username: nil,
-            password: nil,
-            connectCompletionHandler: nil,
-            authenticateCompletionHandler: nil)
+        if success {
+        dispatch_async(dispatch_get_main_queue()) {
+        self.tableView.reloadData()
+        }
+        }
         */
+    }
+    
+    func onChatsUpdate(success: Bool) {
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.searchResultController.view.removeFromSuperview()
-        
-        XMPPRosterManager.sharedInstance.delegate = nil
     }
 
     func updateSearchResultsForSearchController(searchController: UISearchController) {
@@ -77,9 +97,10 @@ class ChatTableViewController:
         }
     }
     
-    var dataList: NSArray {
+    var dataList: [ChatConversation] {
         get {
-            return self.inSearchMode ? self.filteredChatsList : XMPPChatManager.getChatsList()
+            // return self.inSearchMode ? self.filteredChatsList : UserAPI.sharedInstance.chatsList
+            return UserAPI.sharedInstance.chatsList
         }
     }
     
@@ -104,24 +125,24 @@ class ChatTableViewController:
             forIndexPath: indexPath) as! ChatTableViewCell
 
         // Configure the cell...
-        let user = self.dataList.objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+        let chatConversation = self.dataList[indexPath.row]
       
-        var displayName = user.jidStr
-        if let vcard = XMPPvCardManager.sharedInstance.getvCardForJID(user.jid) {
-            displayName = vcard.nickname
-        }
-       
-        if displayName != nil {
-            cell.cellTopLabel.attributedText = NSAttributedString(string: displayName)
-            cell.cellBottomLabel.attributedText = NSAttributedString(string: user.jidStr)
-            cell.cellCornerLabel.attributedText = NSAttributedString(string: MessageTimestampFormatter.sharedInstance.timestampForDate(NSDate()))
-            
-            (cell.avatarImageView.image, cell.avatarImageView.highlightedImage) = XMPPManager.avatarImageForJID(user.jidStr)
+        let displayName = UserAPI.sharedInstance.getDisplayName(chatConversation.peerJID)
+        var msgText: String!
+        if chatConversation.lastMessage.isMediaMessage {
+            msgText = "\(displayName) sent a media item."
         } else {
-            cell.cellTopLabel.text = ""
-            cell.cellBottomLabel.text = ""
-            cell.cellCornerLabel.text = ""
+            msgText = chatConversation.lastMessage.displayText
         }
+        let date = MessageTimestampFormatter.sharedInstance.timestampForDate(chatConversation.lastMessage.date)
+       
+        cell.cellTopLabel.attributedText = NSAttributedString(string: displayName)
+        cell.cellBottomLabel.attributedText = NSAttributedString(string: msgText)
+        cell.cellCornerLabel.attributedText = NSAttributedString(string: date)
+       
+        let avatar = UserAPI.sharedInstance.getAvatarImage(chatConversation.peerJID)
+        cell.avatarImageView.image = avatar.avatarImage
+        cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
         
         return cell
     }
@@ -167,11 +188,11 @@ class ChatTableViewController:
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        let user: XMPPUserCoreDataStorageObject = self.dataList.objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+        let chatConversation = self.dataList[indexPath.row]
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
         
-        self.performSegueWithIdentifier("chats.to.messages", sender: user)
+        self.performSegueWithIdentifier("chats.to.messages", sender: chatConversation)
     }
     
     /*

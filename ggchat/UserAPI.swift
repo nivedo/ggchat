@@ -16,6 +16,7 @@ protocol UserDelegate {
     
     func onAvatarUpdate(jid: String, success: Bool)
     func onRosterUpdate(success: Bool)
+    func onChatsUpdate(success: Bool)
 }
 
 class RosterUser {
@@ -268,7 +269,7 @@ class UserAPI {
                     self.email = email
                     self.cacheProfile(nil)
                     self.cacheRoster()
-                    // self.cacheChats()
+                    self.cacheChats()
                     self.updatePushToken()
                     completion?(true)
                 } else {
@@ -296,7 +297,7 @@ class UserAPI {
                         self.jpassword = pass
                         self.cacheProfile(nil)
                         self.cacheRoster()
-                        // self.cacheChats()
+                        self.cacheChats()
                         self.updatePushToken()
                         completion?(true)
                     } else {
@@ -516,10 +517,15 @@ class UserAPI {
                     if let array = arrayBody {
                         for element in array {
                             if let json = element as? [String: AnyObject] {
+                                // print(json)
                                 self.chatsList.append(ChatConversation(json: json))
                             }
                         }
+                        self.delegate?.onChatsUpdate(true)
+                    } else {
+                        self.delegate?.onChatsUpdate(false)
                     }
+                    // print("chat list count: \(self.chatsList.count)")
             })
         }
     }

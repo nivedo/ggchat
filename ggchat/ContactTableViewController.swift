@@ -126,6 +126,7 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
             forControlEvents: UIControlEvents.ValueChanged)
     }
     
+    
     func handleRefresh(refreshControl: UIRefreshControl) {
         print("handleRefresh")
         UserAPI.sharedInstance.cacheRoster({ (success: Bool) -> Void in
@@ -154,6 +155,10 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
             }
         }
         */
+    }
+    
+    func onChatsUpdate(success: Bool) {
+        //
     }
     
     override func viewWillDisappear(animated: Bool) {
