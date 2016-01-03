@@ -12,6 +12,8 @@ import UIKit
 class MediaItem: NSObject, NSCoding, NSCopying, MessageMediaData {
 
     var cachedPlaceholderView: UIView?
+    var delegate: MessageMediaDelegate?
+    
     var appliesMediaViewMaskAsOutgoing: Bool = true {
         didSet {
             if oldValue != self.appliesMediaViewMaskAsOutgoing {

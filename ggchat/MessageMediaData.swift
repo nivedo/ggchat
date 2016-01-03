@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol MessageMediaDelegate {
+    func redrawMessageMedia()
+}
+
 protocol MessageMediaData {
     
     func mediaView() -> UIView?

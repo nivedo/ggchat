@@ -17,6 +17,7 @@ class MessageViewController: UIViewController,
     MessageKeyboardControllerDelegate,
     MessageComposerTextViewPasteDelegate,
     MessageAutocompleteControllerDelegate,
+    MessageMediaDelegate,
     UITextViewDelegate {
     
     static let kMessagesKeyValueObservingContext = UnsafeMutablePointer<Void>()
@@ -1484,13 +1485,14 @@ class MessageViewController: UIViewController,
         if ((UIPasteboard.generalPasteboard().image) != nil) {
             // If there's an image in the pasteboard, construct a media item with that image and `send` it.
             let item: PhotoMediaItem = PhotoMediaItem(
-                image: UIPasteboard.generalPasteboard().image!)
+                image: UIPasteboard.generalPasteboard().image!,
+                delegate: self)
             let message: Message = Message(
                 senderId: self.senderId,
                 senderDisplayName: self.senderDisplayName,
                 isOutgoing: true,
                 date: NSDate(),
-                media:item)
+                media: item)
             self.messages.append(message)
             self.finishSendingMessage()
             return false
@@ -1519,5 +1521,10 @@ class MessageViewController: UIViewController,
             prevAttributedString: replaceText)
         // print(self.inputToolbar.contentView.textView.attributedText)
         self.autocompleteController?.hide()
+    }
+    
+    func redrawMessageMedia() {
+        self.messageCollectionView.reloadData()
+        self.scrollToBottomAnimated(false)
     }
 }

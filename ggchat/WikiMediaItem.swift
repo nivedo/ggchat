@@ -8,34 +8,74 @@
 
 import Foundation
 import UIKit
+import MBProgressHUD
+import Kingfisher
 
 class WikiMediaItem: MediaItem {
     
     var cachedView_: UIView?
-    var image_: UIImage?
+    var cachedImageView_: UIImageView?
+    var imageURL: NSURL!
+    // var image_: UIImage?
     let inset: CGFloat = CGFloat(6.0)
 
     // pragma mark - Initialization
 
-    init(image: UIImage) {
+    init(imageURL: NSURL, delegate: MessageMediaDelegate?) {
         super.init()
-        self.image_ = image.copy() as? UIImage
-        self.cachedView_ = nil
+        // self.image_ = image.copy() as? UIImage
+        self.delegate = delegate
+        self.imageURL = imageURL
+        self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, 210.0, 150.0))
+        self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, 210.0, 150.0))
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
+        hud.mode = MBProgressHUDMode.AnnularDeterminate
+        hud.labelText = "Downloading"
+        
+        self.cachedImageView_!.kf_setImageWithURL(imageURL,
+            placeholderImage: nil,
+            optionsInfo: [.Transition(ImageTransition.Fade(1))],
+            progressBlock: { (receivedSize, totalSize) -> () in
+                hud.progress = Float(receivedSize) / Float(totalSize)
+            },
+            completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
+                // print("Downloaded")
+                if let img = image {
+                    let size: CGSize = self.imageDisplaySize(img)
+                    let view: UIView = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
+                    view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
+                    if let imageView = self.cachedImageView_ {
+                        imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
+                        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                        imageView.clipsToBounds = true
+                        imageView.layer.masksToBounds = true
+                        imageView.layer.cornerRadius = 8.0
+                        view.addSubview(imageView)
+                        self.cachedView_ = view
+                        self.setNeedsDisplay()
+                        self.delegate?.redrawMessageMedia()
+                    }
+                }
+                hud.hide(true)
+        })
     }
 
     deinit {
-        self.image = nil
+        self.cachedImageView_ = nil
         self.cachedView_ = nil
     }
     
     override func clearCachedMediaViews() {
         super.clearCachedMediaViews()
+        self.cachedImageView_ = nil
         self.cachedView_ = nil
     }
 
     // pragma mark - Setters
 
     var image: UIImage? {
+        /*
         set {
             if newValue != nil {
                 self.image_ = newValue!.copy() as? UIImage
@@ -44,26 +84,56 @@ class WikiMediaItem: MediaItem {
             }
             self.cachedView_ = nil
         }
+        */
+        set {
+            if newValue != nil {
+                self.cachedImageView_?.image = newValue!.copy() as? UIImage
+            } else {
+                self.clearCachedMediaViews()
+            }
+        }
         get {
-            return self.image_
+            return self.cachedImageView_?.image
         }
     }
 
+    /*
     override var appliesMediaViewMaskAsOutgoing: Bool {
         didSet {
             if oldValue != self.appliesMediaViewMaskAsOutgoing {
-                self.cachedView_ = nil
+                self.clearCachedMediaViews()
             }
         }
     }
+    */
 
     // pragma mark - MessageMediaData protocol
     override func setNeedsDisplay() {
         super.setNeedsDisplay()
         self.cachedView_?.setNeedsDisplay()
     }
+   
+    func imageDisplaySize(image: UIImage) -> CGSize {
+        let size = CGSizeMake(210.0, UIScreen.mainScreen().bounds.size.height)
+        let aspect: CGFloat = image.size.width / image.size.height
+        if size.width / aspect <= size.height {
+            return CGSizeMake(size.width, size.width / aspect)
+        } else {
+            return CGSizeMake(size.height * aspect, size.height)
+        }
+    }
     
     override func mediaViewDisplaySize() -> CGSize {
+        if let img = self.image {
+            return self.imageDisplaySize(img)
+        } else {
+            if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+                return CGSizeMake(315.0, 225.0)
+            } else {
+                return CGSizeMake(210.0, 150.0)
+            }
+        }
+        /*
         if let img = self.image_ {
             let size = CGSizeMake(210.0, UIScreen.mainScreen().bounds.size.height)
             let aspect: CGFloat = img.size.width / img.size.height
@@ -79,10 +149,12 @@ class WikiMediaItem: MediaItem {
                 return CGSizeMake(210.0, 150.0)
             }
         }
+        */
     }
     
     override func mediaView() -> UIView? {
-        if (self.image_ == nil) {
+        /*
+        if (self.image == nil) {
             return nil
         }
         
@@ -90,15 +162,17 @@ class WikiMediaItem: MediaItem {
             let size: CGSize = self.mediaViewDisplaySize()
             let view: UIView = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
             view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
-            let imageView: UIImageView = UIImageView(image: self.image_)
-            imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
-            imageView.contentMode = UIViewContentMode.ScaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.layer.masksToBounds = true
-            imageView.layer.cornerRadius = 8.0
-            view.addSubview(imageView)
-            self.cachedView_ = view
+            if let imageView = self.cachedImageView_ {
+                imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
+                imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                imageView.clipsToBounds = true
+                imageView.layer.masksToBounds = true
+                imageView.layer.cornerRadius = 8.0
+                view.addSubview(imageView)
+                self.cachedView_ = view
+            }
         }
+        */
         
         return self.cachedView_
     }
@@ -110,8 +184,8 @@ class WikiMediaItem: MediaItem {
     // pragma mark - NSObject
 
     override var hash: Int {
-        if self.image_ != nil {
-            return super.hash ^ self.image_!.hash
+        if self.image != nil {
+            return super.hash ^ self.image!.hash
         } else {
             return super.hash
         }
@@ -125,7 +199,7 @@ class WikiMediaItem: MediaItem {
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.image_ = aDecoder.decodeObjectForKey(NSStringFromSelector(Selector("image"))) as? UIImage
+        self.image = aDecoder.decodeObjectForKey(NSStringFromSelector(Selector("image"))) as? UIImage
     }
 
     required init() {
@@ -134,14 +208,14 @@ class WikiMediaItem: MediaItem {
 
     override func encodeWithCoder(aCoder: NSCoder) {
         super.encodeWithCoder(aCoder)
-        aCoder.encodeObject(self.image_,
+        aCoder.encodeObject(self.image,
             forKey: NSStringFromSelector(Selector("image")))
     }
 
     // pragma mark - NSCopying
 
     override func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy: WikiMediaItem = WikiMediaItem(image: self.image_!)
+        let copy: WikiMediaItem = WikiMediaItem(imageURL: self.imageURL, delegate: self.delegate)
         copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing
         return copy
     }

@@ -16,7 +16,7 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
     @IBOutlet weak var imageView: UIImageView!
    
     var attributes: [String: AnyObject]?
-    var imageAsset: ImageModalAsset?
+    var imageAsset: GGWikiAsset?
     var callDismiss: Bool = false
     var onDismiss: ((sender: AnyObject?) -> Void)?
     
@@ -76,7 +76,8 @@ class ImageModalViewController: UIViewController, ImageModalAssetDelegate {
                             let yTarget = scaleFactor * img.size.height
                             let newSize = CGSizeMake(xTarget, yTarget)
                             
-                            self.imageView.image = img.gg_imageScaledToSize(newSize, isOpaque: false)
+                            // self.imageView.image = img.gg_imageScaledToSize(newSize, isOpaque: false)
+                            self.imageView.frame = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: newSize)
                         }
                         hud.hide(true)
                 })

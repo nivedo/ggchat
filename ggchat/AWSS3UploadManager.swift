@@ -88,18 +88,18 @@ class S3PhotoManager: S3UploadDelegate {
         AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
     }
     
-    func getPhotoMessage(xmppMessage: DDXMLElement, completion: ((Void) -> Void)?) -> Message? {
+    func getPhotoMessage(xmppMessage: DDXMLElement, completion: ((Void) -> Void)?, delegate: MessageMediaDelegate?) -> Message? {
         let photo = xmppMessage.elementForName("body")!.elementForName("photo")!
         let originalKey = photo.elementForName("originalKey")!.stringValue()
         let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
         let from = xmppMessage.attributeStringValueForName("from")!
         if let originalFileURL = AWSS3DownloadManager.sharedInstance.fileURLOfDownloadKey(originalKey) {
             // print("Found cached download at \(originalFileURL)")
-            return self.photoMessage(originalFileURL, from: from)
+            return self.photoMessage(originalFileURL, from: from, delegate: delegate)
         } else {
             if let thumbnailFileURL = AWSS3DownloadManager.sharedInstance.fileURLOfDownloadKey(thumbnailKey) {
                 // print("Found cached download at \(thumbnailFileURL)")
-                return self.photoMessage(thumbnailFileURL, from: from)
+                return self.photoMessage(thumbnailFileURL, from: from, delegate: delegate)
             } else {
                 let message: Message = self.placeholderPhotoMessage(from)
                 AWSS3DownloadManager.sharedInstance.download(
@@ -110,7 +110,7 @@ class S3PhotoManager: S3UploadDelegate {
                         // print("Downloaded \(fileURL)")
                         let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                         let image = UIImage(data: data)
-                        message.addMedia(PhotoMediaItem(image: image!))
+                        message.addMedia(PhotoMediaItem(image: image!, delegate: delegate))
                         completion?()
                         
                         AWSS3DownloadManager.sharedInstance.download(
@@ -119,7 +119,7 @@ class S3PhotoManager: S3UploadDelegate {
                             completion: { (fileURL: NSURL) -> Void in
                             let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                             let image = UIImage(data: data)
-                            message.addMedia(PhotoMediaItem(image: image!))
+                            message.addMedia(PhotoMediaItem(image: image!, delegate: delegate))
                             completion?()
                         })
                     })
@@ -128,10 +128,10 @@ class S3PhotoManager: S3UploadDelegate {
         }
     }
 
-    func photoMessage(fileURL: NSURL, from: String) -> Message {
+    func photoMessage(fileURL: NSURL, from: String, delegate: MessageMediaDelegate?) -> Message {
         let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
         let image = UIImage(data: data)
-        let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!)
+        let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!, delegate: delegate)
         let message: Message = Message(
             senderId: from,
             senderDisplayName: from,

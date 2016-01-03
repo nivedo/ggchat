@@ -38,10 +38,6 @@ class TappableText: NSObject {
         return Singleton.instance
     }
     
-    func imageModalAsset(id: String) -> ImageModalAsset? {
-        return GGWiki.sharedInstance.cardAssets[id]
-    }
-    
     func tappableAttributedString(
         text: String,
         textColor: UIColor,

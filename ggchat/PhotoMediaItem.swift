@@ -16,10 +16,11 @@ class PhotoMediaItem: MediaItem {
 
     // pragma mark - Initialization
 
-    init(image: UIImage) {
+    init(image: UIImage, delegate: MessageMediaDelegate?) {
         super.init()
         self.image_ = image.copy() as? UIImage
         self.cachedImageView_ = nil
+        self.delegate = delegate
     }
 
     deinit {
@@ -120,7 +121,7 @@ class PhotoMediaItem: MediaItem {
     // pragma mark - NSCopying
 
     override func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy: PhotoMediaItem = PhotoMediaItem(image: self.image_!)
+        let copy: PhotoMediaItem = PhotoMediaItem(image: self.image_!, delegate: self.delegate)
         copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing
         return copy
     }

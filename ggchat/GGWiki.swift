@@ -15,6 +15,7 @@ protocol ImageModalAssetDelegate {
     
 }
 
+/*
 protocol ImageModalAsset {
     
     var delegate: ImageModalAssetDelegate? { get set }
@@ -24,6 +25,7 @@ protocol ImageModalAsset {
     var key: String { get }
     
 }
+*/
 
 protocol GGWikiDelegate {
     
@@ -66,7 +68,7 @@ class AssetManager {
     
 }
 
-class GGWikiAsset : ImageModalAsset {
+class GGWikiAsset {
     var name: String
     var bundleId: String
     var assetId: String
@@ -107,10 +109,6 @@ class GGWikiAsset : ImageModalAsset {
                 print("Creating '\(bundleURL)' directory failed. Error: \(error)")
             }
         }
-    }
-    
-    func getUIImage() -> UIImage? {
-        return self.image
     }
     
     func getDisplayName() -> String {
@@ -424,12 +422,11 @@ class GGWiki {
         }
     }
     
-    func getAsset(id: String) -> ImageModalAsset? {
-        // print("getAsset: \(id)")
+    func getAsset(id: String) -> GGWikiAsset? {
         if id.rangeOfString("::") != nil {
             if let asset = self.cardAssets[id] {
-                asset.loadSavedImage()
-                asset.downloadImage()
+                // asset.loadSavedImage()
+                // asset.downloadImage()
                 return asset
             }
         }
@@ -451,8 +448,8 @@ class GGWiki {
                 let name = displayName[1..<displayName.length-1]
                 if self.cardAssets[id] == nil {
                     let asset = GGWikiAsset(name: name, bundleId: bundleId, assetId: assetId, fileType: fileType)
-                    asset.loadSavedImage()
-                    asset.downloadImage()
+                    // asset.loadSavedImage()
+                    // asset.downloadImage()
                     self.cardAssets[id] = asset
                 }
             }

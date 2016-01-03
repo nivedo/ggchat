@@ -24,6 +24,7 @@ class GGMessageViewController:
             if let recipient = self.recipient {
                 UserAPI.sharedInstance.getHistory(recipient.jid,
                     limit: 10,
+                    delegate: self,
                     completion: { (messages: [Message]?) -> Void in
                     if let msgs = messages {
                         self.messages = msgs
@@ -74,7 +75,7 @@ class GGMessageViewController:
             if let recipient = self.recipient {
                 // GGSystemSoundPlayer.gg_playMessageSentSound()
                 let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-                let photoMedia: PhotoMediaItem = PhotoMediaItem(image: chosenImage)
+                let photoMedia: PhotoMediaItem = PhotoMediaItem(image: chosenImage, delegate: self)
                 let message: Message = Message(
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
@@ -153,6 +154,7 @@ class GGMessageViewController:
                 */
                 UserAPI.sharedInstance.getHistory(recipient.jid,
                     limit: 10,
+                    delegate: self,
                     completion: { (messages: [Message]?) -> Void in
                     if let msgs = messages {
                         self.messages = msgs
@@ -213,15 +215,13 @@ class GGMessageViewController:
             var message: Message!
             if let id = AssetManager.getSingleEncodedAsset(text) {
                 if let asset = GGWiki.sharedInstance.getAsset(id) {
-                    if let image = asset.getUIImage() {
-                        let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
-                        message = Message(
-                            senderId: senderId,
-                            senderDisplayName: senderDisplayName,
-                            isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
-                            date: NSDate(),
-                            media: wikiMedia)        
-                    }
+                    let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
+                    message = Message(
+                        senderId: senderId,
+                        senderDisplayName: senderDisplayName,
+                        isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
+                        date: NSDate(),
+                        media: wikiMedia)
                 }
             }
             
@@ -325,15 +325,13 @@ class GGMessageViewController:
                         var message: Message!
                         if let id = AssetManager.getSingleEncodedAsset(msg) {
                             if let asset = GGWiki.sharedInstance.getAsset(id) {
-                                if let image = asset.getUIImage() {
-                                    let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
-                                    message = Message(
-                                        senderId: fromBare,
-                                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                                        isOutgoing: false,
-                                        date: NSDate(),
-                                        media: wikiMedia)        
-                                }
+                                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
+                                message = Message(
+                                    senderId: fromBare,
+                                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                                    isOutgoing: false,
+                                    date: NSDate(),
+                                    media: wikiMedia)
                             }
                         }
                 
@@ -376,7 +374,7 @@ class GGMessageViewController:
                     
                     let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                     let image = UIImage(data: data)
-                    let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!)
+                    let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!, delegate: self)
                     let message: Message = Message(
                             senderId: from,
                             senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
@@ -395,7 +393,7 @@ class GGMessageViewController:
                         
                         let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
                         let image = UIImage(data: data)
-                        message.addMedia(PhotoMediaItem(image: image!))
+                        message.addMedia(PhotoMediaItem(image: image!, delegate: self))
                         // self.messageCollectionView.reloadData()
                         self.finishReceivingMessageAnimated(true)
                     })
@@ -453,17 +451,15 @@ class GGMessageViewController:
                 if let text = m.rawText {
                     if let id = AssetManager.getSingleEncodedAsset(text) {
                         if let asset = GGWiki.sharedInstance.getAsset(id) {
-                            if let image = asset.getUIImage() {
-                                let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
-                                let message = Message(
-                                    senderId: m.senderId,
-                                    senderDisplayName: m.senderDisplayName,
-                                    isOutgoing: m.isOutgoing,
-                                    date: m.date,
-                                    media: wikiMedia)
-                                self.messages[i] = message
-                                refreshed = true
-                            }
+                            let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
+                            let message = Message(
+                                senderId: m.senderId,
+                                senderDisplayName: m.senderDisplayName,
+                                isOutgoing: m.isOutgoing,
+                                date: m.date,
+                                media: wikiMedia)
+                            self.messages[i] = message
+                            refreshed = true
                         }
                     }
                 }

@@ -122,7 +122,7 @@ public class XMPPMessageManager: NSObject {
 		}
 	}
 	
-    public func loadArchivedMessagesFrom(jid jid: String, mediaCompletion: ((Void) -> Void)?) -> NSMutableArray {
+    func loadArchivedMessagesFrom(jid jid: String, mediaCompletion: ((Void) -> Void)?, delegate: MessageMediaDelegate?) -> NSMutableArray {
 		let moc = messageStorage?.mainThreadManagedObjectContext
 		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
 		let request = NSFetchRequest()
@@ -165,7 +165,7 @@ public class XMPPMessageManager: NSObject {
 				}
                 
                 if let _ = element.elementForName("body")!.elementForName("photo") {
-                    if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(element, completion: mediaCompletion) {
+                    if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(element, completion: mediaCompletion, delegate: delegate) {
                         retrievedMessages.addObject(photoMessage)
                     } else {
                         print("Unable to load archive photo message")

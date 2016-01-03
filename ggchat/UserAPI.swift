@@ -382,7 +382,7 @@ class UserAPI {
         self.delegate?.onRosterUpdate(false)
     }
    
-    func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval) -> Message? {
+    func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
         // print(MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(date))
         
@@ -400,7 +400,7 @@ class UserAPI {
             let fromBare = UserAPI.stripResourceFromJID(from)
             
             if let _ = bodyElement.elementForName("photo") {
-                if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(bodyElement, completion: nil) {
+                if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(bodyElement, completion: nil, delegate: delegate) {
                     return photoMessage
                 }
             } else {
@@ -408,16 +408,14 @@ class UserAPI {
                 if let id = AssetManager.getSingleEncodedAsset(body) {
                     // print("single encoded asset \(id)")
                     if let asset = GGWiki.sharedInstance.getAsset(id) {
-                        if let image = asset.getUIImage() {
-                            let wikiMedia: WikiMediaItem = WikiMediaItem(image: image)
-                            let message = Message(
-                                senderId: fromBare,
-                                senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                                isOutgoing: self.isOutgoingJID(fromBare),
-                                date: date,
-                                media: wikiMedia)
-                            return message
-                        }
+                        let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: delegate)
+                        let message = Message(
+                            senderId: fromBare,
+                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                            isOutgoing: self.isOutgoingJID(fromBare),
+                            date: date,
+                            media: wikiMedia)
+                        return message
                     }
                 }
                 let fullMessage = Message(
@@ -441,7 +439,7 @@ class UserAPI {
         return self.jidBareStr == UserAPI.stripResourceFromJID(jid)
     }
     
-    func getHistory(peerJID: String, limit: Int?, completion: HTTPMessagesCompletion? = nil) {
+    func getHistory(peerJID: String, limit: Int?, delegate: MessageMediaDelegate?, completion: HTTPMessagesCompletion? = nil) {
         print("getHistory")
         if let token = self.authToken {
             self.get(UserAPI.historyUrl(peerJID, limit: limit),
@@ -453,7 +451,7 @@ class UserAPI {
                         for element in array {
                             if let json = element as? [String: AnyObject] {
                                 if let xmlStr = json["xml"] as? String, let timestamp = json["time"] as? NSTimeInterval {
-                                    if let msg = self.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6) {
+                                    if let msg = self.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6, delegate: delegate) {
                                         messages.append(msg)
                                     }
                                 }
