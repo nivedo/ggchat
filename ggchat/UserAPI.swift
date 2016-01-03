@@ -35,6 +35,15 @@ class RosterUser {
         if self.avatar.length > 0 {
             print("Downloading avatar at \(self.avatar)")
             
+            S3ImageCache.sharedInstance.retrieveImageForKey(
+                self.avatar,
+                bucket: GGSetting.awsS3AvatarsBucketName,
+                completion: { (image: UIImage?) -> Void in
+                    self.avatarImage = image
+                    avatarCompletion?(true)
+                    UserAPI.sharedInstance.delegate?.onAvatarUpdate(self.jid, success: true)
+            })
+            /*
             AWSS3DownloadManager.sharedInstance.download(
                 self.avatar,
                 userData: nil,
@@ -47,6 +56,7 @@ class RosterUser {
                 },
                 bucket: GGSetting.awsS3AvatarsBucketName
             )
+            */
         } else {
             avatarCompletion?(false)
             UserAPI.sharedInstance.delegate?.onAvatarUpdate(self.jid, success: false)
@@ -334,7 +344,14 @@ class UserAPI {
                     if avatarPath.length > 0 {
                         print("Downloading avatar at \(avatarPath)")
                         self.avatarPath = avatarPath
+                        S3ImageCache.sharedInstance.retrieveImageForKey(
+                            avatarPath,
+                            bucket: GGSetting.awsS3AvatarsBucketName,
+                            completion: { (image: UIImage?) -> Void in
+                                self.avatarImage = image
+                        })
                         
+                        /*
                         AWSS3DownloadManager.sharedInstance.download(
                             avatarPath,
                             userData: nil,
@@ -345,6 +362,7 @@ class UserAPI {
                             },
                             bucket: GGSetting.awsS3AvatarsBucketName
                         )
+                        */
                     }
                 }
                 completion?(true)
