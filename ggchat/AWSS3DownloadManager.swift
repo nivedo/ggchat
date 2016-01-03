@@ -1,4 +1,3 @@
-//
 //  AWSS3DownloadManager.swift
 //  ggchat
 //
@@ -8,6 +7,7 @@
 
 import Foundation
 import AWSS3
+import Kingfisher
 
 public typealias S3DownloadCompletion = (NSURL) -> Void
 
@@ -37,6 +37,58 @@ protocol S3DownloadDelegate {
     func onDownloadPauseFailure()
     func onDownloadSuccess(fileURL: NSURL, userData: [String: AnyObject]?)
     
+}
+
+class S3ImageCache {
+    
+    class var sharedInstance: S3ImageCache {
+        struct Singleton {
+            static let instance = S3ImageCache()
+        }
+        return Singleton.instance
+    }
+    
+    var caches = [String: ImageCache]()
+    
+    init() {
+        let buckets = [ GGSetting.awsS3AvatarsBucketName, GGSetting.awsS3BucketName ]
+        for bucket in buckets {
+            self.caches[bucket] = ImageCache(name: "cache_\(bucket)")
+        }
+    }
+    
+    func retrieveImageForKey(key: String, bucket: String, completion: ((image: UIImage?) -> Void)?) {
+        if let cache = self.caches[bucket] {
+            cache.retrieveImageForKey(key,
+                options: KingfisherManager.DefaultOptions,
+                completionHandler: { (image: UIImage?, cacheType: CacheType!) -> () in
+                    if image == nil {
+                        self.downloadImageForKey(key, bucket: bucket, completion: completion)
+                    } else {
+                        completion?(image: image)
+                    }
+            })
+        } else {
+            self.caches[bucket] = ImageCache(name: "cache_\(bucket)")
+            self.downloadImageForKey(key, bucket: bucket, completion: completion)
+        }
+    }
+    
+    private func downloadImageForKey(key: String, bucket: String, completion: ((image: UIImage?) -> Void)?) {
+        AWSS3DownloadManager.sharedInstance.download(
+            key,
+            userData: nil,
+            completion: { (fileURL: NSURL) -> Void in
+                let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                let image = UIImage(data: data)
+                completion?(image: image)
+                if let cache = self.caches[bucket], let img = image {
+                    cache.storeImage(img, originalData: data, forKey: key)
+                }
+            },
+            bucket: bucket
+        )
+    }
 }
 
 class AWSS3DownloadManager {
