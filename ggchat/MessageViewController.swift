@@ -1525,6 +1525,7 @@ class MessageViewController: UIViewController,
     
     func redrawMessageMedia() {
         dispatch_async(dispatch_get_main_queue()) {
+            self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
             self.messageCollectionView.reloadData()
             self.scrollToBottomAnimated(false)
         }
