@@ -93,7 +93,24 @@ class RosterUser {
             }
         }
     }
+}
 
+class ChatConversation {
+    var peerJID: String!
+    var lastTime: NSDate!
+    var lastMessage: Message!
+    
+    init(json: [String: AnyObject]) {
+        if let timestamp = json["time"] as? NSTimeInterval,
+            let jid = json["peer"] as? String,
+            let xmlStr = json["xml"] as? String {
+            self.peerJID = jid
+            if let msg = UserAPI.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6, delegate: nil) {
+                self.lastTime = msg.date
+                self.lastMessage = msg
+            }
+        }
+    }
 }
 
 struct Language {
@@ -187,6 +204,10 @@ class UserAPI {
     class var rosterUrl: String {
         return "\(self.route("rosterv2"))"
     }
+
+    class var chatsUrl: String {
+        return "\(self.route("chats"))"
+    }
     
     class func historyUrl(peerJID: String, limit: Int? = nil) -> String {
         let tokens = peerJID.componentsSeparatedByString("@")
@@ -247,6 +268,7 @@ class UserAPI {
                     self.email = email
                     self.cacheProfile(nil)
                     self.cacheRoster()
+                    // self.cacheChats()
                     self.updatePushToken()
                     completion?(true)
                 } else {
@@ -274,6 +296,7 @@ class UserAPI {
                         self.jpassword = pass
                         self.cacheProfile(nil)
                         self.cacheRoster()
+                        // self.cacheChats()
                         self.updatePushToken()
                         completion?(true)
                     } else {
@@ -400,7 +423,7 @@ class UserAPI {
         self.delegate?.onRosterUpdate(false)
     }
    
-    func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
+    class func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
         // print(MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(date))
         
@@ -430,7 +453,7 @@ class UserAPI {
                         let message = Message(
                             senderId: fromBare,
                             senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                            isOutgoing: self.isOutgoingJID(fromBare),
+                            isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                             date: date,
                             media: wikiMedia)
                         return message
@@ -439,7 +462,7 @@ class UserAPI {
                 let fullMessage = Message(
                     senderId: fromBare,
                     senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                    isOutgoing: self.isOutgoingJID(fromBare),
+                    isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                     date: date,
                     text: body)
                 return fullMessage
@@ -469,7 +492,7 @@ class UserAPI {
                         for element in array {
                             if let json = element as? [String: AnyObject] {
                                 if let xmlStr = json["xml"] as? String, let timestamp = json["time"] as? NSTimeInterval {
-                                    if let msg = self.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6, delegate: delegate) {
+                                    if let msg = UserAPI.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6, delegate: delegate) {
                                         messages.append(msg)
                                     }
                                 }
@@ -481,6 +504,23 @@ class UserAPI {
                         completion?(messages: nil)
                     }
                 })
+        }
+    }
+    
+    func cacheChats() {
+        self.chatsList.removeAll()
+        if let token = self.authToken {
+            self.get(UserAPI.chatsUrl,
+                authToken: token,
+                arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
+                    if let array = arrayBody {
+                        for element in array {
+                            if let json = element as? [String: AnyObject] {
+                                self.chatsList.append(ChatConversation(json: json))
+                            }
+                        }
+                    }
+            })
         }
     }
     
@@ -605,6 +645,7 @@ class UserAPI {
     var avatarPath: String?
     var avatarImage: UIImage?
     var rosterList: [RosterUser] = [RosterUser]()
+    var chatsList: [ChatConversation] = [ChatConversation]()
     var rosterMap: [String: RosterUser] = [String: RosterUser]()
     var settings: UserSetting = UserSetting()
     
