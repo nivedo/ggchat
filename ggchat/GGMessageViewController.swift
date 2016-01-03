@@ -477,6 +477,7 @@ class GGMessageViewController:
             self.parentViewController!.navigationController!.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
         } else {
             viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            print("presentTransparentViewController")
         }
         
         self.presentViewController(viewControllerToPresent,

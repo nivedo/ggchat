@@ -18,6 +18,7 @@ class WikiMediaItem: MediaItem {
     var imageURL: NSURL!
     // var image_: UIImage?
     let inset: CGFloat = CGFloat(6.0)
+    var downloaded: Bool = false
 
     // pragma mark - Initialization
 
@@ -26,22 +27,19 @@ class WikiMediaItem: MediaItem {
         // self.image_ = image.copy() as? UIImage
         self.delegate = delegate
         self.imageURL = imageURL
+       
+        self.initView()
+    }
+  
+    func initView() {
         self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, 210.0, 150.0))
         self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, 210.0, 150.0))
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
-        hud.mode = MBProgressHUDMode.AnnularDeterminate
-        hud.labelText = "Downloading"
-        
         self.cachedImageView_!.kf_setImageWithURL(imageURL,
             placeholderImage: nil,
-            // optionsInfo: [.Transition(ImageTransition.Fade(1))],
             optionsInfo: nil,
-            progressBlock: { (receivedSize, totalSize) -> () in
-                hud.progress = Float(receivedSize) / Float(totalSize)
-            },
+            progressBlock: nil,
             completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
-                // print("Downloaded")
                 if let img = image {
                     let size: CGSize = self.imageDisplaySize(img)
                     if let view = self.cachedView_, let imageView = self.cachedImageView_ {
@@ -53,13 +51,31 @@ class WikiMediaItem: MediaItem {
                         imageView.layer.masksToBounds = true
                         imageView.layer.cornerRadius = 8.0
                         view.addSubview(imageView)
-                        // self.cachedView_ = view
                         self.setNeedsDisplay()
-                        self.delegate?.redrawMessageMedia()
+                        self.downloaded = true
                     }
                 }
-                hud.hide(true)
         })
+    }
+    
+    func initViewWithHUD() {
+        if !self.downloaded {
+            let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
+            hud.mode = MBProgressHUDMode.AnnularDeterminate
+            hud.labelText = "Downloading"
+            
+            self.cachedImageView_!.kf_setImageWithURL(imageURL,
+                placeholderImage: nil,
+                optionsInfo: nil,
+                progressBlock: { (receivedSize, totalSize) -> () in
+                    hud.progress = Float(receivedSize) / Float(totalSize)
+                },
+                completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
+                    self.downloaded = true
+                    hud.hide(true)
+                    self.delegate?.redrawMessageMedia()
+            })
+        }
     }
 
     deinit {
@@ -174,6 +190,7 @@ class WikiMediaItem: MediaItem {
             }
         }
         */
+        self.initViewWithHUD()
         
         return self.cachedView_
     }
