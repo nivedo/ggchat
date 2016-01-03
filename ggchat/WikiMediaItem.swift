@@ -35,7 +35,8 @@ class WikiMediaItem: MediaItem {
         
         self.cachedImageView_!.kf_setImageWithURL(imageURL,
             placeholderImage: nil,
-            optionsInfo: [.Transition(ImageTransition.Fade(1))],
+            // optionsInfo: [.Transition(ImageTransition.Fade(1))],
+            optionsInfo: nil,
             progressBlock: { (receivedSize, totalSize) -> () in
                 hud.progress = Float(receivedSize) / Float(totalSize)
             },
@@ -43,16 +44,16 @@ class WikiMediaItem: MediaItem {
                 // print("Downloaded")
                 if let img = image {
                     let size: CGSize = self.imageDisplaySize(img)
-                    let view: UIView = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
-                    view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
-                    if let imageView = self.cachedImageView_ {
+                    if let view = self.cachedView_, let imageView = self.cachedImageView_ {
+                        view.frame = CGRectMake(0.0, 0.0, size.width, size.height)
+                        view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
                         imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
                         imageView.contentMode = UIViewContentMode.ScaleAspectFill
                         imageView.clipsToBounds = true
                         imageView.layer.masksToBounds = true
                         imageView.layer.cornerRadius = 8.0
                         view.addSubview(imageView)
-                        self.cachedView_ = view
+                        // self.cachedView_ = view
                         self.setNeedsDisplay()
                         self.delegate?.redrawMessageMedia()
                     }
