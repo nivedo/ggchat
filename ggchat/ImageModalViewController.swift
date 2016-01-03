@@ -103,8 +103,8 @@ class ImageModalViewController: UIViewController {
         self.callDismiss = false
         self.attributes = nil
         // self.imageAsset?.delegate = nil
-        self.imageView.image = nil
-        MBProgressHUD.hideHUDForView(self.view, animated: false)
+        // self.imageView.image = nil
+        // MBProgressHUD.hideHUDForView(self.view, animated: false)
     }
     
     override func viewWillAppear(animated: Bool) {
