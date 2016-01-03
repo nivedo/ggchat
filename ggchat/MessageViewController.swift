@@ -1524,7 +1524,9 @@ class MessageViewController: UIViewController,
     }
     
     func redrawMessageMedia() {
-        self.messageCollectionView.reloadData()
-        self.scrollToBottomAnimated(false)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.messageCollectionView.reloadData()
+            self.scrollToBottomAnimated(false)
+        }
     }
 }
