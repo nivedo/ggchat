@@ -84,7 +84,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmM-0d-thf" userLabel="Cell top label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmM-0d-thf" userLabel="Cell top label">
                                             <rect key="frame" x="60" y="0.0" width="150" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -109,7 +109,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44r-ER-T7S" userLabel="Cell bottom label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44r-ER-T7S" userLabel="Cell bottom label">
                                             <rect key="frame" x="60" y="30" width="260" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -118,10 +118,12 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="QmM-0d-thf" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="04b-g8-ORc"/>
+                                        <constraint firstAttribute="trailing" secondItem="44r-ER-T7S" secondAttribute="trailing" id="23m-k0-4FR"/>
                                         <constraint firstItem="44r-ER-T7S" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="8sE-2K-xgb"/>
                                         <constraint firstItem="44r-ER-T7S" firstAttribute="top" secondItem="QmM-0d-thf" secondAttribute="bottom" id="bGa-42-lW1"/>
                                         <constraint firstAttribute="trailing" secondItem="ziM-Es-CrP" secondAttribute="trailing" constant="8" id="fM9-Ie-XiS"/>
                                         <constraint firstItem="ziM-Es-CrP" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" constant="8" id="iwT-wf-ENA"/>
+                                        <constraint firstAttribute="bottom" secondItem="44r-ER-T7S" secondAttribute="bottom" id="oMd-7F-mUm"/>
                                         <constraint firstItem="QmM-0d-thf" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" constant="8" id="wdF-tb-zGu"/>
                                         <constraint firstItem="R3F-nn-JfU" firstAttribute="leading" secondItem="37J-Dd-wNn" secondAttribute="leading" id="x2Z-hc-Kpt"/>
                                         <constraint firstItem="R3F-nn-JfU" firstAttribute="top" secondItem="37J-Dd-wNn" secondAttribute="top" id="z2o-0N-gSk"/>
@@ -878,6 +880,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="td0-iI-Ota"/>
-        <segue reference="Aln-Pk-2fu"/>
+        <segue reference="opv-3B-fXB"/>
     </inferredMetricsTieBreakers>
 </document>
