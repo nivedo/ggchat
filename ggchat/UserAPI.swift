@@ -203,7 +203,7 @@ class UserAPI {
     }
 
     class var rosterUrl: String {
-        return "\(self.route("rosterv2"))"
+        return "\(self.route("rosterv3"))"
     }
 
     class var chatsUrl: String {
@@ -315,11 +315,11 @@ class UserAPI {
             jsonCompletion: jsonCompletion)
     }
 
-    func getRoster(jid: String, jsonCompletion: HTTPJsonCompletion) {
+    func getRoster(jid: String, arrayCompletion: HTTPArrayCompletion) {
         if let token = self.authToken {
             self.get(UserAPI.rosterUrl,
                 authToken: token,
-                jsonCompletion: jsonCompletion)
+                arrayCompletion: arrayCompletion)
         }
     }
     
@@ -398,12 +398,12 @@ class UserAPI {
     func cacheRoster(completion: ((Bool) -> Void)? = nil) {
         if let jid = self.jid {
             UserAPI.sharedInstance.getRoster(jid,
-                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
-                    if let json = jsonBody, let profiles = json["profiles"] as? NSArray {
+                arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
+                    if let array = arrayBody {
                         // print(profiles)
                         self.rosterList.removeAll()
                         self.rosterMap.removeAll()
-                        for profile in profiles {
+                        for profile in array {
                             let user = RosterUser(
                                 profile: profile as! [String: AnyObject],
                                 avatarCompletion: completion)

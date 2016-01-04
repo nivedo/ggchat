@@ -121,6 +121,25 @@ public class XMPPMessageManager: NSObject {
 			XMPPManager.sharedInstance.stream.sendElement(message)
 		}
 	}
+    
+    func archiveMessage(xmlString: String, date: NSDate, outgoing: Bool) {
+        var element: DDXMLElement?
+        do {
+            element = try DDXMLElement(XMLString: xmlString)
+        } catch _ {
+            element = nil
+        }
+       
+        if let delay = DDXMLElement(name: "delay", xmlns: "urn:xmpp:delay") {
+            delay.addAttributeWithName("stamp", stringValue: date.aws_stringValue("CCYY-MM-DDThh:mm:ss[.sss]TZD"))
+            element?.addChild(delay)
+        }
+        if let xmppMessage = element as? XMPPMessage {
+            self.messageStorage?.archiveMessage(xmppMessage,
+                outgoing: outgoing,
+                xmppStream: XMPPManager.sharedInstance.stream)
+        }
+    }
 	
     func loadArchivedMessagesFrom(jid jid: String, mediaCompletion: ((Void) -> Void)?, delegate: MessageMediaDelegate?) -> [Message] {
 		let moc = messageStorage?.mainThreadManagedObjectContext
