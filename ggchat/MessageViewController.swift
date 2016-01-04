@@ -1512,7 +1512,7 @@ class MessageViewController: UIViewController,
         self.inputToolbar.contentView.textView.text.appendContentsOf(assetSuggestion.id)
         */
       
-        assert(GGWiki.sharedInstance.getAsset(assetSuggestion.id) != nil, "Asset \(assetSuggestion.id) not loaded.")
+        assert(GGWiki.sharedInstance.cardAssets[assetSuggestion.id] != nil, "Asset \(assetSuggestion.id) not loaded.")
         self.inputToolbar.contentView.textView.attributedText = TappableText.sharedInstance.tappableAttributedString(
             assetSuggestion.id,
             textColor: self.inputToolbar.contentView.textView.textColor!,
