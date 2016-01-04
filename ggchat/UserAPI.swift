@@ -530,15 +530,13 @@ class UserAPI {
         }
     }
     
-    func addBuddy(username: String) {
+    func addBuddy(username: String, completion: HTTPJsonCompletion?) {
         if let token = self.authToken {
             self.post(UserAPI.addbuddyUrl(username),
                 authToken: token,
                 jsonBody: nil,
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
-                    if let json = jsonBody {
-                        print(json)
-                    }
+                    completion?(json: jsonBody)
                 }
             )
         }

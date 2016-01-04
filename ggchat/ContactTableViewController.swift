@@ -73,12 +73,30 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
                 if let usernameTextField = alert.textFields?.first {
                     if let username = usernameTextField.text {
                         print(username)
+                        UserAPI.sharedInstance.addBuddy(username, completion: { (jsonBody: [String: AnyObject]?) -> Void in
+                            if let json = jsonBody {
+                                print(json)
+                                if let errorMsg = json["error"] as? String {
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        let alert = UIAlertView()
+                                        alert.title = "Alert"
+                                        alert.message = errorMsg
+                                        alert.addButtonWithTitle("OK")
+                                        alert.show()
+                                    }
+                                } else {
+                                    UserAPI.sharedInstance.cacheRoster()
+                                }
+                            }
+                        })
+                        /*
                         UserAPI.sharedInstance.getUserinfo(username, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                             if let json = jsonBody, let jidStr = json["jid"] as? String {
                                 print("Adding \(jidStr)")
                                 XMPPRosterManager.addUser(jidStr, nickname: "")
                             }
                         })
+                        */
                     }
                 }
             })
