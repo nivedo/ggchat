@@ -45,8 +45,9 @@ class GGMessageViewController:
        
         self.photoPicker.delegate = self
         // GGWiki.sharedInstance.delegate = self
-       
-        self.loadUserHistory(true, loadLastActivity: true)
+      
+        self.loadArchivedMessagesFromCoreData(true)
+        self.loadLastActivity(true)
         self.messageCollectionView.reloadData()
    
         if SettingManager.sharedInstance.tappableMessageText {
@@ -92,17 +93,18 @@ class GGMessageViewController:
         print("GG::viewWillAppear")
         
         super.viewWillAppear(animated)
-        loadUserHistory(false, loadLastActivity: false)
+        self.loadArchivedMessagesFromCoreData(true)
+        self.loadLastActivity(false)
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = self
         }
     }
     
-    func loadUserHistory(loadArchiveMessages: Bool, loadLastActivity: Bool) {
+    func loadLastActivity(force: Bool) {
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
          
-            if self.recipientDetails == nil || loadLastActivity {
+            if self.recipientDetails == nil || force {
                 XMPPLastActivityManager.sendLastActivityQueryToJID(recipient.jid,
                     sender: XMPPManager.sharedInstance.lastActivity) { (response, forJID, error) -> Void in
                     if let lastActivitySeconds = response?.lastActivitySeconds() {
@@ -127,11 +129,6 @@ class GGMessageViewController:
                     }
                 }
             }
-            
-            // Load archive messages
-            if loadArchiveMessages {
-                self.loadArchivedMessagesFromCoreData(true)
-            }
         }
     }
     
@@ -147,6 +144,7 @@ class GGMessageViewController:
                 )
                 if animated {
                     self.finishReceivingMessageAnimated(false)
+                    self.scrollToBottomAnimated(false)
                 }
                 self.syncArchivedMessages(animated)
             })
@@ -159,10 +157,6 @@ class GGMessageViewController:
             if let lastArchivedMessageId = self.messages.last?.id {
                 if let chatConversation = UserAPI.sharedInstance.chatsMap[recipient.jid], let lastServerMessageId = chatConversation.lastMessage.id {
                     syncNeeded = (lastArchivedMessageId != lastServerMessageId)
-                    
-                    if syncNeeded {
-                        print("sync needed for \(recipient.jid): \(lastArchivedMessageId) vs \(lastServerMessageId)")
-                    }
                 }
             }
             

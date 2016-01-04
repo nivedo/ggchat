@@ -17,6 +17,7 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
 
     var searchResultController = UISearchController()
     var filteredRosterList = [RosterUser]()
+    var rosterList = [RosterUser]()
 
     @IBAction func addContactAction(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(
@@ -148,17 +149,23 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
     func onRosterUpdate(success: Bool) {
         // Don't reloadData on roster update, wait for avatar update. 
         // Otherwise, avatars will appear blank.
-        /*
         if success {
             dispatch_async(dispatch_get_main_queue()) {
+                self.rosterList = UserAPI.sharedInstance.rosterList
                 self.tableView.reloadData()
             }
         }
-        */
     }
     
     func onChatsUpdate(success: Bool) {
-        //
+        // Do nothing
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+      
+        UserAPI.sharedInstance.delegate = self
+        UserAPI.sharedInstance.cacheRoster()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -171,7 +178,7 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
             let searchString = searchController.searchBar.text!.lowercaseString
-            self.filteredRosterList = UserAPI.sharedInstance.rosterList.filter { user in
+            self.filteredRosterList = self.rosterList.filter { user in
                 user.displayName.lowercaseString.containsString(searchString)
             }
             /*
@@ -186,17 +193,21 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         }
         self.tableView.reloadData()
     }
-  
-    /*
-	func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.reloadData()
-    }
-    */
     
     var inSearchMode: Bool {
         get {
             return self.searchResultController.active
                 && self.searchResultController.searchBar.text!.characters.count > 0
+        }
+    }
+    
+    var dataList: [RosterUser] {
+        get {
+            if self.inSearchMode {
+                return self.filteredRosterList
+            } else {
+                return self.rosterList
+            }
         }
     }
     
@@ -209,23 +220,15 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.inSearchMode {
-            return self.filteredRosterList.count
-        } else {
-            return UserAPI.sharedInstance.rosterList.count
-        }
+        return self.rosterList.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! ContactTableViewCell
 
-        let user: RosterUser
-        if self.inSearchMode {
-            user = self.filteredRosterList[indexPath.row]
-        } else {
-            user = UserAPI.sharedInstance.rosterList[indexPath.row]
-        }
+        let user = self.rosterList[indexPath.row]
+        
         let avatar = user.messageAvatarImage
         cell.avatarImageView.image = avatar.avatarImage
         cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
@@ -237,12 +240,8 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        let user: RosterUser
-        if self.inSearchMode {
-            user = self.filteredRosterList[indexPath.row]
-        } else {
-            user = UserAPI.sharedInstance.rosterList[indexPath.row]
-        }
+        let user = self.rosterList[indexPath.row]
+        
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
         
