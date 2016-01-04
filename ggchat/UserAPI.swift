@@ -210,13 +210,16 @@ class UserAPI {
         return "\(self.route("chats"))"
     }
     
-    class func historyUrl(peerJID: String, limit: Int? = nil) -> String {
+    class func historyUrl(peerJID: String, limit: Int? = nil, end: NSDate? = nil) -> String {
         let tokens = peerJID.componentsSeparatedByString("@")
         let peerUUID = tokens[0]
         let path = "history?peer=\(peerUUID)"
         var url = "\(self.route(path))"
         if let messageLimit = limit {
             url = "\(url)&limit=\(messageLimit)"
+        }
+        if let endDate = end {
+            url = "\(url)&end=\(endDate.timeIntervalSince1970 * 1e6)"
         }
         return url
     }
@@ -494,10 +497,10 @@ class UserAPI {
         return self.jidBareStr == UserAPI.stripResourceFromJID(jid)
     }
     
-    func getHistory(peerJID: String, limit: Int?, delegate: MessageMediaDelegate?, completion: HTTPMessagesCompletion? = nil) {
-        print("getHistory")
+    func getHistory(peerJID: String, end: NSDate?, delegate: MessageMediaDelegate?, completion: HTTPMessagesCompletion? = nil) {
+        // print("getHistory")
         if let token = self.authToken {
-            self.get(UserAPI.historyUrl(peerJID, limit: limit),
+            self.get(UserAPI.historyUrl(peerJID, limit: nil, end: end),
                 authToken: token,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {

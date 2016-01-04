@@ -170,8 +170,9 @@ class GGMessageViewController:
     
     func syncHistoryMessages(animated: Bool) {
         if let recipient = self.recipient {
+            let date = self.messages.last?.date
             UserAPI.sharedInstance.getHistory(recipient.jid,
-                limit: 10,
+                end: date,
                 delegate: self,
                 completion: { (messages: [Message]?) -> Void in
                 if let msgs = messages {
