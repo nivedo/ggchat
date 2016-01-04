@@ -201,6 +201,10 @@ class UserAPI {
     class func userinfoUrl(username: String) -> String {
         return "\(self.route("userinfo"))?username=\(username)"
     }
+    
+    class func addbuddyUrl(username: String) -> String {
+        return "\(self.route("addbuddy?username=\(username)"))"
+    }
 
     class var rosterUrl: String {
         return "\(self.route("rosterv3"))"
@@ -523,6 +527,20 @@ class UserAPI {
                         completion?(messages: nil, xmls: nil)
                     }
                 })
+        }
+    }
+    
+    func addBuddy(username: String) {
+        if let token = self.authToken {
+            self.post(UserAPI.addbuddyUrl(username),
+                authToken: token,
+                jsonBody: nil,
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    if let json = jsonBody {
+                        print(json)
+                    }
+                }
+            )
         }
     }
     
