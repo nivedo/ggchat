@@ -57,10 +57,9 @@ class TappableText: NSObject {
                
                 // let (tappable, assetKey) = self.isTappableToken(token)
                 let id = "\(self.delimiter)\(token)\(self.delimiter)"
-                let asset = GGWiki.sharedInstance.getAsset(id)
                 var tappable = false
                 var assetId = str
-                if let imageAsset = asset {
+                if let imageAsset = GGWiki.sharedInstance.cardAssets[id] {
                     tappable = true
                     assetId = imageAsset.id
                     str = imageAsset.getDisplayName() // .capitalizedString

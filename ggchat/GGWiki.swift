@@ -41,14 +41,14 @@ class AssetManager {
         return false
     }
     
-    class func getSingleEncodedAsset(str: String) -> String? {
+    class func getSingleEncodedAsset(str: String) -> GGWikiAsset? {
         if str.length > 6 {
             if ((str[0...1] == "||") && (str[str.length-2..<str.length] == "||")) {
                 let info = str[2..<str.length-2]
                 let params = info.componentsSeparatedByString("|")
                 if params.count == 3 {
                     if self.isSingleId(params[0]) {
-                        return params[0]
+                        return GGWiki.sharedInstance.getSingleAsset(str)
                     }
                 }
             }
@@ -413,18 +413,20 @@ class GGWiki {
         }
     }
     
-    func getAsset(id: String) -> GGWikiAsset? {
-        if id.rangeOfString("::") != nil {
-            if let asset = self.cardAssets[id] {
-                // asset.loadSavedImage()
-                // asset.downloadImage()
-                return asset
+    func getSingleAsset(text: String) -> GGWikiAsset? {
+        let tokens = text.componentsSeparatedByString("||")
+        for (_, token) in tokens.enumerate() {
+            if token.length > 0 {
+                let elements = token.componentsSeparatedByString("|")
+                if elements.count == 3 {
+                    return GGWiki.sharedInstance.addAsset(elements[0], url: elements[1], displayName: elements[2])
+                }
             }
         }
         return nil
     }
     
-    func addAsset(id: String, url: String, displayName: String) {
+    func addAsset(id: String, url: String, displayName: String) -> GGWikiAsset? {
         if id.rangeOfString("::") != nil && id.length > 6 && url.length > 0 && displayName.length > 2 {
            
             let idStrip = id[2..<id.length-2]
@@ -437,14 +439,16 @@ class GGWiki {
                 let fileType = urlTokens[urlTokens.count-1]
                 
                 let name = displayName[1..<displayName.length-1]
-                if self.cardAssets[id] == nil {
+                if let asset = self.cardAssets[id] {
+                    return asset
+                } else {
                     let asset = GGWikiAsset(name: name, bundleId: bundleId, assetId: assetId, fileType: fileType)
-                    // asset.loadSavedImage()
-                    // asset.downloadImage()
                     self.cardAssets[id] = asset
+                    return asset
                 }
             }
         }
+        return nil
     }
     
     func getAssetImageURL(id: String) -> String {

@@ -446,20 +446,17 @@ class UserAPI {
                     return photoMessage
                 }
             } else {
-                print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(body)")
-                if let id = AssetManager.getSingleEncodedAsset(body) {
-                    print("single encoded asset \(id)")
-                    if let asset = GGWiki.sharedInstance.getAsset(id) {
-                        let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: delegate)
-                        let message = Message(
-                            senderId: fromBare,
-                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                            isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
-                            date: date,
-                            media: wikiMedia,
-                            text: body)
-                        return message
-                    }
+                // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(body)")
+                if let asset = AssetManager.getSingleEncodedAsset(body) {
+                    let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: delegate)
+                    let message = Message(
+                        senderId: fromBare,
+                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                        isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
+                        date: date,
+                        media: wikiMedia,
+                        text: body)
+                    return message
                 }
                 let fullMessage = Message(
                     senderId: fromBare,

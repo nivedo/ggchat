@@ -213,17 +213,15 @@ class GGMessageViewController:
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
             var message: Message!
-            if let id = AssetManager.getSingleEncodedAsset(text) {
-                if let asset = GGWiki.sharedInstance.getAsset(id) {
-                    let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
-                    message = Message(
-                        senderId: senderId,
-                        senderDisplayName: senderDisplayName,
-                        isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
-                        date: NSDate(),
-                        media: wikiMedia,
-                        text: text)
-                }
+            if let asset = AssetManager.getSingleEncodedAsset(text) {
+                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
+                message = Message(
+                    senderId: senderId,
+                    senderDisplayName: senderDisplayName,
+                    isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
+                    date: NSDate(),
+                    media: wikiMedia,
+                    text: text)
             }
             
             if message == nil {
@@ -324,17 +322,15 @@ class GGMessageViewController:
                         JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                         
                         var message: Message!
-                        if let id = AssetManager.getSingleEncodedAsset(msg) {
-                            if let asset = GGWiki.sharedInstance.getAsset(id) {
-                                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
-                                message = Message(
-                                    senderId: fromBare,
-                                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                                    isOutgoing: false,
-                                    date: NSDate(),
-                                    media: wikiMedia,
-                                    text: msg)
-                            }
+                        if let asset = AssetManager.getSingleEncodedAsset(msg) {
+                            let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
+                            message = Message(
+                                senderId: fromBare,
+                                senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                                isOutgoing: false,
+                                date: NSDate(),
+                                media: wikiMedia,
+                                text: msg)
                         }
                 
                         if message == nil {
@@ -438,38 +434,6 @@ class GGMessageViewController:
     func onTapCatchAll() {
         self.dismissKeyboard()
     }
-   
-    /*
-    func refreshMessages(reload: Bool) {
-        var refreshed = false
-        for i in 0..<self.messages.count {
-            let m = self.messages[i]
-            if !m.isMediaMessage {
-                if let text = m.rawText {
-                    if let id = AssetManager.getSingleEncodedAsset(text) {
-                        if let asset = GGWiki.sharedInstance.getAsset(id) {
-                            let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
-                            let message = Message(
-                                senderId: m.senderId,
-                                senderDisplayName: m.senderDisplayName,
-                                isOutgoing: m.isOutgoing,
-                                date: m.date,
-                                media: wikiMedia)
-                            self.messages[i] = message
-                            refreshed = true
-                        }
-                    }
-                }
-            }
-        }
-        if refreshed && reload {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.messageCollectionView.reloadData()
-                self.scrollToBottomAnimated(false)
-            }
-        }
-    }
-    */
     
     func presentTransparentViewController(
         viewControllerToPresent: UIViewController,
