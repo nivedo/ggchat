@@ -245,6 +245,7 @@ class XMPPManager: NSObject,
             
         if (self.stream.isConnected()) {
             // Already connected
+            print("XMPP stream already connected")
             if !self.stream.isAuthenticated() {
                 self.xmppStreamDidConnect(self.stream)
             } else {
