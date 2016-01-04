@@ -142,7 +142,7 @@ class ChatTableViewController:
        
         let avatar = UserAPI.sharedInstance.getAvatarImage(chatConversation.peerJID)
         cell.avatarImageView.image = avatar.avatarImage
-        cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
+        // cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
         
         return cell
     }
