@@ -21,16 +21,8 @@ class GGMessageViewController:
     var recipient: RosterUser? {
         didSet {
             if let recipient = self.recipient {
-                UserAPI.sharedInstance.getHistory(recipient.jid,
-                    limit: 10,
-                    delegate: self,
-                    completion: { (messages: [Message]?) -> Void in
-                    if let msgs = messages {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.messages = msgs
-                        }
-                    }
-                })
+                // self.loadArchivedMessagesFromCoreData()
+                self.syncHistoryMessages(false)
             }
         }
     }
@@ -141,31 +133,76 @@ class GGMessageViewController:
             
             // Load archive messages
             if loadArchiveMessages {
-                /*
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    let archiveMessages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
-                        jid: recipient.jid,
-                        mediaCompletion: { (Void) -> Void in
+                // self.loadArchivedMessagesFromCoreData()
+                self.syncHistoryMessages(true)
+            }
+        }
+    }
+    
+    func loadArchivedMessagesFromCoreData() {
+        if let recipient = self.recipient {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
+                    jid: recipient.jid,
+                    mediaCompletion: { (Void) -> Void in
                         self.messageCollectionView.reloadData()
-                    })
-                    self.messages = archiveMessages as NSArray as! [Message]
-                    self.refreshMessages(false)
-                    self.finishReceivingMessageAnimated(false)
-                })
-                */
+                    },
+                    delegate: self
+                )
+                self.finishReceivingMessageAnimated(false)
+                self.syncArchivedMessages()
+            })
+        }
+    }
+    
+    func syncArchivedMessages() {
+        if let recipient = self.recipient {
+            var syncNeeded = false
+            if let lastArchivedMessageId = self.messages.last?.id {
+                if let chatConversation = UserAPI.sharedInstance.chatsMap[recipient.jid], let lastServerMessageId = chatConversation.lastMessage.id {
+                    syncNeeded = (lastArchivedMessageId != lastServerMessageId)
+                    
+                    if syncNeeded {
+                        print("sync needed for \(recipient.jid): \(lastArchivedMessageId) vs \(lastServerMessageId)")
+                    }
+                }
+            }
+            
+            if syncNeeded {
                 UserAPI.sharedInstance.getHistory(recipient.jid,
                     limit: 10,
                     delegate: self,
                     completion: { (messages: [Message]?) -> Void in
                     if let msgs = messages {
                         dispatch_async(dispatch_get_main_queue()) {
-                            self.messages = msgs
-                            self.finishReceivingMessageAnimated(false)
+                            // self.messages = msgs
+                            // self.finishReceivingMessageAnimated(false)
                             self.scrollToBottomAnimated(false)
                         }
                     }
                 })
+            } else {
+                print("sync NOT NEEDED for \(recipient.jid)")
             }
+        }
+    }
+    
+    func syncHistoryMessages(animated: Bool) {
+        if let recipient = self.recipient {
+            UserAPI.sharedInstance.getHistory(recipient.jid,
+                limit: 10,
+                delegate: self,
+                completion: { (messages: [Message]?) -> Void in
+                if let msgs = messages {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.messages = msgs
+                        if animated {
+                            self.finishReceivingMessageAnimated(false)
+                            self.scrollToBottomAnimated(false)
+                        }
+                    }
+                }
+            })
         }
     }
     

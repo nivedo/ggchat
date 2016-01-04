@@ -426,8 +426,10 @@ class UserAPI {
    
     class func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
-        // print(MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(date))
-        
+        return self.parseMessageFromString(xmlString, date: date, delegate: delegate)
+    }
+    
+    class func parseMessageFromString(xmlString: String, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
         var element: DDXMLElement?
         do {
             element = try DDXMLElement(XMLString: xmlString)
@@ -438,11 +440,14 @@ class UserAPI {
         // let to = element.attributeStringValueForName("to")
         
         if let bodyElement = element?.elementForName("body"), let from = element?.attributeStringValueForName("from") {
+            let id = element?.attributeStringValueForName("id")
+            
             let body = bodyElement.stringValue()
             let fromBare = UserAPI.stripResourceFromJID(from)
             
             if let _ = bodyElement.elementForName("photo") {
                 if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(bodyElement, completion: nil, delegate: delegate) {
+                    photoMessage.id = id
                     return photoMessage
                 }
             } else {
@@ -456,6 +461,7 @@ class UserAPI {
                         date: date,
                         media: wikiMedia,
                         text: body)
+                    message.id = id
                     return message
                 }
                 let fullMessage = Message(
@@ -464,6 +470,7 @@ class UserAPI {
                     isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                     date: date,
                     text: body)
+                fullMessage.id = id
                 return fullMessage
             }
         }
@@ -508,6 +515,7 @@ class UserAPI {
     
     func cacheChats() {
         self.chatsList.removeAll()
+        self.chatsMap.removeAll()
         if let token = self.authToken {
             self.get(UserAPI.chatsUrl,
                 authToken: token,
@@ -516,7 +524,9 @@ class UserAPI {
                         for element in array {
                             if let json = element as? [String: AnyObject] {
                                 // print(json)
-                                self.chatsList.append(ChatConversation(json: json))
+                                let chat = ChatConversation(json: json)
+                                self.chatsList.append(chat)
+                                self.chatsMap[chat.peerJID] = chat
                             }
                         }
                         self.delegate?.onChatsUpdate(true)
@@ -649,8 +659,9 @@ class UserAPI {
     var avatarPath: String?
     var avatarImage: UIImage?
     var rosterList: [RosterUser] = [RosterUser]()
-    var chatsList: [ChatConversation] = [ChatConversation]()
     var rosterMap: [String: RosterUser] = [String: RosterUser]()
+    var chatsList: [ChatConversation] = [ChatConversation]()
+    var chatsMap: [String: ChatConversation] = [String: ChatConversation]()
     var settings: UserSetting = UserSetting()
     
     var displayName: String {

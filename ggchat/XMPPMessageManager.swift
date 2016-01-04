@@ -67,7 +67,7 @@ public class XMPPMessageManager: NSObject {
     		completeMessage.addAttributeWithName("id", stringValue: messageId)
     		completeMessage.addAttributeWithName("type", stringValue: "chat")
     		completeMessage.addAttributeWithName("to", stringValue: receiver)
-            completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidStr) // XMPPManager.sharedInstance.stream.myJID.bare())
+            completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr) // XMPPManager.sharedInstance.stream.myJID.bare())
     		completeMessage.addChild(body)
     		
     		sharedInstance.didSendMessageCompletionBlock = completion
@@ -122,13 +122,13 @@ public class XMPPMessageManager: NSObject {
 		}
 	}
 	
-    func loadArchivedMessagesFrom(jid jid: String, mediaCompletion: ((Void) -> Void)?, delegate: MessageMediaDelegate?) -> NSMutableArray {
+    func loadArchivedMessagesFrom(jid jid: String, mediaCompletion: ((Void) -> Void)?, delegate: MessageMediaDelegate?) -> [Message] {
 		let moc = messageStorage?.mainThreadManagedObjectContext
 		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
 		let request = NSFetchRequest()
 		let predicateFormat = "bareJidStr like %@ "
 		let predicate = NSPredicate(format: predicateFormat, jid)
-		let retrievedMessages = NSMutableArray()
+		var retrievedMessages = [Message]()
 		
 		request.predicate = predicate
 		request.entity = entityDescription
@@ -136,7 +136,15 @@ public class XMPPMessageManager: NSObject {
 		do {
 			let results = try moc?.executeFetchRequest(request)
 			
-			for message in results! {
+			for messageElement in results! {
+                if let message = UserAPI.parseMessageFromString(
+                    messageElement.messageStr,
+                    date: messageElement.timestamp,
+                    delegate: delegate) {
+                    retrievedMessages.append(message)
+                    print("archived message: \(message.displayText)")
+                }
+                /*
 				var element: DDXMLElement!
 				do {
 					element = try DDXMLElement(XMLString: message.messageStr)
@@ -179,6 +187,7 @@ public class XMPPMessageManager: NSObject {
                         text: body)
                     retrievedMessages.addObject(fullMessage)
                 }
+                */
 			}
 		} catch _ {
 			//catch fetch error here

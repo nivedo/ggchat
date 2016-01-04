@@ -19,6 +19,7 @@ class Message {
     var isMediaMessage: Bool
     var isOutgoing: Bool
     var media: MessageMediaData?
+    var id: String?
     
     var displayText: String {
         get {
