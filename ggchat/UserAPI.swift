@@ -410,6 +410,7 @@ class UserAPI {
                             self.rosterList.append(user)
                             self.rosterMap[user.jid] = user
                         }
+                        self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
                         completion?(true)
                         self.delegate?.onRosterUpdate(true)
                         return

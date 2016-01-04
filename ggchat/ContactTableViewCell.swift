@@ -28,6 +28,9 @@ class ContactTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.cellMainLabel.adjustsFontSizeToFitWidth = false
+        self.cellMainLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

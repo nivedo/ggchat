@@ -231,7 +231,7 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         
         let avatar = user.messageAvatarImage
         cell.avatarImageView.image = avatar.avatarImage
-        cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
+        // cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
         cell.cellMainLabel.attributedText = NSAttributedString(string: user.displayName)
         
         return cell
