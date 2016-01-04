@@ -174,11 +174,17 @@ class GGMessageViewController:
             UserAPI.sharedInstance.getHistory(recipient.jid,
                 end: date,
                 delegate: self,
-                completion: { (messages: [Message]?) -> Void in
-                if let msgs = messages {
+                completion: { (messages: [Message]?, xmls: [String]?) -> Void in
+                if let msgs = messages, let xmls = xmls {
                     dispatch_async(dispatch_get_main_queue()) {
-                        if self.messages.count == 0 {
-                            self.messages = msgs
+                        let lastTimestamp = self.messages.last?.date
+                        for i in 0..<msgs.count {
+                            let m = msgs[i]
+                            let x = xmls[i]
+                            if lastTimestamp == nil || m.date.compare(lastTimestamp!) == NSComparisonResult.OrderedDescending {
+                                self.messages.append(m)
+                                XMPPMessageManager.sharedInstance.archiveMessage(x, date: m.date, outgoing: m.isOutgoing)
+                            }
                         }
                         if animated {
                             self.finishReceivingMessageAnimated(false)

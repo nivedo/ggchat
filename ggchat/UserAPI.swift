@@ -10,7 +10,7 @@ import Foundation
 
 public typealias HTTPJsonCompletion = (json: [String: AnyObject]?) -> Void
 public typealias HTTPArrayCompletion = (array: [AnyObject]?) -> Void
-typealias HTTPMessagesCompletion = (messages: [Message]?) -> Void
+typealias HTTPMessagesCompletion = (messages: [Message]?, xmls: [String]?) -> Void
 
 protocol UserDelegate {
     
@@ -506,19 +506,21 @@ class UserAPI {
                     if let array = arrayBody {
                         // print(array)
                         var messages = [Message]()
+                        var xmls = [String]()
                         for element in array {
                             if let json = element as? [String: AnyObject] {
                                 if let xmlStr = json["xml"] as? String, let timestamp = json["time"] as? NSTimeInterval {
                                     if let msg = UserAPI.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6, delegate: delegate) {
                                         messages.append(msg)
+                                        xmls.append(xmlStr)
                                     }
                                 }
                             }
                         }
-                        completion?(messages: messages)
+                        completion?(messages: messages, xmls: xmls)
                     } else {
                         print("Failed to load history for \(peerJID)")
-                        completion?(messages: nil)
+                        completion?(messages: nil, xmls: nil)
                     }
                 })
         }

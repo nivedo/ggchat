@@ -123,6 +123,7 @@ public class XMPPMessageManager: NSObject {
 	}
     
     func archiveMessage(xmlString: String, date: NSDate, outgoing: Bool) {
+        print("archiveMessage: \(xmlString)")
         var element: DDXMLElement?
         do {
             element = try DDXMLElement(XMLString: xmlString)
@@ -134,10 +135,12 @@ public class XMPPMessageManager: NSObject {
             delay.addAttributeWithName("stamp", stringValue: date.aws_stringValue("CCYY-MM-DDThh:mm:ss[.sss]TZD"))
             element?.addChild(delay)
         }
-        if let xmppMessage = element as? XMPPMessage {
+        if let xmppMessage = XMPPMessage(fromElement: element) {
             self.messageStorage?.archiveMessage(xmppMessage,
                 outgoing: outgoing,
                 xmppStream: XMPPManager.sharedInstance.stream)
+            
+            print("archive SUCCESS")
         }
     }
 	
