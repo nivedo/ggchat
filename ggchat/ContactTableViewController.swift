@@ -282,7 +282,36 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         return true
     }
     */
-
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if !self.inSearchMode {
+            if editingStyle == .Delete {
+                // Delete the row from the data source
+                let refreshAlert = UIAlertController(
+                    title: "",
+                    message: "Are you sure you want to delete this contact?",
+                    preferredStyle: UIAlertControllerStyle.ActionSheet)
+                
+                refreshAlert.addAction(UIAlertAction(title: "Delete contact",
+                    style: .Destructive,
+                    handler: { (action: UIAlertAction!) in
+                        // XMPPChatManager.removeUserAtIndexPath(indexPath)
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                }))
+                
+                refreshAlert.addAction(UIAlertAction(title: "Cancel",
+                    style: .Cancel,
+                    handler: { (action: UIAlertAction!) in
+                }))
+                
+                self.presentViewController(refreshAlert, animated: true, completion: nil)
+                
+            } else if editingStyle == .Insert {
+                // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            }
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

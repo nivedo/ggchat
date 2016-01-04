@@ -168,7 +168,7 @@ class ChatTableViewController:
                 refreshAlert.addAction(UIAlertAction(title: "Clear message history",
                     style: .Destructive,
                     handler: { (action: UIAlertAction!) in
-                        XMPPChatManager.removeUserAtIndexPath(indexPath)
+                        // XMPPChatManager.removeUserAtIndexPath(indexPath)
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                 }))
                 
