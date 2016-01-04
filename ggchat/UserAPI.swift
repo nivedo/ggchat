@@ -396,13 +396,13 @@ class UserAPI {
     }
     
     func cacheRoster(completion: ((Bool) -> Void)? = nil) {
-        self.rosterList.removeAll()
-        self.rosterMap.removeAll()
         if let jid = self.jid {
             UserAPI.sharedInstance.getRoster(jid,
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                     if let json = jsonBody, let profiles = json["profiles"] as? NSArray {
                         // print(profiles)
+                        self.rosterList.removeAll()
+                        self.rosterMap.removeAll()
                         for profile in profiles {
                             let user = RosterUser(
                                 profile: profile as! [String: AnyObject],
@@ -521,13 +521,14 @@ class UserAPI {
     }
     
     func cacheChats() {
-        self.chatsList.removeAll()
-        self.chatsMap.removeAll()
         if let token = self.authToken {
+            print(UserAPI.chatsUrl)
             self.get(UserAPI.chatsUrl,
                 authToken: token,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {
+                        self.chatsList.removeAll()
+                        self.chatsMap.removeAll()
                         for element in array {
                             if let json = element as? [String: AnyObject] {
                                 // print(json)

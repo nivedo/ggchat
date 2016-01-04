@@ -15,6 +15,7 @@ class ChatTableViewController:
 
     var searchResultController = UISearchController()
     var filteredChatsList = [ChatConversation]()
+    var chatsList = [ChatConversation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,13 @@ class ChatTableViewController:
         self.tableView.reloadData()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        UserAPI.sharedInstance.delegate = self
+        
+        UserAPI.sharedInstance.cacheChats()
+    }
+    
     func onAvatarUpdate(jid: String, success: Bool) {
         if success {
             dispatch_async(dispatch_get_main_queue()) {
@@ -53,24 +61,16 @@ class ChatTableViewController:
     }
     
     func onRosterUpdate(success: Bool) {
-        // Don't reloadData on roster update, wait for avatar update.
-        // Otherwise, avatars will appear blank.
-        /*
-        if success {
-        dispatch_async(dispatch_get_main_queue()) {
-        self.tableView.reloadData()
-        }
-        }
-        */
+        // Nothing to do
     }
     
     func onChatsUpdate(success: Bool) {
-        
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tableView.reloadData()
+        if success {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.chatsList = UserAPI.sharedInstance.chatsList
+                self.tableView.reloadData()
+            }
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -81,7 +81,7 @@ class ChatTableViewController:
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
             let searchString = searchController.searchBar.text!.lowercaseString
-            self.filteredChatsList = UserAPI.sharedInstance.chatsList.filter { chat in
+            self.filteredChatsList = self.chatsList.filter { chat in
                 if let user = UserAPI.sharedInstance.rosterMap[chat.peerJID] {
                     return user.displayName.lowercaseString.containsString(searchString)
                 } else {
@@ -104,7 +104,7 @@ class ChatTableViewController:
             if self.inSearchMode {
                 return self.filteredChatsList
             } else {
-                return UserAPI.sharedInstance.chatsList
+                return self.chatsList
             }
         }
     }
