@@ -14,7 +14,7 @@ class ChatTableViewController:
     UserDelegate {
 
     var searchResultController = UISearchController()
-    var filteredChatsList = NSArray()
+    var filteredChatsList = [ChatConversation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,12 +80,14 @@ class ChatTableViewController:
 
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
-            let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
-                searchController.searchBar.text!)
-           
-            self.filteredChatsList = XMPPChatManager.getChatsList().filteredArrayUsingPredicate(searchPredicate)
-            
-            print("updateSearch, active: \(self.searchResultController.active), match: \(self.filteredChatsList.count)")
+            let searchString = searchController.searchBar.text!.lowercaseString
+            self.filteredChatsList = UserAPI.sharedInstance.chatsList.filter { chat in
+                if let user = UserAPI.sharedInstance.rosterMap[chat.peerJID] {
+                    return user.displayName.lowercaseString.containsString(searchString)
+                } else {
+                    return false
+                }
+            }
         }
         self.tableView.reloadData()
     }
@@ -99,8 +101,11 @@ class ChatTableViewController:
     
     var dataList: [ChatConversation] {
         get {
-            // return self.inSearchMode ? self.filteredChatsList : UserAPI.sharedInstance.chatsList
-            return UserAPI.sharedInstance.chatsList
+            if self.inSearchMode {
+                return self.filteredChatsList
+            } else {
+                return UserAPI.sharedInstance.chatsList
+            }
         }
     }
     
@@ -214,25 +219,12 @@ class ChatTableViewController:
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.identifier == "chats.to.messages") {
-            let user = sender as! XMPPUserCoreDataStorageObject
-            if let cpd = segue.destinationViewController as? ContactPickerDelegate {
-                print("ContactPickerDelege!")
-                // cpd.didSelectContact(user)
+            if let chatConversation = sender as? ChatConversation, let user = UserAPI.sharedInstance.rosterMap[chatConversation.peerJID] {
+                if let cpd = segue.destinationViewController as? ContactPickerDelegate {
+                    print("ContactPickerDelege!")
+                    cpd.didSelectContact(user)
+                }
             }
         }
-    }
-    
-    /*
-    func tableView(tableView: UITableView,
-        avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        // return GGModelData.sharedInstance.getAvatar(Demo.id_jobs)
-        let user = XMPPChatManager.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
-        return GGModelData.sharedInstance.getAvatar(user.jidStr)
-    }
-    */
-    
-    func onRosterContentChanged(controller: NSFetchedResultsController) {
-        print("onRosterContentChanged")
-        self.tableView.reloadData()
     }
 }
