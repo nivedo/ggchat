@@ -439,7 +439,14 @@ class UserAPI {
        
         // let to = element.attributeStringValueForName("to")
         
-        if let bodyElement = element?.elementForName("body"), let from = element?.attributeStringValueForName("from") {
+        if let bodyElement = element?.elementForName("body"),
+            let from = element?.attributeStringValueForName("from"),
+            let type = element?.attributeStringValueForName("type") {
+            if type != "chat" {
+                print(xmlString)
+                return nil
+            }
+                
             let id = element?.attributeStringValueForName("id")
             
             let body = bodyElement.stringValue()

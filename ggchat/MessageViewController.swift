@@ -412,7 +412,7 @@ class MessageViewController: UIViewController,
     }
 
     override func viewDidAppear(animated: Bool) {
-        print("MessageViewController::viewDidAppear()")
+        // print("MessageViewController::viewDidAppear()")
         super.viewDidAppear(animated)
         self.gg_addObservers()
         self.gg_addActionToInteractivePopGestureRecognizer(true)
@@ -707,7 +707,7 @@ class MessageViewController: UIViewController,
     func collectionView(_ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        print("MVC::viewForSupplementaryElementOfKind, kind: \(kind)")
+        // print("MVC::viewForSupplementaryElementOfKind, kind: \(kind)")
         if (self.showTypingIndicator && kind == UICollectionElementKindSectionFooter) {
             return messageCollectionView.dequeueTypingIndicatorFooterViewForIndexPath(indexPath)
         } else if (self.showLoadEarlierMessagesHeader && kind == UICollectionElementKindSectionHeader) {

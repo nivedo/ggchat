@@ -20,10 +20,7 @@ class GGMessageViewController:
 
     var recipient: RosterUser? {
         didSet {
-            if let recipient = self.recipient {
-                // self.loadArchivedMessagesFromCoreData()
-                self.syncHistoryMessages(false)
-            }
+            self.loadArchivedMessagesFromCoreData(false)
         }
     }
     var recipientDetails: UIView?
@@ -133,13 +130,12 @@ class GGMessageViewController:
             
             // Load archive messages
             if loadArchiveMessages {
-                // self.loadArchivedMessagesFromCoreData()
-                self.syncHistoryMessages(true)
+                self.loadArchivedMessagesFromCoreData(true)
             }
         }
     }
     
-    func loadArchivedMessagesFromCoreData() {
+    func loadArchivedMessagesFromCoreData(animated: Bool) {
         if let recipient = self.recipient {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
@@ -149,15 +145,17 @@ class GGMessageViewController:
                     },
                     delegate: self
                 )
-                self.finishReceivingMessageAnimated(false)
-                self.syncArchivedMessages()
+                if animated {
+                    self.finishReceivingMessageAnimated(false)
+                }
+                self.syncArchivedMessages(animated)
             })
         }
     }
     
-    func syncArchivedMessages() {
+    func syncArchivedMessages(animated: Bool) {
         if let recipient = self.recipient {
-            var syncNeeded = false
+            var syncNeeded = true
             if let lastArchivedMessageId = self.messages.last?.id {
                 if let chatConversation = UserAPI.sharedInstance.chatsMap[recipient.jid], let lastServerMessageId = chatConversation.lastMessage.id {
                     syncNeeded = (lastArchivedMessageId != lastServerMessageId)
@@ -169,18 +167,7 @@ class GGMessageViewController:
             }
             
             if syncNeeded {
-                UserAPI.sharedInstance.getHistory(recipient.jid,
-                    limit: 10,
-                    delegate: self,
-                    completion: { (messages: [Message]?) -> Void in
-                    if let msgs = messages {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            // self.messages = msgs
-                            // self.finishReceivingMessageAnimated(false)
-                            self.scrollToBottomAnimated(false)
-                        }
-                    }
-                })
+                self.syncHistoryMessages(animated)
             } else {
                 print("sync NOT NEEDED for \(recipient.jid)")
             }
@@ -195,7 +182,9 @@ class GGMessageViewController:
                 completion: { (messages: [Message]?) -> Void in
                 if let msgs = messages {
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.messages = msgs
+                        if self.messages.count == 0 {
+                            self.messages = msgs
+                        }
                         if animated {
                             self.finishReceivingMessageAnimated(false)
                             self.scrollToBottomAnimated(false)

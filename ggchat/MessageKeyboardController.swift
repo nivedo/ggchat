@@ -116,7 +116,7 @@ class MessageKeyboardController: NSObject {
     // pragma mark - Notifications
 
      func gg_registerForNotifications() {
-        print("keyboardController::gg_registerForNotification()")
+        // print("keyboardController::gg_registerForNotification()")
         self.gg_unregisterForNotifications()
 
         NSNotificationCenter.defaultCenter().addObserver(self,

@@ -142,7 +142,7 @@ public class XMPPMessageManager: NSObject {
                     date: messageElement.timestamp,
                     delegate: delegate) {
                     retrievedMessages.append(message)
-                    print("archived message: \(message.displayText)")
+                    // print("archived message: \(message.displayText)")
                 }
                 /*
 				var element: DDXMLElement!
