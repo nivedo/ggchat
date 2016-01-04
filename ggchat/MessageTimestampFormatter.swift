@@ -51,6 +51,14 @@ class MessageTimestampFormatter {
         return self.dateFormatter.stringFromDate(date)
     }
     
+    func conciseTimestampForDate(date: NSDate) -> String {
+        if NSCalendar.currentCalendar().isDateInToday(date) {
+            return self.timeForDate(date)
+        } else {
+            return self.relativeDateForDate(date)
+        }
+    }
+    
     func attributedTimestampForDate(date: NSDate) -> NSAttributedString {
         let relativeDate: String = self.relativeDateForDate(date)
         let time: String = self.timeForDate(date)

@@ -85,7 +85,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Cell top label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmM-0d-thf" userLabel="Cell top label">
-                                            <rect key="frame" x="60" y="0.0" width="150" height="30"/>
+                                            <rect key="frame" x="90" y="0.0" width="150" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -104,7 +104,10 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Corner label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziM-Es-CrP" userLabel="Cell corner label">
-                                            <rect key="frame" x="220" y="0.0" width="100" height="30"/>
+                                            <rect key="frame" x="240" y="0.0" width="80" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="8ov-ks-xcK"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -119,6 +122,7 @@
                                     <constraints>
                                         <constraint firstItem="QmM-0d-thf" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="04b-g8-ORc"/>
                                         <constraint firstAttribute="trailing" secondItem="44r-ER-T7S" secondAttribute="trailing" id="23m-k0-4FR"/>
+                                        <constraint firstItem="ziM-Es-CrP" firstAttribute="leading" secondItem="QmM-0d-thf" secondAttribute="trailing" id="8g8-32-ajb"/>
                                         <constraint firstItem="44r-ER-T7S" firstAttribute="leading" secondItem="R3F-nn-JfU" secondAttribute="trailing" id="8sE-2K-xgb"/>
                                         <constraint firstItem="44r-ER-T7S" firstAttribute="top" secondItem="QmM-0d-thf" secondAttribute="bottom" id="bGa-42-lW1"/>
                                         <constraint firstAttribute="trailing" secondItem="ziM-Es-CrP" secondAttribute="trailing" constant="8" id="fM9-Ie-XiS"/>

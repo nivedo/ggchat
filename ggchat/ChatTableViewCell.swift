@@ -42,6 +42,8 @@ class ChatTableViewCell: UITableViewCell {
         self.cellTopLabel.textAlignment = NSTextAlignment.Left
         self.cellTopLabel.font = UIFont.boldSystemFontOfSize(20.0)
         self.cellTopLabel.textColor = UIColor.darkGrayColor()
+        self.cellTopLabel.adjustsFontSizeToFitWidth = false
+        self.cellTopLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         
         self.cellBottomLabel.textAlignment = NSTextAlignment.Left
         self.cellBottomLabel.font = UIFont.systemFontOfSize(18.0)

@@ -139,7 +139,7 @@ class ChatTableViewController:
         } else {
             msgText = chatConversation.lastMessage.displayText
         }
-        let date = MessageTimestampFormatter.sharedInstance.timestampForDate(chatConversation.lastMessage.date)
+        let date = MessageTimestampFormatter.sharedInstance.conciseTimestampForDate(chatConversation.lastMessage.date)
        
         cell.cellTopLabel.attributedText = NSAttributedString(string: displayName)
         cell.cellBottomLabel.attributedText = NSAttributedString(string: msgText)
