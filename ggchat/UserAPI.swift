@@ -446,9 +446,9 @@ class UserAPI {
                     return photoMessage
                 }
             } else {
-                // print("\(fromBare) vs \(self.jidBareStr)")
+                print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(body)")
                 if let id = AssetManager.getSingleEncodedAsset(body) {
-                    // print("single encoded asset \(id)")
+                    print("single encoded asset \(id)")
                     if let asset = GGWiki.sharedInstance.getAsset(id) {
                         let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: delegate)
                         let message = Message(
@@ -456,7 +456,8 @@ class UserAPI {
                             senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                             isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                             date: date,
-                            media: wikiMedia)
+                            media: wikiMedia,
+                            text: body)
                         return message
                     }
                 }

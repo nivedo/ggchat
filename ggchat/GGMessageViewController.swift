@@ -221,7 +221,8 @@ class GGMessageViewController:
                         senderDisplayName: senderDisplayName,
                         isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
                         date: NSDate(),
-                        media: wikiMedia)
+                        media: wikiMedia,
+                        text: text)
                 }
             }
             
@@ -331,7 +332,8 @@ class GGMessageViewController:
                                     senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                                     isOutgoing: false,
                                     date: NSDate(),
-                                    media: wikiMedia)
+                                    media: wikiMedia,
+                                    text: msg)
                             }
                         }
                 

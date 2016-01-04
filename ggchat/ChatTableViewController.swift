@@ -133,12 +133,7 @@ class ChatTableViewController:
         let chatConversation = self.dataList[indexPath.row]
       
         let displayName = UserAPI.sharedInstance.getDisplayName(chatConversation.peerJID)
-        var msgText: String!
-        if chatConversation.lastMessage.isMediaMessage {
-            msgText = "\(displayName) sent a media item."
-        } else {
-            msgText = chatConversation.lastMessage.displayText
-        }
+        let msgText = chatConversation.lastMessage.displayText
         let date = MessageTimestampFormatter.sharedInstance.conciseTimestampForDate(chatConversation.lastMessage.date)
        
         cell.cellTopLabel.attributedText = NSAttributedString(string: displayName)

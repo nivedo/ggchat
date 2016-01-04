@@ -22,7 +22,11 @@ class Message {
     
     var displayText: String {
         get {
-            return self.attributedText!.string
+            if let text = self.attributedText?.string {
+                return text
+            } else {
+                return "\(self.senderDisplayName) sent a media item."
+            }
         }
     }
     
@@ -55,7 +59,7 @@ class Message {
         self.isMediaMessage = isMedia
     }
     
-    convenience init(senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData) {
+    convenience init(senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, text: String? = nil) {
         self.init(
             senderId: senderId,
             senderDisplayName: senderDisplayName,
@@ -63,6 +67,12 @@ class Message {
             date: date,
             isMedia: true)
         self.media = media
+        
+        if let msg = text {
+            self.attributedText = TappableText.sharedInstance.tappableEncodedString(
+                msg,
+                textColor: isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
+        }
     }
     
     func addMedia(media: MessageMediaData) {
