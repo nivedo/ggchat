@@ -144,50 +144,6 @@ public class XMPPMessageManager: NSObject {
                     retrievedMessages.append(message)
                     // print("archived message: \(message.displayText)")
                 }
-                /*
-				var element: DDXMLElement!
-				do {
-					element = try DDXMLElement(XMLString: message.messageStr)
-				} catch _ {
-					element = nil
-				}
-				
-				let body: String
-				let sender: String
-				let date: NSDate
-				
-				date = message.timestamp
-				
-				if message.body() != nil {
-					body = message.body()
-				} else {
-					body = ""
-				}
-				
-				if element.attributeStringValueForName("to") == jid {
-					// let displayName = XMPPManager.sharedInstance.stream.myJID
-					// sender = displayName!.bare()
-                    sender = UserAPI.sharedInstance.jidStr
-				} else {
-					sender = jid
-				}
-                
-                if let _ = element.elementForName("body")!.elementForName("photo") {
-                    if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(element, completion: mediaCompletion, delegate: delegate) {
-                        retrievedMessages.addObject(photoMessage)
-                    } else {
-                        print("Unable to load archive photo message")
-                    }
-                } else {
-                    let fullMessage = Message(
-                        senderId: sender,
-                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(sender),
-                        isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(sender),
-                        date: date,
-                        text: body)
-                    retrievedMessages.addObject(fullMessage)
-                }
-                */
 			}
 		} catch _ {
 			//catch fetch error here
