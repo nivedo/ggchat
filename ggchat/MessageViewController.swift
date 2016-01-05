@@ -611,16 +611,19 @@ class MessageViewController: UIViewController,
         if (isOutgoingMessage) {
             cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Right
             cell.cellBottomLabel.textAlignment = NSTextAlignment.Right
+            cell.timeLabel.textAlignment = NSTextAlignment.Right
             cell.textView.textColor = GGConfig.outgoingTextColor
         } else {
             cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Left
             cell.cellBottomLabel.textAlignment = NSTextAlignment.Left
+            cell.timeLabel.textAlignment = NSTextAlignment.Left
             cell.textView.textColor = GGConfig.incomingTextColor
         }
             
+        cell.timeLabel.text = MessageTimestampFormatter.sharedInstance.timeForDate(messageItem.date)
+
         if (!isMediaMessage) {
             cell.textView.text = messageItem.displayText
-
             if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
                 //  workaround for iOS 7 textView data detectors bug
                 cell.textView.text = nil

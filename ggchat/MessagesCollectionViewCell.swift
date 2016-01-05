@@ -61,6 +61,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cellTopLabel: MessageLabel!
     @IBOutlet weak var messageBubbleTopLabel: MessageLabel!
     @IBOutlet var textView: MessageCellTextView!
+    @IBOutlet weak var timeLabel: UILabel!
     
     @IBOutlet weak var messageBubbleContainerView: UIView!
     @IBOutlet var messageBubbleImageView: UIImageView!
@@ -128,6 +129,9 @@ class MessagesCollectionViewCell: UICollectionViewCell {
         
         self.cellBottomLabel.font = UIFont.systemFontOfSize(11.0)
         self.cellBottomLabel.textColor = GGConfig.cellBottomLabelTextColor
+        
+        self.timeLabel.font = UIFont.systemFontOfSize(12.0)
+        self.timeLabel.textColor = GGConfig.cellTopLabelTextColor
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("gg_handleTapGesture:"))
         self.addGestureRecognizer(tap)

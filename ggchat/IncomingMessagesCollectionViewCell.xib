@@ -86,6 +86,12 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="time label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8H-jC-UHi" userLabel="Time label">
+                        <rect key="frame" x="280" y="114" width="40" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -93,6 +99,7 @@
                 <constraint firstAttribute="trailing" secondItem="h36-eA-i5B" secondAttribute="trailing" id="3WS-em-WBX"/>
                 <constraint firstItem="YJb-gP-pVg" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4TR-ak-QlF"/>
                 <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="GZ0-1y-QjP" secondAttribute="bottom" id="CeA-bz-Fa4"/>
+                <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="v8H-jC-UHi" secondAttribute="bottom" id="KCJ-WB-JAH"/>
                 <constraint firstAttribute="trailing" secondItem="YJb-gP-pVg" secondAttribute="trailing" id="M7j-iF-MO7"/>
                 <constraint firstItem="h36-eA-i5B" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="S1R-ui-059"/>
                 <constraint firstItem="jxR-jy-U2S" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="a7N-jR-1pB"/>
@@ -103,6 +110,7 @@
                 <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="jxR-jy-U2S" secondAttribute="bottom" id="nvF-yg-Odt"/>
                 <constraint firstItem="XdS-3H-25R" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="q40-1G-x4R"/>
                 <constraint firstItem="XdS-3H-25R" firstAttribute="top" secondItem="YJb-gP-pVg" secondAttribute="bottom" id="sO5-YO-VBb"/>
+                <constraint firstItem="v8H-jC-UHi" firstAttribute="leading" secondItem="GZ0-1y-QjP" secondAttribute="trailing" id="wut-p6-V1t"/>
                 <constraint firstItem="GZ0-1y-QjP" firstAttribute="top" secondItem="XdS-3H-25R" secondAttribute="bottom" id="ybh-eI-ekL"/>
             </constraints>
             <size key="customSize" width="240" height="175"/>
@@ -125,8 +133,9 @@
                 <outlet property="textViewBottomVerticalSpaceConstraint" destination="0fP-Lq-Vlt" id="hkv-fR-EXd"/>
                 <outlet property="textViewMarginHorizontalSpaceConstraint" destination="vh5-vq-GuW" id="Ced-mt-BSe"/>
                 <outlet property="textViewTopVerticalSpaceConstraint" destination="3aB-Zi-8nV" id="ZDX-Sk-v0e"/>
+                <outlet property="timeLabel" destination="v8H-jC-UHi" id="RFl-WQ-k3E"/>
             </connections>
-            <point key="canvasLocation" x="755" y="672.5"/>
+            <point key="canvasLocation" x="755" y="672"/>
         </collectionViewCell>
     </objects>
 </document>

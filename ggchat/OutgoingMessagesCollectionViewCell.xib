@@ -86,12 +86,20 @@
                             <constraint firstAttribute="width" constant="244" id="xOM-Po-gAb"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="time label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lo-ql-mSi" userLabel="Time label">
+                        <rect key="frame" x="0.0" y="114" width="40" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstItem="WOk-3d-b4L" firstAttribute="leading" secondItem="iYp-dz-DkR" secondAttribute="trailing" constant="2" id="3wb-nP-SZZ"/>
                 <constraint firstItem="BGD-qY-E0o" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5uN-ja-9Ob"/>
+                <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="5lo-ql-mSi" secondAttribute="bottom" id="6KD-WL-FUq"/>
+                <constraint firstItem="iYp-dz-DkR" firstAttribute="leading" secondItem="5lo-ql-mSi" secondAttribute="trailing" id="6P6-0S-Glk"/>
                 <constraint firstAttribute="trailing" secondItem="DZf-LO-Mjz" secondAttribute="trailing" id="CPW-Up-lew"/>
                 <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="bottom" id="DgU-N8-EvM"/>
                 <constraint firstAttribute="trailing" secondItem="BGD-qY-E0o" secondAttribute="trailing" id="PqF-uC-oNF"/>
@@ -125,6 +133,7 @@
                 <outlet property="textViewBottomVerticalSpaceConstraint" destination="MC5-U2-wiz" id="a71-2G-fYT"/>
                 <outlet property="textViewMarginHorizontalSpaceConstraint" destination="0nz-Zp-IS3" id="pWw-gg-9BD"/>
                 <outlet property="textViewTopVerticalSpaceConstraint" destination="GBY-h7-PhD" id="rH1-iC-fvA"/>
+                <outlet property="timeLabel" destination="5lo-ql-mSi" id="9sP-7P-Icr"/>
             </connections>
             <point key="canvasLocation" x="138" y="515"/>
         </collectionViewCell>
