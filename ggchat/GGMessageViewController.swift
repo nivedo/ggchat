@@ -181,7 +181,7 @@ class GGMessageViewController:
                 limit = 20
             }
             let date = self.messages.last?.date
-            print("sync message history from \(date)")
+            print("sync message history from \(date), msg: \(self.messages.last?.displayText), id: \(lastId), time: \(lastTimestamp)")
             UserAPI.sharedInstance.getHistory(recipient.jid,
                 limit: limit,
                 end: date,
@@ -189,9 +189,12 @@ class GGMessageViewController:
                 completion: { (messages: [Message]?, xmls: [String]?) -> Void in
                 if let msgs = messages, let xmls = xmls {
                     dispatch_async(dispatch_get_main_queue()) {
+                        print("returned \(msgs.count) messages from archives")
+                        // print(xmls)
                         for i in 0..<msgs.count {
                             let m = msgs[i]
                             let x = xmls[i]
+                            // print(m.date)
                             if (lastId == nil || lastId! != m.id) &&
                                 (lastTimestamp == nil || m.date.compare(lastTimestamp!) == NSComparisonResult.OrderedDescending) {
                                 self.messages.append(m)

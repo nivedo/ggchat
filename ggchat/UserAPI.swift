@@ -223,8 +223,9 @@ class UserAPI {
             url = "\(url)&limit=\(messageLimit)"
         }
         if let endDate = end {
-            url = "\(url)&end=\(endDate.timeIntervalSince1970 * 1e6)"
+            url = "\(url)&end=\(Int(endDate.timeIntervalSince1970 * 1e6))"
         }
+        print(url)
         return url
     }
     
