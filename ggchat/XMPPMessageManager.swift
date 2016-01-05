@@ -12,22 +12,22 @@ public typealias MessageCompletionHandler = (stream: XMPPStream, message: XMPPMe
 
 // MARK: Protocols
 
-public protocol XMPPMessageManagerDelegate : NSObjectProtocol {
+protocol XMPPMessageManagerDelegate : NSObjectProtocol {
 	func onMessage(
         sender: XMPPStream,
         didReceiveMessage message: XMPPMessage,
-        from user: XMPPUserCoreDataStorageObject)
+        from user: RosterUser) // XMPPUserCoreDataStorageObject)
 	func onPhoto(
         sender: XMPPStream,
         didReceivePhoto message: XMPPMessage,
-        from user: XMPPUserCoreDataStorageObject)
+        from user: RosterUser) // XMPPUserCoreDataStorageObject)
 	func onMessage(
         sender: XMPPStream,
-        userIsComposing user: XMPPUserCoreDataStorageObject)
+        userIsComposing user: RosterUser) // XMPPUserCoreDataStorageObject)
 }
 
 public class XMPPMessageManager: NSObject {
-	public weak var delegate: XMPPMessageManagerDelegate?
+	var delegate: XMPPMessageManagerDelegate?
 	
 	public var messageStorage: XMPPMessageArchivingCoreDataStorage?
 	var messageArchiving: XMPPMessageArchiving?
@@ -226,19 +226,15 @@ extension XMPPManager {
 	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         print("didReceiveManager")
+        /*
 		if let user = XMPPManager.sharedInstance.rosterStorage.userForJID(
             message.from(),
             xmppStream: XMPPManager.sharedInstance.stream,
             managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster()) {
-    
-            // (1) User is in roster
-                
-    		if !XMPPChatManager.knownUserForJid(jidStr: user.jidStr) {
-    			XMPPChatManager.addUserToChatList(jidStr: user.jidStr)
-    		}
-    		
+        */
+        if let user = UserAPI.sharedInstance.rosterMap[message.from().bare()] {
     		if message.isChatMessageWithBody() {
-                print("receiving message from \(user.jidStr) --> \(message.elementForName("body")!.stringValue())")
+                print("receiving message from \(user.jid) --> \(message.elementForName("body")!.stringValue())")
                 if let _ = message.elementForName("body")!.elementForName("photo") {
         			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
                         didReceivePhoto: message,
@@ -249,7 +245,7 @@ extension XMPPManager {
                         from: user)
                 }
     		} else {
-                print("composing by \(user.jidStr)")
+                print("composing by \(user.jid)")
     			if let _ = message.elementForName("composing") {
     				XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, userIsComposing: user)
     			}

@@ -20,6 +20,7 @@ class GGMessageViewController:
 
     var recipient: RosterUser? {
         didSet {
+            print("set recipient --> \(self.recipient?.displayName)")
             self.loadArchivedMessagesFromCoreData(false)
         }
     }
@@ -148,7 +149,7 @@ class GGMessageViewController:
                     self.finishReceivingMessageAnimated(false)
                     self.scrollToBottomAnimated(false)
                 }
-                self.syncArchivedMessages(animated)
+                // self.syncArchivedMessages(animated)
             })
         }
     }
@@ -173,6 +174,7 @@ class GGMessageViewController:
     func syncHistoryMessages(animated: Bool) {
         if let recipient = self.recipient {
             let date = self.messages.last?.date
+            print("sync message history from \(date)")
             UserAPI.sharedInstance.getHistory(recipient.jid,
                 end: date,
                 delegate: self,
@@ -340,7 +342,8 @@ class GGMessageViewController:
 	func onMessage(
         sender: XMPPStream,
         didReceiveMessage message: XMPPMessage,
-        from user: XMPPUserCoreDataStorageObject) {
+        // from user: XMPPUserCoreDataStorageObject) {
+        from user: RosterUser) {
         if let msg: String = message.elementForName("body")?.stringValue() {
             if let from: String = message.attributeForName("from")?.stringValue() {
                 let fromBare = UserAPI.stripResourceFromJID(from)
@@ -382,8 +385,8 @@ class GGMessageViewController:
 	func onPhoto(
         sender: XMPPStream,
         didReceivePhoto xmppMessage: XMPPMessage,
-        from user: XMPPUserCoreDataStorageObject) {
-        // print(message.elementForName("photo"))
+        // from user: XMPPUserCoreDataStorageObject) {
+        from user: RosterUser) {
         if let photo = xmppMessage.elementForName("body")!.elementForName("photo"),
             let originalKey = photo.elementForName("originalKey")?.stringValue(),
             let thumbnailKey = photo.elementForName("thumbnailKey")?.stringValue() {
@@ -444,7 +447,8 @@ class GGMessageViewController:
     
 	func onMessage(
         sender: XMPPStream,
-        userIsComposing user: XMPPUserCoreDataStorageObject) {
+        // userIsComposing user: XMPPUserCoreDataStorageObject) {
+        userIsComposing user: RosterUser) {
         self.showTypingIndicator = !self.showTypingIndicator
         self.scrollToBottomAnimated(true)
     }
