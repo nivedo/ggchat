@@ -289,7 +289,7 @@ class UserAPI {
         if self.authToken == nil {
             self.authToken = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.userApiAuthToken)
         }
-        // print("Authenticate with \(self.authToken)")
+        print("Authenticate with \(self.authToken)")
         if let token = self.authToken {
             self.get(UserAPI.authUrl,
                 authToken: token,

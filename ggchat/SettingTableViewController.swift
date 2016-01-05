@@ -55,7 +55,8 @@ class SettingTableViewController:
         hud.labelText = "Uploading avatar."
         UserAPI.sharedInstance.updateAvatarImage(resizedImage, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
-                if let _ = jsonBody {
+                if let json = jsonBody {
+                    print(json)
                     self.tableView.reloadData()
                 }
                 MBProgressHUD.hideHUDForView(self.view, animated: false)
