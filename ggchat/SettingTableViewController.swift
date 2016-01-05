@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class SettingTableViewController:
     UITableViewController,
@@ -42,20 +43,25 @@ class SettingTableViewController:
     func imagePickerController(
         picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+            
         let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
         let newSize: CGFloat = CGFloat(32.0)
-        let resizedImage = self.imageWithImage(chosenImage, scaledToSize: CGSize(width: newSize, height: newSize))
+        let resizedImage = chosenImage.gg_imageScaledToSize(CGSize(width: newSize, height: newSize), isOpaque: true)
         
-        GGModelData.sharedInstance.updateAvatar(XMPPManager.sharedInstance.jid, image: resizedImage)
-        // XMPPvCardManager.sharedInstance.updateAvatarImage(resizedImage)
+        // let jid = UserAPI.sharedInstance.jid!
+        // GGModelData.sharedInstance.updateAvatar(jid, image: resizedImage)
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Uploading avatar."
         UserAPI.sharedInstance.updateAvatarImage(resizedImage, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
-            if let _ = jsonBody {
-                dispatch_async(dispatch_get_main_queue()) {
+            dispatch_async(dispatch_get_main_queue()) {
+                if let _ = jsonBody {
                     self.tableView.reloadData()
                 }
+                MBProgressHUD.hideHUDForView(self.view, animated: false)
             }
         })
-        
+            
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
