@@ -56,11 +56,11 @@ class MessageImageViewController: UIViewController {
     func updateImage() {
         if let image = self.image {
             let screenSize = UIScreen.mainScreen().bounds.size
-            let resizedImage = image.gg_imageScaledToFitSize(screenSize, isOpaque: false)
-            self.imageView.frame = CGRectMake(0,0, resizedImage.size.width, resizedImage.size.height)
-            
-            self.imageView.center = self.imageView.superview!.center
-            self.imageView.image = resizedImage
+            // let newImage = image.gg_imageScaledToFitSize(screenSize, isOpaque: true)
+            // print(newSize)
+            // self.imageView.frame = CGRectMake(self.imageView.frame.origin.x, self.imageView.frame.origin.y, newSize.width, newSize.height)
+            self.imageView.image = image
+            // self.imageView.center = self.imageView.superview!.center
         }
     }
     

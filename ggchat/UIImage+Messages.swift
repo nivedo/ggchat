@@ -55,6 +55,17 @@ extension UIImage {
         }
     }
     
+    func gg_sizeScaledToFitSize(size: CGSize) -> CGSize {
+        assert(self.size.width > 0, "Scale image to fit size, width must be nonzero")
+        assert(self.size.height > 0, "Scale image to fit size, height must be nonzero")
+        let aspect: CGFloat = self.size.width / self.size.height
+        if size.width / aspect <= size.height {
+            return CGSizeMake(size.width, size.width / aspect)
+        } else {
+            return CGSizeMake(size.height * aspect, size.height)
+        }
+    }
+    
     func gg_imageCompressedToFitSize(size: CGSize, isOpaque: Bool) -> UIImage {
         assert(self.size.width > 0, "Scale image to fit size, width must be nonzero")
         assert(self.size.height > 0, "Scale image to fit size, height must be nonzero")
