@@ -510,10 +510,10 @@ class UserAPI {
         return self.jidBareStr == UserAPI.stripResourceFromJID(jid)
     }
     
-    func getHistory(peerJID: String, end: NSDate?, delegate: MessageMediaDelegate?, completion: HTTPMessagesCompletion? = nil) {
+    func getHistory(peerJID: String, limit: Int?, end: NSDate?, delegate: MessageMediaDelegate?, completion: HTTPMessagesCompletion? = nil) {
         // print("getHistory")
         if let token = self.authToken {
-            self.get(UserAPI.historyUrl(peerJID, limit: nil, end: end),
+            self.get(UserAPI.historyUrl(peerJID, limit: limit, end: end),
                 authToken: token,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {

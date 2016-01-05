@@ -94,9 +94,9 @@ class GGMessageViewController:
         print("GG::viewWillAppear")
         
         super.viewWillAppear(animated)
-        // self.loadArchivedMessagesFromCoreData(true)
-        self.finishReceivingMessageAnimated(false)
-        self.scrollToBottomAnimated(false)
+        self.loadArchivedMessagesFromCoreData(true)
+        // self.finishReceivingMessageAnimated(false)
+        // self.scrollToBottomAnimated(false)
         self.loadLastActivity(false)
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = self
@@ -149,7 +149,7 @@ class GGMessageViewController:
                     self.finishReceivingMessageAnimated(false)
                     self.scrollToBottomAnimated(false)
                 }
-                // self.syncArchivedMessages(animated)
+                self.syncArchivedMessages(animated)
             })
         }
     }
@@ -173,20 +173,29 @@ class GGMessageViewController:
     
     func syncHistoryMessages(animated: Bool) {
         if let recipient = self.recipient {
+            let lastMessage = self.messages.last
+            let lastTimestamp = self.messages.last?.date
+            let lastId = self.messages.last?.id
+            var limit: Int? = nil
+            if lastMessage == nil {
+                limit = 20
+            }
             let date = self.messages.last?.date
             print("sync message history from \(date)")
             UserAPI.sharedInstance.getHistory(recipient.jid,
+                limit: limit,
                 end: date,
                 delegate: self,
                 completion: { (messages: [Message]?, xmls: [String]?) -> Void in
                 if let msgs = messages, let xmls = xmls {
                     dispatch_async(dispatch_get_main_queue()) {
-                        let lastTimestamp = self.messages.last?.date
                         for i in 0..<msgs.count {
                             let m = msgs[i]
                             let x = xmls[i]
-                            if lastTimestamp == nil || m.date.compare(lastTimestamp!) == NSComparisonResult.OrderedDescending {
+                            if (lastId == nil || lastId! != m.id) &&
+                                (lastTimestamp == nil || m.date.compare(lastTimestamp!) == NSComparisonResult.OrderedDescending) {
                                 self.messages.append(m)
+                                print("archiving message \(m.displayText)")
                                 XMPPMessageManager.sharedInstance.archiveMessage(x, date: m.date, outgoing: m.isOutgoing)
                             }
                         }

@@ -353,10 +353,15 @@ class MessageViewController: UIViewController,
         *
         *  Show a timestamp for every 3rd message
         */
+        /*
         if (indexPath.item % 3 == 0) {
             // let message: Message = self.messages[indexPath.item]
             let message: Message = self.messages[indexPath.item]
             return MessageTimestampFormatter.sharedInstance.attributedTimestampForDate(message.date)
+        }
+        */
+        if let date = collectionView.messageDataSource.dateForTopLabelAtIndexPath(collectionView, indexPath: indexPath) {
+            return NSAttributedString(string: date)
         }
         return nil;
     }
@@ -1351,11 +1356,31 @@ class MessageViewController: UIViewController,
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewFlowLayout,
         heightForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (indexPath.item % 3 == 0) {
+            if let _ = self.dateForTopLabelAtIndexPath(collectionView, indexPath: indexPath) {
             return MessagesCollectionViewFlowLayout.kMessagesCollectionViewCellLabelHeightDefault
         }
         
         return 0.0
+    }
+    
+    func dateForTopLabelAtIndexPath(_ collectionView: UICollectionView, indexPath: NSIndexPath) -> String? {
+        let message = self.messages[indexPath.item]
+        let date = MessageTimestampFormatter.sharedInstance.relativeDateForDate(message.date)
+        if indexPath.item == 0 {
+            return date
+        } else if indexPath.item < self.messages.count {
+            let prevIndex = indexPath.item - 1
+            let prevMessage = self.messages[prevIndex]
+            
+            let prevDate = MessageTimestampFormatter.sharedInstance.relativeDateForDate(prevMessage.date)
+           
+            if prevDate != date {
+                return date
+            } else {
+                return nil
+            }
+        }
+        return nil
     }
     
     /**
@@ -1528,7 +1553,7 @@ class MessageViewController: UIViewController,
     
     func redrawMessageMedia() {
         dispatch_async(dispatch_get_main_queue()) {
-            self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+            // self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
             self.messageCollectionView.reloadData()
             self.scrollToBottomAnimated(false)
         }
