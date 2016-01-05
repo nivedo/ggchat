@@ -391,8 +391,10 @@ class GGMessageViewController:
             let originalKey = photo.elementForName("originalKey")?.stringValue(),
             let thumbnailKey = photo.elementForName("thumbnailKey")?.stringValue() {
             
-            if let from: String = xmppMessage.attributeForName("from")?.stringValue() {
+            if let fromRaw: String = xmppMessage.attributeForName("from")?.stringValue() {
+                let from = UserAPI.stripResourceFromJID(fromRaw)
                 if self.recipient == nil || self.recipient!.jid == UserAPI.stripResourceFromJID(from) {
+                    /*
                     if S3ImageCache.sharedInstance.isImageCachedForKey(originalKey) {
                         S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
                             bucket: GGSetting.awsS3BucketName,
@@ -405,40 +407,28 @@ class GGMessageViewController:
                                         isOutgoing: false,
                                         date: NSDate(),
                                         media: photoMedia)
-                                    
-                                self.messages.append(message)
-                                self.finishReceivingMessageAnimated(true)
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    self.messages.append(message)
+                                    self.finishReceivingMessageAnimated(true)
+                                }
                             }
                         })
                     } else {
-                        print("Downloading thumbnail \(thumbnailKey)")
-                        S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
-                            bucket: GGSetting.awsS3BucketName,
-                            completion: { (image: UIImage?) -> Void in
-                            if let image = image {
-                                let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image, delegate: self)
-                                let message: Message = Message(
-                                        senderId: from,
-                                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                                        isOutgoing: false,
-                                        date: NSDate(),
-                                        media: photoMedia)
-                                    
-                                self.messages.append(message)
-                                self.finishReceivingMessageAnimated(true)
-                                    
-                                print("Downloading original \(originalKey)")
-                                S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
-                                    bucket: GGSetting.awsS3BucketName,
-                                    completion: { (image: UIImage?) -> Void in
-                                    if let image = image {
-                                        message.addMedia(PhotoMediaItem(image: image, delegate: self))
-                                        // self.messageCollectionView.reloadData()
-                                        self.finishReceivingMessageAnimated(true)
-                                    }
-                                })
-                            }
-                        })
+                    */
+                    let photoMedia: PhotoMediaItem = PhotoMediaItem(
+                        thumbnailKey: thumbnailKey,
+                        originalKey: originalKey,
+                        delegate: self)
+                    let message: Message = Message(
+                            senderId: from,
+                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
+                            isOutgoing: false,
+                            date: NSDate(),
+                            media: photoMedia)
+                    
+                    self.messages.append(message)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.finishReceivingMessageAnimated(true)
                     }
                 }
             }
