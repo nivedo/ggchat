@@ -18,9 +18,36 @@ class PhotoMediaItem: MediaItem {
 
     init(image: UIImage, delegate: MessageMediaDelegate?) {
         super.init()
-        self.image_ = image.copy() as? UIImage
+        self.image_ = image
         self.cachedImageView_ = nil
         self.delegate = delegate
+    }
+    
+    init(thumbnailKey: String, originalKey: String, delegate: MessageMediaDelegate?) {
+        super.init()
+        
+        self.cachedImageView_ = nil
+        self.delegate = delegate
+        if S3ImageCache.sharedInstance.isImageCachedForKey(originalKey) {
+            S3ImageCache.sharedInstance.retrieveImageForKey(originalKey,
+                bucket: GGSetting.awsS3BucketName,
+                completion: { (image: UIImage?) -> Void in
+                    self.image = image
+                    self.delegate?.redrawMessageMedia()
+            })
+        } else {
+            S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
+                bucket: GGSetting.awsS3BucketName,
+                completion: { (image: UIImage?) -> Void in
+                    self.image = image
+                    S3ImageCache.sharedInstance.retrieveImageForKey(originalKey,
+                        bucket: GGSetting.awsS3BucketName,
+                        completion: { (image: UIImage?) -> Void in
+                            self.image = image
+                            self.delegate?.redrawMessageMedia()
+                    })
+            })
+        }
     }
 
     deinit {

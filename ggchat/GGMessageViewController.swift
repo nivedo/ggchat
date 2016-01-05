@@ -387,42 +387,54 @@ class GGMessageViewController:
             let thumbnailKey = photo.elementForName("thumbnailKey")?.stringValue() {
             
             if let from: String = xmppMessage.attributeForName("from")?.stringValue() {
-                let tokens = from.componentsSeparatedByString("/")
-                if self.recipient == nil || self.recipient!.jid == tokens[0] {
-                
-                // Right recipient
-                print("Downloading thumbnail \(thumbnailKey)")
-                AWSS3DownloadManager.sharedInstance.download(
-                    thumbnailKey,
-                    userData: nil,
-                    completion: { (fileURL: NSURL) -> Void in
-                    
-                    let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-                    let image = UIImage(data: data)
-                    let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!, delegate: self)
-                    let message: Message = Message(
-                            senderId: from,
-                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                            isOutgoing: false,
-                            date: NSDate(),
-                            media: photoMedia)
-                        
-                    self.messages.append(message)
-                    self.finishReceivingMessageAnimated(true)
-                        
-                    print("Downloading original \(originalKey)")
-                    AWSS3DownloadManager.sharedInstance.download(
-                        originalKey,
-                        userData: nil,
-                        completion: { (fileURL: NSURL) -> Void in
-                        
-                        let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-                        let image = UIImage(data: data)
-                        message.addMedia(PhotoMediaItem(image: image!, delegate: self))
-                        // self.messageCollectionView.reloadData()
-                        self.finishReceivingMessageAnimated(true)
-                    })
-                })
+                if self.recipient == nil || self.recipient!.jid == UserAPI.stripResourceFromJID(from) {
+                    if S3ImageCache.sharedInstance.isImageCachedForKey(originalKey) {
+                        S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
+                            bucket: GGSetting.awsS3BucketName,
+                            completion: { (image: UIImage?) -> Void in
+                            if let image = image {
+                                let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image, delegate: self)
+                                let message: Message = Message(
+                                        senderId: from,
+                                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
+                                        isOutgoing: false,
+                                        date: NSDate(),
+                                        media: photoMedia)
+                                    
+                                self.messages.append(message)
+                                self.finishReceivingMessageAnimated(true)
+                            }
+                        })
+                    } else {
+                        print("Downloading thumbnail \(thumbnailKey)")
+                        S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
+                            bucket: GGSetting.awsS3BucketName,
+                            completion: { (image: UIImage?) -> Void in
+                            if let image = image {
+                                let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image, delegate: self)
+                                let message: Message = Message(
+                                        senderId: from,
+                                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
+                                        isOutgoing: false,
+                                        date: NSDate(),
+                                        media: photoMedia)
+                                    
+                                self.messages.append(message)
+                                self.finishReceivingMessageAnimated(true)
+                                    
+                                print("Downloading original \(originalKey)")
+                                S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
+                                    bucket: GGSetting.awsS3BucketName,
+                                    completion: { (image: UIImage?) -> Void in
+                                    if let image = image {
+                                        message.addMedia(PhotoMediaItem(image: image, delegate: self))
+                                        // self.messageCollectionView.reloadData()
+                                        self.finishReceivingMessageAnimated(true)
+                                    }
+                                })
+                            }
+                        })
+                    }
                 }
             }
         }

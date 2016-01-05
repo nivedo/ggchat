@@ -461,10 +461,19 @@ class UserAPI {
             let fromBare = UserAPI.stripResourceFromJID(from)
             
             if let _ = bodyElement.elementForName("photo") {
-                if let photoMessage = S3PhotoManager.sharedInstance.getPhotoMessage(bodyElement, completion: nil, delegate: delegate) {
-                    photoMessage.id = id
-                    return photoMessage
-                }
+                let photo = bodyElement.elementForName("photo")!
+                let originalKey = photo.elementForName("originalKey")!.stringValue()
+                let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
+            
+                let photoMedia = PhotoMediaItem(thumbnailKey: thumbnailKey, originalKey: originalKey, delegate: delegate)
+                let photoMessage = Message(
+                    senderId: fromBare,
+                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                    isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
+                    date: date,
+                    media: photoMedia)
+                photoMessage.id = id
+                return photoMessage
             } else {
                 // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(body)")
                 if let asset = AssetManager.getSingleEncodedAsset(body) {

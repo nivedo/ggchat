@@ -57,6 +57,16 @@ class S3ImageCache {
         }
     }
     
+    func isImageCachedForKey(key: String, bucket: String? = nil) -> Bool {
+        var cache: ImageCache!
+        if let bucketName = bucket {
+            cache = self.caches[bucketName]
+        } else {
+            cache = KingfisherManager.sharedManager.cache
+        }
+        return cache.isImageCachedForKey(key).cached
+    }
+    
     func retrieveImageForKey(key: String, bucket: String, completion: ((image: UIImage?) -> Void)?) {
         if let cache = self.caches[bucket] {
             cache.retrieveImageForKey(key,

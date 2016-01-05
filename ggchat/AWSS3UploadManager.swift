@@ -72,6 +72,7 @@ class S3PhotoManager: S3UploadDelegate {
     }
    
     func sendPhoto(image: UIImage, to: String) {
+        print("sendPhoto to: \(to)")
         
         let originalImage = self.originalCompressedImage(image)
         let thumbnailImage = self.thumbnailCompressedImage(image)
@@ -87,12 +88,27 @@ class S3PhotoManager: S3UploadDelegate {
         AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey)
         AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
     }
-    
+   
+    /*
     func getPhotoMessage(xmppMessage: DDXMLElement, completion: ((Void) -> Void)?, delegate: MessageMediaDelegate?) -> Message? {
         let photo = xmppMessage.elementForName("body")!.elementForName("photo")!
         let originalKey = photo.elementForName("originalKey")!.stringValue()
         let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
         let from = xmppMessage.attributeStringValueForName("from")!
+       
+        if S3ImageCache.sharedInstance.isImageCachedForKey(originalKey) {
+            S3ImageCache.sharedInstance.retrieveImageForKey(originalKey,
+                bucket: GGSetting.awsS3BucketName,
+                completion: { (image: UIImage?) -> Void in
+                if let image = image {
+                    return self.photoMessage(image, from: from, delegate: delegate)
+                }
+            })
+        } else {
+            
+        }
+        
+        /*
         if let originalFileURL = AWSS3DownloadManager.sharedInstance.fileURLOfDownloadKey(originalKey) {
             // print("Found cached download at \(originalFileURL)")
             return self.photoMessage(originalFileURL, from: from, delegate: delegate)
@@ -126,12 +142,11 @@ class S3PhotoManager: S3UploadDelegate {
                 return message
             }
         }
+        */
     }
 
-    func photoMessage(fileURL: NSURL, from: String, delegate: MessageMediaDelegate?) -> Message {
-        let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-        let image = UIImage(data: data)
-        let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image!, delegate: delegate)
+    func photoMessage(image: UIImage, from: String, delegate: MessageMediaDelegate?) -> Message {
+        let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image, delegate: delegate)
         let message: Message = Message(
             senderId: from,
             senderDisplayName: from,
@@ -151,6 +166,7 @@ class S3PhotoManager: S3UploadDelegate {
             media: photoMedia)
         return message
     }
+    */
     
     // S3UploadDelegate methods
     func onUploadFailure() {
