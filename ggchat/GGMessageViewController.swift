@@ -93,7 +93,9 @@ class GGMessageViewController:
         print("GG::viewWillAppear")
         
         super.viewWillAppear(animated)
-        self.loadArchivedMessagesFromCoreData(true)
+        // self.loadArchivedMessagesFromCoreData(true)
+        self.finishReceivingMessageAnimated(false)
+        self.scrollToBottomAnimated(false)
         self.loadLastActivity(false)
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = self
