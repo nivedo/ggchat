@@ -76,8 +76,8 @@ class ImageModalViewController: UIViewController {
                             let yTarget = scaleFactor * img.size.height
                             let newSize = CGSizeMake(xTarget, yTarget)
                             
-                            // self.imageView.image = img.gg_imageScaledToSize(newSize, isOpaque: false)
-                            self.imageView.frame = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: newSize)
+                            self.imageView.image = img.gg_imageScaledToSize(newSize, isOpaque: false)
+                            // self.imageView.frame = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: newSize)
                         }
                         hud.hide(true)
                 })
