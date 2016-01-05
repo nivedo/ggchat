@@ -130,15 +130,23 @@ public class XMPPMessageManager: NSObject {
         } catch _ {
             element = nil
         }
-       
+      
+        /*
         if let delay = DDXMLElement(name: "delay", xmlns: "urn:xmpp:delay") {
-            delay.addAttributeWithName("stamp", stringValue: date.aws_stringValue("CCYY-MM-DDThh:mm:ss[.sss]TZD"))
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            let timestamp = dateFormatter.stringFromDate(date)
+            print("ARCHIVE DELAY: \(timestamp)")
+            delay.addAttributeWithName("stamp", stringValue: timestamp)
             element?.addChild(delay)
         }
+        */
         if let xmppMessage = XMPPMessage(fromElement: element) {
             self.messageStorage?.archiveMessage(xmppMessage,
                 outgoing: outgoing,
-                xmppStream: XMPPManager.sharedInstance.stream)
+                xmppStream: XMPPManager.sharedInstance.stream,
+                archiveDate: date
+            )
             
             print("archive SUCCESS")
         }

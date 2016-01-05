@@ -333,6 +333,11 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream
 {
+    [self archiveMessage:message outgoing:isOutgoing xmppStream:xmppStream archiveDate: Nil];
+}
+
+- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream archiveDate:(NSDate *)date
+{
 	// Message should either have a body, or be a composing notification
 	
 	NSString *messageBody = [[message elementForName:@"body"] stringValue];
@@ -409,12 +414,19 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			
 			archivedMessage.bareJid = [messageJid bareJID];
 			archivedMessage.streamBareJidStr = [myJid bare];
-			
-			NSDate *timestamp = [message delayedDeliveryDate];
-			if (timestamp)
-				archivedMessage.timestamp = timestamp;
-			else
-				archivedMessage.timestamp = [[NSDate alloc] init];
+		
+            if (date)
+            {
+                archivedMessage.timestamp = date;
+            }
+            else
+            {
+    			NSDate *timestamp = [message delayedDeliveryDate];
+    			if (timestamp)
+    				archivedMessage.timestamp = timestamp;
+    			else
+    				archivedMessage.timestamp = [[NSDate alloc] init];
+            }
 			
 			archivedMessage.thread = [[message elementForName:@"thread"] stringValue];
 			archivedMessage.isOutgoing = isOutgoing;
