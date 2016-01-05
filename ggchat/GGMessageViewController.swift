@@ -394,27 +394,6 @@ class GGMessageViewController:
             if let fromRaw: String = xmppMessage.attributeForName("from")?.stringValue() {
                 let from = UserAPI.stripResourceFromJID(fromRaw)
                 if self.recipient == nil || self.recipient!.jid == UserAPI.stripResourceFromJID(from) {
-                    /*
-                    if S3ImageCache.sharedInstance.isImageCachedForKey(originalKey) {
-                        S3ImageCache.sharedInstance.retrieveImageForKey(thumbnailKey,
-                            bucket: GGSetting.awsS3BucketName,
-                            completion: { (image: UIImage?) -> Void in
-                            if let image = image {
-                                let photoMedia: PhotoMediaItem = PhotoMediaItem(image: image, delegate: self)
-                                let message: Message = Message(
-                                        senderId: from,
-                                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                                        isOutgoing: false,
-                                        date: NSDate(),
-                                        media: photoMedia)
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    self.messages.append(message)
-                                    self.finishReceivingMessageAnimated(true)
-                                }
-                            }
-                        })
-                    } else {
-                    */
                     let photoMedia: PhotoMediaItem = PhotoMediaItem(
                         thumbnailKey: thumbnailKey,
                         originalKey: originalKey,
