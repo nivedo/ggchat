@@ -73,6 +73,7 @@ class MessageAutocompleteController: NSObject,
         }
         */
         self.suggestions = suggestions
+        self.suggestions.sortInPlace({ $0.displayString.length > $1.displayString.length })
         // print(suggestions)
         
         self.tableView.reloadData()
