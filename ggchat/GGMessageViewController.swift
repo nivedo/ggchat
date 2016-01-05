@@ -21,7 +21,7 @@ class GGMessageViewController:
     var recipient: RosterUser? {
         didSet {
             print("set recipient --> \(self.recipient?.displayName)")
-            self.loadArchivedMessagesFromCoreData(false)
+            self.loadArchivedMessagesFromCoreData(true, animated: true)
         }
     }
     var recipientDetails: UIView?
@@ -47,7 +47,7 @@ class GGMessageViewController:
         self.photoPicker.delegate = self
         // GGWiki.sharedInstance.delegate = self
       
-        self.loadArchivedMessagesFromCoreData(true)
+        self.loadArchivedMessagesFromCoreData(false, animated: false)
         self.loadLastActivity(true)
         self.messageCollectionView.reloadData()
    
@@ -94,7 +94,7 @@ class GGMessageViewController:
         print("GG::viewWillAppear")
         
         super.viewWillAppear(animated)
-        self.loadArchivedMessagesFromCoreData(true)
+        self.loadArchivedMessagesFromCoreData(false, animated: true)
         // self.finishReceivingMessageAnimated(false)
         // self.scrollToBottomAnimated(false)
         self.loadLastActivity(false)
@@ -135,7 +135,7 @@ class GGMessageViewController:
         }
     }
     
-    func loadArchivedMessagesFromCoreData(animated: Bool) {
+    func loadArchivedMessagesFromCoreData(sync: Bool, animated: Bool) {
         if let recipient = self.recipient {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
@@ -149,7 +149,9 @@ class GGMessageViewController:
                     self.finishReceivingMessageAnimated(false)
                     self.scrollToBottomAnimated(false)
                 }
-                self.syncArchivedMessages(animated)
+                if sync {
+                    self.syncArchivedMessages(animated)
+                }
             })
         }
     }
