@@ -216,7 +216,7 @@ class ChatTableViewController:
         if (segue.identifier == "chats.to.messages") {
             if let chatConversation = sender as? ChatConversation, let user = UserAPI.sharedInstance.rosterMap[chatConversation.peerJID] {
                 if let cpd = segue.destinationViewController as? ContactPickerDelegate {
-                    print("ContactPickerDelege!")
+                    print("segue --> chats.to.messages, \(user.displayName)")
                     cpd.didSelectContact(user)
                 }
             }

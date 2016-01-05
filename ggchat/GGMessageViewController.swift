@@ -21,7 +21,7 @@ class GGMessageViewController:
     var recipient: RosterUser? {
         didSet {
             print("set recipient --> \(self.recipient?.displayName)")
-            self.loadArchivedMessagesFromCoreData(true, animated: true)
+            self.loadArchivedMessagesFromCoreData(true, animated: false)
         }
     }
     var recipientDetails: UIView?
