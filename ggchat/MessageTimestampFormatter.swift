@@ -55,7 +55,8 @@ class MessageTimestampFormatter {
         if NSCalendar.currentCalendar().isDateInToday(date) {
             return self.timeForDate(date)
         } else {
-            return self.relativeDateForDate(date)
+            // return self.relativeDateForDate(date)
+            return self.shortDateForDate(date)
         }
     }
     
@@ -83,6 +84,12 @@ class MessageTimestampFormatter {
     
     func relativeDateForDate(date: NSDate) -> String {
         self.dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        self.dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        return self.dateFormatter.stringFromDate(date)
+    }
+
+    func shortDateForDate(date: NSDate) -> String {
+        self.dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
         self.dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
         return self.dateFormatter.stringFromDate(date)
     }

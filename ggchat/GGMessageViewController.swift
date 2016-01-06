@@ -123,10 +123,10 @@ class GGMessageViewController:
                         self.recipientDetails = XMPPLastActivityManager.sharedInstance.addLastActivityLabelToNavigationBar(
                             lastActivityResponse, displayName: recipient.displayName)
                         if (self.recipientDetails != nil) {
-                            self.navigationItem.title = ""
-                            
-                            self.navigationController!.view.addSubview(
-                                self.recipientDetails!)
+                            if let navController = self.navigationController {
+                                self.navigationItem.title = ""
+                                navController.view.addSubview(self.recipientDetails!)
+                            }
                         }
                         // print(self.recipientDetails)
                     }
