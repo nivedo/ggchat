@@ -78,20 +78,9 @@ class RosterUser {
     var messageAvatarImage: MessageAvatarImage {
         get {
             if let image = self.avatarImage {
-                return MessageAvatarImageFactory.avatarImageWithImage(image, diameter: GGConfig.avatarSize)
+                return UserAPI.avatarFromImage(image)
             } else {
-                let tokens = self.displayName.tokens
-                var initials = tokens[0].substringToIndex(tokens[0].startIndex.advancedBy(1))
-                if tokens.count > 1 {
-                    let second = tokens[1]
-                    initials = "\(initials)\(second.substringToIndex(second.startIndex.advancedBy(1)))"
-                }
-                return MessageAvatarImageFactory.avatarImageWithUserInitials(
-                    initials,
-                    backgroundColor: UIColor(white: 0.85, alpha: 1.0),
-                    textColor: UIColor(white: 0.60, alpha: 1.0),
-                    font: UIFont.systemFontOfSize(14.0),
-                    diameter: GGConfig.avatarSize)
+                return UserAPI.avatarFromInitials(self.displayName)
             }
         }
     }
@@ -189,6 +178,25 @@ class UserAPI {
     
     var delegate: UserDelegate?
 
+    class func avatarFromImage(image: UIImage) -> MessageAvatarImage {
+        return MessageAvatarImageFactory.avatarImageWithImage(image, diameter: GGConfig.avatarSize)
+    }
+    
+    class func avatarFromInitials(displayName: String) -> MessageAvatarImage {
+        let tokens = displayName.tokens
+        var initials = tokens[0].substringToIndex(tokens[0].startIndex.advancedBy(1))
+        if tokens.count > 1 {
+            let second = tokens[1]
+            initials = "\(initials)\(second.substringToIndex(second.startIndex.advancedBy(1)))"
+        }
+        return MessageAvatarImageFactory.avatarImageWithUserInitials(
+            initials,
+            backgroundColor: UIColor(white: 0.85, alpha: 1.0),
+            textColor: UIColor(white: 0.60, alpha: 1.0),
+            font: UIFont.systemFontOfSize(14.0),
+            diameter: GGConfig.avatarSize)
+    }
+    
     ////////////////////////////////////////////////////////////////////
     // Routes
     ////////////////////////////////////////////////////////////////////
@@ -684,14 +692,7 @@ class UserAPI {
                 return user.messageAvatarImage
             }
         }
-        let tokens = jid.tokens
-        let initials = tokens[0].substringToIndex(tokens[0].startIndex.advancedBy(1))
-        return MessageAvatarImageFactory.avatarImageWithUserInitials(
-            initials,
-            backgroundColor: UIColor(white: 0.85, alpha: 1.0),
-            textColor: UIColor(white: 0.60, alpha: 1.0),
-            font: UIFont.systemFontOfSize(14.0),
-            diameter: GGConfig.avatarSize)
+        return UserAPI.avatarFromInitials(jid)
     }
     
     func getDisplayName(jid: String) -> String {
@@ -774,10 +775,9 @@ class UserAPI {
     var avatar: MessageAvatarImage {
         get {
             if let image = self.avatarImage {
-                let avatar = MessageAvatarImageFactory.avatarImageWithImage(image, diameter: GGConfig.avatarSize)
-                return avatar
+                return UserAPI.avatarFromImage(image)
             } else {
-                return GGModelData.sharedInstance.getAvatar(self.jid!, displayName: self.displayName)
+                return UserAPI.avatarFromInitials(self.displayName)
             }
         }
     }

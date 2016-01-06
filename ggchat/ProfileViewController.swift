@@ -52,7 +52,7 @@ class ProfileViewController: UIViewController,
         self.submitButton.layer.borderColor = UIColor.darkGrayColor().CGColor
         self.submitButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal);
      
-        let avatar = GGModelData.sharedInstance.getAvatar(UserAPI.sharedInstance.jid!, displayName: UserAPI.sharedInstance.username!)
+        let avatar = UserAPI.sharedInstance.avatar
         self.avatarImage.image = avatar.avatarImage
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -158,15 +158,18 @@ class ProfileViewController: UIViewController,
             let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
             let newSize: CGFloat = self.avatarContainer.frame.width // CGFloat(100.0)
             let resizedImage = chosenImage.gg_imageScaledToSize(CGSize(width: newSize, height: newSize), isOpaque: true)
-           
+          
+            /*
             let jid = UserAPI.sharedInstance.jid!
             GGModelData.sharedInstance.updateAvatar(jid, image: resizedImage)
             let avatar = GGModelData.sharedInstance.getAvatar(jid)
+            */
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.labelText = "Uploading avatar."
             UserAPI.sharedInstance.updateAvatarImage(resizedImage, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                 dispatch_async(dispatch_get_main_queue()) {
                     if let _ = jsonBody {
+                        let avatar = UserAPI.sharedInstance.avatar
                         self.avatarImage.image = avatar.avatarImage
                     }
                     MBProgressHUD.hideHUDForView(self.view, animated: false)

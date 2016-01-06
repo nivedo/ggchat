@@ -23,6 +23,7 @@ class Demo {
     static var avatarSize: CGFloat = 30.0
 }
 
+/*
 class GGModelData {
     var messages = [Message]()
     var chats = [Chat]()
@@ -135,7 +136,7 @@ class GGModelData {
                 diameter: Demo.avatarSize),
         ]
     }
-   
+  
     func updateAvatar(id: String, image: UIImage) {
         self.avatars[id] = MessageAvatarImageFactory.avatarImageWithImage(image, diameter: Demo.avatarSize)
     }
@@ -161,6 +162,7 @@ class GGModelData {
             return self.avatars[id]!
         }
     }
+
     
     func loadUsers() {
         self.users = [
@@ -207,6 +209,5 @@ class GGModelData {
         [self.messages addObject:videoMessage];
         */
     }
-
-
 }
+*/

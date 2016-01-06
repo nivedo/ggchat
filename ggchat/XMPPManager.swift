@@ -48,7 +48,8 @@ class XMPPManager: NSObject,
     //////////////////////////////////////////////////////////////////////////////
     // Class helper methods
     //////////////////////////////////////////////////////////////////////////////
-  
+ 
+    /*
     class func avatarForJID(jid: String) -> MessageAvatarImage {
         var avatar: MessageAvatarImage?
        
@@ -90,6 +91,7 @@ class XMPPManager: NSObject,
             return (avatarImage!, avatar.avatarHighlightedImage)
         }
     }
+    */
     
     var jid: String {
         get {

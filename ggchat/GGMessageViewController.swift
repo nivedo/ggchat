@@ -339,14 +339,16 @@ class GGMessageViewController:
         let actionLocation = UIAlertAction(
             title: "Send location",
             style: UIAlertActionStyle.Default) { action -> Void in
+                /*
                 GGModelData.sharedInstance.addLocationMediaMessageCompletion({
                     self.messageCollectionView.reloadData()
                 })
+                */
         }
         let actionVideo = UIAlertAction(
             title: "Send video",
             style: UIAlertActionStyle.Default) { action -> Void in
-            GGModelData.sharedInstance.addVideoMediaMessage()
+            // GGModelData.sharedInstance.addVideoMediaMessage()
         }
         alert.addAction(actionCancel)
         alert.addAction(actionPhoto)
