@@ -113,6 +113,20 @@ class ChatConversation {
             }
         }
     }
+    
+    init(jid: String, date: NSDate, xmlString: String) {
+        self.peerJID = jid
+        self.lastTime = date
+        self.lastMessage = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil)
+    }
+    
+    func updateIfMoreRecent(date: NSDate, xmlString: String) {
+        if self.lastTime.compare(date) == NSComparisonResult.OrderedAscending {
+            self.lastTime = date
+            self.lastMessage = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil)
+        }
+    }
+    
 }
 
 struct Language {
@@ -304,7 +318,10 @@ class UserAPI {
                         self.authToken = newToken
                         self.jid = jid
                         self.jpassword = pass
-                        self.loadRosterFromCoreData(nil)
+                       
+                        // self.loadRosterFromCoreData(nil)
+                        // self.loadChatsFromCoreData()
+                        
                         self.cacheProfile(nil)
                         self.cacheRoster()
                         self.cacheChats()
@@ -317,6 +334,11 @@ class UserAPI {
             return true
         }
         return false
+    }
+    
+    func loadCoreData() {
+        self.loadRosterFromCoreData(nil)
+        self.loadChatsFromCoreData()
     }
    
     func getUserinfo(username: String, jsonCompletion: HTTPJsonCompletion) {
@@ -565,6 +587,22 @@ class UserAPI {
         }
     }
     
+    func loadChatsFromCoreData() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.chatsMap = XMPPMessageManager.sharedInstance.loadAllMostRecentArchivedMessages()
+            self.chatsList.removeAll()
+            
+            for (_,v) in self.chatsMap {
+                // print("chat: \(k) --> \(v.lastMessage.displayText)")
+                self.chatsList.append(v)
+            }
+            self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
+            self.delegate?.onChatsUpdate(true)
+            
+            print("Loaded \(self.chatsList.count) from core data")
+        }
+    }
+    
     func cacheChats() {
         if let token = self.authToken {
             print(UserAPI.chatsUrl)
@@ -572,17 +610,19 @@ class UserAPI {
                 authToken: token,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {
-                        self.chatsList.removeAll()
-                        self.chatsMap.removeAll()
-                        for element in array {
-                            if let json = element as? [String: AnyObject] {
-                                // print(json)
-                                let chat = ChatConversation(json: json)
-                                self.chatsList.append(chat)
-                                self.chatsMap[chat.peerJID] = chat
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.chatsList.removeAll()
+                            self.chatsMap.removeAll()
+                            for element in array {
+                                if let json = element as? [String: AnyObject] {
+                                    // print(json)
+                                    let chat = ChatConversation(json: json)
+                                    self.chatsList.append(chat)
+                                    self.chatsMap[chat.peerJID] = chat
+                                }
                             }
+                            self.delegate?.onChatsUpdate(true)
                         }
-                        self.delegate?.onChatsUpdate(true)
                     } else {
                         self.delegate?.onChatsUpdate(false)
                     }

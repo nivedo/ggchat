@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         UIApplication.sharedApplication().statusBarHidden = false
         
+        UserAPI.sharedInstance.loadCoreData()
+        
         print("application::didFinishLaunchingWithOptions")
         let logLevel = XMPP_LOG_FLAG_SEND | XMPP_LOG_FLAG_TRACE | XMPP_LOG_FLAG_VERBOSE
         DDLog.addLogger(DDASLLogger.sharedInstance(), withLogLevel: logLevel)

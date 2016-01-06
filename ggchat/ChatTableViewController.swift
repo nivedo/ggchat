@@ -47,9 +47,13 @@ class ChatTableViewController:
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        UserAPI.sharedInstance.delegate = self
         
-        UserAPI.sharedInstance.cacheChats()
+        self.chatsList = UserAPI.sharedInstance.chatsList
+        print("Chats::viewWillAppear --> \(self.chatsList.count)")
+        self.tableView.reloadData()
+        
+        UserAPI.sharedInstance.delegate = self
+        // UserAPI.sharedInstance.cacheChats()
     }
     
     func onAvatarUpdate(jid: String, success: Bool) {
