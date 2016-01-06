@@ -71,14 +71,15 @@ class GGMessageViewController:
                 // GGSystemSoundPlayer.gg_playMessageSentSound()
                 let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
                 let photoMedia: PhotoMediaItem = PhotoMediaItem(image: chosenImage, delegate: self)
+                let now = NSDate()
                 let message: Message = Message(
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
                     isOutgoing: true,
-                    date: NSDate(),
+                    date: now,
                     media: photoMedia)
             
-                self.messages.append(message)
+                self.appendMessage(recipient.jid, date: now, message: message)
                
                 S3PhotoManager.sharedInstance.sendPhoto(chosenImage, to: recipient.jid)
                 
@@ -285,9 +286,8 @@ class GGMessageViewController:
                     text: text)
             }
             
-            self.messages.append(message)
+            self.appendMessage(recipient.jid, date: date, message: message)
          
-            UserAPI.sharedInstance.sendMessage(recipient.jid, date: date, message: message)
             XMPPMessageManager.sendMessage(text,
                 to: recipient.jid,
                 completionHandler: nil)
@@ -376,6 +376,7 @@ class GGMessageViewController:
                     if recipient.jidBare == fromBare {
                     
                         JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                        let now = NSDate()
                         
                         var message: Message!
                         if let asset = AssetManager.getSingleEncodedAsset(msg) {
@@ -384,7 +385,7 @@ class GGMessageViewController:
                                 senderId: fromBare,
                                 senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                                 isOutgoing: false,
-                                date: NSDate(),
+                                date: now,
                                 media: wikiMedia,
                                 text: msg)
                         }
@@ -394,16 +395,22 @@ class GGMessageViewController:
                                 senderId: fromBare,
                                 senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                                 isOutgoing: false,
-                                date: NSDate(),
+                                date: now,
                                 text: msg)
                         }
-                        self.messages.append(message)
+                        
+                        self.appendMessage(fromBare, date: now, message: message)
                         
                         self.finishReceivingMessageAnimated(true)
                     }
                 }
             }
         }
+    }
+    
+    func appendMessage(peerJID: String, date: NSDate, message: Message) {
+        self.messages.append(message)
+        UserAPI.sharedInstance.newMessage(peerJID, date: date, message: message)
     }
     
 	func onPhoto(
@@ -422,15 +429,16 @@ class GGMessageViewController:
                         thumbnailKey: thumbnailKey,
                         originalKey: originalKey,
                         delegate: self)
+                    let now = NSDate()
                     let message: Message = Message(
-                            senderId: from,
-                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                            isOutgoing: false,
-                            date: NSDate(),
-                            media: photoMedia)
+                        senderId: from,
+                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
+                        isOutgoing: false,
+                        date: now,
+                        media: photoMedia)
                     
-                    self.messages.append(message)
                     dispatch_async(dispatch_get_main_queue()) {
+                        self.appendMessage(from, date: now, message: message)
                         self.finishReceivingMessageAnimated(true)
                     }
                 }

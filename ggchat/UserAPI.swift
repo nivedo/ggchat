@@ -646,7 +646,7 @@ class UserAPI {
         }
     }
     
-    func sendMessage(peerJID: String, date: NSDate, message: Message) {
+    func newMessage(peerJID: String, date: NSDate, message: Message) {
         let jid = UserAPI.stripResourceFromJID(peerJID)
         if let chat = self.chatsMap[jid] {
             chat.updateIfMoreRecent(date, message: message)
