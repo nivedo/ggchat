@@ -26,7 +26,11 @@ class Message {
             if let text = self.attributedText?.string {
                 return text
             } else {
-                return "\(self.senderDisplayName) sent a media item."
+                if self.senderId == UserAPI.sharedInstance.jidBareStr {
+                    return "You sent a photo."
+                } else {
+                    return "\(self.senderDisplayName) sent a photo."
+                }
             }
         }
     }
