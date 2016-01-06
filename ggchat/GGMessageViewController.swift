@@ -23,7 +23,7 @@ class GGMessageViewController:
             print("set recipient --> \(self.recipient?.displayName)")
             if let recipient = self.recipient {
                 self.navigationItem.title = recipient.displayName
-                if recipient.isEqual(oldValue) {
+                if !recipient.isEqual(oldValue) {
                     self.loadArchivedMessagesFromCoreData(true, animated: false)
                 }
             }
