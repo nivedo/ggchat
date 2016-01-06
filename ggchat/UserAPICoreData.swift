@@ -81,6 +81,25 @@ class UserAPICoreData {
         }
     }
     
+    func trimAllUsers(rosterMap: [String: RosterUser]) {
+        var needUpdate = false
+        if let users = self.fetchAllUsers() {
+            for user in users {
+                if rosterMap[user.jid!] == nil {
+                    needUpdate = true
+                    self.managedObjectContext.deleteObject(user)
+                }
+            }
+        }
+        if needUpdate {
+            do {
+                try self.managedObjectContext.save()
+            } catch let error as NSError  {
+                print("Could not save deletions \(error), \(error.userInfo)")
+            }
+        }
+    }
+    
     // MARK: - Core Data stack
     
     lazy var applicationDocumentsDirectory: NSURL = {
