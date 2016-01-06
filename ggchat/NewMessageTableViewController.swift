@@ -12,10 +12,11 @@ class NewMessageTableViewController:
     UITableViewController,
     UISearchResultsUpdating,
     NSFetchedResultsControllerDelegate,
-    XMPPRosterManagerDelegate {
+    UserDelegate {
 
     var searchResultController = UISearchController()
-    var searchFetchController: NSFetchedResultsController?
+    var filteredRosterList = [RosterUser]()
+    var rosterList = [RosterUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,6 @@ class NewMessageTableViewController:
         self.tableView.delegate = self
         self.tableView.registerNib(ContactTableViewCell.nib(),
             forCellReuseIdentifier: ContactTableViewCell.cellReuseIdentifier())
-        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -46,35 +46,35 @@ class NewMessageTableViewController:
             
             return controller
         })()
-        
-        XMPPRosterManager.sharedInstance.delegate = self
+       
+        UserAPI.sharedInstance.delegate = self
+        self.rosterList = UserAPI.sharedInstance.rosterList
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+       
+        UserAPI.sharedInstance.delegate = self
+        self.rosterList = UserAPI.sharedInstance.rosterList
         self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.searchResultController.view.removeFromSuperview()
-        
-        XMPPRosterManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
-            let searchPredicate = NSPredicate(format: "jidStr CONTAINS[cd] %@",
-                searchController.searchBar.text!)
-            
-            self.searchFetchController = XMPPRosterManager.sharedInstance.newFetchedResultsController(searchPredicate)
-            self.searchFetchController?.delegate = self
-            
-            print("updateSearch, active: \(self.searchResultController.active)")
+            let searchString = searchController.searchBar.text!.lowercaseString
+            self.filteredRosterList = self.rosterList.filter { user in
+                user.displayName.lowercaseString.containsString(searchString)
+            }
         }
         self.tableView.reloadData()
     }
    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.reloadData()
-    }
-    
     var inSearchMode: Bool {
         get {
             return self.searchResultController.active
@@ -82,8 +82,14 @@ class NewMessageTableViewController:
         }
     }
     
-    func frc() -> NSFetchedResultsController? {
-        return self.inSearchMode ? self.searchFetchController : XMPPRosterManager.sharedInstance.fetchedResultsController()
+    var dataList: [RosterUser] {
+        get {
+            if self.inSearchMode {
+                return self.filteredRosterList
+            } else {
+                return self.rosterList
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -94,19 +100,11 @@ class NewMessageTableViewController:
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        return self.frc()!.sections!.count
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        let sections: NSArray = self.frc()!.sections!
-        
-        if (section < sections.count) {
-            return sections[section].numberOfObjects
-        }
-        
-        return 0
+        return self.dataList.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -114,30 +112,11 @@ class NewMessageTableViewController:
             forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
-       
-        let needsAvatar: Bool = true
-        if (needsAvatar) {
-            let avatarImageDataSource = self.tableView(
-                self.tableView,
-                avatarImageDataForItemAtIndexPath: indexPath)
-            if (avatarImageDataSource != nil) {
-                let avatarImage: UIImage? = avatarImageDataSource!.avatarImage
-                if (avatarImage == nil) {
-                    cell.avatarImageView.image = avatarImageDataSource!.avatarPlaceholderImage
-                    cell.avatarImageView.highlightedImage = nil
-                } else {
-                    cell.avatarImageView.image = avatarImage
-                    cell.avatarImageView.highlightedImage = avatarImageDataSource!.avatarHighlightedImage
-                }
-            }
-        }
+        let user = self.rosterList[indexPath.row]
         
-        let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
-        var displayName = user.jidStr
-        if (user.nickname != nil && user.nickname != "") {
-            displayName = user.nickname
-        }
-        cell.cellMainLabel.attributedText = NSAttributedString(string: displayName)
+        let avatar = user.messageAvatarImage
+        cell.avatarImageView.image = avatar.avatarImage
+        cell.cellMainLabel.attributedText = NSAttributedString(string: user.displayName)
         
         return cell
     }
@@ -145,7 +124,7 @@ class NewMessageTableViewController:
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        let user: XMPPUserCoreDataStorageObject = frc()!.objectAtIndexPath(indexPath) as! XMPPUserCoreDataStorageObject
+        let user = self.rosterList[indexPath.row]
         
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
@@ -157,41 +136,6 @@ class NewMessageTableViewController:
         print("back button pressed")
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
 
@@ -200,30 +144,38 @@ class NewMessageTableViewController:
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.identifier == "new_message.to.messages") {
-            let user = sender as! XMPPUserCoreDataStorageObject
+            let user = sender as! RosterUser
             if let cpd = segue.destinationViewController as? ContactPickerDelegate {
                 print("ContactPickerDelege!")
-                // cpd.didSelectContact(user)
+                cpd.didSelectContact(user)
             }
             if let mvc = segue.destinationViewController as? MessageViewController {
                 mvc.overrideNavBackButtonToRootViewController = true
             }
         }
     }
-
-    func tableView(tableView: UITableView,
-        avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> MessageAvatarImage? {
-        // let id = GGModelData.sharedInstance.contacts[indexPath.row].id
-        let user: XMPPUserCoreDataStorageObject = XMPPRosterManager.userFromRosterAtIndexPath(indexPath: indexPath)
-        return GGModelData.sharedInstance.getAvatar(user.jidStr)
+    
+    // MARK: - UserDelegate
+    func onAvatarUpdate(jid: String, success: Bool) {
+        if success {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
     }
     
-    //////////////////////////////////////////////////////////////////////////
-    // NSFetchedResultsControllerDelegate methods
-    //////////////////////////////////////////////////////////////////////////
-   
-    func onRosterContentChanged(controller: NSFetchedResultsController) {
-        print("onRosterContentChanged")
-        self.tableView.reloadData()
+    func onRosterUpdate(success: Bool) {
+        // Don't reloadData on roster update, wait for avatar update.
+        // Otherwise, avatars will appear blank.
+        if success {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.rosterList = UserAPI.sharedInstance.rosterList
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func onChatsUpdate(success: Bool) {
+        // Do nothing
     }
 }
