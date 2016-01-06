@@ -21,6 +21,9 @@ class GGMessageViewController:
     var recipient: RosterUser? {
         didSet {
             print("set recipient --> \(self.recipient?.displayName)")
+            if let recipient = self.recipient {
+                self.navigationItem.title = recipient.displayName
+            }
             self.loadArchivedMessagesFromCoreData(true, animated: false)
         }
     }
@@ -104,6 +107,9 @@ class GGMessageViewController:
     }
     
     func loadLastActivity(force: Bool) {
+        // Disable last activity
+        return
+        
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
          
