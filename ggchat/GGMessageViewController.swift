@@ -152,7 +152,6 @@ class GGMessageViewController:
                     },
                     delegate: self
                 )
-                self.messages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
                 if animated {
                     self.finishReceivingMessageAnimated(false)
                     self.scrollToBottomAnimated(false)

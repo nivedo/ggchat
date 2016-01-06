@@ -178,7 +178,8 @@ public class XMPPMessageManager: NSObject {
 		} catch _ {
 			//catch fetch error here
 		}
-		return retrievedMessages
+        retrievedMessages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
+        return retrievedMessages
 	}
 	
 	public func deleteMessagesFrom(jid jid: String, messages: NSArray) {
