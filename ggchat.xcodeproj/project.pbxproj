@@ -142,7 +142,6 @@
 		D4A9F4F41BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */; };
 		D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F51BF2ED2A00FA4444 /* UIDevice+Messages.swift */; };
 		D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */; };
-		D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */; };
 		D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */; };
 		D4A9F5071BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5061BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift */; };
 		D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A9F5081BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift */; };
@@ -480,7 +479,6 @@
 		D4A9F4F21BF2AF0100FA4444 /* OutgoingMessagesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OutgoingMessagesCollectionViewCell.xib; sourceTree = "<group>"; };
 		D4A9F4F51BF2ED2A00FA4444 /* UIDevice+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Messages.swift"; sourceTree = "<group>"; };
 		D4A9F4F71BF2F36800FA4444 /* UIView+Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Messages.swift"; sourceTree = "<group>"; };
-		D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GGModelData.swift; sourceTree = "<group>"; };
 		D4A9F4FB1BF31C8800FA4444 /* MessageAvatarImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAvatarImageFactory.swift; sourceTree = "<group>"; };
 		D4A9F5061BF476E600FA4444 /* MessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		D4A9F5081BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayoutInvalidationContext.swift; sourceTree = "<group>"; };
@@ -1096,7 +1094,6 @@
 				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4C8FCCD1C069FC100992801 /* GGBridge.h */,
 				D45FBD421BFDB1B300E79B4E /* GGConfig.swift */,
-				D4A9F4F91BF2FB8900FA4444 /* GGModelData.swift */,
 				D45FBD731C056A3F00E79B4E /* GGSettingData.swift */,
 				D4A9F51E1BFA9EAE00FA4444 /* GGMessageViewController.swift */,
 				D4683E591BF0486F00E02886 /* Main.storyboard */,
@@ -2286,7 +2283,6 @@
 				D4A9F50D1BF52A7C00FA4444 /* MessageBubbleSizeCalculator.swift in Sources */,
 				D4A9F4F81BF2F36800FA4444 /* UIView+Messages.swift in Sources */,
 				D4C8FE0B1C06AA2300992801 /* XMPPPubSub.m in Sources */,
-				D4A9F4FA1BF2FB8900FA4444 /* GGModelData.swift in Sources */,
 				D4C8FDD51C06AA2300992801 /* XMPPBandwidthMonitor.m in Sources */,
 				D4C8FE271C06AA2300992801 /* XMPPStreamManagementMemoryStorage.m in Sources */,
 				D4C8FDE41C06AA2300992801 /* XMPPUserMemoryStorageObject.m in Sources */,
