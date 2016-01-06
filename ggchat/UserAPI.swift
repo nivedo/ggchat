@@ -116,6 +116,13 @@ class ChatConversation {
         }
     }
     
+    func updateIfMoreRecent(date: NSDate, message: Message) {
+        if self.lastTime.compare(date) == NSComparisonResult.OrderedAscending {
+            self.lastTime = date
+            self.lastMessage = message
+        }
+    }
+    
 }
 
 struct Language {
@@ -636,6 +643,14 @@ class UserAPI {
                     }
                     // print("chat list count: \(self.chatsList.count)")
             })
+        }
+    }
+    
+    func sendMessage(peerJID: String, date: NSDate, message: Message) {
+        let jid = UserAPI.stripResourceFromJID(peerJID)
+        if let chat = self.chatsMap[jid] {
+            chat.updateIfMoreRecent(date, message: message)
+            self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
         }
     }
     

@@ -286,7 +286,8 @@ class GGMessageViewController:
             }
             
             self.messages.append(message)
-           
+         
+            UserAPI.sharedInstance.sendMessage(recipient.jid, date: date, message: message)
             XMPPMessageManager.sendMessage(text,
                 to: recipient.jid,
                 completionHandler: nil)
