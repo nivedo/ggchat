@@ -65,6 +65,14 @@ class RosterUser {
         }
     }
     
+    func isEqual(other: RosterUser?) -> Bool {
+        if let otherUser = other {
+            return self.jidBare == otherUser.jidBare
+        } else {
+            return false
+        }
+    }
+    
     var displayName: String {
         get {
             if self.nickname.length > 0 {

@@ -24,6 +24,9 @@ protocol XMPPMessageManagerDelegate : NSObjectProtocol {
 	func onMessage(
         sender: XMPPStream,
         userIsComposing user: RosterUser) // XMPPUserCoreDataStorageObject)
+    func didSendMessage(
+        sender: XMPPStream,
+        message: XMPPMessage)
 }
 
 public class XMPPMessageManager: NSObject {
@@ -152,7 +155,7 @@ public class XMPPMessageManager: NSObject {
         }
     }
 	
-    func loadArchivedMessagesFrom(jid jid: String, mediaCompletion: ((Void) -> Void)?, delegate: MessageMediaDelegate?) -> [Message] {
+    func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> [Message] {
 		let moc = messageStorage?.mainThreadManagedObjectContext
 		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
 		let request = NSFetchRequest()
@@ -252,6 +255,9 @@ extension XMPPManager {
     }
     
 	func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
+        print("didSendMessage")
+        XMPPMessageManager.sharedInstance.delegate?.didSendMessage(sender, message: message)
+        
 		if let completion = XMPPMessageManager.sharedInstance.didSendMessageCompletionBlock {
 			completion(stream: sender, message: message)
 		}
@@ -259,7 +265,7 @@ extension XMPPManager {
 	
 	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
-        print("didReceiveManager")
+        print("didReceiveMessage")
         /*
 		if let user = XMPPManager.sharedInstance.rosterStorage.userForJID(
             message.from(),

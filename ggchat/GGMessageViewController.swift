@@ -23,8 +23,10 @@ class GGMessageViewController:
             print("set recipient --> \(self.recipient?.displayName)")
             if let recipient = self.recipient {
                 self.navigationItem.title = recipient.displayName
+                if recipient.isEqual(oldValue) {
+                    self.loadArchivedMessagesFromCoreData(true, animated: false)
+                }
             }
-            self.loadArchivedMessagesFromCoreData(true, animated: false)
         }
     }
     var recipientDetails: UIView?
@@ -46,7 +48,7 @@ class GGMessageViewController:
         
         self.showLoadEarlierMessagesHeader = true
         XMPPMessageManager.sharedInstance.delegate = self
-       
+        
         self.photoPicker.delegate = self
         // GGWiki.sharedInstance.delegate = self
       
@@ -59,7 +61,11 @@ class GGMessageViewController:
         }
         self.initImageModalViewController()
     }
-
+    
+    func didSendMessage(sender: XMPPStream, message: XMPPMessage) {
+        // self.loadArchivedMessagesFromCoreData(false, animated: true)
+    }
+    
     //////////////////////////////////////////////////////////////////////////////////
     // UIImagePickerControllerDelegate
     
@@ -96,11 +102,12 @@ class GGMessageViewController:
     
     override func viewWillAppear(animated: Bool) {
         print("GG::viewWillAppear")
-        
         super.viewWillAppear(animated)
-        self.loadArchivedMessagesFromCoreData(false, animated: true)
+        
+        // self.loadArchivedMessagesFromCoreData(false, animated: true)
         // self.finishReceivingMessageAnimated(false)
         // self.scrollToBottomAnimated(false)
+        
         self.loadLastActivity(false)
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = self
@@ -109,8 +116,7 @@ class GGMessageViewController:
     
     func loadLastActivity(force: Bool) {
         // Disable last activity
-        return
-        
+        /*
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
          
@@ -140,6 +146,7 @@ class GGMessageViewController:
                 }
             }
         }
+        */
     }
     
     func loadArchivedMessagesFromCoreData(sync: Bool, animated: Bool) {
@@ -147,9 +154,6 @@ class GGMessageViewController:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
                     jid: recipient.jid,
-                    mediaCompletion: { (Void) -> Void in
-                        self.messageCollectionView.reloadData()
-                    },
                     delegate: self
                 )
                 if animated {
