@@ -34,7 +34,20 @@ class RosterUser {
         self.avatar = profile["avatar"] as! String
             
         UserAPICoreData.sharedInstance.syncUser(self)
+            
+        self.initAvatar(avatarCompletion)
+    }
+    
+    init(user: User, avatarCompletion: ((Bool) -> Void)?) {
+        self.jid = user.jid!
+        self.jidBare = UserAPI.stripResourceFromJID(self.jid)
+        self.nickname = user.nickname!
+        self.avatar = user.avatar!
         
+        self.initAvatar(avatarCompletion)
+    }
+    
+    func initAvatar(avatarCompletion: ((Bool) -> Void)?) {
         if self.avatar.length > 0 {
             print("Downloading avatar at \(self.avatar)")
             
@@ -291,6 +304,7 @@ class UserAPI {
                         self.authToken = newToken
                         self.jid = jid
                         self.jpassword = pass
+                        self.loadRosterFromCoreData(nil)
                         self.cacheProfile(nil)
                         self.cacheRoster()
                         self.cacheChats()
@@ -370,19 +384,6 @@ class UserAPI {
                             completion: { (image: UIImage?) -> Void in
                                 self.avatarImage = image
                         })
-                        
-                        /*
-                        AWSS3DownloadManager.sharedInstance.download(
-                            avatarPath,
-                            userData: nil,
-                            completion: { (fileURL: NSURL) -> Void in
-                                let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-                                let image = UIImage(data: data)
-                                self.avatarImage = image
-                            },
-                            bucket: GGSetting.awsS3AvatarsBucketName
-                        )
-                        */
                     }
                 }
                 completion?(true)
@@ -391,29 +392,52 @@ class UserAPI {
         completion?(false)
     }
     
+    func loadRosterFromCoreData(completion: ((Bool) -> Void)? = nil) {
+        print("loadRosterFromCoreData")
+        
+        if let users = UserAPICoreData.sharedInstance.fetchAllUsers() {
+            print("Fetched \(users.count) roster user from core data")
+            dispatch_async(dispatch_get_main_queue()) {
+                self.rosterList.removeAll()
+                self.rosterMap.removeAll()
+                for user in users {
+                    let rosterUser = RosterUser(user: user, avatarCompletion: completion)
+                    self.rosterList.append(rosterUser)
+                    self.rosterMap[rosterUser.jid] = rosterUser
+                }
+                self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
+                self.delegate?.onRosterUpdate(true)
+                completion?(true)
+            }
+        } else {
+            self.delegate?.onRosterUpdate(false)
+            completion?(false)
+        }
+    }
+    
     func cacheRoster(completion: ((Bool) -> Void)? = nil) {
         if let jid = self.jid {
             UserAPI.sharedInstance.getRoster(jid,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {
-                        // print(profiles)
-                        self.rosterList.removeAll()
-                        self.rosterMap.removeAll()
-                        for profile in array {
-                            let user = RosterUser(
-                                profile: profile as! [String: AnyObject],
-                                avatarCompletion: completion)
-                            self.rosterList.append(user)
-                            self.rosterMap[user.jid] = user
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.rosterList.removeAll()
+                            self.rosterMap.removeAll()
+                            for profile in array {
+                                let user = RosterUser(
+                                    profile: profile as! [String: AnyObject],
+                                    avatarCompletion: completion)
+                                self.rosterList.append(user)
+                                self.rosterMap[user.jid] = user
+                            }
+                            self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
+                            completion?(true)
+                            self.delegate?.onRosterUpdate(true)
                         }
-                        self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
-                        completion?(true)
-                        self.delegate?.onRosterUpdate(true)
-                        return
+                    } else {
+                        completion?(false)
+                        self.delegate?.onRosterUpdate(false)
                     }
-                    completion?(false)
-                    self.delegate?.onRosterUpdate(false)
-                    return
                 }
             )
         }

@@ -183,7 +183,10 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         super.viewWillAppear(animated)
       
         UserAPI.sharedInstance.delegate = self
-        UserAPI.sharedInstance.cacheRoster()
+        // UserAPI.sharedInstance.cacheRoster()
+        
+        self.rosterList = UserAPI.sharedInstance.rosterList
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {

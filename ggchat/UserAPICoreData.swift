@@ -70,11 +70,10 @@ class UserAPICoreData {
     }
     
     func fetchAllUsers() -> [User]? {
-        let managedContext = self.managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "User")
         
         do {
-            let results = try managedContext.executeFetchRequest(fetchRequest)
+            let results = try self.managedObjectContext.executeFetchRequest(fetchRequest)
             return results as? [User]
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
