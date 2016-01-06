@@ -32,6 +32,8 @@ class RosterUser {
         self.jidBare = UserAPI.stripResourceFromJID(self.jid)
         self.nickname = profile["nickname"] as! String
         self.avatar = profile["avatar"] as! String
+            
+        UserAPICoreData.sharedInstance.syncUser(self)
         
         if self.avatar.length > 0 {
             print("Downloading avatar at \(self.avatar)")
@@ -44,20 +46,6 @@ class RosterUser {
                     avatarCompletion?(true)
                     UserAPI.sharedInstance.delegate?.onAvatarUpdate(self.jid, success: true)
             })
-            /*
-            AWSS3DownloadManager.sharedInstance.download(
-                self.avatar,
-                userData: nil,
-                completion: { (fileURL: NSURL) -> Void in
-                    let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-                    let image = UIImage(data: data)
-                    self.avatarImage = image
-                    avatarCompletion?(true)
-                    UserAPI.sharedInstance.delegate?.onAvatarUpdate(self.jid, success: true)
-                },
-                bucket: GGSetting.awsS3AvatarsBucketName
-            )
-            */
         } else {
             avatarCompletion?(false)
             UserAPI.sharedInstance.delegate?.onAvatarUpdate(self.jid, success: false)

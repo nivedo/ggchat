@@ -22,6 +22,10 @@
 		D433B1511C312AF50003E100 /* SettingTableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B14F1C312AF50003E100 /* SettingTableLabelCell.swift */; };
 		D433B1521C312AF50003E100 /* SettingTableLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D433B1501C312AF50003E100 /* SettingTableLabelCell.xib */; };
 		D433B1551C3282DD0003E100 /* WikiMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1541C3282DD0003E100 /* WikiMediaItem.swift */; };
+		D433B1581C3CB2BC0003E100 /* UserAPIModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D433B1561C3CB2BB0003E100 /* UserAPIModel.xcdatamodeld */; };
+		D433B15B1C3CB6AC0003E100 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1591C3CB6AC0003E100 /* User+CoreDataProperties.swift */; };
+		D433B15C1C3CB6AC0003E100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15A1C3CB6AC0003E100 /* User.swift */; };
+		D433B15E1C3CB6FE0003E100 /* UserAPICoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -299,6 +303,10 @@
 		D433B14F1C312AF50003E100 /* SettingTableLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableLabelCell.swift; sourceTree = "<group>"; };
 		D433B1501C312AF50003E100 /* SettingTableLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableLabelCell.xib; sourceTree = "<group>"; };
 		D433B1541C3282DD0003E100 /* WikiMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiMediaItem.swift; sourceTree = "<group>"; };
+		D433B1571C3CB2BB0003E100 /* UserAPIModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserAPIModel.xcdatamodel; sourceTree = "<group>"; };
+		D433B1591C3CB6AC0003E100 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D433B15A1C3CB6AC0003E100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPICoreData.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -1236,6 +1244,10 @@
 			isa = PBXGroup;
 			children = (
 				D49447281C1FA5AD0008C582 /* UserAPI.swift */,
+				D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */,
+				D433B1561C3CB2BB0003E100 /* UserAPIModel.xcdatamodeld */,
+				D433B1591C3CB6AC0003E100 /* User+CoreDataProperties.swift */,
+				D433B15A1C3CB6AC0003E100 /* User.swift */,
 			);
 			name = APIs;
 			sourceTree = "<group>";
@@ -2182,6 +2194,7 @@
 				D4A9F4FC1BF31C8800FA4444 /* MessageAvatarImageFactory.swift in Sources */,
 				D4C8FE0C1C06AA2300992801 /* TURNSocket.m in Sources */,
 				D47840B01BF1BA4A00441A2D /* NSBundle+Messages.swift in Sources */,
+				D433B1581C3CB2BC0003E100 /* UserAPIModel.xcdatamodeld in Sources */,
 				D4C8FDF91C06AA2300992801 /* XMPPMUC.m in Sources */,
 				D4C8FDD81C06AA2300992801 /* XMPPIncomingFileTransfer.m in Sources */,
 				D4C8FE1F1C06AA2300992801 /* XMPPMessageArchiving.m in Sources */,
@@ -2224,6 +2237,7 @@
 				D4683E921BF050A200E02886 /* MessagesCollectionView.swift in Sources */,
 				D4C8FDE31C06AA2300992801 /* XMPPRosterMemoryStorage.m in Sources */,
 				D4C8FE0F1C06AA2300992801 /* XMPPRegistration.m in Sources */,
+				D433B15E1C3CB6FE0003E100 /* UserAPICoreData.swift in Sources */,
 				D4C8FDEE1C06AA2300992801 /* XMPPRoomCoreDataStorage.m in Sources */,
 				D43B28DE1C06894D00B3F367 /* DDXMLElement.m in Sources */,
 				D4C8FE101C06AA2300992801 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
@@ -2242,6 +2256,7 @@
 				D42B017B1C1531A500643835 /* MessageAutocompleteController.swift in Sources */,
 				D4C8FE361C06AA2300992801 /* XMPPMessage+XEP_0333.m in Sources */,
 				D4C8FDDB1C06AA2300992801 /* XMPPProcessOne.m in Sources */,
+				D433B15C1C3CB6AC0003E100 /* User.swift in Sources */,
 				D469EAA41C09BFA200D30C9A /* SettingTableAvatarCell.swift in Sources */,
 				D4A9F4E61BF26CDE00FA4444 /* MessageCellTextView.swift in Sources */,
 				D4A9F59F1BFC182600FA4444 /* MessageTypingIndicatorFooterView.swift in Sources */,
@@ -2345,6 +2360,7 @@
 				D4C8FE1D1C06AA2300992801 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				D4C8FE031C06AA2300992801 /* XMPPvCardTempBase.m in Sources */,
 				D4C8FDF51C06AA2300992801 /* XMPPRoomMemoryStorage.m in Sources */,
+				D433B15B1C3CB6AC0003E100 /* User+CoreDataProperties.swift in Sources */,
 				D433B1491C2B951A0003E100 /* ProfileViewController.swift in Sources */,
 				D4C8FE291C06AA2300992801 /* XMPPStreamManagement.m in Sources */,
 				D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */,
@@ -2632,6 +2648,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		D433B1561C3CB2BB0003E100 /* UserAPIModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D433B1571C3CB2BB0003E100 /* UserAPIModel.xcdatamodel */,
+			);
+			currentVersion = D433B1571C3CB2BB0003E100 /* UserAPIModel.xcdatamodel */;
+			path = UserAPIModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		D4C8FD151C06AA2300992801 /* XMPPRoom.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
