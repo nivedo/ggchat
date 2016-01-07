@@ -266,12 +266,7 @@ extension XMPPManager {
 	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         print("didReceiveMessage")
-        /*
-		if let user = XMPPManager.sharedInstance.rosterStorage.userForJID(
-            message.from(),
-            xmppStream: XMPPManager.sharedInstance.stream,
-            managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster()) {
-        */
+        
         if let user = UserAPI.sharedInstance.rosterMap[message.from().bare()] {
     		if message.isChatMessageWithBody() {
                 print("receiving message from \(user.jid) --> \(message.elementForName("body")!.stringValue())")
