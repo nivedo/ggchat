@@ -20,8 +20,8 @@ public protocol XMPPManagerDelegate {
 
 class XMPPManager: NSObject,
     XMPPStreamDelegate,
-    XMPPRosterDelegate,
-    XMPPvCardTempModuleDelegate {
+    XMPPRosterDelegate {
+    // XMPPvCardTempModuleDelegate {
 
     var username: String!
     var password: String!
@@ -35,9 +35,9 @@ class XMPPManager: NSObject,
     var deliveryReceipts: XMPPMessageDeliveryReceipts!
     var capabilities: XMPPCapabilities!
     var capabilitiesStorage: XMPPCapabilitiesCoreDataStorage!
-    var vCardStorage: XMPPvCardCoreDataStorage!
-    var vCardTempModule: XMPPvCardTempModule!
-    var vCardAvatarModule: XMPPvCardAvatarModule!
+    // var vCardStorage: XMPPvCardCoreDataStorage!
+    // var vCardTempModule: XMPPvCardTempModule!
+    // var vCardAvatarModule: XMPPvCardAvatarModule!
     // var lastActivity: XMPPLastActivity!
     
     // Delegates and completion handlers
@@ -113,7 +113,8 @@ class XMPPManager: NSObject,
             self.jid_ = newValue
         }
     }
-   
+  
+    /*
     var displayName: String {
         let vCard = self.vCardStorage.vCardTempForJID(
             self.stream.myJID,
@@ -135,7 +136,7 @@ class XMPPManager: NSObject,
             }
         }
     }
-
+    */
    
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
@@ -195,6 +196,7 @@ class XMPPManager: NSObject,
         self.capabilities.autoFetchNonHashedCapabilities = false
         self.capabilities.activate(self.stream)
         
+        /*
         // Initialize vCard support
         self.vCardStorage = XMPPvCardCoreDataStorage.sharedInstance()
         self.vCardTempModule = XMPPvCardTempModule(withvCardStorage: self.vCardStorage)
@@ -204,7 +206,6 @@ class XMPPManager: NSObject,
         self.vCardAvatarModule.activate(self.stream)
         
         // Initialize last activity
-        /*
         self.lastActivity = XMPPLastActivity()
         self.lastActivity.activate(self.stream)
         self.lastActivity.addDelegate(self, delegateQueue: dispatch_get_main_queue())
@@ -214,14 +215,14 @@ class XMPPManager: NSObject,
     func teardown() {
         self.stream.removeDelegate(self)
         self.roster.removeDelegate(self)
-        self.vCardTempModule.removeDelegate(self)
+        // self.vCardTempModule.removeDelegate(self)
         // self.lastActivity.removeDelegate(self)
         
         self.reconnecter.deactivate()
         self.roster.deactivate()
         self.capabilities.deactivate()
-        self.vCardTempModule.deactivate()
-        self.vCardAvatarModule.deactivate()
+        // self.vCardTempModule.deactivate()
+        // self.vCardAvatarModule.deactivate()
         // self.lastActivity.deactivate()
 
         self.stream.disconnect()
@@ -413,7 +414,7 @@ class XMPPManager: NSObject,
         NSUserDefaults.standardUserDefaults().synchronize()
         
         // Fetch vCard
-        self.vCardTempModule.fetchvCardTempForJID(self.stream.myJID)
+        // self.vCardTempModule.fetchvCardTempForJID(self.stream.myJID)
     
         self.authenticateCompletionHandler?(stream: sender, error: nil)
     }

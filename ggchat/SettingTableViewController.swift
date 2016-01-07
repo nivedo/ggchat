@@ -281,12 +281,11 @@ class SettingTableViewController:
                     if id == "username" {
                         stf.beforeSegue("Username",
                             completionHandler: { (textValue: String) -> Void in
-                                XMPPvCardManager.sharedInstance.updateDisplayName(textValue)
+                                // XMPPvCardManager.sharedInstance.updateDisplayName(textValue)
                         })
                     } else if id == "displayName" {
                         stf.beforeSegue("Display Name",
                             completionHandler: { (textValue: String) -> Void in
-                                // XMPPvCardManager.sharedInstance.updateDisplayName(textValue)
                                 UserAPI.sharedInstance.updateNickname(textValue, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                                     if let _ = jsonBody {
                                         dispatch_async(dispatch_get_main_queue()) {

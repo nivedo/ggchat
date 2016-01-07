@@ -5,17 +5,7 @@
 //  Created by Gary Chang on 11/29/15.
 //  Copyright © 2015 Blub. All rights reserved.
 //
-
-import Foundation
-
-//
-//  XMPPvCardManager.swift
-//  ggchat
-//
-//  Created by Gary Chang on 11/27/15.
-//  Copyright © 2015 Blub. All rights reserved.
-//
-
+/*
 import Foundation
 
 public class XMPPvCardManager: NSObject {
@@ -120,3 +110,4 @@ extension XMPPUserCoreDataStorageObject {
         return self.jidStr
     }
 }
+*/
