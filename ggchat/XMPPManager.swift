@@ -38,7 +38,7 @@ class XMPPManager: NSObject,
     var vCardStorage: XMPPvCardCoreDataStorage!
     var vCardTempModule: XMPPvCardTempModule!
     var vCardAvatarModule: XMPPvCardAvatarModule!
-    var lastActivity: XMPPLastActivity!
+    // var lastActivity: XMPPLastActivity!
     
     // Delegates and completion handlers
     var delegate: XMPPManagerDelegate?
@@ -204,23 +204,25 @@ class XMPPManager: NSObject,
         self.vCardAvatarModule.activate(self.stream)
         
         // Initialize last activity
+        /*
         self.lastActivity = XMPPLastActivity()
         self.lastActivity.activate(self.stream)
         self.lastActivity.addDelegate(self, delegateQueue: dispatch_get_main_queue())
+        */
     }
     
     func teardown() {
         self.stream.removeDelegate(self)
         self.roster.removeDelegate(self)
         self.vCardTempModule.removeDelegate(self)
-        self.lastActivity.removeDelegate(self)
+        // self.lastActivity.removeDelegate(self)
         
         self.reconnecter.deactivate()
         self.roster.deactivate()
         self.capabilities.deactivate()
         self.vCardTempModule.deactivate()
         self.vCardAvatarModule.deactivate()
-        self.lastActivity.deactivate()
+        // self.lastActivity.deactivate()
 
         self.stream.disconnect()
     }

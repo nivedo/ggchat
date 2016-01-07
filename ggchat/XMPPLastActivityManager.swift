@@ -5,7 +5,7 @@
 //  Created by Gary Chang on 11/29/15.
 //  Copyright © 2015 Blub. All rights reserved.
 //
-
+/*
 import Foundation
 
 public typealias MakeLastCallCompletionHandler = (response: XMPPIQ?, forJID:XMPPJID?, error: DDXMLElement?) -> Void
@@ -175,3 +175,4 @@ extension XMPPManager {
 		return 30
 	}
 }
+*/
