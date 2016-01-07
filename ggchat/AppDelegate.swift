@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        UIApplication.sharedApplication().statusBarHidden = false
+        // UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        // UIApplication.sharedApplication().statusBarHidden = false
         
         UserAPI.sharedInstance.loadCoreData()
         

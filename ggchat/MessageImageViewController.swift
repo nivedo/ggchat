@@ -103,6 +103,10 @@ class MessageImageViewController: UIViewController {
         self.imageView.image = nil
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     override func viewWillAppear(animated: Bool) {
         print("ImageVC::viewWillAppear()")
         super.viewWillAppear(animated)
