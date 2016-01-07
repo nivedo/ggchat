@@ -84,6 +84,16 @@ class S3ImageCache {
         }
     }
     
+    func storeImageForKey(key: String, bucket: String, image: UIImage) {
+        if let cache = self.caches[bucket] {
+            cache.storeImage(image, forKey: key)
+        } else {
+            let cache = ImageCache(name: "cache_\(bucket)")
+            self.caches[bucket] = cache
+            cache.storeImage(image, forKey: key)
+        }
+    }
+    
     private func downloadImageForKey(key: String, bucket: String, completion: ((image: UIImage?) -> Void)?) {
         AWSS3DownloadManager.sharedInstance.download(
             key,

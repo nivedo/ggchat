@@ -108,7 +108,7 @@ public class XMPPMessageManager: NSObject {
 		completeMessage.addAttributeWithName("type", stringValue: "chat")
         completeMessage.addAttributeWithName("content_type", stringValue: "image")
 		completeMessage.addAttributeWithName("to", stringValue: receiver)
-        completeMessage.addAttributeWithName("from", stringValue: XMPPManager.sharedInstance.stream.myJID.bare())
+        completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr) // XMPPManager.sharedInstance.stream.myJID.bare())
         let originalKey = DDXMLElement(name: "originalKey", stringValue: originalKey)
         let thumbnailKey = DDXMLElement(name: "thumbnailKey", stringValue: thumbnailKey)
         let photo = DDXMLElement(name: "photo")

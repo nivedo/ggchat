@@ -85,6 +85,14 @@ class S3PhotoManager: S3UploadDelegate {
             "thumbnailKey"  : thumbnailKey,
             "to" : to
         ]
+        
+        // Cache images
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            S3ImageCache.sharedInstance.storeImageForKey(originalKey, bucket: GGSetting.awsS3BucketName, image: originalImage)
+            S3ImageCache.sharedInstance.storeImageForKey(thumbnailKey, bucket: GGSetting.awsS3BucketName, image: thumbnailImage)
+        }
+        
+        // Upload images
         AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey)
         AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
     }
