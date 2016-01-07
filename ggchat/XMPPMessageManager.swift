@@ -278,6 +278,7 @@ extension XMPPManager {
         if message.isChatMessageWithBody() {
             if let msg = UserAPI.parseMessageFromElement(message as DDXMLElement, date: now, delegate: nil) {
                 XMPPMessageManager.sharedInstance.delegate?.receiveMessage(jid, message: msg)
+                UserAPI.sharedInstance.newMessage(jid, date: now, message: msg)
             } else {
                 print("Unable to parse received message \(message)")
             }

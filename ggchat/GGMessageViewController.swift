@@ -367,103 +367,11 @@ class GGMessageViewController:
         // JSQSystemSoundPlayer.jsq_playMessageSentSound()
         // self.finishSendingMessageAnimated(true)
     }
-   
-    /*
-	func onMessage(
-        sender: XMPPStream,
-        didReceiveMessage message: XMPPMessage,
-        // from user: XMPPUserCoreDataStorageObject) {
-        from user: RosterUser) {
-        if let msg: String = message.elementForName("body")?.stringValue() {
-            if let from: String = message.attributeForName("from")?.stringValue() {
-                let fromBare = UserAPI.stripResourceFromJID(from)
-                // print("\(tokens[0]) ? \(self.recipient!.jid)")
-                if let recipient = self.recipient {
-                    if recipient.jidBare == fromBare {
-                    
-                        JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                        let now = NSDate()
-                        
-                        var message: Message!
-                        if let asset = AssetManager.getSingleEncodedAsset(msg) {
-                            let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
-                            message = Message(
-                                senderId: fromBare,
-                                senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                                isOutgoing: false,
-                                date: now,
-                                media: wikiMedia,
-                                text: msg)
-                        }
-                
-                        if message == nil {
-                            message = Message(
-                                senderId: fromBare,
-                                senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                                isOutgoing: false,
-                                date: now,
-                                text: msg)
-                        }
-                        
-                        self.appendMessage(fromBare, date: now, message: message)
-                        
-                        self.finishReceivingMessageAnimated(true)
-                    }
-                }
-            }
-        }
-    }
-    */
     
     func appendMessage(peerJID: String, date: NSDate, message: Message) {
         self.messages.append(message)
         UserAPI.sharedInstance.newMessage(peerJID, date: date, message: message)
     }
-   
-    /*
-	func onPhoto(
-        sender: XMPPStream,
-        didReceivePhoto xmppMessage: XMPPMessage,
-        // from user: XMPPUserCoreDataStorageObject) {
-        from user: RosterUser) {
-        if let photo = xmppMessage.elementForName("body")!.elementForName("photo"),
-            let originalKey = photo.elementForName("originalKey")?.stringValue(),
-            let thumbnailKey = photo.elementForName("thumbnailKey")?.stringValue() {
-            
-            if let fromRaw: String = xmppMessage.attributeForName("from")?.stringValue() {
-                let from = UserAPI.stripResourceFromJID(fromRaw)
-                if self.recipient == nil || self.recipient!.jid == UserAPI.stripResourceFromJID(from) {
-                    let photoMedia: PhotoMediaItem = PhotoMediaItem(
-                        thumbnailKey: thumbnailKey,
-                        originalKey: originalKey,
-                        delegate: self)
-                    let now = NSDate()
-                    let message: Message = Message(
-                        senderId: from,
-                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(from),
-                        isOutgoing: false,
-                        date: now,
-                        media: photoMedia)
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.appendMessage(from, date: now, message: message)
-                        self.finishReceivingMessageAnimated(true)
-                    }
-                }
-            }
-        }
-    }
-    */
-   
-    /*
-	func onMessage(
-        sender: XMPPStream,
-        // userIsComposing user: XMPPUserCoreDataStorageObject) {
-        userIsComposing user: RosterUser) {
-        self.showTypingIndicator = !self.showTypingIndicator
-        self.scrollToBottomAnimated(true)
-    }
-    */
     
     func receiveMessage(from: String, message: Message) {
         if let recipient = self.recipient {
