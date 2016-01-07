@@ -73,7 +73,11 @@ class MessageAutocompleteController: NSObject,
         }
         */
         self.suggestions = suggestions
-        self.suggestions.sortInPlace({ $0.displayString.length > $1.displayString.length })
+        self.suggestions.sortInPlace({ (s1: AssetAutocompleteSuggestion, s2: AssetAutocompleteSuggestion) -> Bool in
+            return (s1.displayString.length == s2.displayString.length)
+                ? s1.displayString.lowercaseString < s2.displayString.lowercaseString
+                : s1.displayString.length > s2.displayString.length
+        })
         // print(suggestions)
         
         self.tableView.reloadData()

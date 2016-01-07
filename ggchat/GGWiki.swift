@@ -508,7 +508,8 @@ class GGWiki {
         
         var results = [AssetAutocompleteSuggestion]()
         if suggestions.count > 0 {
-            results = suggestions.sort({ $0.score > $1.score }).map {
+            // results = suggestions.sort({ $0.score > $1.score }).map {
+            results = suggestions.map {
                 (let helper) -> AssetAutocompleteSuggestion in
                 return AssetAutocompleteSuggestion(
                     displayString: helper.str,
