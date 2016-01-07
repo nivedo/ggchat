@@ -6,6 +6,7 @@
 //  Copyright © 2015 Blub. All rights reserved.
 //
 
+/*
 import Foundation
 
 public class XMPPChatManager: NSObject, NSFetchedResultsControllerDelegate {
@@ -198,3 +199,4 @@ public class XMPPChatManager: NSObject, NSFetchedResultsControllerDelegate {
 		}
 	}
 }
+*/
