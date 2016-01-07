@@ -24,7 +24,7 @@ class GGMessageViewController:
             if let recipient = self.recipient {
                 self.navigationItem.title = recipient.displayName
                 if !recipient.isEqual(oldValue) {
-                    self.loadArchivedMessagesFromCoreData(true, animated: false)
+                    self.loadArchivedMessagesFromCoreData(true, animated: true)
                 }
             }
         }
@@ -50,10 +50,11 @@ class GGMessageViewController:
         XMPPMessageManager.sharedInstance.delegate = self
         
         self.photoPicker.delegate = self
+        
         // GGWiki.sharedInstance.delegate = self
-      
-        self.loadArchivedMessagesFromCoreData(false, animated: false)
-        self.loadLastActivity(true)
+        // self.loadArchivedMessagesFromCoreData(false, animated: false)
+        // self.loadLastActivity(true)
+        
         self.messageCollectionView.reloadData()
    
         if SettingManager.sharedInstance.tappableMessageText {
@@ -156,6 +157,7 @@ class GGMessageViewController:
                     jid: recipient.jid,
                     delegate: self
                 )
+                print("XMPPMessengerManager.sharedInstance.loadArchivedMessagesFrom: \(self.messages.count) messages")
                 if animated {
                     self.finishReceivingMessageAnimated(false)
                     self.scrollToBottomAnimated(false)

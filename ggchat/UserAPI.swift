@@ -107,20 +107,26 @@ class ChatConversation {
             if let msg = UserAPI.parseMessageFromString(xmlStr, timestamp: timestamp / 1e6, delegate: nil) {
                 self.lastTime = msg.date
                 self.lastMessage = msg
+            } else {
+                assert(false, "Unable to parse message xml \(xmlStr)")
             }
         }
     }
     
     init(jid: String, date: NSDate, xmlString: String) {
         self.peerJID = jid
-        self.lastTime = date
-        self.lastMessage = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil)
+        if let msg = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil) {
+            self.lastTime = date
+            self.lastMessage = msg
+        }
     }
     
     func updateIfMoreRecent(date: NSDate, xmlString: String) {
         if self.lastTime.compare(date) == NSComparisonResult.OrderedAscending {
-            self.lastTime = date
-            self.lastMessage = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil)
+            if let msg = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil) {
+                self.lastTime = date
+                self.lastMessage = msg
+            }
         }
     }
     
