@@ -11,6 +11,7 @@ import UIKit
 class ChatTableViewController:
     UITableViewController,
     UISearchResultsUpdating,
+    XMPPMessageManagerDelegate,
     UserDelegate {
 
     var searchResultController = UISearchController()
@@ -42,17 +43,20 @@ class ChatTableViewController:
         })()
    
         UserAPI.sharedInstance.delegate = self
+        XMPPMessageManager.sharedInstance.delegate = self
         self.tableView.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
+        UserAPI.sharedInstance.delegate = self
+        XMPPMessageManager.sharedInstance.delegate = self
         
         self.chatsList = UserAPI.sharedInstance.chatsList
         print("Chats::viewWillAppear --> \(self.chatsList.count)")
         self.tableView.reloadData()
         
-        UserAPI.sharedInstance.delegate = self
         // UserAPI.sharedInstance.cacheChats()
     }
     
@@ -224,6 +228,16 @@ class ChatTableViewController:
                     cpd.didSelectContact(user)
                 }
             }
+        }
+    }
+    
+    func receiveComposingMessage(from: String) {
+        // Do nothing for chat view
+    }
+    
+    func receiveMessage(from: String, message: Message) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
         }
     }
 }

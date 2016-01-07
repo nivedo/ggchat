@@ -27,9 +27,11 @@ protocol XMPPMessageManagerDelegate : NSObjectProtocol {
         userIsComposing user: RosterUser) // XMPPUserCoreDataStorageObject)
     */
     
+    /*
     func didSendMessage(
         sender: XMPPStream,
         message: XMPPMessage)
+    */
     func receiveMessage(from: String, message: Message)
     func receiveComposingMessage(from: String)
     
@@ -262,7 +264,7 @@ extension XMPPManager {
     
 	func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
         print("didSendMessage")
-        XMPPMessageManager.sharedInstance.delegate?.didSendMessage(sender, message: message)
+        // XMPPMessageManager.sharedInstance.delegate?.didSendMessage(sender, message: message)
         
 		if let completion = XMPPMessageManager.sharedInstance.didSendMessageCompletionBlock {
 			completion(stream: sender, message: message)
