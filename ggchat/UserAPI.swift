@@ -262,8 +262,14 @@ class UserAPI {
         return "\(self.route("rosterv3"))"
     }
 
+    /*
     class var chatsUrl: String {
         return "\(self.route("chats"))"
+    }
+    */
+
+    class var syncUrl: String {
+        return "\(self.route("sync"))"
     }
     
     class func historyUrl(peerJID: String, limit: Int? = nil, end: NSDate? = nil) -> String {
@@ -327,9 +333,8 @@ class UserAPI {
                     self.jpassword = pass
                     self.password = password
                     self.email = email
-                    self.cacheProfile(nil)
                     self.cacheRoster()
-                    self.cacheChats()
+                    self.sync()
                     self.updatePushToken()
                     completion?(true)
                 } else {
@@ -359,9 +364,8 @@ class UserAPI {
                         // self.loadRosterFromCoreData(nil)
                         // self.loadChatsFromCoreData()
                         
-                        self.cacheProfile(nil)
                         self.cacheRoster()
-                        self.cacheChats()
+                        self.sync()
                         self.updatePushToken()
                         completion?(true)
                     } else {
@@ -415,40 +419,34 @@ class UserAPI {
         return false
     }
     
-    func cacheProfile(completion: ((Bool) -> Void)?) {
-        self.getProfile({ (jsonResponse: [String: AnyObject]?) -> Void in
-            if let json = jsonResponse {
-                if let nickname = json["nickname"] as? String {
-                    if nickname.length > 0 {
-                        self.nickname = nickname
-                    }
-                }
-                if let username = json["username"] as? String {
-                    if username.length > 0 {
-                        self.username = username
-                    }
-                }
-                if let language = json["lang"] as? String {
-                    if language.length > 0 {
-                        self.settings.language = language
-                    }
-                }
-                if let avatarPath = json["avatar"] as? String {
-                    if avatarPath.length > 0 {
-                        print("Downloading avatar at \(avatarPath)")
-                        self.avatarPath = avatarPath
-                        S3ImageCache.sharedInstance.retrieveImageForKey(
-                            avatarPath,
-                            bucket: GGSetting.awsS3AvatarsBucketName,
-                            completion: { (image: UIImage?) -> Void in
-                                self.avatarImage = image
-                        })
-                    }
-                }
-                completion?(true)
+    func loadProfileFromJson(json: [String: AnyObject]) {
+        if let nickname = json["nickname"] as? String {
+            if nickname.length > 0 {
+                self.nickname = nickname
             }
-        })
-        completion?(false)
+        }
+        if let username = json["username"] as? String {
+            if username.length > 0 {
+                self.username = username
+            }
+        }
+        if let language = json["lang"] as? String {
+            if language.length > 0 {
+                self.settings.language = language
+            }
+        }
+        if let avatarPath = json["avatar"] as? String {
+            if avatarPath.length > 0 {
+                print("Downloading avatar at \(avatarPath)")
+                self.avatarPath = avatarPath
+                S3ImageCache.sharedInstance.retrieveImageForKey(
+                    avatarPath,
+                    bucket: GGSetting.awsS3AvatarsBucketName,
+                    completion: { (image: UIImage?) -> Void in
+                        self.avatarImage = image
+                })
+            }
+        }
     }
     
     func loadRosterFromCoreData(completion: ((Bool) -> Void)? = nil) {
@@ -641,25 +639,29 @@ class UserAPI {
         }
     }
     
-    func cacheChats() {
+    func sync() {
         if let token = self.authToken {
-            print(UserAPI.chatsUrl)
-            self.get(UserAPI.chatsUrl,
+            self.get(UserAPI.syncUrl,
                 authToken: token,
-                arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
-                    if let array = arrayBody {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.chatsList.removeAll()
-                            self.chatsMap.removeAll()
-                            for element in array {
-                                if let json = element as? [String: AnyObject] {
-                                    // print(json)
-                                    let chat = ChatConversation(json: json)
-                                    self.chatsList.append(chat)
-                                    self.chatsMap[chat.peerJID] = chat
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    if let json = jsonBody {
+                        if let messagesJson = json["messages"] as? [AnyObject] {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.chatsList.removeAll()
+                                self.chatsMap.removeAll()
+                                for element in messagesJson {
+                                    if let json = element as? [String: AnyObject] {
+                                        // print(json)
+                                        let chat = ChatConversation(json: json)
+                                        self.chatsList.append(chat)
+                                        self.chatsMap[chat.peerJID] = chat
+                                    }
                                 }
+                                self.delegate?.onChatsUpdate(true)
                             }
-                            self.delegate?.onChatsUpdate(true)
+                        }
+                        if let profileJson = json["profile"] as? [String: AnyObject] {
+                            self.loadProfileFromJson(profileJson)
                         }
                     } else {
                         self.delegate?.onChatsUpdate(false)
