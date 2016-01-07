@@ -77,6 +77,7 @@ public class XMPPMessageManager: NSObject {
     		
     		completeMessage.addAttributeWithName("id", stringValue: messageId)
     		completeMessage.addAttributeWithName("type", stringValue: "chat")
+            completeMessage.addAttributeWithName("content_type", stringValue: "text")
     		completeMessage.addAttributeWithName("to", stringValue: receiver)
             completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr) // XMPPManager.sharedInstance.stream.myJID.bare())
     		completeMessage.addChild(body)
@@ -105,6 +106,7 @@ public class XMPPMessageManager: NSObject {
 		
 		completeMessage.addAttributeWithName("id", stringValue: messageId)
 		completeMessage.addAttributeWithName("type", stringValue: "chat")
+        completeMessage.addAttributeWithName("content_type", stringValue: "image")
 		completeMessage.addAttributeWithName("to", stringValue: receiver)
         completeMessage.addAttributeWithName("from", stringValue: XMPPManager.sharedInstance.stream.myJID.bare())
         let originalKey = DDXMLElement(name: "originalKey", stringValue: originalKey)

@@ -44,7 +44,7 @@ struct S3PhotoSize {
     static let pinterest = CGSize(width: 735, height: 1102)
     static let instagram = CGSize(width: 1080, height: 1080)
     
-    static let maxDimension = CGFloat(200.0)
+    static let maxDimension = CGFloat(1200.0)
     static let thumbnailDimension = CGFloat(20.0)  // Thumbnail should be less than 10 KB
 }
 

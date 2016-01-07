@@ -441,20 +441,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6F-Qb-PCX" userLabel="Image Container">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ffn-iR-cyl">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ffn-iR-cyl">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Ffn-iR-cyl" firstAttribute="centerX" secondItem="z6F-Qb-PCX" secondAttribute="centerX" id="CUK-ER-7UY"/>
-                                    <constraint firstItem="Ffn-iR-cyl" firstAttribute="centerY" secondItem="z6F-Qb-PCX" secondAttribute="centerY" id="cbK-9x-UmG"/>
+                                    <constraint firstItem="Ffn-iR-cyl" firstAttribute="centerX" secondItem="z6F-Qb-PCX" secondAttribute="centerX" id="2NK-fH-TA4"/>
+                                    <constraint firstItem="Ffn-iR-cyl" firstAttribute="centerY" secondItem="z6F-Qb-PCX" secondAttribute="centerY" id="9G0-0X-XN0"/>
                                 </constraints>
                             </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iHA-sv-CyY">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Title" id="ydn-Hx-Ji7"/>
                                 </items>
@@ -462,21 +462,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="z6F-Qb-PCX" firstAttribute="top" secondItem="wlo-D0-Ozo" secondAttribute="bottom" id="5p8-66-dCN"/>
+                            <constraint firstItem="E9Q-db-sWd" firstAttribute="top" secondItem="z6F-Qb-PCX" secondAttribute="bottom" id="9M7-Kq-ybl"/>
                             <constraint firstItem="iHA-sv-CyY" firstAttribute="leading" secondItem="wbb-6d-Krr" secondAttribute="leading" id="Bn8-bJ-pf0"/>
+                            <constraint firstAttribute="trailing" secondItem="z6F-Qb-PCX" secondAttribute="trailing" id="Laf-TV-GCe"/>
                             <constraint firstAttribute="trailing" secondItem="iHA-sv-CyY" secondAttribute="trailing" id="c4V-F9-f6X"/>
-                            <constraint firstItem="z6F-Qb-PCX" firstAttribute="leading" secondItem="wbb-6d-Krr" secondAttribute="leading" id="ccN-3q-i4v"/>
                             <constraint firstItem="iHA-sv-CyY" firstAttribute="top" secondItem="wlo-D0-Ozo" secondAttribute="bottom" id="e3f-c0-c6i"/>
-                            <constraint firstAttribute="trailing" secondItem="z6F-Qb-PCX" secondAttribute="trailing" id="iGd-IU-XqO"/>
-                            <constraint firstItem="z6F-Qb-PCX" firstAttribute="top" secondItem="wlo-D0-Ozo" secondAttribute="bottom" id="uci-Wa-r2U"/>
-                            <constraint firstItem="E9Q-db-sWd" firstAttribute="top" secondItem="z6F-Qb-PCX" secondAttribute="bottom" id="x2i-pN-g76"/>
+                            <constraint firstItem="z6F-Qb-PCX" firstAttribute="leading" secondItem="wbb-6d-Krr" secondAttribute="leading" id="rEr-1L-osO"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="mHw-vI-MOi"/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
+                        <outlet property="imageContainer" destination="z6F-Qb-PCX" id="pLg-Os-OAp"/>
                         <outlet property="imageView" destination="Ffn-iR-cyl" id="8J8-ak-Up0"/>
                         <outlet property="navBar" destination="iHA-sv-CyY" id="eg7-3W-HtO"/>
                     </connections>

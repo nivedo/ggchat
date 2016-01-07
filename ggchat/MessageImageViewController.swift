@@ -10,11 +10,27 @@ import UIKit
 
 class MessageImageViewController: UIViewController {
 
+    @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var navBar: UINavigationBar!
-    var image: UIImage?
+    var image_: UIImage?
+    var image: UIImage? {
+        set {
+            if newValue != nil {
+                let screenSize = UIScreen.mainScreen().bounds.size
+                self.image_ = (newValue!.copy() as? UIImage)?.gg_imageScaledToFitSize(screenSize, isOpaque: true)
+                print("set image: \(self.image_!.size)")
+            } else {
+                self.image_ = nil
+            }
+        }
+        get {
+            return self.image_
+        }
+    }
     
     override func viewDidLoad() {
+        print("ImageVC::viewDidLoad()")
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -29,14 +45,20 @@ class MessageImageViewController: UIViewController {
         self.navBar.backgroundColor = UIColor.whiteColor()
         // self.edgesForExtendedLayout = UIRectEdge.None
        
-        self.updateImage()
-        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: Selector("toggleNavBar:"))
         
         self.view.addGestureRecognizer(tap)
     }
+   
+    /*
+    override func viewDidLayoutSubviews() {
+        print("viewDidLayoutSubviews()")
+        super.viewDidLayoutSubviews()
+        self.updateImage()
+    }
+    */
     
     func donePressed(sender: AnyObject?) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -56,15 +78,34 @@ class MessageImageViewController: UIViewController {
     func updateImage() {
         if let image = self.image {
             let screenSize = UIScreen.mainScreen().bounds.size
+            let y = 0.5 * (screenSize.height - image.size.height)
+            self.imageView.frame = CGRectMake(0.0, y,
+                image.size.width, image.size.height)
+            self.imageView.image = image
+            
+            print("set frame \(self.imageView.frame)")
+            print("container \(self.imageContainer.frame)")
+        }
+        /*
+        if let image = self.image {
+            // let screenSize = UIScreen.mainScreen().bounds.size
             // let newImage = image.gg_imageScaledToFitSize(screenSize, isOpaque: true)
             // print(newSize)
             // self.imageView.frame = CGRectMake(self.imageView.frame.origin.x, self.imageView.frame.origin.y, newSize.width, newSize.height)
             self.imageView.image = image
             // self.imageView.center = self.imageView.superview!.center
         }
+        */
+    }
+    
+    func reset() {
+        self.image = nil
+        self.imageView.image = nil
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("ImageVC::viewWillAppear()")
+        super.viewWillAppear(animated)
         self.updateImage()
     }
     
@@ -73,6 +114,7 @@ class MessageImageViewController: UIViewController {
         
         // self.attributes = nil
         // self.imageAsset?.delegate = nil
+        self.reset()
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
@@ -80,6 +122,7 @@ class MessageImageViewController: UIViewController {
         
         // self.attributes = nil
         // self.imageAsset?.delegate = nil
+        self.reset()
     }
     
     /*
