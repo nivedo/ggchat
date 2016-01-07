@@ -86,6 +86,10 @@ class Message {
         self.isMediaMessage = true
     }
     
+    func setMediaDelegate(delegate: MessageMediaDelegate) {
+        self.media?.setDelegate(delegate)
+    }
+    
     func messageHash() -> Int {
         return self.hash()
     }

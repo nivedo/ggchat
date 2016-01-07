@@ -13,6 +13,7 @@ public typealias MessageCompletionHandler = (stream: XMPPStream, message: XMPPMe
 // MARK: Protocols
 
 protocol XMPPMessageManagerDelegate : NSObjectProtocol {
+    /*
 	func onMessage(
         sender: XMPPStream,
         didReceiveMessage message: XMPPMessage,
@@ -24,9 +25,14 @@ protocol XMPPMessageManagerDelegate : NSObjectProtocol {
 	func onMessage(
         sender: XMPPStream,
         userIsComposing user: RosterUser) // XMPPUserCoreDataStorageObject)
+    */
+    
     func didSendMessage(
         sender: XMPPStream,
         message: XMPPMessage)
+    func receiveMessage(from: String, message: Message)
+    func receiveComposingMessage(from: String)
+    
 }
 
 public class XMPPMessageManager: NSObject {
@@ -266,27 +272,42 @@ extension XMPPManager {
 	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         print("didReceiveMessage")
-        
-        if let user = UserAPI.sharedInstance.rosterMap[message.from().bare()] {
-    		if message.isChatMessageWithBody() {
-                print("receiving message from \(user.jid) --> \(message.elementForName("body")!.stringValue())")
-                if let _ = message.elementForName("body")!.elementForName("photo") {
-        			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
-                        didReceivePhoto: message,
-                        from: user)
-                } else {
-        			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
-                        didReceiveMessage: message,
-                        from: user)
-                }
-    		} else {
-                print("composing by \(user.jid)")
-    			if let _ = message.elementForName("composing") {
-    				XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, userIsComposing: user)
-    			}
-    		}
+     
+        let now = NSDate()
+        let jid = UserAPI.stripResourceFromJID(message.from().bare())
+        if message.isChatMessageWithBody() {
+            if let msg = UserAPI.parseMessageFromElement(message as DDXMLElement, date: now, delegate: nil) {
+                XMPPMessageManager.sharedInstance.delegate?.receiveMessage(jid, message: msg)
+            } else {
+                print("Unable to parse received message \(message)")
+            }
+        } else {
+            if let _ = message.elementForName("composing") {
+                print("composing by \(jid)")
+                XMPPMessageManager.sharedInstance.delegate?.receiveComposingMessage(jid)
+            }
         }
-        // (2) User is not in roster
+            /*
+            if let user = UserAPI.sharedInstance.rosterMap[message.from().bare()] {
+        		if message.isChatMessageWithBody() {
+                    print("receiving message from \(user.jid) --> \(message.elementForName("body")!.stringValue())")
+                    if let _ = message.elementForName("body")!.elementForName("photo") {
+            			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
+                            didReceivePhoto: message,
+                            from: user)
+                    } else {
+            			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
+                            didReceiveMessage: message,
+                            from: user)
+                    }
+        		} else {
+                    print("composing by \(user.jid)")
+        			if let _ = message.elementForName("composing") {
+        				XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, userIsComposing: user)
+        			}
+        		}
+            }
+            */
 	}
 }
 

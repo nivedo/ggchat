@@ -20,5 +20,6 @@ protocol MessageMediaData {
     func mediaPlaceholderView() -> UIView?
     func mediaHash() -> Int
     func setNeedsDisplay()
+    func setDelegate(delegate: MessageMediaDelegate)
     
 }

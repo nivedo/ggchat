@@ -367,7 +367,8 @@ class GGMessageViewController:
         // JSQSystemSoundPlayer.jsq_playMessageSentSound()
         // self.finishSendingMessageAnimated(true)
     }
-    
+   
+    /*
 	func onMessage(
         sender: XMPPStream,
         didReceiveMessage message: XMPPMessage,
@@ -412,12 +413,14 @@ class GGMessageViewController:
             }
         }
     }
+    */
     
     func appendMessage(peerJID: String, date: NSDate, message: Message) {
         self.messages.append(message)
         UserAPI.sharedInstance.newMessage(peerJID, date: date, message: message)
     }
-    
+   
+    /*
 	func onPhoto(
         sender: XMPPStream,
         didReceivePhoto xmppMessage: XMPPMessage,
@@ -450,13 +453,40 @@ class GGMessageViewController:
             }
         }
     }
-    
+    */
+   
+    /*
 	func onMessage(
         sender: XMPPStream,
         // userIsComposing user: XMPPUserCoreDataStorageObject) {
         userIsComposing user: RosterUser) {
         self.showTypingIndicator = !self.showTypingIndicator
         self.scrollToBottomAnimated(true)
+    }
+    */
+    
+    func receiveMessage(from: String, message: Message) {
+        if let recipient = self.recipient {
+            if recipient.jidBare == from {
+                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                message.setMediaDelegate(self)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.appendMessage(from, date: message.date, message: message)
+                    self.finishReceivingMessageAnimated(true)
+                }
+            }
+        }
+    }
+    
+    func receiveComposingMessage(from: String) {
+        if let recipient = self.recipient {
+            if recipient.jidBare == from {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.showTypingIndicator = !self.showTypingIndicator
+                    self.scrollToBottomAnimated(true)
+                }
+            }
+        }
     }
    
     func onTap(attributes: [String: AnyObject] ) {

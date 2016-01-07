@@ -59,6 +59,10 @@ class MediaItem: NSObject, NSCoding, NSCopying, MessageMediaData {
     func setNeedsDisplay() {
         self.mediaView()?.setNeedsDisplay()
     }
+    
+    func setDelegate(delegate: MessageMediaDelegate) {
+        self.delegate = delegate
+    }
 
     func mediaViewDisplaySize() -> CGSize {
         if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
