@@ -517,14 +517,15 @@ class UserAPI {
         } catch _ {
             element = nil
         }
-       
-        // let to = element.attributeStringValueForName("to")
         
+        return self.parseMessageFromElement(element, date: date, delegate: delegate)
+    }
+    
+    class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
         if let bodyElement = element?.elementForName("body"),
             let from = element?.attributeStringValueForName("from"),
             let type = element?.attributeStringValueForName("type") {
             if type != "chat" {
-                print(xmlString)
                 return nil
             }
                 
