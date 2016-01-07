@@ -118,7 +118,15 @@ class ChatConversation {
         if let msg = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil) {
             self.lastTime = date
             self.lastMessage = msg
+        } else {
+            assert(false, "Unable to parse message xml \(xmlString)")
         }
+    }
+    
+    init(jid: String, date: NSDate, message: Message) {
+        self.peerJID = jid
+        self.lastTime = date
+        self.lastMessage = message
     }
     
     func updateIfMoreRecent(date: NSDate, xmlString: String) {
@@ -664,8 +672,12 @@ class UserAPI {
         let jid = UserAPI.stripResourceFromJID(peerJID)
         if let chat = self.chatsMap[jid] {
             chat.updateIfMoreRecent(date, message: message)
-            self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
+        } else {
+            let chat = ChatConversation(jid: jid, date: date, message: message)
+            self.chatsMap[jid] = chat
+            self.chatsList.append(chat)
         }
+        self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
     }
     
     func updatePushToken() {
