@@ -393,6 +393,7 @@ class GGMessageViewController:
                     self.appendMessage(from, date: message.date, message: message)
                     self.finishReceivingMessageAnimated(true)
                 }
+                UserAPI.sharedInstance.readAllMessages(recipient.jid)
             }
         }
         self.initBackButton()
