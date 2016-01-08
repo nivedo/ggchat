@@ -121,18 +121,20 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6O9-Fm-I7M" userLabel="Badge container">
                                             <rect key="frame" x="290" y="30" width="30" height="29"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vjf-lK-bc9" userLabel="Badge image">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vjf-lK-bc9" userLabel="Badge image">
                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="a2g-eE-5qY"/>
+                                                        <constraint firstAttribute="height" constant="16" id="jPR-Mh-llW"/>
+                                                    </constraints>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="vjf-lK-bc9" firstAttribute="top" secondItem="6O9-Fm-I7M" secondAttribute="top" constant="6" id="5RA-wZ-ef3"/>
                                                 <constraint firstAttribute="height" constant="29" id="E4P-RB-w4G"/>
-                                                <constraint firstItem="vjf-lK-bc9" firstAttribute="top" secondItem="6O9-Fm-I7M" secondAttribute="top" id="SdC-BU-zkM"/>
-                                                <constraint firstAttribute="bottom" secondItem="vjf-lK-bc9" secondAttribute="bottom" id="afR-d3-ZFq"/>
-                                                <constraint firstAttribute="trailing" secondItem="vjf-lK-bc9" secondAttribute="trailing" id="gtd-We-feX"/>
+                                                <constraint firstItem="vjf-lK-bc9" firstAttribute="leading" secondItem="6O9-Fm-I7M" secondAttribute="leading" constant="6" id="It2-u0-BZJ"/>
                                                 <constraint firstAttribute="width" constant="30" id="t5s-W6-UOE"/>
-                                                <constraint firstItem="vjf-lK-bc9" firstAttribute="leading" secondItem="6O9-Fm-I7M" secondAttribute="leading" id="wEk-nH-bOx"/>
                                             </constraints>
                                         </view>
                                     </subviews>

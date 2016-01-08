@@ -152,6 +152,13 @@ class ChatTableViewController:
         cell.avatarImageView.image = avatar.avatarImage
         // cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
         
+        if chatConversation.unreadCount == 0 {
+            cell.badgeImageView.image = nil
+        } else {
+            let badge = "\(chatConversation.unreadCount)"
+            cell.badgeImageView.image = MessageAvatarImageFactory.badgeImageWithNumber(badge)
+        }
+        
         return cell
     }
 

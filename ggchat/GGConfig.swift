@@ -48,6 +48,7 @@ struct GGConfig {
     static let outgoingTextColor = UIColor.darkGrayColor()
     static let springinessEnabled = false
     static let avatarSize: CGFloat = 30.0
+    static let badgeSize: CGFloat = 16.0
     static let messageBubbleFont: UIFont = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
     static let messageComposerFont: UIFont = UIFont.systemFontOfSize(16.0)
 }

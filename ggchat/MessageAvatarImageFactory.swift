@@ -68,8 +68,8 @@ class MessageAvatarImageFactory: NSObject {
         let badgeImage: UIImage = MessageAvatarImageFactory.gg_imageWitInitials(number,
             backgroundColor: UIColor.redColor(),
             textColor: UIColor.whiteColor(),
-            font: UIFont.systemFontOfSize(8.0),
-            diameter: CGFloat(8.0))
+            font: UIFont.systemFontOfSize(GGConfig.badgeSize-3.0),
+            diameter: GGConfig.badgeSize)
         return badgeImage
     }
 
