@@ -109,15 +109,15 @@ class GGMessageViewController:
         // self.finishReceivingMessageAnimated(false)
         // self.scrollToBottomAnimated(false)
         
-        self.loadLastActivity(false)
+        // self.loadLastActivity(false)
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = self
         }
     }
     
+    /*
     func loadLastActivity(force: Bool) {
         // Disable last activity
-        /*
         if let recipient = self.recipient {
             self.navigationItem.title = recipient.displayName
          
@@ -147,8 +147,8 @@ class GGMessageViewController:
                 }
             }
         }
-        */
     }
+    */
     
     func loadArchivedMessagesFromCoreData(sync: Bool, animated: Bool) {
         if let recipient = self.recipient {
