@@ -136,7 +136,11 @@ public class XMPPMessageManager: NSObject {
 		}
 	}
     
-    func archiveMessage(xmlString: String, date: NSDate, outgoing: Bool) {
+    func archiveMessage(id: String, xmlString: String, date: NSDate, outgoing: Bool) {
+        if self.archivedMessageIds.contains(id) {
+            return
+        }
+        
         print("archiveMessage: \(xmlString)")
         var element: DDXMLElement?
         do {
@@ -161,10 +165,13 @@ public class XMPPMessageManager: NSObject {
                 xmppStream: XMPPManager.sharedInstance.stream,
                 archiveDate: date
             )
+            self.archivedMessageIds.insert(id)
             
             print("archive SUCCESS")
         }
     }
+    
+    var archivedMessageIds = Set<String>()
 	
     func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> [Message] {
 		let moc = messageStorage?.mainThreadManagedObjectContext
@@ -179,7 +186,8 @@ public class XMPPMessageManager: NSObject {
 		
 		do {
 			let results = try moc?.executeFetchRequest(request)
-			
+		
+            self.archivedMessageIds.removeAll()
 			for messageElement in results! {
                 if let message = UserAPI.parseMessageFromString(
                     messageElement.messageStr,
@@ -187,6 +195,7 @@ public class XMPPMessageManager: NSObject {
                     delegate: delegate) {
                     retrievedMessages.append(message)
                     // print("archived message: \(message.displayText)")
+                    self.archivedMessageIds.insert(message.id)
                 }
 			}
 		} catch _ {

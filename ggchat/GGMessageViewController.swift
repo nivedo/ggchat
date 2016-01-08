@@ -220,7 +220,7 @@ class GGMessageViewController:
                                 (lastTimestamp == nil || m.date.compare(lastTimestamp!) == NSComparisonResult.OrderedDescending) {
                                 self.messages.append(m)
                                 print("archiving message \(m.displayText)")
-                                XMPPMessageManager.sharedInstance.archiveMessage(x, date: m.date, outgoing: m.isOutgoing)
+                                XMPPMessageManager.sharedInstance.archiveMessage(m.id, xmlString: x, date: m.date, outgoing: m.isOutgoing)
                             }
                         }
                         if animated {
