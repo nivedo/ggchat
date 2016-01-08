@@ -67,11 +67,12 @@ public class XMPPMessageManager: NSObject {
 	
 	// MARK: public methods
 	public class func sendMessage(
+        id messageId: String,
         message: String,
         to receiver: String,
         completionHandler completion: MessageCompletionHandler?) {
         if (message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
-            let messageId = XMPPManager.sharedInstance.stream.generateUUID()
+            // let messageId = XMPPManager.sharedInstance.stream.generateUUID()
             let body = DDXMLElement(name: "body", stringValue: message)
             let completeMessage = DDXMLElement(name: "message")
     		

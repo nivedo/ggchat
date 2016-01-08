@@ -80,6 +80,7 @@ class GGMessageViewController:
                 let photoMedia: PhotoMediaItem = PhotoMediaItem(image: chosenImage, delegate: self)
                 let now = NSDate()
                 let message: Message = Message(
+                    id: XMPPManager.sharedInstance.stream.generateUUID(),
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
                     isOutgoing: true,
@@ -178,8 +179,8 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             var syncNeeded = true
             if let lastArchivedMessageId = self.messages.last?.id {
-                if let chatConversation = UserAPI.sharedInstance.chatsMap[recipient.jid], let lastServerMessageId = chatConversation.lastMessage.id {
-                    syncNeeded = (lastArchivedMessageId != lastServerMessageId)
+                if let chatConversation = UserAPI.sharedInstance.chatsMap[recipient.jid] {
+                    syncNeeded = (lastArchivedMessageId != chatConversation.lastMessage.id)
                 }
             }
             
@@ -275,10 +276,12 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
+            let id = XMPPManager.sharedInstance.stream.generateUUID()
             var message: Message!
             if let asset = AssetManager.getSingleEncodedAsset(text) {
                 let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
                 message = Message(
+                    id: id,
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
                     isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
@@ -289,6 +292,7 @@ class GGMessageViewController:
             
             if message == nil {
                 message = Message(
+                    id: id,
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
                     isOutgoing: true,
@@ -298,7 +302,9 @@ class GGMessageViewController:
             
             self.appendMessage(recipient.jid, date: date, message: message)
          
-            XMPPMessageManager.sendMessage(text,
+            XMPPMessageManager.sendMessage(
+                id: id,
+                message: text,
                 to: recipient.jid,
                 completionHandler: nil)
         

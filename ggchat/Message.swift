@@ -19,7 +19,7 @@ class Message {
     var isMediaMessage: Bool
     var isOutgoing: Bool
     var media: MessageMediaData?
-    var id: String?
+    var id: String
     
     var displayText: String {
         get {
@@ -35,7 +35,8 @@ class Message {
         }
     }
     
-    init(senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, text: String) {
+    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, text: String) {
+        self.id = id
         self.senderId = senderId
         self.senderDisplayName = senderDisplayName
         self.date = date
@@ -48,15 +49,18 @@ class Message {
         self.isOutgoing = isOutgoing
     }
     
-    convenience init(senderId: String, senderDisplayName: String, isOutgoing: Bool, text: String) {
-        self.init(senderId: senderId,
+    convenience init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, text: String) {
+        self.init(
+            id: id,
+            senderId: senderId,
             senderDisplayName: senderDisplayName,
             isOutgoing: isOutgoing,
             date: NSDate(),
             text: text)
     }
     
-    init(senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, isMedia: Bool) {
+    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, isMedia: Bool) {
+        self.id = id
         self.senderId = senderId
         self.senderDisplayName = senderDisplayName
         self.isOutgoing = isOutgoing
@@ -64,8 +68,9 @@ class Message {
         self.isMediaMessage = isMedia
     }
     
-    convenience init(senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, text: String? = nil) {
+    convenience init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, text: String? = nil) {
         self.init(
+            id: id,
             senderId: senderId,
             senderDisplayName: senderDisplayName,
             isOutgoing: isOutgoing,

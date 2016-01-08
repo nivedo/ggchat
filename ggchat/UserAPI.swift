@@ -559,34 +559,37 @@ class UserAPI {
             
                 let photoMedia = PhotoMediaItem(thumbnailKey: thumbnailKey, originalKey: originalKey, delegate: delegate)
                 let photoMessage = Message(
+                    id: id!,
                     senderId: fromBare,
                     senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                     isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                     date: date,
                     media: photoMedia)
-                photoMessage.id = id
+                // photoMessage.id = id
                 return photoMessage
             } else {
                 // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(body)")
                 if let asset = AssetManager.getSingleEncodedAsset(body) {
                     let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: delegate)
                     let message = Message(
+                        id: id!,
                         senderId: fromBare,
                         senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                         isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                         date: date,
                         media: wikiMedia,
                         text: body)
-                    message.id = id
+                    // message.id = id
                     return message
                 }
                 let fullMessage = Message(
+                    id: id!,
                     senderId: fromBare,
                     senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                     isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                     date: date,
                     text: body)
-                fullMessage.id = id
+                // fullMessage.id = id
                 return fullMessage
             }
         }

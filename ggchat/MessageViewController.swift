@@ -1538,6 +1538,7 @@ class MessageViewController: UIViewController,
                 image: UIPasteboard.generalPasteboard().image!,
                 delegate: self)
             let message: Message = Message(
+                id: XMPPManager.sharedInstance.stream.generateUUID(),
                 senderId: self.senderId,
                 senderDisplayName: self.senderDisplayName,
                 isOutgoing: true,
