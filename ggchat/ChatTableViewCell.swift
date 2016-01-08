@@ -13,6 +13,8 @@ class ChatTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarContainer: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
     
+    @IBOutlet weak var badgeContainer: UIView!
+    @IBOutlet weak var badgeImageView: UIImageView!
     
     @IBOutlet weak var cellTopLabel: UILabel!
     @IBOutlet weak var cellBottomLabel: UILabel!
@@ -31,6 +33,7 @@ class ChatTableViewCell: UITableViewCell {
         
         self.avatarImageView.image = nil
         self.avatarImageView.highlightedImage = nil
+        self.badgeImageView.image = nil
     }
     
     override func awakeFromNib() {

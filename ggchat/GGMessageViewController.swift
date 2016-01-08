@@ -104,6 +104,10 @@ class GGMessageViewController:
     override func viewWillAppear(animated: Bool) {
         print("GG::viewWillAppear")
         super.viewWillAppear(animated)
+       
+        if let recipient = self.recipient {
+            UserAPI.sharedInstance.readAllMessages(recipient.jid)
+        }
         
         // self.loadArchivedMessagesFromCoreData(false, animated: true)
         // self.finishReceivingMessageAnimated(false)

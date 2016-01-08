@@ -716,6 +716,13 @@ class UserAPI {
         }
     }
     
+    func readAllMessages(peerJID: String) {
+        let jid = UserAPI.stripResourceFromJID(peerJID)
+        if let chat = self.chatsMap[jid] {
+            chat.unreadCount = 0
+        }
+    }
+    
     func updatePushToken() {
         if let token = self.pushToken {
             let success = self.editProfile(["pushToken": token] , jsonCompletion: { HTTPJsonCompletion in
