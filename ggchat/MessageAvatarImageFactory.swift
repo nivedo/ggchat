@@ -63,6 +63,15 @@ class MessageAvatarImageFactory: NSObject {
             highlightedImage: avatarHighlightedImage,
             placeholderImage: avatarImage)
     }
+    
+    class func badgeImageWithNumber(number: String) -> UIImage {
+        let badgeImage: UIImage = MessageAvatarImageFactory.gg_imageWitInitials(number,
+            backgroundColor: UIColor.redColor(),
+            textColor: UIColor.whiteColor(),
+            font: UIFont.systemFontOfSize(8.0),
+            diameter: CGFloat(8.0))
+        return badgeImage
+    }
 
     // pragma mark - Private
 

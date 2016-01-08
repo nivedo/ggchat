@@ -238,6 +238,9 @@ class ChatTableViewController:
     func receiveMessage(from: String, message: Message) {
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView.reloadData()
+            if let tabBarItems = self.tabBarController?.tabBar.items {
+                tabBarItems[0].badgeValue = "1"
+            }
         }
     }
 }
