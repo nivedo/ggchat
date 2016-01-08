@@ -1556,13 +1556,40 @@ class MessageViewController: UIViewController,
     }
     
     func redrawMessageMedia() {
+        // print("redrawMessageMedia")
         dispatch_async(dispatch_get_main_queue()) {
             if self.messageCollectionView != nil {
                 // This method could be called before viewWillLoad / viewDidLoad has initialized the view controller
                 // self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
                 self.messageCollectionView.reloadData()
-                self.scrollToBottomAnimated(false)
+                if self.inputToolbar.contentView.textView.isFirstResponder() {
+                    self.scrollToBottomAnimated(false)
+                } else if let lastIndexPath = self.lastScrollVisibleCellIndexPath {
+                    // let scrollPosition: UICollectionViewScrollPosition = (finalCellSize.height > maxHeightForVisibleMessage) ? UICollectionViewScrollPosition.Bottom : UICollectionViewScrollPosition.Top
+                    /*
+                    print("redraw scroll to last index path \(lastIndexPath)")
+                    
+                    let scrollPosition = UICollectionViewScrollPosition.Bottom
+                    self.messageCollectionView.scrollToItemAtIndexPath(lastIndexPath,
+                        atScrollPosition: scrollPosition,
+                        animated: false)
+                    */
+                } else {
+                    self.scrollToBottomAnimated(false)
+                }
             }
         }
     }
+   
+    var lastScrollVisibleCellIndexPath: NSIndexPath?
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        // print("scrollViewDidScroll y-offset: \(scrollView.contentOffset.y), y-position: \(scrollView.contentOffset.y)")
+       
+        let visibleCells = self.messageCollectionView.visibleCells()
+        if let lastVisibleCell = visibleCells.last {
+            self.lastScrollVisibleCellIndexPath = self.messageCollectionView.indexPathForCell(lastVisibleCell)
+        }
+    }
+    
 }
