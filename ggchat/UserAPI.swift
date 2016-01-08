@@ -333,7 +333,6 @@ class UserAPI {
                     self.jpassword = pass
                     self.password = password
                     self.email = email
-                    self.cacheRoster()
                     self.sync()
                     self.updatePushToken()
                     completion?(true)
@@ -364,7 +363,6 @@ class UserAPI {
                         // self.loadRosterFromCoreData(nil)
                         // self.loadChatsFromCoreData()
                         
-                        self.cacheRoster()
                         self.sync()
                         self.updatePushToken()
                         completion?(true)
@@ -447,6 +445,20 @@ class UserAPI {
                 })
             }
         }
+    }
+    
+    func loadProfilesFromJson(array: [AnyObject], completion: ((Bool) -> Void)? = nil) {
+        self.rosterList.removeAll()
+        self.rosterMap.removeAll()
+        for profile in array {
+            let user = RosterUser(
+                profile: profile as! [String: AnyObject],
+                avatarCompletion: completion)
+            self.rosterList.append(user)
+            self.rosterMap[user.jid] = user
+        }
+        UserAPICoreData.sharedInstance.trimAllUsers(self.rosterMap)
+        self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
     }
     
     func loadRosterFromCoreData(completion: ((Bool) -> Void)? = nil) {
@@ -662,6 +674,9 @@ class UserAPI {
                         }
                         if let profileJson = json["profile"] as? [String: AnyObject] {
                             self.loadProfileFromJson(profileJson)
+                        }
+                        if let profilesArray = json["profiles"] as? [AnyObject] {
+                            self.loadProfilesFromJson(profilesArray)
                         }
                     } else {
                         self.delegate?.onChatsUpdate(false)
