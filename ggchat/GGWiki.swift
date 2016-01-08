@@ -491,16 +491,15 @@ class GGWiki {
             let lastTokens = tokens[startIndex..<tokens.count]
             
             let target = lastTokens.joinWithSeparator(" ")
-            // let replaceIndex = name.characters.count - target.characters.count
             let replaceIndex = inputLength - target.characters.count
             if let s = self.computeCardSuggestion(target, replaceIndex: replaceIndex) {
                 for h in s {
+                    // Remove duplicate suggestions
                     if !suggestionIds.contains(h.id) {
                         suggestions.append(h)
                     }
                     suggestionIds.insert(h.id)
                 }
-                // suggestions.appendContentsOf(s)
             } else {
                 return nil
             }
