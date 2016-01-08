@@ -723,6 +723,16 @@ class UserAPI {
         }
     }
     
+    var totalUnreadCount: Int {
+        get {
+            var totalUnread = 0
+            for (_, chat) in UserAPI.sharedInstance.chatsMap {
+                totalUnread += chat.unreadCount
+            }
+            return totalUnread
+        }
+    }
+    
     func updatePushToken() {
         if let token = self.pushToken {
             let success = self.editProfile(["pushToken": token] , jsonCompletion: { HTTPJsonCompletion in

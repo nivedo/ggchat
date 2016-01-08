@@ -149,6 +149,7 @@ class MessageViewController: UIViewController,
         barButton.title = "Back"
         self.navigationController!.navigationBar.topItem!.backBarButtonItem = barButton
         */
+        /*
         if (self.overrideNavBackButtonToRootViewController) {
             let barButton: UIBarButtonItem = UIBarButtonItem(
                 title: "Chats",
@@ -157,6 +158,8 @@ class MessageViewController: UIViewController,
                 action: Selector("receivedBackPressed:"))
             self.navigationItem.leftBarButtonItem = barButton
         }
+        */
+        self.initBackButton()
         
         // Tap gesture recognizer to dismiss keyboard
         let tap = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard"))
@@ -182,6 +185,20 @@ class MessageViewController: UIViewController,
          */
         self.inputToolbar.maximumHeight = 150
         
+    }
+    
+    func initBackButton() {
+        let totalUnreadCount = UserAPI.sharedInstance.totalUnreadCount
+        var text = "Back"
+        if totalUnreadCount > 0 {
+            text = "Back (\(totalUnreadCount))"
+        }
+        let barButton: UIBarButtonItem = UIBarButtonItem(
+            title: text,
+            style: UIBarButtonItemStyle.Plain,
+            target: self,
+            action: Selector("receivedBackPressed:"))
+        self.navigationItem.leftBarButtonItem = barButton
     }
     
     func receivedBackPressed(button: UIBarButtonItem) {
