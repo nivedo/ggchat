@@ -698,6 +698,9 @@ class UserAPI {
             let chat = ChatConversation(jid: jid, date: date, message: message)
             self.chatsMap[jid] = chat
             self.chatsList.append(chat)
+            
+            // New chat or user, sync
+            self.sync()
         }
         self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
     }

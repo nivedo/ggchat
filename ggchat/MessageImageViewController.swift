@@ -83,8 +83,8 @@ class MessageImageViewController: UIViewController {
                 image.size.width, image.size.height)
             self.imageView.image = image
             
-            print("set frame \(self.imageView.frame)")
-            print("container \(self.imageContainer.frame)")
+            // print("set frame \(self.imageView.frame)")
+            // print("container \(self.imageContainer.frame)")
         }
         /*
         if let image = self.image {
