@@ -98,6 +98,7 @@ class ChatConversation {
     var peerJID: String!
     var lastTime: NSDate!
     var lastMessage: Message!
+    var unreadCount: Int = 0
     
     init(json: [String: AnyObject]) {
         if let timestamp = json["time"] as? NSTimeInterval,
@@ -144,7 +145,14 @@ class ChatConversation {
             self.lastMessage = message
         }
     }
+   
+    func incrementUnread() {
+        self.unreadCount++
+    }
     
+    func resetUnread() {
+        self.unreadCount = 0
+    }
 }
 
 struct Language {
@@ -690,19 +698,22 @@ class UserAPI {
         }
     }
     
-    func newMessage(peerJID: String, date: NSDate, message: Message) {
+    func newMessage(peerJID: String, date: NSDate, message: Message) -> ChatConversation {
         let jid = UserAPI.stripResourceFromJID(peerJID)
         if let chat = self.chatsMap[jid] {
             chat.updateIfMoreRecent(date, message: message)
+            self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
+            return chat
         } else {
             let chat = ChatConversation(jid: jid, date: date, message: message)
             self.chatsMap[jid] = chat
             self.chatsList.append(chat)
+            self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
             
             // New chat or user, sync
             self.sync()
+            return chat
         }
-        self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
     }
     
     func updatePushToken() {
