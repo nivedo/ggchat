@@ -423,7 +423,8 @@ class GGMessageViewController:
     func onTapCatchAll() {
         self.dismissKeyboard()
     }
-    
+   
+    /*
     func presentTransparentViewController(
         viewControllerToPresent: UIViewController,
         animated flag: Bool,
@@ -439,6 +440,7 @@ class GGMessageViewController:
             animated: true,
             completion: completion)
     }
+    */
     
     func initImageModalViewController() {
         let storyboardName: String = "Main"

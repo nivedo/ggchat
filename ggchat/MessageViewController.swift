@@ -1468,7 +1468,8 @@ class MessageViewController: UIViewController,
         if message.isMediaMessage {
             if let mivc = self.messageImageViewController, let photoMedia = message.media as? PhotoMediaItem {
                 mivc.image = photoMedia.image
-                self.presentViewController(mivc, animated: true, completion: nil)
+                // self.presentViewController(mivc, animated: true, completion: nil)
+                self.presentTransparentViewController(mivc, animated: true, completion: nil)
             }
         }
         self.dismissKeyboard()
@@ -1590,6 +1591,22 @@ class MessageViewController: UIViewController,
         if let lastVisibleCell = visibleCells.last {
             self.lastScrollVisibleCellIndexPath = self.messageCollectionView.indexPathForCell(lastVisibleCell)
         }
+    }
+    
+    func presentTransparentViewController(
+        viewControllerToPresent: UIViewController,
+        animated flag: Bool,
+        completion: ((Void) -> Void)?) {
+            if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
+                self.parentViewController!.navigationController!.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+            } else {
+                viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                print("presentTransparentViewController")
+            }
+            
+            self.presentViewController(viewControllerToPresent,
+                animated: true,
+                completion: completion)
     }
     
 }
