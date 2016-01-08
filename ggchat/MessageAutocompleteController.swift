@@ -61,24 +61,35 @@ class MessageAutocompleteController: NSObject,
         self.tableView.reloadData()
     }
     
-    func displaySuggestions(suggestions: [AssetAutocompleteSuggestion], frame: CGRect) {
+    func displaySuggestions(target: String, suggestions: [AssetAutocompleteSuggestion], frame: CGRect) {
         self.tableView.frame = CGRect(
             origin: CGPoint(x: 0, y: frame.origin.y - MessageAutocompleteController.defaultHeight),
             size: CGSize(width: frame.width, height: MessageAutocompleteController.defaultHeight))
         self.tableView.hidden = false
-        /*
-        self.suggestions = suggestions.map {
-            (let str) -> AssetAutocompleteSuggestion in
-            return AssetAutocompleteSuggestion(displayString: str)
-        }
-        */
+       
+        let t0 = target.lowercaseString[0] as String
         self.suggestions = suggestions
         self.suggestions.sortInPlace({ (s1: AssetAutocompleteSuggestion, s2: AssetAutocompleteSuggestion) -> Bool in
-            return (s1.displayString.length == s2.displayString.length)
-                ? s1.displayString.lowercaseString < s2.displayString.lowercaseString
-                : s1.displayString.length > s2.displayString.length
+            if s1.displayString.length == s2.displayString.length {
+                let l1 = s1.displayString.lowercaseString
+                let l2 = s2.displayString.lowercaseString
+                let c1 = l1[0] as String
+                let c2 = l2[0] as String
+                if c1 == c2 {
+                    return l1 < l2
+                } else {
+                    if t0 == c1 {
+                        return true
+                    } else if t0 == c2 {
+                        return false
+                    } else {
+                        return l1 < l2
+                    }
+                }
+            } else {
+                return s1.displayString.length > s2.displayString.length
+            }
         })
-        // print(suggestions)
         
         self.tableView.reloadData()
     }

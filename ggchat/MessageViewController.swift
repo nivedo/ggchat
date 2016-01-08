@@ -959,7 +959,9 @@ class MessageViewController: UIViewController,
                 let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
                 if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.autocompleteController?.displaySuggestions(suggestions!, frame: self.inputToolbar.frame)
+                        self.autocompleteController?.displaySuggestions(word,
+                            suggestions: suggestions!,
+                            frame: self.inputToolbar.frame)
                     }
                 }
             }
@@ -985,7 +987,9 @@ class MessageViewController: UIViewController,
                 dispatch_async(dispatch_get_main_queue()) {
                     if let s = suggestions {
                         if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {
-                            self.autocompleteController?.displaySuggestions(s, frame: self.inputToolbar.frame)
+                            self.autocompleteController?.displaySuggestions(word,
+                                suggestions: s,
+                                frame: self.inputToolbar.frame)
                         } else {
                             self.autocompleteController?.hide()
                         }
