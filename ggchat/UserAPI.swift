@@ -651,32 +651,36 @@ class UserAPI {
         }
     }
     
+    func loadMessagesFromJson(messagesArray: [AnyObject]) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.chatsList.removeAll()
+            self.chatsMap.removeAll()
+            for element in messagesArray {
+                if let json = element as? [String: AnyObject] {
+                    // print(json)
+                    let chat = ChatConversation(json: json)
+                    self.chatsList.append(chat)
+                    self.chatsMap[chat.peerJID] = chat
+                }
+            }
+            self.delegate?.onChatsUpdate(true)
+        }
+    }
+    
     func sync() {
         if let token = self.authToken {
             self.get(UserAPI.syncUrl,
                 authToken: token,
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                     if let json = jsonBody {
-                        if let messagesJson = json["messages"] as? [AnyObject] {
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.chatsList.removeAll()
-                                self.chatsMap.removeAll()
-                                for element in messagesJson {
-                                    if let json = element as? [String: AnyObject] {
-                                        // print(json)
-                                        let chat = ChatConversation(json: json)
-                                        self.chatsList.append(chat)
-                                        self.chatsMap[chat.peerJID] = chat
-                                    }
-                                }
-                                self.delegate?.onChatsUpdate(true)
-                            }
-                        }
                         if let profileJson = json["profile"] as? [String: AnyObject] {
                             self.loadProfileFromJson(profileJson)
                         }
                         if let profilesArray = json["profiles"] as? [AnyObject] {
                             self.loadProfilesFromJson(profilesArray)
+                        }
+                        if let messagesArray = json["messages"] as? [AnyObject] {
+                            self.loadMessagesFromJson(messagesArray)
                         }
                     } else {
                         self.delegate?.onChatsUpdate(false)
