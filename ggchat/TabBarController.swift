@@ -16,15 +16,15 @@ class TabBarController {
        // Nothing to do
     }
     
-    class func incrementChatsBadge(tabBarController: UITabBarController?) {
+    class func incrementChatsBadge(tabBarController: UITabBarController?, increment: Int = 1) {
         JSQSystemSoundPlayer.jsq_playMessageReceivedAlert()
         // AudioServicesPlaySystemSound(1103)
         
         if let tabBarItems = tabBarController?.tabBar.items {
             if let badgeValue = tabBarItems[0].badgeValue, let badgeInt = Int(badgeValue) {
-                tabBarItems[0].badgeValue = (badgeInt + 1).description
+                tabBarItems[0].badgeValue = (badgeInt + increment).description
             } else {
-                tabBarItems[0].badgeValue = "1"
+                tabBarItems[0].badgeValue = "\(increment)"
             }
         }
     }
