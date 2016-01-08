@@ -28,4 +28,29 @@ class TabBarController {
             }
         }
     }
+
+    class func updateChatsBar(tabBarController: UITabBarController?) {
+        var totalUnread = 0
+        for (_, chat) in UserAPI.sharedInstance.chatsMap {
+            totalUnread += chat.unreadCount
+        }
+        self.updateChatsBadge(tabBarController, badge: totalUnread)
+    }
+    
+    class func updateChatsBadge(tabBarController: UITabBarController?, badge: Int) {
+        // AudioServicesPlaySystemSound(1103)
+        
+        if let tabBarItems = tabBarController?.tabBar.items {
+            if badge == 0 {
+                tabBarItems[0].badgeValue = nil
+            } else {
+                if let oldValue = tabBarItems[0].badgeValue, let oldInt = Int(oldValue) {
+                    if badge > oldInt {
+                        JSQSystemSoundPlayer.jsq_playMessageReceivedAlert()
+                    }
+                }
+                tabBarItems[0].badgeValue = "\(badge)"
+            }
+        }
+    }
 }

@@ -55,6 +55,7 @@ class ChatTableViewController:
         
         self.chatsList = UserAPI.sharedInstance.chatsList
         print("Chats::viewWillAppear --> \(self.chatsList.count)")
+        TabBarController.updateChatsBar(self.tabBarController)
         self.tableView.reloadData()
         
         // UserAPI.sharedInstance.cacheChats()

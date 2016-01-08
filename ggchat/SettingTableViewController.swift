@@ -132,6 +132,7 @@ class SettingTableViewController:
         // This call is necessary because popViewControllerAnimated will not
         // call viewDidLoad() or refresh the tableView after the pop
         
+        TabBarController.updateChatsBar(self.tabBarController)
         self.tableView.reloadData()
     }
 

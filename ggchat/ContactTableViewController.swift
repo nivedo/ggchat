@@ -190,6 +190,7 @@ class ContactTableViewController: UITableViewController,
         // UserAPI.sharedInstance.cacheRoster()
         
         self.rosterList = UserAPI.sharedInstance.rosterList
+        TabBarController.updateChatsBar(self.tabBarController)
         self.tableView.reloadData()
     }
     
