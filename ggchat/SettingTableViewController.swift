@@ -12,7 +12,8 @@ import MBProgressHUD
 class SettingTableViewController:
     UITableViewController,
     UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate {
+    UINavigationControllerDelegate,
+    XMPPMessageManagerDelegate {
 
     let photoPicker = UIImagePickerController()
     
@@ -35,6 +36,7 @@ class SettingTableViewController:
         
         // Initialize photo and camera delegates
         self.photoPicker.delegate = self
+        XMPPMessageManager.sharedInstance.delegate = self
     }
     
     //////////////////////////////////////////////////////////////////////////////////
@@ -332,5 +334,15 @@ class SettingTableViewController:
         alert.addAction(actionCancel)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func receiveComposingMessage(from: String) {
+        // Do nothing for chat view
+    }
+    
+    func receiveMessage(from: String, message: Message) {
+        dispatch_async(dispatch_get_main_queue()) {
+            TabBarController.incrementChatsBadge(self.tabBarController)
+        }
     }
 }

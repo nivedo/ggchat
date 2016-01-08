@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import JSQSystemSoundPlayer
+// import AudioToolbox
 
 class TabBarController {
     
@@ -15,6 +17,9 @@ class TabBarController {
     }
     
     class func incrementChatsBadge(tabBarController: UITabBarController?) {
+        JSQSystemSoundPlayer.jsq_playMessageReceivedAlert()
+        // AudioServicesPlaySystemSound(1103)
+        
         if let tabBarItems = tabBarController?.tabBar.items {
             if let badgeValue = tabBarItems[0].badgeValue, let badgeInt = Int(badgeValue) {
                 tabBarItems[0].badgeValue = (badgeInt + 1).description

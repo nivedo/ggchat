@@ -13,7 +13,10 @@ protocol ContactPickerDelegate{
     func didSelectContact(recipient: RosterUser)
 }
 
-class ContactTableViewController: UITableViewController, UISearchResultsUpdating, UserDelegate {
+class ContactTableViewController: UITableViewController,
+    UISearchResultsUpdating,
+    XMPPMessageManagerDelegate,
+    UserDelegate {
 
     var searchResultController = UISearchController()
     var filteredRosterList = [RosterUser]()
@@ -137,6 +140,7 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
         })()
         
         UserAPI.sharedInstance.delegate = self
+        XMPPMessageManager.sharedInstance.delegate = self
         self.tableView.reloadData()
        
         self.refreshControl = UIRefreshControl()
@@ -342,6 +346,16 @@ class ContactTableViewController: UITableViewController, UISearchResultsUpdating
                 // print("ContactPickerDelege!")
                 cpd.didSelectContact(user)
             }
+        }
+    }
+    
+    func receiveComposingMessage(from: String) {
+        // Do nothing for chat view
+    }
+    
+    func receiveMessage(from: String, message: Message) {
+        dispatch_async(dispatch_get_main_queue()) {
+            TabBarController.incrementChatsBadge(self.tabBarController)
         }
     }
 }
