@@ -8,7 +8,15 @@
 
 import UIKit
 
- let reuseIdentifier = "Cell"
+class MessagePacket {
+    var placeholderText: String
+    var encodedText: String
+    
+    init(placeholderText: String, encodedText: String) {
+        self.placeholderText = placeholderText
+        self.encodedText = encodedText
+    }
+}
 
 class MessageViewController: UIViewController,
     UICollectionViewDataSource,
@@ -498,7 +506,7 @@ class MessageViewController: UIViewController,
 
     func didPressSendButton(
         button: UIButton,
-        withMessageText text: String,
+        withMessagePacket packet: MessagePacket,
         senderId: String,
         senderDisplayName: String,
         date: NSDate) {
@@ -831,7 +839,7 @@ class MessageViewController: UIViewController,
             self.didPressAccessoryButton(sender)
         } else {
             self.didPressSendButton(sender,
-                withMessageText: self.gg_currentlyComposedMessageText(),
+                withMessagePacket: self.gg_currentlyComposedMessageText(),
                 senderId: self.senderId,
                 senderDisplayName: self.senderDisplayName,
                 date: NSDate())
@@ -850,7 +858,7 @@ class MessageViewController: UIViewController,
         print("MVC::didPressRightBarButton")
         if (toolbar.sendButtonOnRight) {
             self.didPressSendButton(sender,
-                withMessageText: self.gg_currentlyComposedMessageText(),
+                withMessagePacket: self.gg_currentlyComposedMessageText(),
                 senderId: self.senderId,
                 senderDisplayName: self.senderDisplayName,
                 date: NSDate())
@@ -859,13 +867,15 @@ class MessageViewController: UIViewController,
         }
     }
 
-    func gg_currentlyComposedMessageText() -> String {
+    func gg_currentlyComposedMessageText() -> MessagePacket {
         //  auto-accept any auto-correct suggestions
         self.inputToolbar.contentView.textView.inputDelegate?.selectionWillChange(self.inputToolbar.contentView.textView)
         
         self.inputToolbar.contentView.textView.inputDelegate?.selectionDidChange(self.inputToolbar.contentView.textView)
 
         let currentAttributedText = NSMutableAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
+        let placeholderText = currentAttributedText.string.gg_stringByTrimingWhitespace()
+        
         // print("Initial send string: \(currentAttributedText)")
         currentAttributedText.enumerateAttribute(
             TappableText.tapAssetId,
@@ -880,7 +890,8 @@ class MessageViewController: UIViewController,
             }
         )
         // print("Final string to send: \(currentAttributedText.string.gg_stringByTrimingWhitespace())")
-        return currentAttributedText.string.gg_stringByTrimingWhitespace()
+        let encodedText = currentAttributedText.string.gg_stringByTrimingWhitespace()
+        return MessagePacket(placeholderText: placeholderText, encodedText: encodedText)
     }
     
     func gg_currentlyTypedMessageText() -> (String, Int) {

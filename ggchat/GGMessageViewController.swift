@@ -268,7 +268,7 @@ class GGMessageViewController:
     
     override func didPressSendButton(
         button: UIButton,
-        withMessageText text: String,
+        withMessagePacket packet: MessagePacket,
         senderId: String,
         senderDisplayName: String,
         date: NSDate) {
@@ -276,6 +276,7 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
+            let text = packet.encodedText
             let id = XMPPManager.sharedInstance.stream.generateUUID()
             var message: Message!
             if let asset = AssetManager.getSingleEncodedAsset(text) {
