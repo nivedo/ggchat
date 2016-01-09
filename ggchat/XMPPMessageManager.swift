@@ -73,7 +73,7 @@ public class XMPPMessageManager: NSObject {
         completionHandler completion: MessageCompletionHandler?) {
         if (messagePacket.encodedText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
             // let messageId = XMPPManager.sharedInstance.stream.generateUUID()
-            let body = DDXMLElement(name: "body", stringValue: messagePacket.encodedText)
+            let body = DDXMLElement(name: "body", stringValue: messagePacket.placeholderText)
             let ggbody = DDXMLElement(name: "ggbody", stringValue: messagePacket.encodedText)
             let completeMessage = DDXMLElement(name: "message")
     		

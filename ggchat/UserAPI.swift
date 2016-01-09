@@ -560,7 +560,10 @@ class UserAPI {
                 
             let id = element?.attributeStringValueForName("id")
             
-            let body = bodyElement.stringValue()
+            var text = bodyElement.stringValue()
+            if let ggbodyElement = element?.elementForName("ggbody") {
+                text = ggbodyElement.stringValue()
+            }
             let fromBare = UserAPI.stripResourceFromJID(from)
             
             if let _ = bodyElement.elementForName("photo") {
@@ -579,8 +582,8 @@ class UserAPI {
                 // photoMessage.id = id
                 return photoMessage
             } else {
-                // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(body)")
-                if let asset = AssetManager.getSingleEncodedAsset(body) {
+                // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(text)")
+                if let asset = AssetManager.getSingleEncodedAsset(text) {
                     let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: delegate)
                     let message = Message(
                         id: id!,
@@ -589,7 +592,7 @@ class UserAPI {
                         isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                         date: date,
                         media: wikiMedia,
-                        text: body)
+                        text: text)
                     // message.id = id
                     return message
                 }
@@ -599,7 +602,7 @@ class UserAPI {
                     senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                     isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                     date: date,
-                    text: body)
+                    text: text)
                 // fullMessage.id = id
                 return fullMessage
             }
