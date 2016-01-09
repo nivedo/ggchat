@@ -23,10 +23,10 @@
 		D433B1521C312AF50003E100 /* SettingTableLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D433B1501C312AF50003E100 /* SettingTableLabelCell.xib */; };
 		D433B1551C3282DD0003E100 /* WikiMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1541C3282DD0003E100 /* WikiMediaItem.swift */; };
 		D433B1581C3CB2BC0003E100 /* UserAPIModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D433B1561C3CB2BB0003E100 /* UserAPIModel.xcdatamodeld */; };
-		D433B15B1C3CB6AC0003E100 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1591C3CB6AC0003E100 /* User+CoreDataProperties.swift */; };
 		D433B15C1C3CB6AC0003E100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15A1C3CB6AC0003E100 /* User.swift */; };
 		D433B15E1C3CB6FE0003E100 /* UserAPICoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */; };
 		D433B1601C3F77200003E100 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15F1C3F77200003E100 /* TabBarController.swift */; };
+		D433B1621C40FD6F0003E100 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -304,10 +304,10 @@
 		D433B1501C312AF50003E100 /* SettingTableLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTableLabelCell.xib; sourceTree = "<group>"; };
 		D433B1541C3282DD0003E100 /* WikiMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiMediaItem.swift; sourceTree = "<group>"; };
 		D433B1571C3CB2BB0003E100 /* UserAPIModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserAPIModel.xcdatamodel; sourceTree = "<group>"; };
-		D433B1591C3CB6AC0003E100 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D433B15A1C3CB6AC0003E100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPICoreData.swift; sourceTree = "<group>"; };
 		D433B15F1C3F77200003E100 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -1246,8 +1246,8 @@
 				D49447281C1FA5AD0008C582 /* UserAPI.swift */,
 				D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */,
 				D433B1561C3CB2BB0003E100 /* UserAPIModel.xcdatamodeld */,
-				D433B1591C3CB6AC0003E100 /* User+CoreDataProperties.swift */,
 				D433B15A1C3CB6AC0003E100 /* User.swift */,
+				D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */,
 			);
 			name = APIs;
 			sourceTree = "<group>";
@@ -2187,6 +2187,7 @@
 				D4C8FE041C06AA2300992801 /* XMPPvCardTempEmail.m in Sources */,
 				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
 				D4A786501C0A93EF00C37427 /* SettingTextFieldTableViewController.swift in Sources */,
+				D433B1621C40FD6F0003E100 /* User+CoreDataProperties.swift in Sources */,
 				D4A7866F1C0EA0F700C37427 /* SettingManager.swift in Sources */,
 				D4C8FE0D1C06AA2300992801 /* XMPPIQ+XEP_0066.m in Sources */,
 				D4C8FDE91C06AA2300992801 /* XMPPJabberRPCModule.m in Sources */,
@@ -2360,7 +2361,6 @@
 				D4C8FE1D1C06AA2300992801 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				D4C8FE031C06AA2300992801 /* XMPPvCardTempBase.m in Sources */,
 				D4C8FDF51C06AA2300992801 /* XMPPRoomMemoryStorage.m in Sources */,
-				D433B15B1C3CB6AC0003E100 /* User+CoreDataProperties.swift in Sources */,
 				D433B1491C2B951A0003E100 /* ProfileViewController.swift in Sources */,
 				D4C8FE291C06AA2300992801 /* XMPPStreamManagement.m in Sources */,
 				D42B017E1C153FAD00643835 /* MessageAutocompleteCell.swift in Sources */,
