@@ -285,7 +285,7 @@ class GGMessageViewController:
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
                     isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
-                    date: NSDate(),
+                    date: date,
                     media: wikiMedia,
                     text: text)
             }

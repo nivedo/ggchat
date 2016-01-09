@@ -16,7 +16,7 @@ class WikiMediaItem: MediaItem {
     var cachedView_: UIView?
     var cachedImageView_: UIImageView?
     var imageURL: NSURL!
-    // var image_: UIImage?
+    var placeholderImage: UIImage?
     let inset: CGFloat = CGFloat(6.0)
     var downloaded: Bool = false
 
@@ -24,42 +24,69 @@ class WikiMediaItem: MediaItem {
 
     init(imageURL: NSURL, delegate: MessageMediaDelegate?) {
         super.init()
-        // self.image_ = image.copy() as? UIImage
+        self.placeholderImage = UIImage(named: "mtg_back")
+        // assert(self.placeholderImage != nil, "placeholder image is nil")
         self.delegate = delegate
         self.imageURL = imageURL
        
-        self.initView()
+        // self.initView()
     }
-  
+ 
+    /*
     func initView() {
-        self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, 210.0, 150.0))
-        self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, 210.0, 150.0))
+        /*
+        var defaultWidth = CGFloat(210.0)
+        var defaultHeight = CGFloat(150.0)
+        if let placeholder = self.placeholderImage {
+            let size = self.imageDisplaySize(placeholder)
+            defaultWidth = size.width
+            defaultHeight = size.height
+        }
+        self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, defaultWidth, defaultHeight))
+        self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, defaultWidth, defaultHeight))
+        */
         
+        /*
+        let size = self.imageDisplaySize(self.placeholderImage!)
+        self.cachedView_ = UIView()
+        self.cachedImageView_ = UIImageView(image: self.placeholderImage!)
+        self.cachedView_?.addSubview(self.cachedImageView_!)
+        self.setupFramesWithSize(size)
+        */
+       
+        /*
         self.cachedImageView_!.kf_setImageWithURL(imageURL,
-            placeholderImage: nil,
+            placeholderImage: self.placeholderImage,
             optionsInfo: nil,
             progressBlock: nil,
             completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
                 if let img = image {
                     let size: CGSize = self.imageDisplaySize(img)
-                    if let view = self.cachedView_, let imageView = self.cachedImageView_ {
-                        view.frame = CGRectMake(0.0, 0.0, size.width, size.height)
-                        view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
-                        imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
-                        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-                        imageView.clipsToBounds = true
-                        imageView.layer.masksToBounds = true
-                        imageView.layer.cornerRadius = 8.0
-                        view.addSubview(imageView)
-                        self.setNeedsDisplay()
-                        self.downloaded = true
-                    }
+                    self.setupFramesWithSize(size)
+                    self.downloaded = true
                 }
         })
+        */
+    }
+    */
+    
+    func setupFramesWithSize(size: CGSize) {
+        if let view = self.cachedView_, let imageView = self.cachedImageView_ {
+            view.frame = CGRectMake(0.0, 0.0, size.width, size.height)
+            view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
+            imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
+            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.layer.masksToBounds = true
+            imageView.layer.cornerRadius = 8.0
+            // view.addSubview(imageView)
+            // self.setNeedsDisplay()
+        }
     }
     
     func initViewWithHUD() {
         if !self.downloaded {
+            self.downloaded = true
             if !KingfisherManager.sharedManager.cache.isImageCachedForKey(self.imageURL.absoluteString).cached {
                 let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
                 hud.mode = MBProgressHUDMode.AnnularDeterminate
@@ -67,13 +94,16 @@ class WikiMediaItem: MediaItem {
                 
                 // self.cachedImageView_!.kf_showIndicatorWhenLoading = true
                 self.cachedImageView_!.kf_setImageWithURL(imageURL,
-                    placeholderImage: nil,
+                    placeholderImage: self.placeholderImage!,
                     optionsInfo: nil,
                     progressBlock: { (receivedSize, totalSize) -> () in
                         hud.progress = Float(receivedSize) / Float(totalSize)
                     },
                     completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
-                        self.downloaded = true
+                        if let img = image {
+                            let size: CGSize = self.imageDisplaySize(img)
+                            self.setupFramesWithSize(size)
+                        }
                         hud.hide(true)
                         self.delegate?.redrawMessageMedia()
                 })
@@ -98,16 +128,6 @@ class WikiMediaItem: MediaItem {
     // pragma mark - Setters
 
     var image: UIImage? {
-        /*
-        set {
-            if newValue != nil {
-                self.image_ = newValue!.copy() as? UIImage
-            } else {
-                self.image_ = nil
-            }
-            self.cachedView_ = nil
-        }
-        */
         set {
             if newValue != nil {
                 self.cachedImageView_?.image = newValue!.copy() as? UIImage
@@ -120,20 +140,11 @@ class WikiMediaItem: MediaItem {
         }
     }
 
-    /*
-    override var appliesMediaViewMaskAsOutgoing: Bool {
-        didSet {
-            if oldValue != self.appliesMediaViewMaskAsOutgoing {
-                self.clearCachedMediaViews()
-            }
-        }
-    }
-    */
-
     // pragma mark - MessageMediaData protocol
     override func setNeedsDisplay() {
         super.setNeedsDisplay()
         self.cachedView_?.setNeedsDisplay()
+        self.cachedImageView_?.setNeedsDisplay()
     }
    
     func imageDisplaySize(image: UIImage) -> CGSize {
@@ -149,6 +160,8 @@ class WikiMediaItem: MediaItem {
     override func mediaViewDisplaySize() -> CGSize {
         if let img = self.image {
             return self.imageDisplaySize(img)
+        } else if let placeholder = self.placeholderImage {
+            return self.imageDisplaySize(placeholder)
         } else {
             if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 return CGSizeMake(315.0, 225.0)
@@ -156,48 +169,23 @@ class WikiMediaItem: MediaItem {
                 return CGSizeMake(210.0, 150.0)
             }
         }
-        /*
-        if let img = self.image_ {
-            let size = CGSizeMake(210.0, UIScreen.mainScreen().bounds.size.height)
-            let aspect: CGFloat = img.size.width / img.size.height
-            if size.width / aspect <= size.height {
-                return CGSizeMake(size.width, size.width / aspect)
-            } else {
-                return CGSizeMake(size.height * aspect, size.height)
-            }
-        } else {
-            if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-                return CGSizeMake(315.0, 225.0)
-            } else {
-                return CGSizeMake(210.0, 150.0)
-            }
-        }
-        */
     }
     
     override func mediaView() -> UIView? {
-        /*
-        if (self.image == nil) {
-            return nil
-        }
         
-        if (self.cachedView_ == nil) {
-            let size: CGSize = self.mediaViewDisplaySize()
-            let view: UIView = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
-            view.bounds = CGRectInset(view.frame, -self.inset, -self.inset)
-            if let imageView = self.cachedImageView_ {
-                imageView.frame = CGRectMake(0.0, 0.0, size.width - 2*self.inset, size.height - 2*self.inset)
-                imageView.contentMode = UIViewContentMode.ScaleAspectFill
-                imageView.clipsToBounds = true
-                imageView.layer.masksToBounds = true
-                imageView.layer.cornerRadius = 8.0
-                view.addSubview(imageView)
-                self.cachedView_ = view
-            }
+        let size = self.imageDisplaySize(self.placeholderImage!)
+        if self.cachedView_ == nil {
+            self.cachedView_ = UIView()
+            self.cachedImageView_ = UIImageView(image: self.placeholderImage!)
+            self.cachedView_?.addSubview(self.cachedImageView_!)
+            self.setupFramesWithSize(size)
         }
-        */
         self.initViewWithHUD()
-        
+    
+        return self.cachedView_
+    }
+    
+    override func mediaPlaceholderView() -> UIView? {
         return self.cachedView_
     }
 
