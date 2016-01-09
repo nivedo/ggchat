@@ -305,7 +305,7 @@ class GGMessageViewController:
          
             XMPPMessageManager.sendMessage(
                 id: id,
-                message: text,
+                message: packet,
                 to: recipient.jid,
                 completionHandler: nil)
         

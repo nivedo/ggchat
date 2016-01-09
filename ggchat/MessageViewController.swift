@@ -16,6 +16,12 @@ class MessagePacket {
         self.placeholderText = placeholderText
         self.encodedText = encodedText
     }
+    
+    var description: String {
+        get {
+            return self.encodedText
+        }
+    }
 }
 
 class MessageViewController: UIViewController,

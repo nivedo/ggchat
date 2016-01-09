@@ -66,14 +66,15 @@ public class XMPPMessageManager: NSObject {
 	}
 	
 	// MARK: public methods
-	public class func sendMessage(
+	class func sendMessage(
         id messageId: String,
-        message: String,
+        message messagePacket: MessagePacket,
         to receiver: String,
         completionHandler completion: MessageCompletionHandler?) {
-        if (message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
+        if (messagePacket.encodedText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
             // let messageId = XMPPManager.sharedInstance.stream.generateUUID()
-            let body = DDXMLElement(name: "body", stringValue: message)
+            let body = DDXMLElement(name: "body", stringValue: messagePacket.encodedText)
+            let ggbody = DDXMLElement(name: "ggbody", stringValue: messagePacket.encodedText)
             let completeMessage = DDXMLElement(name: "message")
     		
     		completeMessage.addAttributeWithName("id", stringValue: messageId)
@@ -82,10 +83,11 @@ public class XMPPMessageManager: NSObject {
     		completeMessage.addAttributeWithName("to", stringValue: receiver)
             completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr) // XMPPManager.sharedInstance.stream.myJID.bare())
     		completeMessage.addChild(body)
+    		completeMessage.addChild(ggbody)
     		
     		sharedInstance.didSendMessageCompletionBlock = completion
             if XMPPManager.sharedInstance.isConnected() {
-                print("XMPP connected, send message: \(message)")
+                print("XMPP connected, send message: \(messagePacket.description)")
                 XMPPManager.sharedInstance.stream.sendElement(completeMessage)
             } else {
                 print("XMPP not connected, message not sent and queued.")
