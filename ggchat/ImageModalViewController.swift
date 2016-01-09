@@ -59,9 +59,10 @@ class ImageModalViewController: UIViewController {
                 let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 hud.mode = MBProgressHUDMode.AnnularDeterminate
                 hud.labelText = "Downloading"
-                
+               
+                let placeholderImage = UIImage(named: "mtg_back")
                 self.imageView.kf_setImageWithURL(asset.url,
-                    placeholderImage: nil,
+                    placeholderImage: placeholderImage,
                     optionsInfo: nil,
                     progressBlock: { (receivedSize, totalSize) -> () in
                         // print("Download Progress: \(receivedSize)/\(totalSize)")
