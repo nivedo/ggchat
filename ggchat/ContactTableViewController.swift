@@ -20,7 +20,7 @@ class ContactTableViewController: UITableViewController,
 
     var searchResultController = UISearchController()
     var filteredRosterList = [RosterUser]()
-    var rosterList = [RosterUser]()
+    var buddyList = [RosterUser]()
 
     @IBAction func addContactAction(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(
@@ -88,7 +88,7 @@ class ContactTableViewController: UITableViewController,
                                         alert.show()
                                     }
                                 } else {
-                                    UserAPI.sharedInstance.cacheRoster()
+                                    UserAPI.sharedInstance.sync()
                                 }
                             }
                         })
@@ -152,8 +152,7 @@ class ContactTableViewController: UITableViewController,
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         print("handleRefresh")
-        UserAPI.sharedInstance.cacheRoster({ (success: Bool) -> Void in
-            // print("cacheRoster completion")
+        UserAPI.sharedInstance.sync({ (success: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 refreshControl.endRefreshing()
             }
@@ -173,7 +172,7 @@ class ContactTableViewController: UITableViewController,
         // Otherwise, avatars will appear blank.
         if success {
             dispatch_async(dispatch_get_main_queue()) {
-                self.rosterList = UserAPI.sharedInstance.rosterList
+                self.buddyList = UserAPI.sharedInstance.buddyList
                 self.tableView.reloadData()
             }
         }
@@ -189,7 +188,7 @@ class ContactTableViewController: UITableViewController,
         UserAPI.sharedInstance.delegate = self
         // UserAPI.sharedInstance.cacheRoster()
         
-        self.rosterList = UserAPI.sharedInstance.rosterList
+        self.buddyList = UserAPI.sharedInstance.buddyList
         TabBarController.updateChatsBar(self.tabBarController)
         self.tableView.reloadData()
     }
@@ -204,7 +203,7 @@ class ContactTableViewController: UITableViewController,
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
             let searchString = searchController.searchBar.text!.lowercaseString
-            self.filteredRosterList = self.rosterList.filter { user in
+            self.filteredRosterList = self.buddyList.filter { user in
                 user.displayName.lowercaseString.containsString(searchString)
             }
             /*
@@ -232,7 +231,7 @@ class ContactTableViewController: UITableViewController,
             if self.inSearchMode {
                 return self.filteredRosterList
             } else {
-                return self.rosterList
+                return self.buddyList
             }
         }
     }
@@ -246,14 +245,14 @@ class ContactTableViewController: UITableViewController,
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.rosterList.count
+        return self.buddyList.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! ContactTableViewCell
 
-        let user = self.rosterList[indexPath.row]
+        let user = self.buddyList[indexPath.row]
         
         let avatar = user.messageAvatarImage
         cell.avatarImageView.image = avatar.avatarImage
@@ -266,7 +265,7 @@ class ContactTableViewController: UITableViewController,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        let user = self.rosterList[indexPath.row]
+        let user = self.buddyList[indexPath.row]
         
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false

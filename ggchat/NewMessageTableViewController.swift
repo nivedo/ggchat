@@ -16,7 +16,7 @@ class NewMessageTableViewController:
 
     var searchResultController = UISearchController()
     var filteredRosterList = [RosterUser]()
-    var rosterList = [RosterUser]()
+    var buddyList = [RosterUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +48,7 @@ class NewMessageTableViewController:
         })()
        
         UserAPI.sharedInstance.delegate = self
-        self.rosterList = UserAPI.sharedInstance.rosterList
+        self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
     
@@ -56,7 +56,7 @@ class NewMessageTableViewController:
         super.viewWillAppear(animated)
        
         UserAPI.sharedInstance.delegate = self
-        self.rosterList = UserAPI.sharedInstance.rosterList
+        self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
     
@@ -68,7 +68,7 @@ class NewMessageTableViewController:
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
             let searchString = searchController.searchBar.text!.lowercaseString
-            self.filteredRosterList = self.rosterList.filter { user in
+            self.filteredRosterList = self.buddyList.filter { user in
                 user.displayName.lowercaseString.containsString(searchString)
             }
         }
@@ -87,7 +87,7 @@ class NewMessageTableViewController:
             if self.inSearchMode {
                 return self.filteredRosterList
             } else {
-                return self.rosterList
+                return self.buddyList
             }
         }
     }
@@ -112,7 +112,7 @@ class NewMessageTableViewController:
             forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
-        let user = self.rosterList[indexPath.row]
+        let user = self.buddyList[indexPath.row]
         
         let avatar = user.messageAvatarImage
         cell.avatarImageView.image = avatar.avatarImage
@@ -124,7 +124,7 @@ class NewMessageTableViewController:
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        let user = self.rosterList[indexPath.row]
+        let user = self.buddyList[indexPath.row]
         
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
@@ -169,7 +169,7 @@ class NewMessageTableViewController:
         // Otherwise, avatars will appear blank.
         if success {
             dispatch_async(dispatch_get_main_queue()) {
-                self.rosterList = UserAPI.sharedInstance.rosterList
+                self.buddyList = UserAPI.sharedInstance.buddyList
                 self.tableView.reloadData()
             }
         }

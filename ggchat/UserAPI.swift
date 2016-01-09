@@ -461,17 +461,19 @@ class UserAPI {
     }
     
     func loadProfilesFromJson(array: [AnyObject], completion: ((Bool) -> Void)? = nil) {
-        self.rosterList.removeAll()
+        self.buddyList.removeAll()
         self.rosterMap.removeAll()
         for profile in array {
             let user = RosterUser(
                 profile: profile as! [String: AnyObject],
                 avatarCompletion: completion)
-            self.rosterList.append(user)
+            if user.isBuddy {
+                self.buddyList.append(user)
+            }
             self.rosterMap[user.jid] = user
         }
         UserAPICoreData.sharedInstance.trimAllUsers(self.rosterMap)
-        self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
+        self.buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
     }
     
     func loadRosterFromCoreData(completion: ((Bool) -> Void)? = nil) {
@@ -480,14 +482,16 @@ class UserAPI {
         if let users = UserAPICoreData.sharedInstance.fetchAllUsers() {
             print("Fetched \(users.count) roster user from core data")
             dispatch_async(dispatch_get_main_queue()) {
-                self.rosterList.removeAll()
+                self.buddyList.removeAll()
                 self.rosterMap.removeAll()
                 for user in users {
                     let rosterUser = RosterUser(user: user, avatarCompletion: completion)
-                    self.rosterList.append(rosterUser)
+                    if rosterUser.isBuddy {
+                        self.buddyList.append(rosterUser)
+                    }
                     self.rosterMap[rosterUser.jid] = rosterUser
                 }
-                self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
+                self.buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
                 self.delegate?.onRosterUpdate(true)
                 completion?(true)
             }
@@ -496,24 +500,25 @@ class UserAPI {
             completion?(false)
         }
     }
-    
+   
+    /*
     func cacheRoster(completion: ((Bool) -> Void)? = nil) {
         if let jid = self.jid {
             UserAPI.sharedInstance.getRoster(jid,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {
                         dispatch_async(dispatch_get_main_queue()) {
-                            self.rosterList.removeAll()
+                            self.buddyList.removeAll()
                             self.rosterMap.removeAll()
                             for profile in array {
                                 let user = RosterUser(
                                     profile: profile as! [String: AnyObject],
                                     avatarCompletion: completion)
-                                self.rosterList.append(user)
+                                self.buddyList.append(user)
                                 self.rosterMap[user.jid] = user
                             }
                             UserAPICoreData.sharedInstance.trimAllUsers(self.rosterMap)
-                            self.rosterList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
+                            self.buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
                             completion?(true)
                             self.delegate?.onRosterUpdate(true)
                         }
@@ -527,6 +532,7 @@ class UserAPI {
         completion?(false)
         self.delegate?.onRosterUpdate(false)
     }
+    */
    
     class func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
@@ -683,7 +689,7 @@ class UserAPI {
         }
     }
     
-    func sync() {
+    func sync(completion: ((Bool) -> Void)? = nil) {
         if let token = self.authToken {
             self.get(UserAPI.syncUrl,
                 authToken: token,
@@ -698,8 +704,10 @@ class UserAPI {
                         if let messagesArray = json["messages"] as? [AnyObject] {
                             self.loadMessagesFromJson(messagesArray)
                         }
+                        completion?(true)
                     } else {
                         self.delegate?.onChatsUpdate(false)
+                        completion?(false)
                     }
                     // print("chat list count: \(self.chatsList.count)")
             })
@@ -854,7 +862,7 @@ class UserAPI {
     var nickname: String?
     var avatarPath: String?
     var avatarImage: UIImage?
-    var rosterList: [RosterUser] = [RosterUser]()
+    var buddyList: [RosterUser] = [RosterUser]()
     var rosterMap: [String: RosterUser] = [String: RosterUser]()
     var chatsList: [ChatConversation] = [ChatConversation]()
     var chatsMap: [String: ChatConversation] = [String: ChatConversation]()
