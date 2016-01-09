@@ -17,13 +17,15 @@ class User: NSManagedObject {
     func isEqual(rosterUser: RosterUser) -> Bool {
         return self.jid == rosterUser.jidBare &&
             self.nickname == rosterUser.nickname &&
-            self.avatar == rosterUser.avatar
+            self.avatar == rosterUser.avatar &&
+            self.is_buddy?.boolValue == rosterUser.isBuddy
     }
     
     func update(rosterUser: RosterUser) -> Bool {
         if !self.isEqual(rosterUser) {
             self.nickname = rosterUser.nickname
             self.avatar = rosterUser.avatar
+            self.is_buddy = NSNumber(bool: rosterUser.isBuddy)
             return true
         }
         return false
@@ -33,6 +35,7 @@ class User: NSManagedObject {
         self.jid = rosterUser.jidBare
         self.nickname = rosterUser.nickname
         self.avatar = rosterUser.avatar
+        self.is_buddy = NSNumber(bool: rosterUser.isBuddy)
     }
 
 }

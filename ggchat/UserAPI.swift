@@ -25,6 +25,7 @@ class RosterUser {
     var jidBare: String
     var avatar: String
     var avatarImage: UIImage?
+    var isBuddy: Bool = false
     
     init(profile: [String: AnyObject],
         avatarCompletion: ((Bool) -> Void)?) {
@@ -32,6 +33,7 @@ class RosterUser {
         self.jidBare = UserAPI.stripResourceFromJID(self.jid)
         self.nickname = profile["nickname"] as! String
         self.avatar = profile["avatar"] as! String
+        self.isBuddy = profile["is_buddy"] as! Bool
             
         UserAPICoreData.sharedInstance.syncUser(self)
             
@@ -43,6 +45,9 @@ class RosterUser {
         self.jidBare = UserAPI.stripResourceFromJID(self.jid)
         self.nickname = user.nickname!
         self.avatar = user.avatar!
+        if let isBuddy = user.is_buddy?.boolValue {
+            self.isBuddy = isBuddy
+        }
         
         self.initAvatar(avatarCompletion)
     }
