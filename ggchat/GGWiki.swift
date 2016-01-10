@@ -214,28 +214,64 @@ extension String {
     }
 }
 
+class GGWikiCache {
+    
+    class var sharedInstance: GGWikiCache {
+        struct Singleton {
+            static let instance = GGWikiCache()
+        }
+        return Singleton.instance
+    }
+
+    var imageCache = [String: UIImage?]()
+    
+    init() {
+        // Do nothing
+    }
+    
+    func retreiveImage(url: String) -> UIImage? {
+        if let image = self.imageCache[url] {
+            return image
+        } else {
+            let image = UIImage(data: NSData(contentsOfURL: NSURL(string: url)!)!)
+            self.imageCache[url] = image
+            return image
+        }
+    }
+}
+
 class GGWiki {
   
     class WikiResource {
         var name: String
         var icon: String
+        var placeholder: String?
         var ref: String
         var bundle: String
         var jsonURL: String
         var jsonData: NSData
         var iconImage: UIImage?
+        var placeholderImage: UIImage?
         var language: String
        
         init(json: [String: String], language: String) {
             self.name = json["name"]!
             self.icon = json["icon"]!
+            self.placeholder = json["placeholder"]
             self.ref = json["ref"]!
             self.bundle = "\(self.ref):\(language)"
             self.jsonURL = "\(GGWiki.s3url)/config/\(json["bundle"]!)"
             self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
             
             let iconURL = "\(GGWiki.s3url)/assets/\(self.icon)"
-            self.iconImage = UIImage(data: NSData(contentsOfURL: NSURL(string: iconURL)!)!)
+            // self.iconImage = UIImage(data: NSData(contentsOfURL: NSURL(string: iconURL)!)!)
+            self.iconImage = GGWikiCache.sharedInstance.retreiveImage(iconURL)
+           
+            if let placeholder = self.placeholder {
+                let placeholderURL = "\(GGWiki.s3url)/assets/\(placeholder)"
+                // self.placeholderImage = UIImage(data: NSData(contentsOfURL: NSURL(string: placeholderURL)!)!)
+                self.placeholderImage = GGWikiCache.sharedInstance.retreiveImage(placeholderURL)
+            }
             self.language = language
         }
     }
