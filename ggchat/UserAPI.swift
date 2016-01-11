@@ -550,6 +550,22 @@ class UserAPI {
         return self.parseMessageFromElement(element, date: date, delegate: delegate)
     }
     
+    class func parseVariablesFromElement(element: DDXMLElement?) -> [String: MessageVariable] {
+        var dict = [String: MessageVariable]()
+        if let variablesElement = element?.elementForName("variables") {
+            let variables = variablesElement.elementsForName("variable")
+            for variableElement in variables {
+                let name = variableElement.attributeStringValueForName("name")
+                let displayText = variableElement.attributeStringValueForName("displayText")
+                let assetId = variableElement.attributeStringValueForName("assetId")
+                let assetURL = variableElement.attributeStringValueForName("assetURL")
+                let placeholderURL = variableElement.attributeStringValueForName("placeholderURL")
+                dict[name] = MessageVariable(variableName: name, displayText: displayText, assetId: assetId, assetURL: assetURL, placeholderURL: placeholderURL)
+            }
+        }
+        return dict
+    }
+    
     class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
         if let bodyElement = element?.elementForName("body"),
             let from = element?.attributeStringValueForName("from"),
@@ -563,6 +579,9 @@ class UserAPI {
             var text = bodyElement.stringValue()
             if let ggbodyElement = element?.elementForName("ggbody") {
                 text = ggbodyElement.stringValue()
+                
+                let variablesDict = self.parseVariablesFromElement(ggbodyElement)
+                print("parsed \(variablesDict.count) variables")
             }
             let fromBare = UserAPI.stripResourceFromJID(from)
             

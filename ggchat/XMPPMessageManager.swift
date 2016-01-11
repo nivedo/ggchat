@@ -82,6 +82,20 @@ public class XMPPMessageManager: NSObject {
             completeMessage.addAttributeWithName("content_type", stringValue: "text")
     		completeMessage.addAttributeWithName("to", stringValue: receiver)
             completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr) // XMPPManager.sharedInstance.stream.myJID.bare())
+           
+            let variablesElement = DDXMLElement(name: "variables")
+            for variable in messagePacket.variables {
+                let variableElement = DDXMLElement(name: "variable")
+                variableElement.addAttributeWithName("name", stringValue: variable.variableName)
+                variableElement.addAttributeWithName("displayText", stringValue: variable.displayText)
+                variableElement.addAttributeWithName("assetId", stringValue: variable.assetId)
+                variableElement.addAttributeWithName("assetURL", stringValue: variable.assetURL)
+                if let placeholderURL = variable.placeholderURL {
+                    variableElement.addAttributeWithName("placeholderURL", stringValue: placeholderURL)
+                }
+                variablesElement.addChild(variableElement)
+            }
+            ggbody.addChild(variablesElement)
     		completeMessage.addChild(body)
     		completeMessage.addChild(ggbody)
     		

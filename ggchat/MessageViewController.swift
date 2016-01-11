@@ -8,9 +8,26 @@
 
 import UIKit
 
+class MessageVariable {
+    var variableName: String
+    var displayText: String
+    var assetId: String
+    var assetURL: String
+    var placeholderURL: String?
+    
+    init(variableName: String, displayText: String, assetId: String, assetURL: String, placeholderURL: String?) {
+        self.variableName = variableName
+        self.displayText = displayText
+        self.assetId = assetId
+        self.assetURL = assetURL
+        self.placeholderURL = placeholderURL
+    }
+}
+
 class MessagePacket {
     var placeholderText: String
     var encodedText: String
+    var variables = [MessageVariable]()
     
     init(placeholderText: String, encodedText: String) {
         self.placeholderText = placeholderText
@@ -21,6 +38,16 @@ class MessagePacket {
         get {
             return self.encodedText
         }
+    }
+    
+    func addVariable(variableName: String, displayText: String, assetId: String, assetURL: String, placeholderURL: String?) {
+        self.variables.append(MessageVariable(
+            variableName: variableName,
+            displayText: displayText,
+            assetId: assetId,
+            assetURL: assetURL,
+            placeholderURL: placeholderURL
+            ))
     }
 }
 
@@ -883,6 +910,8 @@ class MessageViewController: UIViewController,
         let placeholderText = currentAttributedText.string.gg_stringByTrimingWhitespace()
         
         // print("Initial send string: \(currentAttributedText)")
+        var variables = [MessageVariable]()
+        
         currentAttributedText.enumerateAttribute(
             TappableText.tapAssetId,
             inRange: NSMakeRange(0, currentAttributedText.length),
@@ -892,12 +921,21 @@ class MessageViewController: UIViewController,
                     let displayText = (currentAttributedText.string as NSString).substringWithRange(range) as String
                     let replaceText = "||\(id)|\(GGWiki.sharedInstance.getAssetImageURL(id))|\(displayText)||"
                     currentAttributedText.replaceCharactersInRange(range, withString: replaceText)
+                    
+                    variables.append(MessageVariable(
+                        variableName: "$\(variables.count)",
+                        displayText: displayText,
+                        assetId: id,
+                        assetURL: GGWiki.sharedInstance.getAssetImageURL(id),
+                        placeholderURL: GGWiki.sharedInstance.getAssetPlaceholderURL(id)))
                 }
             }
         )
         // print("Final string to send: \(currentAttributedText.string.gg_stringByTrimingWhitespace())")
         let encodedText = currentAttributedText.string.gg_stringByTrimingWhitespace()
-        return MessagePacket(placeholderText: placeholderText, encodedText: encodedText)
+        let packet = MessagePacket(placeholderText: placeholderText, encodedText: encodedText)
+        packet.variables = variables
+        return packet
     }
     
     func gg_currentlyTypedMessageText() -> (String, Int) {

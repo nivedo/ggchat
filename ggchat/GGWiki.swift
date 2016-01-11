@@ -449,6 +449,13 @@ class GGWiki {
         }
         return ""
     }
+    
+    func getAssetPlaceholderURL(id: String) -> String? {
+        if let asset = self.cardAssets[id] {
+            return asset.placeholderURL
+        }
+        return nil
+    }
    
     class AssetSortHelper {
         var str: String
