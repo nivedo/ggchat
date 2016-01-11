@@ -92,14 +92,13 @@ class WikiMediaItem: MediaItem {
         if !self.downloaded {
             self.downloaded = true
             if !KingfisherManager.sharedManager.cache.isImageCachedForKey(self.imageURL.absoluteString).cached {
+                self.cachedImageView_!.image = self.placeholderImage
+                self.setNeedsDisplay()
+                
                 let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
                 hud.mode = MBProgressHUDMode.AnnularDeterminate
                 hud.labelText = "Downloading"
                
-                self.cachedImageView_!.image = self.placeholderImage
-                self.cachedImageView_!.setNeedsDisplay()
-                // self.delegate?.redrawMessageMedia()
-                
                 self.cachedImageView_!.kf_setImageWithURL(imageURL,
                     placeholderImage: self.placeholderImage,
                     optionsInfo: nil,

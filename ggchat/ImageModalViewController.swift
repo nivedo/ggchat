@@ -39,6 +39,15 @@ class ImageModalViewController: UIViewController {
         self.view.addGestureRecognizer(tap)
     }
     
+    func sizeForModal(img: UIImage) -> CGSize {
+        let screenSize = UIScreen.mainScreen().bounds
+        let xTarget = screenSize.width * 0.8
+        let scaleFactor = xTarget / img.size.width
+        let yTarget = scaleFactor * img.size.height
+        let newSize = CGSizeMake(xTarget, yTarget)
+        return newSize
+    }
+    
     func updateModal() {
         if let attr = self.attributes, let id = attr[TappableText.tapAssetId] as? String {
             if let asset = GGWiki.sharedInstance.cardAssets[id] {
@@ -61,7 +70,12 @@ class ImageModalViewController: UIViewController {
                 hud.labelText = "Downloading"
                
                 // let placeholderImage = UIImage(named: "mtg_back")
-                let placeholderImage = GGWikiCache.sharedInstance.retreiveImage(asset.placeholderURL)
+                var placeholderImage = GGWikiCache.sharedInstance.retreiveImage(asset.placeholderURL)
+                if placeholderImage != nil {
+                    let newSize = self.sizeForModal(placeholderImage!)
+                    placeholderImage = placeholderImage!.gg_imageScaledToSize(newSize, isOpaque: false)
+                    
+                }
                 self.imageView.kf_setImageWithURL(asset.url,
                     placeholderImage: placeholderImage,
                     optionsInfo: nil,
@@ -72,12 +86,7 @@ class ImageModalViewController: UIViewController {
                     completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
                         // print("Downloaded")
                         if let img = image {
-                            let screenSize = UIScreen.mainScreen().bounds
-                            let xTarget = screenSize.width * 0.8
-                            let scaleFactor = xTarget / img.size.width
-                            let yTarget = scaleFactor * img.size.height
-                            let newSize = CGSizeMake(xTarget, yTarget)
-                            
+                            let newSize = self.sizeForModal(img)
                             self.imageView.image = img.gg_imageScaledToSize(newSize, isOpaque: false)
                             // self.imageView.frame = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: newSize)
                         }
