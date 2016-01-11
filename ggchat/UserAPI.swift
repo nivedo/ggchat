@@ -550,8 +550,8 @@ class UserAPI {
         return self.parseMessageFromElement(element, date: date, delegate: delegate)
     }
     
-    class func parseVariablesFromElement(element: DDXMLElement?) -> [String: MessageVariable] {
-        var dict = [String: MessageVariable]()
+    class func parseVariablesFromElement(element: DDXMLElement?) -> [MessageVariable] {
+        var variablesArray = [MessageVariable]()
         if let variablesElement = element?.elementForName("variables") {
             let variables = variablesElement.elementsForName("variable")
             for variableElement in variables {
@@ -560,10 +560,10 @@ class UserAPI {
                 let assetId = variableElement.attributeStringValueForName("assetId")
                 let assetURL = variableElement.attributeStringValueForName("assetURL")
                 let placeholderURL = variableElement.attributeStringValueForName("placeholderURL")
-                dict[name] = MessageVariable(variableName: name, displayText: displayText, assetId: assetId, assetURL: assetURL, placeholderURL: placeholderURL)
+                variablesArray.append(MessageVariable(variableName: name, displayText: displayText, assetId: assetId, assetURL: assetURL, placeholderURL: placeholderURL))
             }
         }
-        return dict
+        return variablesArray
     }
     
     class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
@@ -580,8 +580,8 @@ class UserAPI {
             if let ggbodyElement = element?.elementForName("ggbody") {
                 text = ggbodyElement.stringValue()
                 
-                let variablesDict = self.parseVariablesFromElement(ggbodyElement)
-                print("parsed \(variablesDict.count) variables")
+                let variables = self.parseVariablesFromElement(ggbodyElement)
+                print("parsed \(variables.count) variables")
             }
             let fromBare = UserAPI.stripResourceFromJID(from)
             
