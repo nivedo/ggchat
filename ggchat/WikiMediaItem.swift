@@ -31,38 +31,19 @@ class WikiMediaItem: MediaItem {
         self.delegate = delegate
         self.imageURL = imageURL
        
-        // self.initView()
-        
+        self.initView()
+        self.initImageView()
+       
+        /*
         let resource = Resource(downloadURL: imageURL)
         KingfisherManager.sharedManager.retrieveImageWithResource(resource,
             optionsInfo: nil,
             progressBlock: nil,
             completionHandler: nil)
+        */
     }
  
-    /*
-    func initView() {
-        /*
-        var defaultWidth = CGFloat(210.0)
-        var defaultHeight = CGFloat(150.0)
-        if let placeholder = self.placeholderImage {
-            let size = self.imageDisplaySize(placeholder)
-            defaultWidth = size.width
-            defaultHeight = size.height
-        }
-        self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, defaultWidth, defaultHeight))
-        self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, defaultWidth, defaultHeight))
-        */
-        
-        /*
-        let size = self.imageDisplaySize(self.placeholderImage!)
-        self.cachedView_ = UIView()
-        self.cachedImageView_ = UIImageView(image: self.placeholderImage!)
-        self.cachedView_?.addSubview(self.cachedImageView_!)
-        self.setupFramesWithSize(size)
-        */
-       
-        /*
+    func initImageView() {
         self.cachedImageView_!.kf_setImageWithURL(imageURL,
             placeholderImage: self.placeholderImage,
             optionsInfo: nil,
@@ -74,10 +55,8 @@ class WikiMediaItem: MediaItem {
                     self.downloaded = true
                 }
         })
-        */
     }
-    */
-    
+
     func setupFramesWithSize(size: CGSize) {
         if let view = self.cachedView_, let imageView = self.cachedImageView_ {
             view.frame = CGRectMake(0.0, 0.0, size.width, size.height)
@@ -91,8 +70,25 @@ class WikiMediaItem: MediaItem {
             // self.setNeedsDisplay()
         }
     }
+   
+    func initView() {
+        if self.cachedView_ == nil {
+            if let placeholderImage = self.placeholderImage {
+                let size = self.imageDisplaySize(placeholderImage)
+                self.cachedView_ = UIView()
+                self.cachedImageView_ = UIImageView(image: placeholderImage)
+                self.cachedView_?.addSubview(self.cachedImageView_!)
+                self.setupFramesWithSize(size)
+            } else {
+                let size = self.defaultDisplaySize()
+                self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
+                self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
+                self.cachedView_?.addSubview(self.cachedImageView_!)
+            }
+        }
+    }
     
-    func initViewWithHUD() {
+    func initImageViewWithHUD() {
         if !self.downloaded {
             self.downloaded = true
             if !KingfisherManager.sharedManager.cache.isImageCachedForKey(self.imageURL.absoluteString).cached {
@@ -192,22 +188,11 @@ class WikiMediaItem: MediaItem {
         }
     }
 
+    
+    
     override func mediaView() -> UIView? {
-        if self.cachedView_ == nil {
-            if let placeholderImage = self.placeholderImage {
-                let size = self.imageDisplaySize(placeholderImage)
-                self.cachedView_ = UIView()
-                self.cachedImageView_ = UIImageView(image: placeholderImage)
-                self.cachedView_?.addSubview(self.cachedImageView_!)
-                self.setupFramesWithSize(size)
-            } else {
-                let size = self.defaultDisplaySize()
-                self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
-                self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
-                self.cachedView_?.addSubview(self.cachedImageView_!)
-            }
-        }
-        self.initViewWithHUD()
+        // self.initView()
+        self.initImageViewWithHUD()
     
         return self.cachedView_
     }
