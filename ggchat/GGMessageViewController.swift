@@ -280,7 +280,7 @@ class GGMessageViewController:
             let id = XMPPManager.sharedInstance.stream.generateUUID()
             var message: Message!
             if let asset = AssetManager.getSingleEncodedAsset(text) {
-                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: self)
+                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: self)
                 message = Message(
                     id: id,
                     senderId: senderId,

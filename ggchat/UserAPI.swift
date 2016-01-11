@@ -584,7 +584,7 @@ class UserAPI {
             } else {
                 // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(text)")
                 if let asset = AssetManager.getSingleEncodedAsset(text) {
-                    let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, delegate: delegate)
+                    let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
                     let message = Message(
                         id: id!,
                         senderId: fromBare,

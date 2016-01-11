@@ -16,15 +16,17 @@ class WikiMediaItem: MediaItem {
     var cachedView_: UIView?
     var cachedImageView_: UIImageView?
     var imageURL: NSURL!
+    var placeholderURL: String?
     var placeholderImage: UIImage?
     let inset: CGFloat = CGFloat(6.0)
     var downloaded: Bool = false
 
     // pragma mark - Initialization
 
-    init(imageURL: NSURL, delegate: MessageMediaDelegate?) {
+    init(imageURL: NSURL, placeholderURL: String?, delegate: MessageMediaDelegate?) {
         super.init()
-        self.placeholderImage = UIImage(named: "mtg_back")
+        // self.placeholderImage = UIImage(named: "mtg_back")
+        self.placeholderImage = GGWikiCache.sharedInstance.retreiveImage(placeholderURL)
         // assert(self.placeholderImage != nil, "placeholder image is nil")
         self.delegate = delegate
         self.imageURL = imageURL
@@ -94,7 +96,7 @@ class WikiMediaItem: MediaItem {
                 
                 // self.cachedImageView_!.kf_showIndicatorWhenLoading = true
                 self.cachedImageView_!.kf_setImageWithURL(imageURL,
-                    placeholderImage: self.placeholderImage!,
+                    placeholderImage: self.placeholderImage,
                     optionsInfo: nil,
                     progressBlock: { (receivedSize, totalSize) -> () in
                         hud.progress = Float(receivedSize) / Float(totalSize)
@@ -108,8 +110,17 @@ class WikiMediaItem: MediaItem {
                         self.delegate?.redrawMessageMedia()
                 })
             } else {
-                self.cachedImageView_!.kf_setImageWithURL(imageURL)
-                self.delegate?.redrawMessageMedia()
+                self.cachedImageView_!.kf_setImageWithURL(imageURL,
+                    placeholderImage: self.placeholderImage,
+                    optionsInfo: nil,
+                    progressBlock: nil,
+                    completionHandler: { (image: UIImage?, error: NSError?, cacheType: CacheType, imageURL: NSURL?) -> () in
+                        if let img = image {
+                            let size: CGSize = self.imageDisplaySize(img)
+                            self.setupFramesWithSize(size)
+                        }
+                        self.delegate?.redrawMessageMedia()
+                })
             }
         }
     }
@@ -163,22 +174,32 @@ class WikiMediaItem: MediaItem {
         } else if let placeholder = self.placeholderImage {
             return self.imageDisplaySize(placeholder)
         } else {
-            if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-                return CGSizeMake(315.0, 225.0)
-            } else {
-                return CGSizeMake(210.0, 150.0)
-            }
+            return self.defaultDisplaySize()
         }
     }
     
+    func defaultDisplaySize() -> CGSize {
+        if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+            return CGSizeMake(315.0, 225.0)
+        } else {
+            return CGSizeMake(210.0, 150.0)
+        }
+    }
+
     override func mediaView() -> UIView? {
-        
-        let size = self.imageDisplaySize(self.placeholderImage!)
         if self.cachedView_ == nil {
-            self.cachedView_ = UIView()
-            self.cachedImageView_ = UIImageView(image: self.placeholderImage!)
-            self.cachedView_?.addSubview(self.cachedImageView_!)
-            self.setupFramesWithSize(size)
+            if let placeholderImage = self.placeholderImage {
+                let size = self.imageDisplaySize(placeholderImage)
+                self.cachedView_ = UIView()
+                self.cachedImageView_ = UIImageView(image: placeholderImage)
+                self.cachedView_?.addSubview(self.cachedImageView_!)
+                self.setupFramesWithSize(size)
+            } else {
+                let size = self.defaultDisplaySize()
+                self.cachedView_ = UIView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
+                self.cachedImageView_ = UIImageView(frame: CGRectMake(0.0, 0.0, size.width, size.height))
+                self.cachedView_?.addSubview(self.cachedImageView_!)
+            }
         }
         self.initViewWithHUD()
     
@@ -227,7 +248,7 @@ class WikiMediaItem: MediaItem {
     // pragma mark - NSCopying
 
     override func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy: WikiMediaItem = WikiMediaItem(imageURL: self.imageURL, delegate: self.delegate)
+        let copy: WikiMediaItem = WikiMediaItem(imageURL: self.imageURL, placeholderURL: self.placeholderURL, delegate: self.delegate)
         copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing
         return copy
     }

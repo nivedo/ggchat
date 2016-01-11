@@ -60,7 +60,8 @@ class ImageModalViewController: UIViewController {
                 hud.mode = MBProgressHUDMode.AnnularDeterminate
                 hud.labelText = "Downloading"
                
-                let placeholderImage = UIImage(named: "mtg_back")
+                // let placeholderImage = UIImage(named: "mtg_back")
+                let placeholderImage = GGWikiCache.sharedInstance.retreiveImage(asset.placeholderURL)
                 self.imageView.kf_setImageWithURL(asset.url,
                     placeholderImage: placeholderImage,
                     optionsInfo: nil,

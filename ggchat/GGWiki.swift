@@ -65,6 +65,7 @@ class GGWikiAsset {
     var apiURL: String
     var fileType: String
     var imageURL: String
+    var placeholderURL: String?
    
     var url: NSURL {
         get {
@@ -72,11 +73,12 @@ class GGWikiAsset {
         }
     }
    
-    init(name: String, bundleId: String, assetId: String, fileType: String) {
+    init(name: String, bundleId: String, assetId: String, fileType: String, placeholderURL: String?) {
         self.name = name
         self.bundleId = bundleId
         self.assetId = assetId
         self.apiURL = GGWiki.apiURL(name)
+        self.placeholderURL = placeholderURL
         self.fileType = fileType
         
         self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).\(fileType)"
@@ -156,14 +158,17 @@ class GGWikiCache {
         // Do nothing
     }
     
-    func retreiveImage(url: String) -> UIImage? {
-        if let image = self.imageCache[url] {
-            return image
-        } else {
-            let image = UIImage(data: NSData(contentsOfURL: NSURL(string: url)!)!)
-            self.imageCache[url] = image
-            return image
+    func retreiveImage(key: String?) -> UIImage? {
+        if let url = key {
+            if let image = self.imageCache[url] {
+                return image
+            } else {
+                let image = UIImage(data: NSData(contentsOfURL: NSURL(string: url)!)!)
+                self.imageCache[url] = image
+                return image
+            }
         }
+        return nil
     }
 }
 
@@ -246,6 +251,7 @@ class GGWiki {
     var cardAssets = [String : GGWikiAsset]()
     var cardNameToIdMap = [String : String]()
     var wikis = [String: WikiResource]()
+    var wikisForBundleId = [String: WikiResource]()
     var autocompleteWiki: String? = nil
     // var delegate: GGWikiDelegate?
     
@@ -358,7 +364,12 @@ class GGWiki {
                                 if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
                                     let id = AssetManager.id(bundleId, assetId: assetId)
                                     if self.cardAssets[id] == nil {
-                                        self.cardAssets[id] = GGWikiAsset(name: cardName, bundleId: bundleId, assetId: assetId, fileType: fileType)
+                                        self.cardAssets[id] = GGWikiAsset(
+                                            name: cardName,
+                                            bundleId: bundleId,
+                                            assetId: assetId,
+                                            fileType: fileType,
+                                            placeholderURL: resource.placeholderURL)
                                     }
                                     if forAutocomplete {
                                         cardNamesSet.insert(cardName)
@@ -396,7 +407,7 @@ class GGWiki {
         return nil
     }
     
-    func addAsset(id: String, url: String, displayName: String) -> GGWikiAsset? {
+    func addAsset(id: String, url: String, displayName: String, placeholderURL: String? = nil) -> GGWikiAsset? {
         if id.rangeOfString("::") != nil && id.length > 6 && url.length > 0 && displayName.length > 2 {
            
             let idStrip = id[2..<id.length-2]
@@ -412,7 +423,12 @@ class GGWiki {
                 if let asset = self.cardAssets[id] {
                     return asset
                 } else {
-                    let asset = GGWikiAsset(name: name, bundleId: bundleId, assetId: assetId, fileType: fileType)
+                    let asset = GGWikiAsset(
+                        name: name,
+                        bundleId: bundleId,
+                        assetId: assetId,
+                        fileType: fileType,
+                        placeholderURL: placeholderURL)
                     self.cardAssets[id] = asset
                     return asset
                 }
