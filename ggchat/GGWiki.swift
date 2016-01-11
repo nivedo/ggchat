@@ -65,11 +65,7 @@ class GGWikiAsset {
     var apiURL: String
     var fileType: String
     var imageURL: String
-    // var imageLocalURL: String
-    // var image: UIImage?
-    // var delegate: ImageModalAssetDelegate?
-    // var downloadAttempts: Int = 0
-    
+   
     var url: NSURL {
         get {
             return NSURL(string: self.imageURL)!
@@ -124,75 +120,6 @@ class GGWikiAsset {
         case NoData = "ERROR: no data"
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
-   
-    /*
-    func downloadImage() {
-        if self.image == nil && self.downloadAttempts <= GGWiki.maxDownloadAttempts {
-            if let url = NSURL(string: self.imageURL) {
-                self.downloadAttempts++
-                self.getDataFromUrl(url) { (data, response, error)  in
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        guard let data = data where error == nil else {
-                            print("Image download failed: \(error?.description)")
-                            self.delegate?.onDownloadError()
-                            return
-                        }
-                        self.image = UIImage(data: data)
-                        if let image = self.image {
-                            print("Finished downloading \"\(url)\".")
-                            self.delegate?.onDownloadSuccess(image)
-                            GGWiki.sharedInstance.delegate?.onDownloadAsset(self.id, success: true)
-                            self.saveImage()
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func saveImage() {
-        if let image = self.image {
-            var data: NSData?
-            if self.fileType == "png" {
-                data = UIImagePNGRepresentation(image)
-            } else if self.fileType == "jpg" {
-                data = UIImageJPEGRepresentation(image, 1.0)
-            }
-           
-            if let imageData = data, let url = NSURL(string: self.imageLocalURL) {
-                if !imageData.writeToURL(url, atomically: false) {
-                    print("Asset not saved \(self.imageLocalURL)")
-                }
-            }
-        }
-    }
-    
-    func loadSavedImage() {
-        if self.image == nil {
-            if let url = NSURL(string: self.imageLocalURL), let imageData = NSData(contentsOfURL: url) {
-                // print("Loaded file \(url)")
-                self.image = UIImage(data: imageData)
-            }
-        }
-    }
-    
-    func deleteSavedImage() {
-        let localUrl = NSURL(fileURLWithPath: self.imageLocalURL)
-        let fileManager = NSFileManager.defaultManager()
-        do {
-            try fileManager.removeItemAtURL(localUrl)
-        } catch {
-            print("Cannot delete file at \(localUrl)")
-        }
-    }
-    
-    func getDataFromUrl(url:NSURL,
-        completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            completion(data: data, response: response, error: error)
-            }.resume()
-    }
-    */
 }
 
 extension String {
@@ -251,7 +178,7 @@ class GGWiki {
         var jsonURL: String
         var jsonData: NSData
         var iconImage: UIImage?
-        var placeholderImage: UIImage?
+        var placeholderURL: String?
         var language: String
        
         init(json: [String: String], language: String) {
@@ -268,11 +195,20 @@ class GGWiki {
             self.iconImage = GGWikiCache.sharedInstance.retreiveImage(iconURL)
            
             if let placeholder = self.placeholder {
-                let placeholderURL = "\(GGWiki.s3url)/assets/\(placeholder)"
-                // self.placeholderImage = UIImage(data: NSData(contentsOfURL: NSURL(string: placeholderURL)!)!)
-                self.placeholderImage = GGWikiCache.sharedInstance.retreiveImage(placeholderURL)
+                self.placeholderURL = "\(GGWiki.s3url)/assets/\(placeholder)"
+                GGWikiCache.sharedInstance.retreiveImage(self.placeholderURL!)
             }
             self.language = language
+        }
+        
+        var placeholderImage: UIImage? {
+            get {
+                if let url = self.placeholderURL {
+                    return GGWikiCache.sharedInstance.retreiveImage(url)
+                } else {
+                    return nil
+                }
+            }
         }
     }
     
