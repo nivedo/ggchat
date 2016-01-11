@@ -186,9 +186,9 @@ class WikiMediaItem: MediaItem {
     
     func defaultDisplaySize() -> CGSize {
         if (UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-            return CGSizeMake(315.0, 225.0)
+            return CGSizeMake(315.0, 436.0)
         } else {
-            return CGSizeMake(210.0, 150.0)
+            return CGSizeMake(210.0, 290.0)
         }
     }
 
