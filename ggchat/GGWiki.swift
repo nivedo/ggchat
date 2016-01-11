@@ -174,7 +174,6 @@ class GGWiki {
         var icon: String
         var placeholder: String?
         var ref: String
-        var bundle: String
         var jsonURL: String
         var jsonData: NSData
         var iconImage: UIImage?
@@ -185,8 +184,7 @@ class GGWiki {
             self.name = json["name"]!
             self.icon = json["icon"]!
             self.placeholder = json["placeholder"]
-            self.ref = json["ref"]!
-            self.bundle = "\(self.ref):\(language)"
+            self.ref = "\(json["ref"]!):\(language)"
             self.jsonURL = "\(GGWiki.s3url)/config/\(json["bundle"]!)"
             self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
             
@@ -289,7 +287,7 @@ class GGWiki {
                             let resource = WikiResource(
                                 json: wikiJson as! [String: String],
                                 language: language as! String)
-                            self.wikis[resource.bundle] = resource
+                            self.wikis[resource.ref] = resource
                         }
                     }
                 }
@@ -324,13 +322,13 @@ class GGWiki {
         // Load asset bundles in the user's language first
         for (_, v) in self.wikis {
             if v.language == UserAPI.sharedInstance.settings.language {
-                print("Load asset \(v.bundle)")
+                print("Load asset \(v.ref)")
                 self.loadAsset(v, forAutocomplete: false)
             }
         }
         for (_, v) in self.wikis {
             if v.language != UserAPI.sharedInstance.settings.language {
-                print("Load asset \(v.bundle)")
+                print("Load asset \(v.ref)")
                 self.loadAsset(v, forAutocomplete: false)
             }
         }
