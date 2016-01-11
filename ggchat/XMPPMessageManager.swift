@@ -138,9 +138,9 @@ public class XMPPMessageManager: NSObject {
 		}
 	}
     
-    func archiveMessage(id: String, xmlString: String, date: NSDate, outgoing: Bool) {
+    func archiveMessage(id: String, xmlString: String, date: NSDate, outgoing: Bool) -> Bool {
         if self.archivedMessageIds.contains(id) {
-            return
+            return false
         }
         
         print("archiveMessage: \(xmlString)")
@@ -150,17 +150,7 @@ public class XMPPMessageManager: NSObject {
         } catch _ {
             element = nil
         }
-      
-        /*
-        if let delay = DDXMLElement(name: "delay", xmlns: "urn:xmpp:delay") {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            let timestamp = dateFormatter.stringFromDate(date)
-            print("ARCHIVE DELAY: \(timestamp)")
-            delay.addAttributeWithName("stamp", stringValue: timestamp)
-            element?.addChild(delay)
-        }
-        */
+
         if let xmppMessage = XMPPMessage(fromElement: element) {
             self.messageStorage?.archiveMessage(xmppMessage,
                 outgoing: outgoing,
@@ -170,7 +160,9 @@ public class XMPPMessageManager: NSObject {
             self.archivedMessageIds.insert(id)
             
             print("archive SUCCESS")
+            return true
         }
+        return false
     }
     
     var archivedMessageIds = Set<String>()
