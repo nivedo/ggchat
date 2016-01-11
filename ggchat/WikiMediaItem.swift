@@ -95,8 +95,11 @@ class WikiMediaItem: MediaItem {
                 let hud = MBProgressHUD.showHUDAddedTo(self.cachedView_, animated: true)
                 hud.mode = MBProgressHUDMode.AnnularDeterminate
                 hud.labelText = "Downloading"
+               
+                self.cachedImageView_!.image = self.placeholderImage
+                self.cachedImageView_!.setNeedsDisplay()
+                // self.delegate?.redrawMessageMedia()
                 
-                // self.cachedImageView_!.kf_showIndicatorWhenLoading = true
                 self.cachedImageView_!.kf_setImageWithURL(imageURL,
                     placeholderImage: self.placeholderImage,
                     optionsInfo: nil,
