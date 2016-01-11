@@ -32,6 +32,12 @@ class WikiMediaItem: MediaItem {
         self.imageURL = imageURL
        
         // self.initView()
+        
+        let resource = Resource(downloadURL: imageURL)
+        KingfisherManager.sharedManager.retrieveImageWithResource(resource,
+            optionsInfo: nil,
+            progressBlock: nil,
+            completionHandler: nil)
     }
  
     /*

@@ -1611,6 +1611,7 @@ class MessageViewController: UIViewController,
                         animated: false)
                     */
                 } else {
+                    print("redrawMessageMedia --> scrollToBottomAnimated")
                     self.scrollToBottomAnimated(false)
                 }
             }
