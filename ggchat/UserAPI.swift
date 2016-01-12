@@ -577,11 +577,12 @@ class UserAPI {
             let id = element?.attributeStringValueForName("id")
             
             var text = bodyElement.stringValue()
+            let packet = MessagePacket(placeholderText: text, encodedText: text)
             if let ggbodyElement = element?.elementForName("ggbody") {
                 text = ggbodyElement.stringValue()
-                
-                let variables = self.parseVariablesFromElement(ggbodyElement)
-                print("parsed \(variables.count) variables")
+                packet.encodedText = ggbodyElement.stringValue()
+                packet.variables = self.parseVariablesFromElement(ggbodyElement)
+                // print("parsed \(variables.count) variables")
             }
             let fromBare = UserAPI.stripResourceFromJID(from)
             

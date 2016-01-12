@@ -25,6 +25,8 @@ class MessageVariable {
 }
 
 class MessagePacket {
+    static let delimiter = "__ggchat_link__"
+    
     var placeholderText: String
     var encodedText: String
     var variables = [MessageVariable]()
@@ -38,6 +40,99 @@ class MessagePacket {
         get {
             return self.encodedText
         }
+    }
+    
+    var isSingleEncodedAsset: Bool {
+        get {
+            if self.variables.count == 1 {
+                let v = self.variables[0]
+                return v.variableName == self.encodedText
+            }
+            return false
+        }
+    }
+    
+    func message(id: String,
+        senderId: String,
+        senderDisplayName: String,
+        isOutgoing: Bool,
+        date: NSDate,
+        delegate: MessageMediaDelegate?) -> Message {
+        let text = self.encodedText
+        if self.isSingleEncodedAsset {
+            if let asset = AssetManager.getSingleEncodedAsset(text) {
+                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
+                let message = Message(
+                    id: id,
+                    senderId: senderId,
+                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(senderId),
+                    isOutgoing: isOutgoing,
+                    date: date,
+                    media: wikiMedia,
+                    text: text)
+                return message
+            }
+        }
+        let fullMessage = Message(
+            id: id,
+            senderId: senderId,
+            senderDisplayName: UserAPI.sharedInstance.getDisplayName(senderId),
+            isOutgoing: UserAPI.sharedInstance.isOutgoingJID(senderId),
+            date: date,
+            text: text)
+        return fullMessage
+    }
+    
+    func tappableText(textColor: UIColor) -> NSAttributedString {
+        let paragraph = NSMutableAttributedString(string: "")
+        let tokens = self.encodedText.componentsSeparatedByString(MessagePacket.delimiter)
+        if tokens.count == self.variables.count+1 {
+            for (i, token) in tokens.enumerate() {
+                if token.length > 0 {
+                    let str = token
+                    let attr: [String : NSObject] = [
+                        NSFontAttributeName : GGConfig.messageBubbleFont,
+                        NSForegroundColorAttributeName : textColor
+                    ]
+                    let attributedString = NSAttributedString(
+                        string: str,
+                        attributes: attr)
+                    paragraph.appendAttributedString(attributedString)
+                }
+                if i < self.variables.count {
+                    let variable = self.variables[i]
+                    var attr: [String : NSObject] = [
+                        NSFontAttributeName : GGConfig.messageBubbleFont,
+                        NSForegroundColorAttributeName : textColor
+                    ]
+                    attr[TappableText.tapAttributeKey] = true
+                    attr[TappableText.tapAssetId] = variable.assetId
+                    attr[NSForegroundColorAttributeName] = UIColor.gg_highlightedColor()
+                        
+                    GGWiki.sharedInstance.addAsset(
+                        variable.assetId,
+                        url: variable.assetURL,
+                        displayName: variable.displayText,
+                        placeholderURL: variable.placeholderURL)
+                    let attributedString = NSAttributedString(
+                        string: variable.displayText,
+                        attributes: attr)
+                    paragraph.appendAttributedString(attributedString)
+                }
+            }
+        } else {
+            let str = self.placeholderText
+            let attr: [String : NSObject] = [
+                NSFontAttributeName : GGConfig.messageBubbleFont,
+                NSForegroundColorAttributeName : textColor
+            ]
+            let attributedString = NSAttributedString(
+                string: str,
+                attributes: attr)
+            paragraph.appendAttributedString(attributedString)
+        }
+        
+        return paragraph.copy() as! NSAttributedString
     }
     
     func addVariable(variableName: String, displayText: String, assetId: String, assetURL: String, placeholderURL: String?) {
