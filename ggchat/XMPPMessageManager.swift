@@ -118,7 +118,7 @@ public class XMPPMessageManager: NSObject {
         let messageId = XMPPManager.sharedInstance.stream.generateUUID()
         let completeMessage = DDXMLElement(name: "message")
 		completeMessage.addAttributeWithName("id", stringValue: messageId)
-		completeMessage.addAttributeWithName("type", stringValue: "read_receipt")
+		completeMessage.addAttributeWithName("type", stringValue: "chat")
         completeMessage.addAttributeWithName("content_type", stringValue: "read_receipt")
 		completeMessage.addAttributeWithName("to", stringValue: receiver)
         completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr)
@@ -129,10 +129,12 @@ public class XMPPMessageManager: NSObject {
             readElement.addAttributeWithName("id", stringValue: id)
             receiptsElement.addChild(readElement)
         }
-		completeMessage.addChild(receiptsElement)
+        let body = DDXMLElement(name: "body")
+		body.addChild(receiptsElement)
+		completeMessage.addChild(body)
 		
         if XMPPManager.sharedInstance.isConnected() {
-            print("XMPP connected, send read receipt: \(ids)")
+            print("XMPP connected, send read receipt: \(ids.count)")
             XMPPManager.sharedInstance.stream.sendElement(completeMessage)
         } else {
             print("XMPP not connected, message not sent and queued.")
@@ -232,6 +234,8 @@ public class XMPPMessageManager: NSObject {
                     retrievedMessages.append(message)
                     // print("archived message: \(message.displayText)")
                     self.archivedMessageIds.insert(message.id)
+                } else {
+                    print("Unable to parse \(messageElement.messageStr)")
                 }
 			}
 		} catch _ {

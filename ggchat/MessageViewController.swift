@@ -52,7 +52,7 @@ class MessagePacket {
     }
     
     func getSingleEncodedAsset() -> GGWikiAsset? {
-        print("isSingleEncodedAsset: \(self.encodedText) --> \(self.isSingleEncodedAsset)")
+        // print("isSingleEncodedAsset: \(self.encodedText) --> \(self.isSingleEncodedAsset)")
         if self.isSingleEncodedAsset {
             let v = self.variables[0]
             return GGWiki.sharedInstance.addAsset(v.assetId, url: v.assetURL, displayName: v.displayText, placeholderURL: v.placeholderURL)

@@ -20,6 +20,7 @@ class Message {
     var isOutgoing: Bool
     var media: MessageMediaData?
     var id: String
+    var readCount: Int = 0
     
     var displayText: String {
         get {
@@ -95,6 +96,16 @@ class Message {
         self.media = media
         
         self.attributedText = attributedText
+    }
+    
+    func markAsRead() {
+        self.readCount++
+    }
+    
+    var isRead: Bool {
+        get {
+            return self.readCount > 0
+        }
     }
     
     func addMedia(media: MessageMediaData) {

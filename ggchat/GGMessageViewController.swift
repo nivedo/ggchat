@@ -105,9 +105,9 @@ class GGMessageViewController:
     override func viewWillAppear(animated: Bool) {
         print("GG::viewWillAppear")
         super.viewWillAppear(animated)
-       
+      
         if let recipient = self.recipient {
-            UserAPI.sharedInstance.readAllMessages(recipient.jid)
+            self.readAllMessages(recipient.jid)
             self.initBackButton()
         }
         
@@ -163,6 +163,7 @@ class GGMessageViewController:
                     jid: recipient.jid,
                     delegate: self
                 )
+                self.readAllMessages(recipient.jid)
                 print("XMPPMessengerManager.sharedInstance.loadArchivedMessagesFrom: \(self.messages.count) messages")
                 if animated {
                     self.finishReceivingMessageAnimated(false)
@@ -228,6 +229,7 @@ class GGMessageViewController:
                             }
                         }
                         self.messages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
+                        self.readAllMessages(recipient.jid)
                         if animated {
                             self.finishReceivingMessageAnimated(false)
                             self.scrollToBottomAnimated(false)
@@ -392,6 +394,25 @@ class GGMessageViewController:
         UserAPI.sharedInstance.newMessage(peerJID, date: date, message: message)
     }
     
+    func readAllMessages(from: String) {
+        UserAPI.sharedInstance.readAllMessages(from)
+        self.initBackButton()
+       
+        var ids = [String]()
+        for msg in self.messages {
+            if !msg.isOutgoing {
+                if !msg.isRead {
+                    ids.append(msg.id)
+                    msg.markAsRead()
+                }
+            }
+        }
+        print("readAllMessages, msgs: \(self.messages.count), read: \(ids.count)")
+        if ids.count > 0 {
+            XMPPMessageManager.sendReadReceipt(ids, to: from)
+        }
+    }
+    
     func receiveMessage(from: String, message: Message) {
         if let recipient = self.recipient {
             if recipient.jidBare == from {
@@ -401,7 +422,7 @@ class GGMessageViewController:
                     self.appendMessage(from, date: message.date, message: message)
                     self.finishReceivingMessageAnimated(true)
                 }
-                UserAPI.sharedInstance.readAllMessages(recipient.jid)
+                self.readAllMessages(recipient.jid)
             }
         }
         self.initBackButton()

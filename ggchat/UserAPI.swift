@@ -573,6 +573,11 @@ class UserAPI {
             if type != "chat" {
                 return nil
             }
+            if let content_type = element?.attributeStringValueForName("content_type") {
+                if content_type == "read_receipt" {
+                    return nil
+                }
+            }
                 
             let id = element?.attributeStringValueForName("id")
             
@@ -602,30 +607,6 @@ class UserAPI {
                 // photoMessage.id = id
                 return photoMessage
             } else {
-                /*
-                // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(text)")
-                if let asset = AssetManager.getSingleEncodedAsset(text) {
-                    let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
-                    let message = Message(
-                        id: id!,
-                        senderId: fromBare,
-                        senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                        isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
-                        date: date,
-                        media: wikiMedia,
-                        text: text)
-                    // message.id = id
-                    return message
-                }
-                let fullMessage = Message(
-                    id: id!,
-                    senderId: fromBare,
-                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                    isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
-                    date: date,
-                    text: text)
-                // fullMessage.id = id
-                */
                 let fullMessage = packet.message(id!,
                     senderId: fromBare,
                     date: date,
