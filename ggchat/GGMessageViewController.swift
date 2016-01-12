@@ -440,8 +440,8 @@ class GGMessageViewController:
                 dispatch_async(dispatch_get_main_queue()) {
                     self.appendMessage(from, date: message.date, message: message)
                     self.finishReceivingMessageAnimated(true)
+                    self.readIncomingMessages(recipient.jid)
                 }
-                self.readIncomingMessages(recipient.jid)
             }
         }
         self.initBackButton()
@@ -461,6 +461,7 @@ class GGMessageViewController:
     func receiveReadReceipt(from: String, readReceipt: ReadReceipt) {
         if let recipient = self.recipient {
             if recipient.jidBare == from {
+                print("receivedReadReceipt from \(from)")
                 var update = false
                 for msg in self.messages {
                     if readReceipt.ids.contains(msg.id) {

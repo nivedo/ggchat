@@ -99,6 +99,7 @@ class Message {
     }
     
     func markAsRead() {
+        // print("mark as read --> \(self.attributedText)")
         self.readCount++
     }
     

@@ -22,8 +22,12 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
         self.readLabel.textColor = GGConfig.cellTopLabelTextColor
     }
     
-    func markAsRead() {
-        self.readLabel.text = "Read"
+    func markAsRead(read: Bool) {
+        if read {
+            self.readLabel.text = "Read"
+        } else {
+            self.readLabel.text = ""
+        }
     }
     
     /*
