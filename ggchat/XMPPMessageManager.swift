@@ -111,6 +111,34 @@ public class XMPPMessageManager: NSObject {
         }
 	}
     
+    class func sendReadReceipt(
+        ids: [String],
+        to receiver: String) {
+       
+        let messageId = XMPPManager.sharedInstance.stream.generateUUID()
+        let completeMessage = DDXMLElement(name: "message")
+		completeMessage.addAttributeWithName("id", stringValue: messageId)
+		completeMessage.addAttributeWithName("type", stringValue: "read_receipt")
+        completeMessage.addAttributeWithName("content_type", stringValue: "read_receipt")
+		completeMessage.addAttributeWithName("to", stringValue: receiver)
+        completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr)
+       
+        let receiptsElement = DDXMLElement(name: "receipts")
+        for id in ids {
+            let readElement = DDXMLElement(name: "read")
+            readElement.addAttributeWithName("id", stringValue: id)
+            receiptsElement.addChild(readElement)
+        }
+		completeMessage.addChild(receiptsElement)
+		
+        if XMPPManager.sharedInstance.isConnected() {
+            print("XMPP connected, send read receipt: \(ids)")
+            XMPPManager.sharedInstance.stream.sendElement(completeMessage)
+        } else {
+            print("XMPP not connected, message not sent and queued.")
+        }
+    }
+    
     public class func sendPhoto(
         originalKey: String,
         thumbnailKey: String,
