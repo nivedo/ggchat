@@ -440,7 +440,22 @@ class GGMessageViewController:
     }
     
     func receiveReadReceipt(from: String, readReceipt: ReadReceipt) {
-        
+        if let recipient = self.recipient {
+            if recipient.jidBare == from {
+                var update = false
+                for msg in self.messages {
+                    if readReceipt.ids.contains(msg.id) {
+                        msg.markAsRead()
+                        update = true
+                    }
+                }
+                if update {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.messageCollectionView.reloadData()
+                    }
+                }
+            }
+        }
     }
    
     func onTap(attributes: [String: AnyObject] ) {

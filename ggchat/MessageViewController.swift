@@ -777,6 +777,12 @@ class MessageViewController: UIViewController,
             cell.cellBottomLabel.textAlignment = NSTextAlignment.Right
             cell.timeLabel.textAlignment = NSTextAlignment.Right
             cell.textView.textColor = GGConfig.outgoingTextColor
+            
+            if messageItem.isRead {
+                if let outgoingCell = cell as? OutgoingMessagesCollectionViewCell {
+                    outgoingCell.markAsRead()
+                }
+            }
         } else {
             cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Left
             cell.cellBottomLabel.textAlignment = NSTextAlignment.Left

@@ -10,11 +10,20 @@ import UIKit
 
 class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
 
+    @IBOutlet weak var readLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.messageBubbleTopLabel.textAlignment = NSTextAlignment.Right;
         self.cellBottomLabel.textAlignment = NSTextAlignment.Right;
+        
+        self.readLabel.text = nil
+        self.readLabel.font = UIFont.systemFontOfSize(10.0)
+        self.readLabel.textColor = GGConfig.cellTopLabelTextColor
+    }
+    
+    func markAsRead() {
+        self.readLabel.text = "Read"
     }
     
     /*
