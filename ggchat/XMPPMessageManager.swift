@@ -34,6 +34,7 @@ protocol XMPPMessageManagerDelegate : NSObjectProtocol {
     */
     func receiveMessage(from: String, message: Message)
     func receiveComposingMessage(from: String)
+    func receiveReadReceipt(from: String, readReceipt: ReadReceipt)
     
 }
 
@@ -336,6 +337,8 @@ extension XMPPManager {
                 let chat = UserAPI.sharedInstance.newMessage(jid, date: now, message: msg)
                 chat.incrementUnread()
                 XMPPMessageManager.sharedInstance.delegate?.receiveMessage(jid, message: msg)
+            } else if let readReceipt = UserAPI.parseReadReceiptFromElement(message as DDXMLElement) {
+                print("Received read receipts from \(readReceipt.from)")
             } else {
                 print("Unable to parse received message \(message)")
             }

@@ -19,6 +19,18 @@ protocol UserDelegate {
     func onChatsUpdate(success: Bool)
 }
 
+class ReadReceipt {
+    var from: String
+    var to: String
+    var ids: [String]
+    
+    init(from: String, to: String, ids: [String]) {
+        self.from = from
+        self.to = to
+        self.ids = ids
+    }
+}
+
 class RosterUser {
     var nickname: String
     var jid: String
@@ -617,18 +629,6 @@ class UserAPI {
         return nil
     }
    
-    class ReadReceipt {
-        var from: String
-        var to: String
-        var ids: [String]
-        
-        init(from: String, to: String, ids: [String]) {
-            self.from = from
-            self.to = to
-            self.ids = ids
-        }
-    }
-    
     class func parseReadReceiptFromString(xmlString: String) -> ReadReceipt? {
         var element: DDXMLElement?
         do {

@@ -438,6 +438,10 @@ class GGMessageViewController:
             }
         }
     }
+    
+    func receiveReadReceipt(from: String, readReceipt: ReadReceipt) {
+        
+    }
    
     func onTap(attributes: [String: AnyObject] ) {
         if let imvc = self.imageModelViewController {

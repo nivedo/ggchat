@@ -358,4 +358,8 @@ class ContactTableViewController: UITableViewController,
             TabBarController.incrementChatsBadge(self.tabBarController)
         }
     }
+    
+    func receiveReadReceipt(from: String, readReceipt: ReadReceipt) {
+        
+    }
 }

@@ -346,4 +346,8 @@ class SettingTableViewController:
             TabBarController.incrementChatsBadge(self.tabBarController)
         }
     }
+    
+    func receiveReadReceipt(from: String, readReceipt: ReadReceipt) {
+        
+    }
 }
