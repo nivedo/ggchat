@@ -349,38 +349,5 @@ extension XMPPManager {
                 XMPPMessageManager.sharedInstance.delegate?.receiveComposingMessage(jid)
             }
         }
-            /*
-            if let user = UserAPI.sharedInstance.rosterMap[message.from().bare()] {
-        		if message.isChatMessageWithBody() {
-                    print("receiving message from \(user.jid) --> \(message.elementForName("body")!.stringValue())")
-                    if let _ = message.elementForName("body")!.elementForName("photo") {
-            			XMPPMessageManager.sharedInstance.delegate?.onPhoto(sender,
-                            didReceivePhoto: message,
-                            from: user)
-                    } else {
-            			XMPPMessageManager.sharedInstance.delegate?.onMessage(sender,
-                            didReceiveMessage: message,
-                            from: user)
-                    }
-        		} else {
-                    print("composing by \(user.jid)")
-        			if let _ = message.elementForName("composing") {
-        				XMPPMessageManager.sharedInstance.delegate?.onMessage(sender, userIsComposing: user)
-        			}
-        		}
-            }
-            */
 	}
 }
-
-/*
-extension XMPPMessage {
-    
-    func isChatMessageWithPhoto() -> Bool {
-        if self.isChatMessage() {
-            return self.elementForName("photo") != nil
-        }
-        return false
-    }
-}
-*/
