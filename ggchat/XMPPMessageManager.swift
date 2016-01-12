@@ -212,13 +212,14 @@ public class XMPPMessageManager: NSObject {
     
     var archivedMessageIds = Set<String>()
 	
-    func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> [Message] {
+    func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> ([Message], [ReadReceipt]) {
 		let moc = messageStorage?.mainThreadManagedObjectContext
 		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
 		let request = NSFetchRequest()
 		let predicateFormat = "bareJidStr like %@ "
 		let predicate = NSPredicate(format: predicateFormat, jid)
-		var retrievedMessages = [Message]()
+		var messages = [Message]()
+        var receipts = [ReadReceipt]()
 		
 		request.predicate = predicate
 		request.entity = entityDescription
@@ -232,11 +233,12 @@ public class XMPPMessageManager: NSObject {
                     messageElement.messageStr,
                     date: messageElement.timestamp,
                     delegate: delegate) {
-                    retrievedMessages.append(message)
+                    messages.append(message)
                     // print("archived message: \(message.displayText)")
                     self.archivedMessageIds.insert(message.id)
                 } else if let readReceipt = UserAPI.parseReadReceiptFromString(messageElement.messageStr) {
-                    print("Loaded archived read receipt: \(readReceipt.ids.count)")
+                    // print("Loaded archived read receipt: \(readReceipt.ids.count)")
+                    receipts.append(readReceipt)
                 } else {
                     print("Unable to parse \(messageElement.messageStr)")
                 }
@@ -244,8 +246,8 @@ public class XMPPMessageManager: NSObject {
 		} catch _ {
 			//catch fetch error here
 		}
-        retrievedMessages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
-        return retrievedMessages
+        messages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
+        return (messages, receipts)
 	}
 	
 	public func deleteMessagesFrom(jid jid: String, messages: NSArray) {

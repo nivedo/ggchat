@@ -107,7 +107,7 @@ class GGMessageViewController:
         super.viewWillAppear(animated)
       
         if let recipient = self.recipient {
-            self.readAllMessages(recipient.jid)
+            self.readIncomingMessages(recipient.jid)
             self.initBackButton()
         }
         
@@ -159,11 +159,13 @@ class GGMessageViewController:
     func loadArchivedMessagesFromCoreData(sync: Bool, animated: Bool) {
         if let recipient = self.recipient {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.messages = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
+                var receipts = [ReadReceipt]()
+                (self.messages, receipts) = XMPPMessageManager.sharedInstance.loadArchivedMessagesFrom(
                     jid: recipient.jid,
                     delegate: self
                 )
-                self.readAllMessages(recipient.jid)
+                self.markOutgoingMessages(receipts)
+                self.readIncomingMessages(recipient.jid)
                 print("XMPPMessengerManager.sharedInstance.loadArchivedMessagesFrom: \(self.messages.count) messages")
                 if animated {
                     self.finishReceivingMessageAnimated(false)
@@ -229,7 +231,7 @@ class GGMessageViewController:
                             }
                         }
                         self.messages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
-                        self.readAllMessages(recipient.jid)
+                        self.readIncomingMessages(recipient.jid)
                         if animated {
                             self.finishReceivingMessageAnimated(false)
                             self.scrollToBottomAnimated(false)
@@ -394,7 +396,24 @@ class GGMessageViewController:
         UserAPI.sharedInstance.newMessage(peerJID, date: date, message: message)
     }
     
-    func readAllMessages(from: String) {
+    func markOutgoingMessages(receipts: [ReadReceipt]) {
+        print("Read receipts in core data: \(receipts.count)")
+        if let recipient = self.recipient {
+            for receipt in receipts {
+                // print("receipt from \(receipt.from)")
+                if recipient.jidBare == receipt.from {
+                    for msg in self.messages {
+                        if receipt.ids.contains(msg.id) {
+                            // print("market as read --> \(msg.id)")
+                            msg.markAsRead()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func readIncomingMessages(from: String) {
         UserAPI.sharedInstance.readAllMessages(from)
         self.initBackButton()
        
@@ -407,7 +426,7 @@ class GGMessageViewController:
                 }
             }
         }
-        print("readAllMessages, msgs: \(self.messages.count), read: \(ids.count)")
+        print("readIncomingMessages, msgs: \(self.messages.count), read: \(ids.count)")
         if ids.count > 0 {
             XMPPMessageManager.sendReadReceipt(ids, to: from)
         }
@@ -422,7 +441,7 @@ class GGMessageViewController:
                     self.appendMessage(from, date: message.date, message: message)
                     self.finishReceivingMessageAnimated(true)
                 }
-                self.readAllMessages(recipient.jid)
+                self.readIncomingMessages(recipient.jid)
             }
         }
         self.initBackButton()

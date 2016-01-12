@@ -25,8 +25,8 @@ class ReadReceipt {
     var ids: [String]
     
     init(from: String, to: String, ids: [String]) {
-        self.from = from
-        self.to = to
+        self.from = UserAPI.stripResourceFromJID(from)
+        self.to = UserAPI.stripResourceFromJID(to)
         self.ids = ids
     }
 }
