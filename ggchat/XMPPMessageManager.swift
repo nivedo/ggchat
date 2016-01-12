@@ -129,7 +129,7 @@ public class XMPPMessageManager: NSObject {
             readElement.addAttributeWithName("id", stringValue: id)
             receiptsElement.addChild(readElement)
         }
-        let body = DDXMLElement(name: "body")
+        let body = DDXMLElement(name: "body", stringValue: "#read_receipt") // Placeholder for core data archiving
 		body.addChild(receiptsElement)
 		completeMessage.addChild(body)
 		
@@ -234,6 +234,8 @@ public class XMPPMessageManager: NSObject {
                     retrievedMessages.append(message)
                     // print("archived message: \(message.displayText)")
                     self.archivedMessageIds.insert(message.id)
+                } else if let readReceipt = UserAPI.parseReadReceiptFromString(messageElement.messageStr) {
+                    print("Loaded archived read receipt: \(readReceipt.ids.count)")
                 } else {
                     print("Unable to parse \(messageElement.messageStr)")
                 }
