@@ -338,7 +338,8 @@ extension XMPPManager {
                 chat.incrementUnread()
                 XMPPMessageManager.sharedInstance.delegate?.receiveMessage(jid, message: msg)
             } else if let readReceipt = UserAPI.parseReadReceiptFromElement(message as DDXMLElement) {
-                print("Received read receipts from \(readReceipt.from)")
+                // print("Received read receipts from \(readReceipt.from)")
+                XMPPMessageManager.sharedInstance.delegate?.receiveReadReceipt(jid, readReceipt: readReceipt)
             } else {
                 print("Unable to parse received message \(message)")
             }
