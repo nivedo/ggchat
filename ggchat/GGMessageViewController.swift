@@ -281,9 +281,10 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
-            let text = packet.encodedText
+            // let text = packet.encodedText
             let id = XMPPManager.sharedInstance.stream.generateUUID()
-            var message: Message!
+            let message = packet.message(id, senderId: senderId, date: date, delegate: self)
+            /*
             if let asset = AssetManager.getSingleEncodedAsset(text) {
                 let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: self)
                 message = Message(
@@ -305,6 +306,7 @@ class GGMessageViewController:
                     date: date,
                     text: text)
             }
+            */
             
             self.appendMessage(recipient.jid, date: date, message: message)
          

@@ -82,7 +82,8 @@ class TappableText: NSObject {
 
         return paragraph.copy() as! NSAttributedString
     }
-    
+   
+    /*
     func tappableEncodedString(
         text: String,
         textColor: UIColor) -> NSAttributedString {
@@ -116,6 +117,7 @@ class TappableText: NSObject {
 
         return paragraph.copy() as! NSAttributedString
     }
+    */
     
     func textTapped(recognizer: UITapGestureRecognizer) {
         let textView: UITextView = recognizer.view as! UITextView

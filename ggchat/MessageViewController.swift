@@ -25,7 +25,7 @@ class MessageVariable {
 }
 
 class MessagePacket {
-    static let delimiter = "__ggchat_link__"
+    static let delimiter = "__ggchat::link__"
     
     var placeholderText: String
     var encodedText: String
@@ -45,41 +45,47 @@ class MessagePacket {
     var isSingleEncodedAsset: Bool {
         get {
             if self.variables.count == 1 {
-                let v = self.variables[0]
-                return v.variableName == self.encodedText
+                return self.encodedText == MessagePacket.delimiter
             }
             return false
         }
     }
     
+    func getSingleEncodedAsset() -> GGWikiAsset? {
+        print("isSingleEncodedAsset: \(self.encodedText) --> \(self.isSingleEncodedAsset)")
+        if self.isSingleEncodedAsset {
+            let v = self.variables[0]
+            return GGWiki.sharedInstance.addAsset(v.assetId, url: v.assetURL, displayName: v.displayText, placeholderURL: v.placeholderURL)
+        }
+        return nil
+    }
+    
     func message(id: String,
         senderId: String,
-        senderDisplayName: String,
-        isOutgoing: Bool,
         date: NSDate,
         delegate: MessageMediaDelegate?) -> Message {
-        let text = self.encodedText
-        if self.isSingleEncodedAsset {
-            if let asset = AssetManager.getSingleEncodedAsset(text) {
-                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
-                let message = Message(
-                    id: id,
-                    senderId: senderId,
-                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(senderId),
-                    isOutgoing: isOutgoing,
-                    date: date,
-                    media: wikiMedia,
-                    text: text)
-                return message
-            }
+        let isOutgoing = UserAPI.sharedInstance.isOutgoingJID(senderId)
+            
+        let attributedText = self.tappableText(isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
+        if let asset = self.getSingleEncodedAsset() {
+            let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
+            let message = Message(
+                id: id,
+                senderId: senderId,
+                senderDisplayName: UserAPI.sharedInstance.getDisplayName(senderId),
+                isOutgoing: isOutgoing,
+                date: date,
+                media: wikiMedia,
+                attributedText: attributedText)
+            return message
         }
         let fullMessage = Message(
             id: id,
             senderId: senderId,
             senderDisplayName: UserAPI.sharedInstance.getDisplayName(senderId),
-            isOutgoing: UserAPI.sharedInstance.isOutgoingJID(senderId),
+            isOutgoing: isOutgoing,
             date: date,
-            text: text)
+            attributedText: attributedText)
         return fullMessage
     }
     
@@ -1014,7 +1020,8 @@ class MessageViewController: UIViewController,
             usingBlock: { (value: AnyObject?, range:NSRange, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
                 if let id = value as? String {
                     let displayText = (currentAttributedText.string as NSString).substringWithRange(range) as String
-                    let replaceText = "||\(id)|\(GGWiki.sharedInstance.getAssetImageURL(id))|\(displayText)||"
+                    // let replaceText = "||\(id)|\(GGWiki.sharedInstance.getAssetImageURL(id))|\(displayText)||"
+                    let replaceText = MessagePacket.delimiter
                     currentAttributedText.replaceCharactersInRange(range, withString: replaceText)
                     
                     variables.append(MessageVariable(

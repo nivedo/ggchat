@@ -602,6 +602,7 @@ class UserAPI {
                 // photoMessage.id = id
                 return photoMessage
             } else {
+                /*
                 // print("\(UserAPI.sharedInstance.rosterMap[fromBare]?.displayName) \(text)")
                 if let asset = AssetManager.getSingleEncodedAsset(text) {
                     let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
@@ -624,6 +625,11 @@ class UserAPI {
                     date: date,
                     text: text)
                 // fullMessage.id = id
+                */
+                let fullMessage = packet.message(id!,
+                    senderId: fromBare,
+                    date: date,
+                    delegate: delegate)
                 return fullMessage
             }
         }

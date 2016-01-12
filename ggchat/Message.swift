@@ -35,6 +35,19 @@ class Message {
         }
     }
     
+    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
+        self.id = id
+        self.senderId = senderId
+        self.senderDisplayName = senderDisplayName
+        self.date = date
+        self.attributedText = attributedText
+        self.text = self.attributedText!.string
+        self.rawText = self.text
+        self.isMediaMessage = false
+        self.isOutgoing = isOutgoing
+    }
+   
+    /*
     init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, text: String) {
         self.id = id
         self.senderId = senderId
@@ -48,7 +61,9 @@ class Message {
         self.isMediaMessage = false
         self.isOutgoing = isOutgoing
     }
-    
+    */
+   
+    /*
     convenience init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, text: String) {
         self.init(
             id: id,
@@ -58,6 +73,7 @@ class Message {
             date: NSDate(),
             text: text)
     }
+    */
     
     init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, isMedia: Bool) {
         self.id = id
@@ -68,7 +84,7 @@ class Message {
         self.isMediaMessage = isMedia
     }
     
-    convenience init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, text: String? = nil) {
+    convenience init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
         self.init(
             id: id,
             senderId: senderId,
@@ -78,11 +94,7 @@ class Message {
             isMedia: true)
         self.media = media
         
-        if let msg = text {
-            self.attributedText = TappableText.sharedInstance.tappableEncodedString(
-                msg,
-                textColor: isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
-        }
+        self.attributedText = attributedText
     }
     
     func addMedia(media: MessageMediaData) {
