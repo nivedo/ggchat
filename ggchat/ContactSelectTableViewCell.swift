@@ -9,10 +9,8 @@
 import UIKit
 
 class ContactSelectTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var avatarContainer: UIView!
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var cellMainLabel: UILabel!
+   
+    @IBOutlet weak var textView: UITextView!
     
     class func nib() -> UINib {
         let nibName = NSStringFromClass(self).componentsSeparatedByString(".").last! as String
@@ -27,11 +25,13 @@ class ContactSelectTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    
+        self.textView.textColor = UIColor.gg_highlightedColor()
+        self.textView.text = ""
         
-        self.cellMainLabel.adjustsFontSizeToFitWidth = false
-        self.cellMainLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        
-        self.accessoryType = UITableViewCellAccessoryType.Checkmark
+        self.textView.layer.borderColor = UIColor.gg_highlightedColor().CGColor
+        self.textView.layer.borderWidth = 1.0
+        self.textView.layer.cornerRadius = 8.0
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

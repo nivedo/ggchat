@@ -228,6 +228,8 @@ public class XMPPMessageManager: NSObject {
                 } else {
                     print("Unable to parse \(messageElement.messageStr)")
                 }
+                
+                // print("---> composing: \(messageElement.isComposing)")
 			}
 		} catch _ {
 			//catch fetch error here

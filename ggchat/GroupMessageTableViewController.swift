@@ -25,6 +25,8 @@ class GroupMessageTableViewController:
         self.tableView.delegate = self
         self.tableView.registerNib(ContactTableViewCell.nib(),
             forCellReuseIdentifier: ContactTableViewCell.cellReuseIdentifier())
+        self.tableView.registerNib(ContactSelectTableViewCell.nib(),
+            forCellReuseIdentifier: ContactSelectTableViewCell.cellReuseIdentifier())
         
         self.navigationItem.title = "New Group"
         
@@ -47,9 +49,28 @@ class GroupMessageTableViewController:
             return controller
         })()
         
+        let barButton: UIBarButtonItem = UIBarButtonItem(
+            title: "Create",
+            style: UIBarButtonItemStyle.Plain,
+            target: self,
+            action: Selector("receivedCreatePressed:"))
+        self.navigationItem.rightBarButtonItem = barButton
+        
         UserAPI.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
+    }
+    
+    func receivedCreatePressed(sender: UIButton) {
+        if self.selectedBuddySet.count < 3 {
+            let alert = UIAlertView()
+            alert.title = "Please Add More People"
+            alert.message = "Groups must be at least 3 people"
+            alert.addButtonWithTitle("OK")
+            alert.show()
+        } else {
+            
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -125,7 +146,7 @@ class GroupMessageTableViewController:
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("clicked \(indexPath)")
+        // print("clicked \(indexPath)")
         
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
@@ -135,10 +156,29 @@ class GroupMessageTableViewController:
         if self.selectedBuddySet.contains(user) {
             cell.accessoryType = UITableViewCellAccessoryType.None
             self.selectedBuddySet.remove(user)
+            self.tableView.reloadData()
         } else {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             self.selectedBuddySet.insert(user)
+            self.tableView.reloadData()
         }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(50.0)
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier()) as! ContactSelectTableViewCell
+        
+        var selectedDisplayNames = [String]()
+        for user in self.selectedBuddySet {
+            selectedDisplayNames.append(user.displayName)
+        }
+        print(selectedDisplayNames.joinWithSeparator(", "))
+        cell.textView.text = "To: \(selectedDisplayNames.joinWithSeparator(", "))"
+        
+        return cell
     }
     
     /*

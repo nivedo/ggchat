@@ -60,7 +60,7 @@ class NewMessageTableViewController:
     }
     
     func receivedGroupPressed(sender: UIButton) {
-        print("receivedGroupPressed")
+        // print("receivedGroupPressed")
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
         self.performSegueWithIdentifier("new_message.to.group_message", sender: sender)
