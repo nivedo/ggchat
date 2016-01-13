@@ -77,7 +77,7 @@ class GroupMessageTableViewController:
    
     var avatarSize: CGSize {
         get {
-            let newSize: CGFloat = CGFloat(40.0)
+            let newSize: CGFloat = CGFloat(48.0)
             return CGSize(width: newSize, height: newSize)
         }
     }
@@ -220,7 +220,7 @@ class GroupMessageTableViewController:
             let cell = tableView.dequeueReusableCellWithIdentifier(GroupProfileTableViewCell.cellReuseIdentifier(),
                 forIndexPath: indexPath) as! GroupProfileTableViewCell
             
-            let avatar = UserAPI.avatarFromInitials("G P")
+            let avatar = UserAPI.avatarFromText("Avatar", diameter: self.avatarSize.width)
             cell.avatarImageView.image = avatar.avatarImage?.gg_imageScaledToFitSize(self.avatarSize, isOpaque: false)
             
             let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
@@ -261,7 +261,7 @@ class GroupMessageTableViewController:
         if indexPath.section == 0 {
             return CGFloat(60.0)
         } else {
-            return CGFloat(32.0)
+            return CGFloat(44.0)
         }
     }
     
@@ -273,7 +273,7 @@ class GroupMessageTableViewController:
             for user in self.selectedBuddySet {
                 selectedDisplayNames.append(user.displayName)
             }
-            print(selectedDisplayNames.joinWithSeparator(", "))
+            // print(selectedDisplayNames.joinWithSeparator(", "))
             cell.textView.text = "To: \(selectedDisplayNames.joinWithSeparator(", "))"
             
             return cell

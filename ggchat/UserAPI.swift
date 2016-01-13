@@ -261,6 +261,15 @@ class UserAPI {
             diameter: GGConfig.avatarSize)
     }
     
+    class func avatarFromText(text: String, diameter: CGFloat) -> MessageAvatarImage {
+        return MessageAvatarImageFactory.avatarImageWithUserInitials(
+            text,
+            backgroundColor: UIColor(white: 0.85, alpha: 1.0),
+            textColor: UIColor(white: 0.60, alpha: 1.0),
+            font: UIFont.systemFontOfSize(12.0),
+            diameter: diameter)
+    }
+    
     ////////////////////////////////////////////////////////////////////
     // Routes
     ////////////////////////////////////////////////////////////////////

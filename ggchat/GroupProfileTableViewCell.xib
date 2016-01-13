@@ -14,18 +14,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l6s-xz-nFT" userLabel="Avatar container">
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l6s-xz-nFT" userLabel="Avatar container">
                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcT-1o-Aiv" userLabel="Avatar image view">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcT-1o-Aiv" userLabel="Avatar image view">
                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="48" id="3lV-JR-ZhX"/>
                             <constraint firstAttribute="trailing" secondItem="dcT-1o-Aiv" secondAttribute="trailing" id="DRX-LO-asw"/>
                             <constraint firstItem="dcT-1o-Aiv" firstAttribute="top" secondItem="l6s-xz-nFT" secondAttribute="top" id="DRj-F0-DoT"/>
                             <constraint firstAttribute="bottom" secondItem="dcT-1o-Aiv" secondAttribute="bottom" id="Esn-YS-kkS"/>
+                            <constraint firstAttribute="height" constant="48" id="a43-me-iax"/>
                             <constraint firstItem="dcT-1o-Aiv" firstAttribute="leading" secondItem="l6s-xz-nFT" secondAttribute="leading" id="vSW-ml-PoJ"/>
                         </constraints>
                     </view>
@@ -37,10 +39,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="n02-Tv-ZSQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Eg9-6S-YZI"/>
-                    <constraint firstItem="l6s-xz-nFT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="JtT-yL-irJ"/>
+                    <constraint firstItem="l6s-xz-nFT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="JtT-yL-irJ"/>
                     <constraint firstAttribute="trailing" secondItem="n02-Tv-ZSQ" secondAttribute="trailing" constant="8" id="LMU-8N-PTX"/>
                     <constraint firstItem="n02-Tv-ZSQ" firstAttribute="leading" secondItem="l6s-xz-nFT" secondAttribute="trailing" constant="8" id="MBO-8t-tfI"/>
-                    <constraint firstItem="l6s-xz-nFT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="cER-kN-zhU"/>
+                    <constraint firstItem="l6s-xz-nFT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="cER-kN-zhU"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
