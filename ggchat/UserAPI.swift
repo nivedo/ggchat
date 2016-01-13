@@ -31,13 +31,23 @@ class ReadReceipt {
     }
 }
 
-class RosterUser {
+func ==(_ lhs: RosterUser, _ rhs: RosterUser) -> Bool {
+    return lhs.jidBare == rhs.jidBare
+}
+
+class RosterUser: Hashable {
     var nickname: String
     var jid: String
     var jidBare: String
     var avatar: String
     var avatarImage: UIImage?
     var isBuddy: Bool = false
+   
+    var hashValue: Int {
+        get {
+            return jidBare.hashValue
+        }
+    }
     
     init(profile: [String: AnyObject],
         avatarCompletion: ((Bool) -> Void)?) {

@@ -16,16 +16,17 @@ class GroupMessageTableViewController:
     var searchResultController = UISearchController()
     var filteredBuddyList = [RosterUser]()
     var buddyList = [RosterUser]()
+    var selectedBuddySet = Set<RosterUser>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.registerNib(ContactSelectTableViewCell.nib(),
-            forCellReuseIdentifier: ContactSelectTableViewCell.cellReuseIdentifier())
+        self.tableView.registerNib(ContactTableViewCell.nib(),
+            forCellReuseIdentifier: ContactTableViewCell.cellReuseIdentifier())
         
-        self.navigationItem.title = "Group Message"
+        self.navigationItem.title = "New Group"
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -109,8 +110,8 @@ class GroupMessageTableViewController:
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier(),
-            forIndexPath: indexPath) as! ContactSelectTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
+            forIndexPath: indexPath) as! ContactTableViewCell
 
         // Configure the cell...
         let user = self.buddyList[indexPath.row]
@@ -118,10 +119,28 @@ class GroupMessageTableViewController:
         let avatar = user.messageAvatarImage
         cell.avatarImageView.image = avatar.avatarImage
         cell.cellMainLabel.attributedText = NSAttributedString(string: user.displayName)
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("clicked \(indexPath)")
+        
+        self.searchResultController.searchBar.resignFirstResponder()
+        self.searchResultController.active = false
+        
+        let user = self.buddyList[indexPath.row]
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ContactTableViewCell
+        if self.selectedBuddySet.contains(user) {
+            cell.accessoryType = UITableViewCellAccessoryType.None
+            self.selectedBuddySet.remove(user)
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            self.selectedBuddySet.insert(user)
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
