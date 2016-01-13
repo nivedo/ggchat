@@ -54,6 +54,7 @@
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="u5b-jf-ZXP" id="zOd-zr-2ZI"/>
+                        <segue destination="3go-2D-Nfc" kind="show" identifier="new_message.to.group_message" id="3jw-XA-Yac"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SYd-YP-ixK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -67,6 +68,36 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="4732" y="-437"/>
+        </scene>
+        <!--Group Message Table View Controller-->
+        <scene sceneID="L3z-6K-Yho">
+            <objects>
+                <tableViewController id="3go-2D-Nfc" customClass="GroupMessageTableViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="iGQ-O4-MTQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="cxH-9G-Y5t">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cxH-9G-Y5t" id="UX9-9J-0dw">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3go-2D-Nfc" id="XJA-OZ-18w"/>
+                            <outlet property="delegate" destination="3go-2D-Nfc" id="FQ8-NZ-wWR"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vH3-d3-HeO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5148" y="-437"/>
         </scene>
         <!--Chat Table View Controller-->
         <scene sceneID="TBS-Mv-znz">
@@ -923,6 +954,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="td0-iI-Ota"/>
-        <segue reference="opv-3B-fXB"/>
+        <segue reference="aIy-Q7-IZA"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ContactSelectTableViewCell" customModule="ggchat" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50L-fI-EoB" userLabel="Avatar container">
+                        <rect key="frame" x="40" y="0.0" width="50" height="50"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aU-Nl-Nr7" userLabel="Avatar image view">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="1aU-Nl-Nr7" secondAttribute="trailing" id="BUd-yf-e6x"/>
+                            <constraint firstItem="1aU-Nl-Nr7" firstAttribute="top" secondItem="50L-fI-EoB" secondAttribute="top" id="CFV-yF-d9R"/>
+                            <constraint firstAttribute="bottom" secondItem="1aU-Nl-Nr7" secondAttribute="bottom" id="tgY-9h-3v0"/>
+                            <constraint firstItem="1aU-Nl-Nr7" firstAttribute="leading" secondItem="50L-fI-EoB" secondAttribute="leading" id="vh4-1p-fkJ"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Cell main label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LsB-Og-5UA">
+                        <rect key="frame" x="98" y="8" width="209" height="33"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="50L-fI-EoB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1Gw-aw-paI"/>
+                    <constraint firstItem="LsB-Og-5UA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="4yB-v6-Xbv"/>
+                    <constraint firstItem="50L-fI-EoB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="H5v-SH-ctr"/>
+                    <constraint firstAttribute="trailing" secondItem="LsB-Og-5UA" secondAttribute="trailing" constant="8" id="VQs-Rw-2xX"/>
+                    <constraint firstItem="LsB-Og-5UA" firstAttribute="leading" secondItem="50L-fI-EoB" secondAttribute="trailing" constant="8" id="h13-u7-pUP"/>
+                    <constraint firstAttribute="bottom" secondItem="LsB-Og-5UA" secondAttribute="bottom" constant="8" id="kkY-Hg-5kx"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarContainer" destination="50L-fI-EoB" id="wgY-7Y-Hnq"/>
+                <outlet property="avatarImageView" destination="1aU-Nl-Nr7" id="Ltf-I3-pmw"/>
+                <outlet property="cellMainLabel" destination="LsB-Og-5UA" id="aNa-3l-Vme"/>
+            </connections>
+            <point key="canvasLocation" x="782" y="532"/>
+        </tableViewCell>
+    </objects>
+</document>

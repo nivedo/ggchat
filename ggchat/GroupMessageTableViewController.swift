@@ -1,39 +1,38 @@
 //
-//  NewMessageTableViewController.swift
+//  GroupMessageTableViewController.swift
 //  ggchat
 //
-//  Created by Gary Chang on 11/25/15.
-//  Copyright © 2015 Blub. All rights reserved.
+//  Created by Gary Chang on 1/13/16.
+//  Copyright © 2016 Blub. All rights reserved.
 //
 
 import UIKit
 
-class NewMessageTableViewController:
+class GroupMessageTableViewController:
     UITableViewController,
     UISearchResultsUpdating,
-    NSFetchedResultsControllerDelegate,
     UserDelegate {
-
+    
     var searchResultController = UISearchController()
     var filteredBuddyList = [RosterUser]()
     var buddyList = [RosterUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.registerNib(ContactTableViewCell.nib(),
-            forCellReuseIdentifier: ContactTableViewCell.cellReuseIdentifier())
+        self.tableView.registerNib(ContactSelectTableViewCell.nib(),
+            forCellReuseIdentifier: ContactSelectTableViewCell.cellReuseIdentifier())
+        
+        self.navigationItem.title = "Group Message"
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        self.navigationItem.title = "New Message"
-        
+      
         self.searchResultController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
@@ -47,28 +46,14 @@ class NewMessageTableViewController:
             return controller
         })()
         
-        let barButton: UIBarButtonItem = UIBarButtonItem(
-            title: "Group",
-            style: UIBarButtonItemStyle.Plain,
-            target: self,
-            action: Selector("receivedGroupPressed:"))
-        self.navigationItem.rightBarButtonItem = barButton
-        
         UserAPI.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
     
-    func receivedGroupPressed(sender: UIButton) {
-        print("receivedGroupPressed")
-        self.searchResultController.searchBar.resignFirstResponder()
-        self.searchResultController.active = false
-        self.performSegueWithIdentifier("new_message.to.group_message", sender: sender)
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-       
+        
         UserAPI.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
@@ -88,7 +73,7 @@ class NewMessageTableViewController:
         }
         self.tableView.reloadData()
     }
-   
+    
     var inSearchMode: Bool {
         get {
             return self.searchResultController.active
@@ -114,16 +99,18 @@ class NewMessageTableViewController:
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
         return self.dataList.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
-            forIndexPath: indexPath) as! ContactTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier(),
+            forIndexPath: indexPath) as! ContactSelectTableViewCell
 
         // Configure the cell...
         let user = self.buddyList[indexPath.row]
@@ -135,39 +122,50 @@ class NewMessageTableViewController:
         return cell
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("clicked \(indexPath)")
-        
-        let user = self.buddyList[indexPath.row]
-        
-        self.searchResultController.searchBar.resignFirstResponder()
-        self.searchResultController.active = false
-        
-        self.performSegueWithIdentifier("new_message.to.messages", sender: user)
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
     }
-    
-    func backButtonPressed(button: UIBarButtonItem) {
-        print("back button pressed")
-        self.navigationController?.popToRootViewControllerAnimated(true)
-    }
+    */
 
+    /*
+    // Override to support editing the table view.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+
+    }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
+
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if (segue.identifier == "new_message.to.messages") {
-            let user = sender as! RosterUser
-            if let cpd = segue.destinationViewController as? ContactPickerDelegate {
-                print("ContactPickerDelege!")
-                cpd.didSelectContact(user)
-            }
-            if let mvc = segue.destinationViewController as? MessageViewController {
-                mvc.overrideNavBackButtonToRootViewController = true
-            }
-        }
     }
+    */
     
     // MARK: - UserDelegate
     func onAvatarUpdate(jid: String, success: Bool) {
