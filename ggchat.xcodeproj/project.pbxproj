@@ -31,6 +31,8 @@
 		D433B1681C45F8E80003E100 /* GroupMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1671C45F8E80003E100 /* GroupMessageTableViewController.swift */; };
 		D433B16B1C4617370003E100 /* ContactSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1691C4617370003E100 /* ContactSelectTableViewCell.swift */; };
 		D433B16C1C4617370003E100 /* ContactSelectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D433B16A1C4617370003E100 /* ContactSelectTableViewCell.xib */; };
+		D433B16F1C4641530003E100 /* GroupProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B16D1C4641530003E100 /* GroupProfileTableViewCell.swift */; };
+		D433B1701C4641530003E100 /* GroupProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D433B16E1C4641530003E100 /* GroupProfileTableViewCell.xib */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -316,6 +318,8 @@
 		D433B1671C45F8E80003E100 /* GroupMessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMessageTableViewController.swift; sourceTree = "<group>"; };
 		D433B1691C4617370003E100 /* ContactSelectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSelectTableViewCell.swift; sourceTree = "<group>"; };
 		D433B16A1C4617370003E100 /* ContactSelectTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactSelectTableViewCell.xib; sourceTree = "<group>"; };
+		D433B16D1C4641530003E100 /* GroupProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCell.swift; sourceTree = "<group>"; };
+		D433B16E1C4641530003E100 /* GroupProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupProfileTableViewCell.xib; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -1213,6 +1217,8 @@
 				D433B1501C312AF50003E100 /* SettingTableLabelCell.xib */,
 				D433B1691C4617370003E100 /* ContactSelectTableViewCell.swift */,
 				D433B16A1C4617370003E100 /* ContactSelectTableViewCell.xib */,
+				D433B16D1C4641530003E100 /* GroupProfileTableViewCell.swift */,
+				D433B16E1C4641530003E100 /* GroupProfileTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2041,6 +2047,7 @@
 			files = (
 				D45FBD6C1C054EE200E79B4E /* ContactTableViewCell.xib in Resources */,
 				D45FBD3F1BFD024100E79B4E /* MessageToolbarContentView.xib in Resources */,
+				D433B1701C4641530003E100 /* GroupProfileTableViewCell.xib in Resources */,
 				D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */,
 				D4A9F4F01BF27A3C00FA4444 /* IncomingMessagesCollectionViewCell.xib in Resources */,
 				D4A786541C0A9BB000C37427 /* SettingTableMenuCell.xib in Resources */,
@@ -2262,6 +2269,7 @@
 				D433B1551C3282DD0003E100 /* WikiMediaItem.swift in Sources */,
 				D43B29051C06896200B3F367 /* XMPPDigestMD5Authentication.m in Sources */,
 				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
+				D433B16F1C4641530003E100 /* GroupProfileTableViewCell.swift in Sources */,
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
 				D43B29301C06897300B3F367 /* XMPPParser.m in Sources */,
 				D469EAAF1C09DC0C00D30C9A /* SettingTableBorderCell.swift in Sources */,
