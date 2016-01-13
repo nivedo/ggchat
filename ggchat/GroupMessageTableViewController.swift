@@ -21,6 +21,17 @@ class GroupMessageTableViewController:
     var buddyList = [RosterUser]()
     var selectedBuddySet = Set<RosterUser>()
     let photoPicker = UIImagePickerController()
+    var groupAvatarImage: UIImage?
+    
+    var groupAvatar: MessageAvatarImage {
+        get {
+            if let image = self.groupAvatarImage {
+                return UserAPI.avatarFromImage(image)
+            } else {
+                return UserAPI.avatarFromText("Avatar", diameter: self.avatarSize.width)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,9 +97,10 @@ class GroupMessageTableViewController:
         picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
             let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
-            let resizedImage = chosenImage.gg_imageScaledToSize(self.avatarSize, isOpaque: false)
+            self.groupAvatarImage = chosenImage.gg_imageScaledToSize(self.avatarSize, isOpaque: false)
             
             self.dismissViewControllerAnimated(true, completion: nil)
+            self.tableView.reloadData()
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -220,8 +232,7 @@ class GroupMessageTableViewController:
             let cell = tableView.dequeueReusableCellWithIdentifier(GroupProfileTableViewCell.cellReuseIdentifier(),
                 forIndexPath: indexPath) as! GroupProfileTableViewCell
             
-            let avatar = UserAPI.avatarFromText("Avatar", diameter: self.avatarSize.width)
-            cell.avatarImageView.image = avatar.avatarImage?.gg_imageScaledToFitSize(self.avatarSize, isOpaque: false)
+            cell.avatarImageView.image = self.groupAvatar.avatarImage
             
             let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
             cell.avatarContainer.addGestureRecognizer(gesture)
