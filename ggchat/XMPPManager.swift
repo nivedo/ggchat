@@ -19,8 +19,8 @@ public protocol XMPPManagerDelegate {
 }
 
 class XMPPManager: NSObject,
-    XMPPStreamDelegate,
-    XMPPRosterDelegate {
+    XMPPStreamDelegate {
+    // XMPPRosterDelegate {
     // XMPPvCardTempModuleDelegate {
 
     var username: String!

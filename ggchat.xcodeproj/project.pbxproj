@@ -27,6 +27,7 @@
 		D433B15E1C3CB6FE0003E100 /* UserAPICoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */; };
 		D433B1601C3F77200003E100 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15F1C3F77200003E100 /* TabBarController.swift */; };
 		D433B1621C40FD6F0003E100 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */; };
+		D433B1641C45E2340003E100 /* XMPPRoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1631C45E2340003E100 /* XMPPRoomManager.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -308,6 +309,7 @@
 		D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPICoreData.swift; sourceTree = "<group>"; };
 		D433B15F1C3F77200003E100 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D433B1631C45E2340003E100 /* XMPPRoomManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPRoomManager.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -1285,6 +1287,7 @@
 				D469EAA11C09749500D30C9A /* XMPPChatManager.swift */,
 				D4A7864D1C0A7CF900C37427 /* XMPPvCardManager.swift */,
 				D4A786551C0AE1BB00C37427 /* XMPPLastActivityManager.swift */,
+				D433B1631C45E2340003E100 /* XMPPRoomManager.swift */,
 				D4A7866E1C0EA0F700C37427 /* SettingManager.swift */,
 			);
 			name = Managers;
@@ -2174,6 +2177,7 @@
 				D42B01791C11B85F00643835 /* GGWiki.swift in Sources */,
 				D4C8FE2A1C06AA2300992801 /* XMPPAutoPing.m in Sources */,
 				D4C8FDD91C06AA2300992801 /* XMPPOutgoingFileTransfer.m in Sources */,
+				D433B1641C45E2340003E100 /* XMPPRoomManager.swift in Sources */,
 				D45FBD6A1C05499000E79B4E /* ContactTableViewCell.swift in Sources */,
 				D4A9F4F61BF2ED2A00FA4444 /* UIDevice+Messages.swift in Sources */,
 				D4C8FE281C06AA2300992801 /* XMPPStreamManagementStanzas.m in Sources */,
