@@ -85,24 +85,8 @@ class GroupMessageTableViewController:
     func imagePickerController(
         picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-            
             let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
             let resizedImage = chosenImage.gg_imageScaledToSize(self.avatarSize, isOpaque: false)
-            
-            // let jid = UserAPI.sharedInstance.jid!
-            // GGModelData.sharedInstance.updateAvatar(jid, image: resizedImage)
-            
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.labelText = "Uploading avatar."
-            UserAPI.sharedInstance.updateAvatarImage(resizedImage, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
-                dispatch_async(dispatch_get_main_queue()) {
-                    if let json = jsonBody {
-                        print(json)
-                        self.tableView.reloadData()
-                    }
-                    MBProgressHUD.hideHUDForView(self.view, animated: false)
-                }
-            })
             
             self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -270,6 +254,14 @@ class GroupMessageTableViewController:
             return CGFloat(50.0)
         } else {
             return CGFloat(0.0)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return CGFloat(60.0)
+        } else {
+            return CGFloat(32.0)
         }
     }
     
