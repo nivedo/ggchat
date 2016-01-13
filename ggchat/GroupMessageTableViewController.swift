@@ -7,16 +7,20 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class GroupMessageTableViewController:
     UITableViewController,
     UISearchResultsUpdating,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate,
     UserDelegate {
     
     var searchResultController = UISearchController()
     var filteredBuddyList = [RosterUser]()
     var buddyList = [RosterUser]()
     var selectedBuddySet = Set<RosterUser>()
+    let photoPicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,10 +68,47 @@ class GroupMessageTableViewController:
             target: self,
             action: Selector("receivedCancelPressed:"))
         self.navigationItem.leftBarButtonItem = cancelButton
-        
+       
+        self.photoPicker.delegate = self
         UserAPI.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
+    }
+   
+    var avatarSize: CGSize {
+        get {
+            let newSize: CGFloat = CGFloat(40.0)
+            return CGSize(width: newSize, height: newSize)
+        }
+    }
+    
+    func imagePickerController(
+        picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+            
+            let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
+            let resizedImage = chosenImage.gg_imageScaledToSize(self.avatarSize, isOpaque: false)
+            
+            // let jid = UserAPI.sharedInstance.jid!
+            // GGModelData.sharedInstance.updateAvatar(jid, image: resizedImage)
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "Uploading avatar."
+            UserAPI.sharedInstance.updateAvatarImage(resizedImage, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let json = jsonBody {
+                        print(json)
+                        self.tableView.reloadData()
+                    }
+                    MBProgressHUD.hideHUDForView(self.view, animated: false)
+                }
+            })
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     func receivedCancelPressed(button: UIBarButtonItem) {
@@ -132,7 +173,37 @@ class GroupMessageTableViewController:
     }
 
     // MARK: - Table view data source
-
+    
+    func selectAvatarImage() {
+        let alert: UIAlertController = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionCancel = UIAlertAction(
+            title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
+        let actionTakePhoto = UIAlertAction(
+            title: "Take Photo",
+            style: UIAlertActionStyle.Default) { action -> Void in
+                self.photoPicker.allowsEditing = true
+                self.photoPicker.sourceType = .Camera
+                self.presentViewController(self.photoPicker, animated: true, completion: nil)
+        }
+        let actionChoosePhoto = UIAlertAction(
+            title: "Choose Photo",
+            style: UIAlertActionStyle.Default) { action -> Void in
+                self.photoPicker.allowsEditing = true
+                self.photoPicker.sourceType = .PhotoLibrary
+                self.presentViewController(self.photoPicker, animated: true, completion: nil)
+        }
+        alert.addAction(actionTakePhoto)
+        alert.addAction(actionChoosePhoto)
+        alert.addAction(actionCancel)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 2
@@ -164,6 +235,12 @@ class GroupMessageTableViewController:
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(GroupProfileTableViewCell.cellReuseIdentifier(),
                 forIndexPath: indexPath) as! GroupProfileTableViewCell
+            
+            let avatar = UserAPI.avatarFromInitials("G P")
+            cell.avatarImageView.image = avatar.avatarImage?.gg_imageScaledToFitSize(self.avatarSize, isOpaque: false)
+            
+            let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
+            cell.avatarContainer.addGestureRecognizer(gesture)
             
             return cell
         }
