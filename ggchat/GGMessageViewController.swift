@@ -164,7 +164,7 @@ class GGMessageViewController:
                     jid: recipient.jid,
                     delegate: self
                 )
-                self.markOutgoingMessages(receipts)
+                self.readMessagesFromCoreDataReceipts(receipts)
                 self.readIncomingMessages(recipient.jid)
                 print("XMPPMessengerManager.sharedInstance.loadArchivedMessagesFrom: \(self.messages.count) messages")
                 if animated {
@@ -396,12 +396,12 @@ class GGMessageViewController:
         UserAPI.sharedInstance.newMessage(peerJID, date: date, message: message)
     }
     
-    func markOutgoingMessages(receipts: [ReadReceipt]) {
+    func readMessagesFromCoreDataReceipts(receipts: [ReadReceipt]) {
         print("Read receipts in core data: \(receipts.count)")
         if let recipient = self.recipient {
             for receipt in receipts {
                 // print("receipt from \(receipt.from)")
-                if recipient.jidBare == receipt.from {
+                if recipient.jidBare == receipt.from || recipient.jidBare == receipt.to {
                     for msg in self.messages {
                         if receipt.ids.contains(msg.id) {
                             // print("market as read --> \(msg.id)")
