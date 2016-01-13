@@ -27,6 +27,8 @@ class GroupMessageTableViewController:
             forCellReuseIdentifier: ContactTableViewCell.cellReuseIdentifier())
         self.tableView.registerNib(ContactSelectTableViewCell.nib(),
             forCellReuseIdentifier: ContactSelectTableViewCell.cellReuseIdentifier())
+        self.tableView.registerNib(GroupProfileTableViewCell.nib(),
+            forCellReuseIdentifier: GroupProfileTableViewCell.cellReuseIdentifier())
         
         self.navigationItem.title = "New Group"
         
@@ -133,63 +135,82 @@ class GroupMessageTableViewController:
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.dataList.count
+        if section == 1 {
+            return self.dataList.count
+        } else {
+            return 1
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
-            forIndexPath: indexPath) as! ContactTableViewCell
+        if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
+                forIndexPath: indexPath) as! ContactTableViewCell
 
-        // Configure the cell...
-        let user = self.buddyList[indexPath.row]
-        
-        let avatar = user.messageAvatarImage
-        cell.avatarImageView.image = avatar.avatarImage
-        cell.cellMainLabel.attributedText = NSAttributedString(string: user.displayName)
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        
-        return cell
+            // Configure the cell...
+            let user = self.buddyList[indexPath.row]
+            
+            let avatar = user.messageAvatarImage
+            cell.avatarImageView.image = avatar.avatarImage
+            cell.cellMainLabel.attributedText = NSAttributedString(string: user.displayName)
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(GroupProfileTableViewCell.cellReuseIdentifier(),
+                forIndexPath: indexPath) as! GroupProfileTableViewCell
+            
+            return cell
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // print("clicked \(indexPath)")
-        
-        self.searchResultController.searchBar.resignFirstResponder()
-        self.searchResultController.active = false
-        
-        let user = self.buddyList[indexPath.row]
-        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ContactTableViewCell
-        if self.selectedBuddySet.contains(user) {
-            cell.accessoryType = UITableViewCellAccessoryType.None
-            self.selectedBuddySet.remove(user)
-            self.tableView.reloadData()
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            self.selectedBuddySet.insert(user)
-            self.tableView.reloadData()
+        if indexPath.section == 1 {
+            self.searchResultController.searchBar.resignFirstResponder()
+            self.searchResultController.active = false
+            
+            let user = self.buddyList[indexPath.row]
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ContactTableViewCell
+            if self.selectedBuddySet.contains(user) {
+                cell.accessoryType = UITableViewCellAccessoryType.None
+                self.selectedBuddySet.remove(user)
+                self.tableView.reloadData()
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                self.selectedBuddySet.insert(user)
+                self.tableView.reloadData()
+            }
         }
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(50.0)
+        if section == 1 {
+            return CGFloat(50.0)
+        } else {
+            return CGFloat(0.0)
+        }
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier()) as! ContactSelectTableViewCell
-        
-        var selectedDisplayNames = [String]()
-        for user in self.selectedBuddySet {
-            selectedDisplayNames.append(user.displayName)
+        if section == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier()) as! ContactSelectTableViewCell
+            
+            var selectedDisplayNames = [String]()
+            for user in self.selectedBuddySet {
+                selectedDisplayNames.append(user.displayName)
+            }
+            print(selectedDisplayNames.joinWithSeparator(", "))
+            cell.textView.text = "To: \(selectedDisplayNames.joinWithSeparator(", "))"
+            
+            return cell
+        } else {
+            return nil
         }
-        print(selectedDisplayNames.joinWithSeparator(", "))
-        cell.textView.text = "To: \(selectedDisplayNames.joinWithSeparator(", "))"
-        
-        return cell
     }
     
     /*
