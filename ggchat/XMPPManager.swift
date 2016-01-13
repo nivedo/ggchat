@@ -28,8 +28,8 @@ class XMPPManager: NSObject,
     var jid_: String?
     var domain: String = GGSetting.xmppDomain
     var stream: XMPPStream!
-    var roster: XMPPRoster!
-    var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
+    // var roster: XMPPRoster!
+    // var rosterStorage: XMPPRosterCoreDataStorage = XMPPRosterCoreDataStorage()
     // var rosterStorage: XMPPRosterMemoryStorage = XMPPRosterMemoryStorage()
     var reconnecter: XMPPReconnect!
     var deliveryReceipts: XMPPMessageDeliveryReceipts!
@@ -49,50 +49,6 @@ class XMPPManager: NSObject,
     // Class helper methods
     //////////////////////////////////////////////////////////////////////////////
  
-    /*
-    class func avatarForJID(jid: String) -> MessageAvatarImage {
-        var avatar: MessageAvatarImage?
-       
-        var xmppUser: XMPPUserCoreDataStorageObject?
-        if let user = sharedInstance.rosterStorage.userForJID(
-            XMPPJID.jidWithString(jid),
-            xmppStream: sharedInstance.stream,
-            managedObjectContext: XMPPRosterManager.sharedInstance.managedObjectContext_roster()) {
-            xmppUser = user
-            if let photo = user.photo {
-                avatar = MessageAvatarImageFactory.avatarImageWithImage(photo, diameter: GGConfig.avatarSize)
-                return avatar!
-            }
-        }
-        
-        if let photoData = sharedInstance.vCardAvatarModule?.photoDataForJID(XMPPJID.jidWithString(jid)) {
-            let photo = UIImage(data: photoData)!
-            avatar = MessageAvatarImageFactory.avatarImageWithImage(photo, diameter: GGConfig.avatarSize)
-            if xmppUser != nil {
-                xmppUser!.photo = photo
-            }
-        } else {
-            print("Unable to find avatar for \(jid) on ejabberd server")
-            avatar = GGModelData.sharedInstance.getAvatar(jid)
-            if xmppUser != nil {
-                xmppUser!.photo = avatar!.avatarImage
-            }
-        }
-        
-        return avatar!
-    }
-    
-    class func avatarImageForJID(jid: String) -> (UIImage?, UIImage?) {
-        let avatar = self.avatarForJID(jid)
-        let avatarImage: UIImage? = avatar.avatarImage
-        if (avatarImage == nil) {
-            return (avatar.avatarPlaceholderImage, nil)
-        } else {
-            return (avatarImage!, avatar.avatarHighlightedImage)
-        }
-    }
-    */
-    
     var jid: String {
         get {
             if self.jid_ == nil {
@@ -113,30 +69,6 @@ class XMPPManager: NSObject,
             self.jid_ = newValue
         }
     }
-  
-    /*
-    var displayName: String {
-        let vCard = self.vCardStorage.vCardTempForJID(
-            self.stream.myJID,
-            xmppStream: self.stream)
-        if let displayName = vCard?.nickname {
-            if displayName != "" {
-                NSUserDefaults.standardUserDefaults().setValue(displayName, forKey: GGKey.displayName)
-                return displayName
-            }
-        }
-       
-        if let email = UserAPI.sharedInstance.email {
-            return email
-        } else {
-            if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.displayName) {
-                return previousJID
-            } else {
-                return self.stream.myJID.bare()
-            }
-        }
-    }
-    */
    
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
@@ -154,7 +86,7 @@ class XMPPManager: NSObject,
         
         XMPPMessageManager.sharedInstance.setupArchiving()
         
-        XMPPRosterManager.sharedInstance.fetchedResultsController()?.delegate = XMPPRosterManager.sharedInstance
+        // XMPPRosterManager.sharedInstance.fetchedResultsController()?.delegate = XMPPRosterManager.sharedInstance
     }
     
     class func stop() {
@@ -168,16 +100,18 @@ class XMPPManager: NSObject,
             self.stream.enableBackgroundingOnSocket = true
         #endif
         
-        self.roster = XMPPRoster(rosterStorage: self.rosterStorage)
+        // self.roster = XMPPRoster(rosterStorage: self.rosterStorage)
         
         // Initialize delegates
         self.stream.addDelegate(self,
             delegateQueue: dispatch_get_main_queue())
+        /*
         self.roster.autoFetchRoster = true
         self.roster.autoAcceptKnownPresenceSubscriptionRequests = true
         self.roster.addDelegate(self, delegateQueue: dispatch_get_main_queue())
         self.roster.activate(self.stream)
-       
+        */
+        
         // Initialize reconnector
         self.reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_main_queue())
         self.reconnecter.usesOldSchoolSecureConnect = true
@@ -214,12 +148,12 @@ class XMPPManager: NSObject,
     
     func teardown() {
         self.stream.removeDelegate(self)
-        self.roster.removeDelegate(self)
+        // self.roster.removeDelegate(self)
         // self.vCardTempModule.removeDelegate(self)
         // self.lastActivity.removeDelegate(self)
         
         self.reconnecter.deactivate()
-        self.roster.deactivate()
+        // self.roster.deactivate()
         self.capabilities.deactivate()
         // self.vCardTempModule.deactivate()
         // self.vCardAvatarModule.deactivate()
@@ -427,7 +361,8 @@ class XMPPManager: NSObject,
     //////////////////////////////////////////////////////////////////////////////
     // XMPPRosterDelegate
     //////////////////////////////////////////////////////////////////////////////
-    
+   
+    /*
     func xmppRoster(sender: XMPPRoster, didReceivePresenceSubscriptionRequest presence: XMPPPresence) {
         print("roster::didReceivePresenceSubscriptionRequest")
     }
@@ -454,7 +389,7 @@ class XMPPManager: NSObject,
         
         // let population = self.rosterStorage.
     }
-    
+
     /**
     * Sent when the roster receives a roster item.
     *
@@ -468,11 +403,11 @@ class XMPPManager: NSObject,
         didReceiveRosterItem item: DDXMLElement!) {
         print("roster::didReceiveRosterItem")
     }
+    */
     
     //////////////////////////////////////////////////////////////////////////////
     // XMPPStreamDelegate
     //////////////////////////////////////////////////////////////////////////////
-
    
     func xmppStream(sender: XMPPStream!, didNotAuthenticate error: DDXMLElement!) {
         let errMsg = "didNotAuthenticate: " + error.stringValue()
@@ -483,9 +418,11 @@ class XMPPManager: NSObject,
     //////////////////////////////////////////////////////////////////////////////
     // XMPPManager public interface
     //////////////////////////////////////////////////////////////////////////////
-    
+   
+    /*
     func sendSubscriptionRequestForRoster(jidStr: String) {
         let jid = XMPPJID.jidWithString(jidStr)
         self.roster.addUser(jid, withNickname: nil)
     }
+    */
 }

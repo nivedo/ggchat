@@ -61,6 +61,7 @@ extension XMPPManager {
                 print("\(presenceFromJID) is \(presenceType)")
             } else if (presenceType == "subscribe") {
                 print("\(presenceFromJID) wants to subscribe")
+                /*
                 var accept: Bool = true
                 if (accept) {
                     self.roster.acceptPresenceSubscriptionRequestFrom(
@@ -70,6 +71,7 @@ extension XMPPManager {
                     self.roster.rejectPresenceSubscriptionRequestFrom(
                         presence.from())
                 }
+                */
             }
         }
     }
