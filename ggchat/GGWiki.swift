@@ -163,9 +163,12 @@ class GGWikiCache {
             if let image = self.imageCache[url] {
                 return image
             } else {
-                let image = UIImage(data: NSData(contentsOfURL: NSURL(string: url)!)!)
-                self.imageCache[url] = image
-                return image
+                if let data = NSData(contentsOfURL: NSURL(string: url)!) {
+                    if let image = UIImage(data: data) {
+                        self.imageCache[url] = image
+                        return image
+                    }
+                }
             }
         }
         return nil

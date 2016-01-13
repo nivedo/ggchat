@@ -14,20 +14,6 @@ public typealias MessageCompletionHandler = (stream: XMPPStream, message: XMPPMe
 
 protocol XMPPMessageManagerDelegate : NSObjectProtocol {
     /*
-	func onMessage(
-        sender: XMPPStream,
-        didReceiveMessage message: XMPPMessage,
-        from user: RosterUser) // XMPPUserCoreDataStorageObject)
-	func onPhoto(
-        sender: XMPPStream,
-        didReceivePhoto message: XMPPMessage,
-        from user: RosterUser) // XMPPUserCoreDataStorageObject)
-	func onMessage(
-        sender: XMPPStream,
-        userIsComposing user: RosterUser) // XMPPUserCoreDataStorageObject)
-    */
-    
-    /*
     func didSendMessage(
         sender: XMPPStream,
         message: XMPPMessage)
