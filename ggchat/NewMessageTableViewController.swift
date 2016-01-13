@@ -54,9 +54,20 @@ class NewMessageTableViewController:
             action: Selector("receivedGroupPressed:"))
         self.navigationItem.rightBarButtonItem = barButton
         
+        let cancelButton: UIBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: UIBarButtonItemStyle.Plain,
+            target: self,
+            action: Selector("receivedCancelPressed:"))
+        self.navigationItem.leftBarButtonItem = cancelButton
+        
         UserAPI.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
+    }
+    
+    func receivedCancelPressed(sender: UIButton) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func receivedGroupPressed(sender: UIButton) {

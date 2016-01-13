@@ -49,16 +49,27 @@ class GroupMessageTableViewController:
             return controller
         })()
         
-        let barButton: UIBarButtonItem = UIBarButtonItem(
+        let createButton: UIBarButtonItem = UIBarButtonItem(
             title: "Create",
             style: UIBarButtonItemStyle.Plain,
             target: self,
             action: Selector("receivedCreatePressed:"))
-        self.navigationItem.rightBarButtonItem = barButton
+        self.navigationItem.rightBarButtonItem = createButton
+        
+        let cancelButton: UIBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: UIBarButtonItemStyle.Plain,
+            target: self,
+            action: Selector("receivedCancelPressed:"))
+        self.navigationItem.leftBarButtonItem = cancelButton
         
         UserAPI.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
+    }
+
+    func receivedCancelPressed(button: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func receivedCreatePressed(sender: UIButton) {
