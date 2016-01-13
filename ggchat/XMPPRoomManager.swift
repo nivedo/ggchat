@@ -8,7 +8,18 @@
 
 import Foundation
 
-class XMPPRoomManager: NSObject {
+class ChatRoom {
+    var xmppRoom: XMPPRoom
+    var inviteList: [String]
+    
+    init(xmppRoom: XMPPRoom, inviteList: [String]) {
+        self.xmppRoom = xmppRoom
+        self.inviteList = inviteList
+    }
+}
+
+class XMPPRoomManager: NSObject,
+    XMPPRoomDelegate {
     
     class var sharedInstance : XMPPRoomManager {
         struct XMPPRoomManagerSingleton {
@@ -16,8 +27,66 @@ class XMPPRoomManager: NSObject {
         }
         return XMPPRoomManagerSingleton.instance
     }
+
+    var rooms = [String: ChatRoom]()
+   
+    func joinOrCreateRoom(roomID: String, invitees: [String]) {
+        if !XMPPManager.sharedInstance.isConnected() {
+            return
+        }
+        if let chatRoom = self.rooms[roomID] {
+            let xmppRoom = chatRoom.xmppRoom
+            if !xmppRoom.isJoined {
+                xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.displayName,
+                    history: nil,
+                    password: nil)
+                chatRoom.inviteList = invitees
+            }
+        } else {
+            let roomJID = XMPPJID.jidWithString(roomID)
+            let roomMemory = XMPPRoomMemoryStorage()
+            let xmppRoom = XMPPRoom(
+                roomStorage: roomMemory,
+                jid:roomJID,
+                dispatchQueue: dispatch_get_main_queue())
+            self.rooms[roomID] = ChatRoom(xmppRoom: xmppRoom, inviteList: invitees)
+            xmppRoom.activate(XMPPManager.sharedInstance.stream)
+            xmppRoom.addDelegate(self, delegateQueue: dispatch_get_main_queue())
+            xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.displayName,
+                history: nil,
+                password: nil)
+        }
+    }
     
-    var roomMemory = XMPPRoomMemoryStorage()
+    var welcome: String {
+        get {
+            return "\(UserAPI.sharedInstance.displayName) invited you to group chat!"
+        }
+    }
     
+    func inviteUsersToRoom(roomID: String, usersJID: [String]) {
+        if !XMPPManager.sharedInstance.isConnected() {
+            return
+        }
+        if let xmppRoom = self.rooms[roomID]?.xmppRoom {
+            for jid in usersJID {
+                xmppRoom.inviteUser(XMPPJID.jidWithString(jid), withMessage: self.welcome)
+            }
+        }
+    }
+    
+    func xmppRoomDidCreate(sender: XMPPRoom) {
+        print("xmppRoomDidCreate")
+    }
+    
+    func xmppRoomDidJoin(sender: XMPPRoom) {
+        print("xmppRoomDidJoin")
+        let roomJID = UserAPI.stripResourceFromJID(sender.myRoomJID.bare())
+        if let chatRoom = self.rooms[roomJID] {
+            for jid in chatRoom.inviteList {
+                chatRoom.xmppRoom.inviteUser(XMPPJID.jidWithString(jid), withMessage: self.welcome)
+            }
+        }
+    }
     
 }
