@@ -739,10 +739,13 @@ class UserAPI {
             self.chatsMap.removeAll()
             for element in messagesArray {
                 if let json = element as? [String: AnyObject] {
-                    // print(json)
                     let chat = ChatConversation(json: json)
-                    self.chatsList.append(chat)
-                    self.chatsMap[chat.peerJID] = chat
+                    if let existingChat = self.chatsMap[chat.peerJID] {
+                        existingChat.updateIfMoreRecent(chat.lastMessage.date, message: chat.lastMessage)
+                    } else {
+                        self.chatsList.append(chat)
+                        self.chatsMap[chat.peerJID] = chat
+                    }
                 }
             }
             self.delegate?.onChatsUpdate(true)
