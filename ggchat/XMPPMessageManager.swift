@@ -13,15 +13,17 @@ public typealias MessageCompletionHandler = (stream: XMPPStream, message: XMPPMe
 // MARK: Protocols
 
 protocol XMPPMessageManagerDelegate : NSObjectProtocol {
-    /*
-    func didSendMessage(
-        sender: XMPPStream,
-        message: XMPPMessage)
-    */
     func receiveMessage(from: String, message: Message)
     func receiveComposingMessage(from: String)
     func receiveReadReceipt(from: String, readReceipt: ReadReceipt)
     
+    func didSendMessage(message: XMPPMessage)
+}
+
+extension XMPPMessageManagerDelegate {
+    func didSendMessage(message: XMPPMessage) {
+        // Optional implementation
+    }
 }
 
 public class XMPPMessageManager: NSObject {
@@ -309,7 +311,7 @@ extension XMPPManager {
     
 	func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
         print("didSendMessage")
-        // XMPPMessageManager.sharedInstance.delegate?.didSendMessage(sender, message: message)
+        XMPPMessageManager.sharedInstance.delegate?.didSendMessage(message)
         
 		if let completion = XMPPMessageManager.sharedInstance.didSendMessageCompletionBlock {
 			completion(stream: sender, message: message)

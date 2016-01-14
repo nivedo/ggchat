@@ -426,6 +426,7 @@ class XMPPManager: NSObject,
     func xmppStream(sender: XMPPStream!, didNotAuthenticate error: DDXMLElement!) {
         let errMsg = "didNotAuthenticate: " + error.stringValue()
         print(errMsg)
+        self.stream.disconnect()
         self.authenticateCompletionHandler?(stream: sender, error: "Username or password incorrect")
     }
 

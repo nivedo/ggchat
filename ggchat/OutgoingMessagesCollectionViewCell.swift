@@ -34,7 +34,7 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
     }
     
     func setIsComposing(isComposing: Bool) {
-        self.arrowImageView.hidden = isComposing
+        self.arrowImageView.hidden = !isComposing
     }
     
     /*

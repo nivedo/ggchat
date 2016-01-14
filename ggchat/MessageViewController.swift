@@ -781,6 +781,7 @@ class MessageViewController: UIViewController,
             
             if let outgoingCell = cell as? OutgoingMessagesCollectionViewCell {
                 outgoingCell.markAsRead(messageItem.isRead)
+                outgoingCell.setIsComposing(messageItem.isComposing)
             }
         } else {
             cell.messageBubbleTopLabel.textAlignment = NSTextAlignment.Left

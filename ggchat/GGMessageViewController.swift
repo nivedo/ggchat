@@ -86,7 +86,8 @@ class GGMessageViewController:
                     isOutgoing: true,
                     date: now,
                     media: photoMedia)
-            
+           
+                message.isComposing = true
                 self.appendMessage(recipient.jid, date: now, message: message)
                
                 S3PhotoManager.sharedInstance.sendPhoto(chosenImage, to: recipient.jid)
@@ -288,30 +289,8 @@ class GGMessageViewController:
             // let text = packet.encodedText
             let id = XMPPManager.sharedInstance.stream.generateUUID()
             let message = packet.message(id, senderId: senderId, date: date, delegate: self)
-            /*
-            if let asset = AssetManager.getSingleEncodedAsset(text) {
-                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: self)
-                message = Message(
-                    id: id,
-                    senderId: senderId,
-                    senderDisplayName: senderDisplayName,
-                    isOutgoing: XMPPManager.sharedInstance.isOutgoingJID(senderId),
-                    date: date,
-                    media: wikiMedia,
-                    text: text)
-            }
-            
-            if message == nil {
-                message = Message(
-                    id: id,
-                    senderId: senderId,
-                    senderDisplayName: senderDisplayName,
-                    isOutgoing: true,
-                    date: date,
-                    text: text)
-            }
-            */
-            
+           
+            message.isComposing = true
             self.appendMessage(recipient.jid, date: date, message: message)
          
             XMPPMessageManager.sendMessage(
@@ -505,23 +484,6 @@ class GGMessageViewController:
         self.dismissKeyboard()
     }
    
-    /*
-    func presentTransparentViewController(
-        viewControllerToPresent: UIViewController,
-        animated flag: Bool,
-        completion: ((Void) -> Void)?) {
-        if (UIDevice.gg_isCurrentDeviceBeforeiOS8()) {
-            self.parentViewController!.navigationController!.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
-        } else {
-            viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            print("presentTransparentViewController")
-        }
-        
-        self.presentViewController(viewControllerToPresent,
-            animated: true,
-            completion: completion)
-    }
-    */
     
     func initImageModalViewController() {
         let storyboardName: String = "Main"
@@ -546,6 +508,25 @@ class GGMessageViewController:
             if let _ = attrs[TappableText.tapAssetId], let tappable = attrs[TappableText.tapAttributeKey] as? Bool {
                 if tappable {
                     self.onTap(attrs)
+                }
+            }
+        }
+    }
+    
+    func didSendMessage(message: XMPPMessage) {
+        if let id = message.attributeStringValueForName("id") {
+            print("didSendMessage: \(id)")
+           
+            var update = false
+            for msg in self.messages {
+                if msg.id == id {
+                    msg.isComposing = false
+                    update = true
+                }
+            }
+            if update {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.messageCollectionView.reloadData()
                 }
             }
         }
