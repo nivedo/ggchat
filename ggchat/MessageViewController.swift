@@ -573,6 +573,7 @@ class MessageViewController: UIViewController,
         }
 
         self.gg_updateKeyboardTriggerPoint()
+        ConnectionManager.checkConnection(self)
     }
 
     override func viewDidAppear(animated: Bool) {

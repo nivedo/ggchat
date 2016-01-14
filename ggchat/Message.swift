@@ -18,6 +18,7 @@ class Message {
     var attributedText: NSAttributedString?
     var isMediaMessage: Bool
     var isOutgoing: Bool
+    var isComposing: Bool = false
     var media: MessageMediaData?
     var id: String
     var readCount: Int = 0
@@ -48,53 +49,14 @@ class Message {
         self.isOutgoing = isOutgoing
     }
    
-    /*
-    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, text: String) {
-        self.id = id
-        self.senderId = senderId
-        self.senderDisplayName = senderDisplayName
-        self.date = date
-        self.attributedText = TappableText.sharedInstance.tappableEncodedString(
-            text,
-            textColor: isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
-        self.text = self.attributedText!.string
-        self.rawText = text
-        self.isMediaMessage = false
-        self.isOutgoing = isOutgoing
-    }
-    */
-   
-    /*
-    convenience init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, text: String) {
-        self.init(
-            id: id,
-            senderId: senderId,
-            senderDisplayName: senderDisplayName,
-            isOutgoing: isOutgoing,
-            date: NSDate(),
-            text: text)
-    }
-    */
-    
-    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, isMedia: Bool) {
+    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
         self.id = id
         self.senderId = senderId
         self.senderDisplayName = senderDisplayName
         self.isOutgoing = isOutgoing
         self.date = date
-        self.isMediaMessage = isMedia
-    }
-    
-    convenience init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
-        self.init(
-            id: id,
-            senderId: senderId,
-            senderDisplayName: senderDisplayName,
-            isOutgoing: isOutgoing,
-            date: date,
-            isMedia: true)
+        self.isMediaMessage = true
         self.media = media
-        
         self.attributedText = attributedText
     }
     
