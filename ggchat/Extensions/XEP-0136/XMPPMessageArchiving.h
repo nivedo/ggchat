@@ -100,7 +100,7 @@
  * 
 **/
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream;
-- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream archiveDate:(NSDate*)date;
+- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream archiveDate:(NSDate*)date composing:(BOOL)isComposingForced;
 
 @optional
 

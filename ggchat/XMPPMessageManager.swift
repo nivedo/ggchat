@@ -59,6 +59,8 @@ public class XMPPMessageManager: NSObject {
         id messageId: String,
         message messagePacket: MessagePacket,
         to receiver: String,
+        date: NSDate,
+        isOutgoing: Bool,
         completionHandler completion: MessageCompletionHandler?) {
         if (messagePacket.encodedText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
             // let messageId = XMPPManager.sharedInstance.stream.generateUUID()
@@ -94,6 +96,7 @@ public class XMPPMessageManager: NSObject {
                 XMPPManager.sharedInstance.stream.sendElement(completeMessage)
             } else {
                 print("XMPP not connected, message not sent and queued.")
+                XMPPMessageManager.sharedInstance.archiveMessage(messageId, element: completeMessage, date: date, outgoing: isOutgoing, composing: true)
             }
         } else {
             print("ERROR: Empty message not sent.")
@@ -172,7 +175,7 @@ public class XMPPMessageManager: NSObject {
 		}
 	}
     
-    func archiveMessage(id: String, xmlString: String, date: NSDate, outgoing: Bool) -> Bool {
+    func archiveMessage(id: String, xmlString: String, date: NSDate, outgoing: Bool, composing: Bool = false) -> Bool {
         if self.archivedMessageIds.contains(id) {
             return false
         }
@@ -184,12 +187,21 @@ public class XMPPMessageManager: NSObject {
         } catch _ {
             element = nil
         }
+        
+        return self.archiveMessage(id, element: element, date: date, outgoing: outgoing, composing: composing)
+    }
 
+    func archiveMessage(id: String, element: DDXMLElement?, date: NSDate, outgoing: Bool, composing: Bool) -> Bool {
+        if self.archivedMessageIds.contains(id) {
+            return false
+        }
+        
         if let xmppMessage = XMPPMessage(fromElement: element) {
             self.messageStorage?.archiveMessage(xmppMessage,
                 outgoing: outgoing,
                 xmppStream: XMPPManager.sharedInstance.stream,
-                archiveDate: date
+                archiveDate: date,
+                composing: composing
             )
             self.archivedMessageIds.insert(id)
             

@@ -298,6 +298,8 @@ class GGMessageViewController:
                 id: id,
                 message: packet,
                 to: recipient.jid,
+                date: date,
+                isOutgoing: message.isOutgoing,
                 completionHandler: nil)
         
             self.finishSendingMessageAnimated(true)
