@@ -19,6 +19,7 @@ class Message {
     var isMediaMessage: Bool
     var isOutgoing: Bool
     var isComposing: Bool = false
+    var isFailedToSend: Bool = false
     var media: MessageMediaData?
     var id: String
     var readCount: Int = 0

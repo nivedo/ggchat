@@ -26,12 +26,22 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
     }
     
     func markAsRead(read: Bool) {
+        // self.readLabel.font = UIFont.systemFontOfSize(10.0)
+        // self.readLabel.textColor = GGConfig.cellTopLabelTextColor
         if read {
             self.readLabel.text = "Read"
         } else {
             self.readLabel.text = ""
         }
     }
+   
+    /*
+    func markAsFailedToSend() {
+        self.readLabel.font = UIFont.systemFontOfSize(10.0)
+        self.readLabel.textColor = UIColor.redColor()
+        self.readLabel.text = "Unsent"
+    }
+    */
     
     func setIsComposing(isComposing: Bool) {
         self.arrowImageView.hidden = !isComposing

@@ -222,6 +222,7 @@ public class XMPPMessageManager: NSObject {
                     messageElement.messageStr,
                     date: messageElement.timestamp,
                     delegate: delegate) {
+                    message.isFailedToSend = messageElement.isComposing
                     messages.append(message)
                     // print("archived message: \(message.displayText)")
                     self.archivedMessageIds.insert(message.id)
