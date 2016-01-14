@@ -29,7 +29,7 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
         self.resetReadLabel()
         if failedToSend {
             self.readLabel.textColor = UIColor.redColor()
-            self.readLabel.text = "Unsent"
+            self.readLabel.text = "Send Failed"
         } else {
             if read {
                 self.readLabel.text = "Read"

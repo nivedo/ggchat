@@ -518,7 +518,7 @@ class GGMessageViewController:
     
     func didSendMessage(message: XMPPMessage) {
         if let id = message.attributeStringValueForName("id") {
-            print("didSendMessage: \(id)")
+            // print("didSendMessage: \(id)")
            
             var update = false
             for msg in self.messages.reverse() {
@@ -529,7 +529,27 @@ class GGMessageViewController:
                 }
             }
             if update {
-                print("found id in messages")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.messageCollectionView.reloadData()
+                }
+            }
+        }
+    }
+    
+    func didFailSendMessage(message: XMPPMessage) {
+        if let id = message.attributeStringValueForName("id") {
+            print("didFailSendMessage: \(id)")
+           
+            var update = false
+            for msg in self.messages.reverse() {
+                if msg.id == id {
+                    msg.isFailedToSend = true
+                    msg.isComposing = false
+                    update = true
+                    break
+                }
+            }
+            if update {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.messageCollectionView.reloadData()
                 }

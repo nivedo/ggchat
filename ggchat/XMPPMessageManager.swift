@@ -18,10 +18,15 @@ protocol XMPPMessageManagerDelegate : NSObjectProtocol {
     func receiveReadReceipt(from: String, readReceipt: ReadReceipt)
     
     func didSendMessage(message: XMPPMessage)
+    func didFailSendMessage(message: XMPPMessage)
 }
 
 extension XMPPMessageManagerDelegate {
     func didSendMessage(message: XMPPMessage) {
+        // Optional implementation
+    }
+    
+    func didFailSendMessage(message: XMPPMessage) {
         // Optional implementation
     }
 }
@@ -97,6 +102,9 @@ public class XMPPMessageManager: NSObject {
             } else {
                 print("XMPP not connected, message not sent and queued.")
                 XMPPMessageManager.sharedInstance.archiveMessage(messageId, element: completeMessage, date: date, outgoing: isOutgoing, composing: true)
+                if let m = completeMessage as? XMPPMessage {
+                    XMPPMessageManager.sharedInstance.delegate?.didFailSendMessage(m)
+                }
             }
         } else {
             print("ERROR: Empty message not sent.")
@@ -324,12 +332,8 @@ public class XMPPMessageManager: NSObject {
 extension XMPPManager {
 	
     func xmppStream(sender: XMPPStream!, didFailToSendMessage message: XMPPMessage!, error: NSError!) {
-        /*
-        let errMsg = "Error Sending Message: " + error.debugDescription
-        let mes = OPMessage(m: message)
-        mes.fromSummoner = _loggedInUser
-        delegate?.didFailSendMessage?(mes, errMsg : errMsg)
-        */
+        print("didFailSendMessage")
+        XMPPMessageManager.sharedInstance.delegate?.didFailSendMessage(message)
     }
     
 	func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
