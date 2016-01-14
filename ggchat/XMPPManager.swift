@@ -89,6 +89,10 @@ class XMPPManager: NSObject,
         // XMPPRosterManager.sharedInstance.fetchedResultsController()?.delegate = XMPPRosterManager.sharedInstance
     }
     
+    class func refresh() {
+        sharedInstance.reconnectIfNotConnected()
+    }
+    
     class func stop() {
         sharedInstance.teardown()
     }
@@ -171,6 +175,16 @@ class XMPPManager: NSObject,
     
     func isOutgoingJID(jid: String) -> Bool {
         return jid == UserAPI.sharedInstance.jidStr // self.stream.myJID.bare()
+    }
+    
+    func reconnectIfNotConnected() {
+        if !self.isConnected() {
+            self.connectWithJID(
+                jid: nil,
+                password: nil,
+                connectCompletionHandler: nil,
+                authenticateCompletionHandler: nil)
+        }
     }
     
     func connectWithJID(
