@@ -71,7 +71,7 @@ class S3PhotoManager: S3UploadDelegate {
         return image.gg_imageCompressedToFitSize(size, isOpaque: true)
     }
    
-    func sendPhoto(image: UIImage, to: String) {
+    func sendPhoto(id: String, image: UIImage, to: String) {
         print("sendPhoto to: \(to)")
         
         let originalImage = self.originalCompressedImage(image)
@@ -83,7 +83,8 @@ class S3PhotoManager: S3UploadDelegate {
         let userData: [String: AnyObject] = [
             "originalKey"  : originalKey,
             "thumbnailKey"  : thumbnailKey,
-            "to" : to
+            "to" : to,
+            "id" : id
         ]
         
         // Cache images
@@ -108,9 +109,12 @@ class S3PhotoManager: S3UploadDelegate {
         if let data = userData,
             let originalKey = data["originalKey"] as? String,
             let thumbnailKey = data["thumbnailKey"] as? String,
-            let to = data["to"] as? String {
+            let to = data["to"] as? String,
+            let id = data["id"] as? String
+        {
             XMPPMessageManager.sendPhoto(
-                originalKey,
+                id,
+                originalKey: originalKey,
                 thumbnailKey: thumbnailKey,
                 to: to,
                 completionHandler: nil)

@@ -79,8 +79,9 @@ class GGMessageViewController:
                 let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
                 let photoMedia: PhotoMediaItem = PhotoMediaItem(image: chosenImage, delegate: self)
                 let now = NSDate()
+                let id = XMPPManager.sharedInstance.stream.generateUUID()
                 let message: Message = Message(
-                    id: XMPPManager.sharedInstance.stream.generateUUID(),
+                    id: id,
                     senderId: senderId,
                     senderDisplayName: senderDisplayName,
                     isOutgoing: true,
@@ -90,7 +91,7 @@ class GGMessageViewController:
                 message.isComposing = true
                 self.appendMessage(recipient.jid, date: now, message: message)
                
-                S3PhotoManager.sharedInstance.sendPhoto(chosenImage, to: recipient.jid)
+                S3PhotoManager.sharedInstance.sendPhoto(id, image: chosenImage, to: recipient.jid)
                 
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.finishSendingMessageAnimated(true)
@@ -518,13 +519,15 @@ class GGMessageViewController:
             print("didSendMessage: \(id)")
            
             var update = false
-            for msg in self.messages {
+            for msg in self.messages.reverse() {
                 if msg.id == id {
                     msg.isComposing = false
                     update = true
+                    break
                 }
             }
             if update {
+                print("found id in messages")
                 dispatch_async(dispatch_get_main_queue()) {
                     self.messageCollectionView.reloadData()
                 }

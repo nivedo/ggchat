@@ -131,12 +131,13 @@ public class XMPPMessageManager: NSObject {
     }
     
     public class func sendPhoto(
+        id: String,
         originalKey: String,
         thumbnailKey: String,
         to receiver: String,
         completionHandler completion: MessageCompletionHandler?) {
         
-        let messageId = XMPPManager.sharedInstance.stream.generateUUID()
+        let messageId = id
         let body = DDXMLElement(name: "body")
         let completeMessage = DDXMLElement(name: "message")
 		
