@@ -221,7 +221,38 @@ public class XMPPMessageManager: NSObject {
     }
     
     var archivedMessageIds = Set<String>()
-	
+
+    func resendArchivedComposingMessagesFrom(jid: String) {
+        if !XMPPManager.sharedInstance.isConnected() {
+            return
+        }
+        let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
+		let request = NSFetchRequest()
+		let predicateFormat = "bareJidStr like %@ && composing == YES"
+		let predicate = NSPredicate(format: predicateFormat, jid)
+        
+        request.predicate = predicate
+		request.entity = entityDescription
+		
+		do {
+			let results = try moc?.executeFetchRequest(request)
+            var update = false
+			for messageElement in results! {
+                let xmppMessage = try XMPPMessage(XMLString: messageElement.messageStr)
+                XMPPManager.sharedInstance.stream.sendElement(xmppMessage)
+                
+                moc!.deleteObject(messageElement as! NSManagedObject)
+                update = true
+            }
+            if update {
+                try moc!.save()
+            }
+        } catch _ {
+            
+        }
+    }
+    
     func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> ([Message], [ReadReceipt]) {
 		let moc = messageStorage?.mainThreadManagedObjectContext
 		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)

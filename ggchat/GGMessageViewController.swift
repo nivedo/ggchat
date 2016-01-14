@@ -556,4 +556,10 @@ class GGMessageViewController:
             }
         }
     }
+    
+    func resendFailedMessages() {
+        if let recipient = self.recipient {
+            XMPPMessageManager.sharedInstance.resendArchivedComposingMessagesFrom(recipient.jid)
+        }
+    }
 }
