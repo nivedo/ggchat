@@ -70,7 +70,10 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 - (void)didCreateManagedObjectContext
 {
 	// If there are any "composing" messages in the database, delete them (as they are temporary).
-	
+}
+
+- (void)deleteAllComposingMessages
+{
 	NSManagedObjectContext *moc = [self managedObjectContext];
 	NSEntityDescription *messageEntity = [self messageEntity:moc];
 	
@@ -387,6 +390,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 		{
 			if (archivedMessage)
 			{
+                NSLog(@"Delete message from core data: %@", archivedMessage);
 				[self willDeleteMessage:archivedMessage]; // Override hook
 				[moc deleteObject:archivedMessage];
 			}
@@ -438,12 +442,12 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			archivedMessage.isComposing = isComposing || isComposingForced;
 			
 			XMPPLogVerbose(@"New archivedMessage: %@", archivedMessage);
-			NSLog(@"New archivedMessage: %@", archivedMessage);
+			// NSLog(@"New archivedMessage: %@", archivedMessage);
 														 
 			if (didCreateNewArchivedMessage) // [archivedMessage isInserted] doesn't seem to work
 			{
 				XMPPLogVerbose(@"Inserting message...");
-				NSLog(@"Inserting message...");
+				// NSLog(@"Inserting message...");
 				
 				[archivedMessage willInsertObject];       // Override hook
 				[self willInsertMessage:archivedMessage]; // Override hook
@@ -452,6 +456,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			else
 			{
 				XMPPLogVerbose(@"Updating message...");
+				// NSLog(@"Updating message...");
 				
 				[archivedMessage didUpdateObject];       // Override hook
 				[self didUpdateMessage:archivedMessage]; // Override hook

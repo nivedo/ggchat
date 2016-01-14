@@ -230,6 +230,8 @@ public class XMPPMessageManager: NSObject {
 			let results = try moc?.executeFetchRequest(request)
 		
             self.archivedMessageIds.removeAll()
+            
+            var composingCount = 0
 			for messageElement in results! {
                 if let message = UserAPI.parseMessageFromString(
                     messageElement.messageStr,
@@ -237,7 +239,9 @@ public class XMPPMessageManager: NSObject {
                     delegate: delegate) {
                     if let composing = messageElement.isComposing {
                         message.isFailedToSend = composing
-                        // print("composing --> \(messageElement)")
+                        if composing {
+                            composingCount++
+                        }
                     }
                     messages.append(message)
                     self.archivedMessageIds.insert(message.id)
@@ -251,6 +255,7 @@ public class XMPPMessageManager: NSObject {
                 // print("---> composing: \(messageElement.isComposing)")
                 // assert(!messageElement.isComposing, "Found composing \(messageElement)")
 			}
+            print("Loaded \(composingCount) composing messages from core data")
 		} catch _ {
 			//catch fetch error here
 		}

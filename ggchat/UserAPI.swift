@@ -898,6 +898,12 @@ class UserAPI {
     
     ////////////////////////////////////////////////////////////////////
     
+    var canAuth: Bool {
+        get {
+            return NSUserDefaults.standardUserDefaults().stringForKey(GGKey.userApiAuthToken) != nil
+        }
+    }
+    
     var authToken: String? {
         didSet {
             NSUserDefaults.standardUserDefaults().setValue(self.authToken, forKey: GGKey.userApiAuthToken)

@@ -74,19 +74,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initializeRootView(animated: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let loginIdentifier = "LoginViewController"
-        
-        let isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
-            if success {
-                print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
-                XMPPManager.sharedInstance.connectWithJID(
-                    jid: UserAPI.sharedInstance.jid!,
-                    password: UserAPI.sharedInstance.jpassword!,
-                    connectCompletionHandler: self.xmppConnectCallback,
-                    authenticateCompletionHandler: self.xmppAuthenticateCallback)
-            } else {
-                self.segueToLoginViewController()
-            }
-        })
+      
+        var isAuthenticated = UserAPI.sharedInstance.canAuth
+        if Reachability.isConnectedToNetwork() {
+            isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
+                if success {
+                    print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
+                    XMPPManager.sharedInstance.connectWithJID(
+                        jid: UserAPI.sharedInstance.jid!,
+                        password: UserAPI.sharedInstance.jpassword!,
+                        connectCompletionHandler: self.xmppConnectCallback,
+                        authenticateCompletionHandler: self.xmppAuthenticateCallback)
+                } else {
+                    self.segueToLoginViewController()
+                }
+            })
+        }
         
         let identifier = isAuthenticated ? "TabBarController" : loginIdentifier
         let viewController = storyboard.instantiateViewControllerWithIdentifier(identifier)
