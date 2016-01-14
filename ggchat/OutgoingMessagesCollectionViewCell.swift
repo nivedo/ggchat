@@ -11,6 +11,7 @@ import UIKit
 class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
 
     @IBOutlet weak var readLabel: UILabel!
+    @IBOutlet weak var arrowImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,6 +21,8 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
         self.readLabel.text = nil
         self.readLabel.font = UIFont.systemFontOfSize(10.0)
         self.readLabel.textColor = GGConfig.cellTopLabelTextColor
+        
+        self.arrowImageView.image = UIImage(named: "ArrowUp")
     }
     
     func markAsRead(read: Bool) {
@@ -28,6 +31,10 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
         } else {
             self.readLabel.text = ""
         }
+    }
+    
+    func setIsComposing(isComposing: Bool) {
+        self.arrowImageView.hidden = isComposing
     }
     
     /*

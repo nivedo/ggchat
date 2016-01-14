@@ -87,7 +87,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="time label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lo-ql-mSi" userLabel="Time label">
-                        <rect key="frame" x="0.0" y="114" width="40" height="20"/>
+                        <rect key="frame" x="8" y="114" width="40" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -98,6 +98,13 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dXj-y2-X85" userLabel="Arrow image view">
+                        <rect key="frame" x="0.0" y="114" width="8" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="9hM-IC-Tml"/>
+                            <constraint firstAttribute="height" constant="16" id="YVs-GP-W3K"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -106,23 +113,27 @@
                 <constraint firstItem="BGD-qY-E0o" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5uN-ja-9Ob"/>
                 <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="5lo-ql-mSi" secondAttribute="bottom" id="6KD-WL-FUq"/>
                 <constraint firstItem="iYp-dz-DkR" firstAttribute="leading" secondItem="5lo-ql-mSi" secondAttribute="trailing" constant="6" id="6P6-0S-Glk"/>
+                <constraint firstItem="dXj-y2-X85" firstAttribute="top" secondItem="PcF-y2-k28" secondAttribute="bottom" id="90a-RS-IdL"/>
                 <constraint firstAttribute="trailing" secondItem="DZf-LO-Mjz" secondAttribute="trailing" id="CPW-Up-lew"/>
                 <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="iYp-dz-DkR" secondAttribute="bottom" id="DgU-N8-EvM"/>
                 <constraint firstAttribute="trailing" secondItem="BGD-qY-E0o" secondAttribute="trailing" id="PqF-uC-oNF"/>
                 <constraint firstAttribute="trailing" secondItem="FyK-BI-YcW" secondAttribute="trailing" id="Prv-Tt-ahs"/>
                 <constraint firstItem="DZf-LO-Mjz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Z0X-Jn-fe3"/>
+                <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="dXj-y2-X85" secondAttribute="bottom" id="bnS-LN-nZW"/>
                 <constraint firstAttribute="bottom" secondItem="FyK-BI-YcW" secondAttribute="bottom" id="grX-Xc-zkU"/>
                 <constraint firstItem="FyK-BI-YcW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="h8d-vn-pEE"/>
                 <constraint firstItem="iYp-dz-DkR" firstAttribute="leading" secondItem="PcF-y2-k28" secondAttribute="trailing" constant="6" id="jPT-eP-IzP"/>
                 <constraint firstAttribute="trailing" secondItem="WOk-3d-b4L" secondAttribute="trailing" id="jjj-SB-cgF"/>
                 <constraint firstItem="iYp-dz-DkR" firstAttribute="top" secondItem="BGD-qY-E0o" secondAttribute="bottom" id="ldu-Zb-Zcp"/>
                 <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="WOk-3d-b4L" secondAttribute="bottom" id="lmx-gx-3cE"/>
+                <constraint firstItem="5lo-ql-mSi" firstAttribute="leading" secondItem="dXj-y2-X85" secondAttribute="trailing" id="oKa-14-WyJ"/>
                 <constraint firstItem="DZf-LO-Mjz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ohg-tf-RpQ"/>
                 <constraint firstItem="5lo-ql-mSi" firstAttribute="top" secondItem="PcF-y2-k28" secondAttribute="bottom" id="r12-jx-6Oi"/>
                 <constraint firstItem="BGD-qY-E0o" firstAttribute="top" secondItem="DZf-LO-Mjz" secondAttribute="bottom" id="uEm-BC-0XJ"/>
                 <constraint firstItem="BGD-qY-E0o" firstAttribute="top" secondItem="DZf-LO-Mjz" secondAttribute="bottom" id="wYT-ZC-TCL"/>
             </constraints>
             <connections>
+                <outlet property="arrowImageView" destination="dXj-y2-X85" id="XvP-F0-eXe"/>
                 <outlet property="avatarContainerView" destination="WOk-3d-b4L" id="3Mq-yW-AlE"/>
                 <outlet property="avatarContainerViewHeightConstraint" destination="8EI-1C-Lf5" id="UVZ-PJ-VYC"/>
                 <outlet property="avatarContainerViewWidthConstraint" destination="vmp-dL-Dhl" id="hr0-v9-sml"/>
