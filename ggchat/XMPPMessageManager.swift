@@ -242,9 +242,12 @@ public class XMPPMessageManager: NSObject {
                 let xmppMessage = try XMPPMessage(XMLString: messageElement.messageStr)
                 XMPPManager.sharedInstance.stream.sendElement(xmppMessage)
                 
-                moc!.deleteObject(messageElement as! NSManagedObject)
+                // moc!.deleteObject(messageElement as! NSManagedObject)
+                // messageElement.isComposing = false
+                messageElement.setValue(false, forKey: "isComposing")
                 update = true
             }
+            print("Resent \(results!.count) composing messages in core data")
             if update {
                 try moc!.save()
             }
@@ -254,6 +257,8 @@ public class XMPPMessageManager: NSObject {
     }
     
     func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> ([Message], [ReadReceipt]) {
+        self.resendArchivedComposingMessagesFrom(jid)
+        
 		let moc = messageStorage?.mainThreadManagedObjectContext
 		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
 		let request = NSFetchRequest()
