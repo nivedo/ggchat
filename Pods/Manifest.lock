@@ -7,9 +7,12 @@ PODS:
   - Crashlytics (3.4.1):
     - Fabric (~> 1.6.0)
   - Fabric (1.6.1)
+  - HexColors (2.3.0)
   - JSQSystemSoundPlayer (4.3.0)
   - Kingfisher (1.9.0)
   - MBProgressHUD (0.9.1)
+  - TSMessages (0.9.13):
+    - HexColors (~> 2.3.0)
 
 DEPENDENCIES:
   - AWSCognito
@@ -20,6 +23,16 @@ DEPENDENCIES:
   - JSQSystemSoundPlayer
   - Kingfisher (~> 1.9)
   - MBProgressHUD (~> 0.9.1)
+  - TSMessages (from `https://github.com/KrauseFx/TSMessages.git`)
+
+EXTERNAL SOURCES:
+  TSMessages:
+    :git: https://github.com/KrauseFx/TSMessages.git
+
+CHECKOUT OPTIONS:
+  TSMessages:
+    :commit: e63f23304f781dcadbac31e6d338f3105fb3cd78
+    :git: https://github.com/KrauseFx/TSMessages.git
 
 SPEC CHECKSUMS:
   AWSCognito: 6f153e3f5fa2ca14b883490cfcb3e48455b64a4b
@@ -27,8 +40,10 @@ SPEC CHECKSUMS:
   AWSS3: b7f4a0ad4da6dcc172e757dcb2b2423d26b32325
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
   Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
+  HexColors: 6ad3947c3447a055a3aa8efa859def096351fe5f
   JSQSystemSoundPlayer: 8021a6c823a8d83372c703f49ef7d1f31e7647ff
   Kingfisher: 163bafc1af6ae14d707e76ecba256d8db99dc955
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  TSMessages: 6e403b790139636c15ab4f51946537095e03e79c
 
 COCOAPODS: 0.39.0

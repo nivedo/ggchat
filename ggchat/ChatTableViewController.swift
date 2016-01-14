@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TSMessages
 
 class ChatTableViewController:
     UITableViewController,
@@ -58,7 +59,12 @@ class ChatTableViewController:
         TabBarController.updateChatsBar(self.tabBarController)
         self.tableView.reloadData()
         
-        // UserAPI.sharedInstance.cacheChats()
+        if !Reachability.isConnectedToNetwork() {
+            TSMessage.showNotificationInViewController(self,
+                title: "Network error",
+                subtitle: "Couldn't connect to server. Please check network connection",
+                type: TSMessageNotificationType.Error)
+        }
     }
     
     func onAvatarUpdate(jid: String, success: Bool) {

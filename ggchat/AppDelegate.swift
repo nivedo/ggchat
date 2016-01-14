@@ -9,6 +9,7 @@
 import UIKit
 import Fabric
 import Crashlytics
+import TSMessages
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -63,6 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load root view
         self.initializeRootView(true)
+        
+        TSMessageView.appearance().alpha = 0.8
+        // TSMessageView.appearance().backgroundColor = UIColor.blackColor()
         
         return true
     }
@@ -145,11 +149,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
 
+        /*
         XMPPManager.sharedInstance.connectWithJID(
             jid: nil,
             password: nil,
             connectCompletionHandler: nil,
             authenticateCompletionHandler: nil)
+        */
     }
 
     func applicationDidBecomeActive(application: UIApplication) {

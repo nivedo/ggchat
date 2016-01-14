@@ -26,6 +26,7 @@ target 'ggchat' do
   pod 'Crashlytics'
   pod 'MBProgressHUD', '~> 0.9.1'
   pod 'Kingfisher', '~> 1.9'
+  pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
 end
 
 target 'ggchatTests' do
