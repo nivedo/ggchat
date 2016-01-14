@@ -74,7 +74,11 @@ class MessageBubbleSizeCalculator {
             let horizontalFrameInsets: CGFloat = layout.messageBubbleTextViewFrameInsets.left + layout.messageBubbleTextViewFrameInsets.right
             
             let horizontalInsetsTotal: CGFloat = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble
-            let maximumTextWidth: CGFloat = self.textBubbleWidthForLayout(layout) - avatarSize.width - layout.messageBubbleLeftRightMargin - horizontalInsetsTotal
+            var maximumTextWidth: CGFloat = self.textBubbleWidthForLayout(layout) - avatarSize.width - layout.messageBubbleLeftRightMargin - horizontalInsetsTotal
+            if messageData.isOutgoing {
+                // Adjust for time/read labels
+                maximumTextWidth -= CGFloat(15.0)
+            }
             
             let stringRect: CGRect = messageData.displayText.boundingRectWithSize(
                 CGSizeMake(maximumTextWidth, CGFloat.max),

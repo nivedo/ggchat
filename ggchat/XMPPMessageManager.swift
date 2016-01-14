@@ -102,9 +102,11 @@ public class XMPPMessageManager: NSObject {
             } else {
                 print("XMPP not connected, message not sent and queued.")
                 XMPPMessageManager.sharedInstance.archiveMessage(messageId, element: completeMessage, date: date, outgoing: isOutgoing, composing: true)
+                /*
                 if let m = completeMessage as? XMPPMessage {
                     XMPPMessageManager.sharedInstance.delegate?.didFailSendMessage(m)
                 }
+                */
             }
         } else {
             print("ERROR: Empty message not sent.")
