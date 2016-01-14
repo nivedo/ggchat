@@ -780,7 +780,7 @@ class MessageViewController: UIViewController,
             cell.textView.textColor = GGConfig.outgoingTextColor
             
             if let outgoingCell = cell as? OutgoingMessagesCollectionViewCell {
-                outgoingCell.markAsRead(messageItem.isRead)
+                outgoingCell.mark(messageItem.isFailedToSend, read: messageItem.isRead)
                 outgoingCell.setIsComposing(messageItem.isComposing)
             }
         } else {

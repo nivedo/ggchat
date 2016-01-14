@@ -333,10 +333,10 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream
 {
-    [self archiveMessage:message outgoing:isOutgoing xmppStream:xmppStream archiveDate: Nil composing: NO];
+    [self archiveMessage:message outgoing:isOutgoing xmppStream:xmppStream archiveDate: Nil composing: NO myJidStr: Nil];
 }
 
-- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream archiveDate:(NSDate *)date composing:(BOOL)isComposingForced
+- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream archiveDate:(NSDate *)date composing:(BOOL)isComposingForced myJidStr:(NSString*)myJidBareStr
 {
 	// Message should either have a body, or be a composing notification
 	
@@ -414,6 +414,11 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			
 			archivedMessage.bareJid = [messageJid bareJID];
 			archivedMessage.streamBareJidStr = [myJid bare];
+            if (myJidBareStr) {
+                if (archivedMessage.streamBareJidStr == Nil) {
+                    archivedMessage.streamBareJidStr = myJidBareStr;
+                }
+            }
 		
             if (date)
             {
@@ -433,10 +438,12 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			archivedMessage.isComposing = isComposing || isComposingForced;
 			
 			XMPPLogVerbose(@"New archivedMessage: %@", archivedMessage);
+			NSLog(@"New archivedMessage: %@", archivedMessage);
 														 
 			if (didCreateNewArchivedMessage) // [archivedMessage isInserted] doesn't seem to work
 			{
 				XMPPLogVerbose(@"Inserting message...");
+				NSLog(@"Inserting message...");
 				
 				[archivedMessage willInsertObject];       // Override hook
 				[self willInsertMessage:archivedMessage]; // Override hook

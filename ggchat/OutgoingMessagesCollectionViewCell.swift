@@ -25,23 +25,25 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
         self.arrowImageView.image = UIImage(named: "ArrowUp")
     }
     
-    func markAsRead(read: Bool) {
-        // self.readLabel.font = UIFont.systemFontOfSize(10.0)
-        // self.readLabel.textColor = GGConfig.cellTopLabelTextColor
-        if read {
-            self.readLabel.text = "Read"
+    func mark(failedToSend: Bool, read: Bool) {
+        self.resetReadLabel()
+        if failedToSend {
+            self.readLabel.textColor = UIColor.redColor()
+            self.readLabel.text = "Unsent"
         } else {
-            self.readLabel.text = ""
+            if read {
+                self.readLabel.text = "Read"
+            } else {
+                self.readLabel.text = ""
+            }
         }
     }
-   
-    /*
-    func markAsFailedToSend() {
+    
+    func resetReadLabel() {
         self.readLabel.font = UIFont.systemFontOfSize(10.0)
-        self.readLabel.textColor = UIColor.redColor()
-        self.readLabel.text = "Unsent"
+        self.readLabel.textColor = GGConfig.cellTopLabelTextColor
+        self.readLabel.text = ""
     }
-    */
     
     func setIsComposing(isComposing: Bool) {
         self.arrowImageView.hidden = !isComposing

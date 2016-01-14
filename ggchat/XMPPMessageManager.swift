@@ -201,7 +201,8 @@ public class XMPPMessageManager: NSObject {
                 outgoing: outgoing,
                 xmppStream: XMPPManager.sharedInstance.stream,
                 archiveDate: date,
-                composing: composing
+                composing: composing,
+                myJidStr: UserAPI.sharedInstance.jidBareStr
             )
             self.archivedMessageIds.insert(id)
             
@@ -234,9 +235,11 @@ public class XMPPMessageManager: NSObject {
                     messageElement.messageStr,
                     date: messageElement.timestamp,
                     delegate: delegate) {
-                    message.isFailedToSend = messageElement.isComposing
+                    if let composing = messageElement.isComposing {
+                        message.isFailedToSend = composing
+                        // print("composing --> \(messageElement)")
+                    }
                     messages.append(message)
-                    // print("archived message: \(message.displayText)")
                     self.archivedMessageIds.insert(message.id)
                 } else if let readReceipt = UserAPI.parseReadReceiptFromString(messageElement.messageStr) {
                     // print("Loaded archived read receipt: \(readReceipt.ids.count)")
@@ -244,8 +247,9 @@ public class XMPPMessageManager: NSObject {
                 } else {
                     print("Unable to parse \(messageElement.messageStr)")
                 }
-                
+               
                 // print("---> composing: \(messageElement.isComposing)")
+                // assert(!messageElement.isComposing, "Found composing \(messageElement)")
 			}
 		} catch _ {
 			//catch fetch error here
