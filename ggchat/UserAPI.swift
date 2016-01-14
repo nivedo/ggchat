@@ -754,8 +754,8 @@ class UserAPI {
     
     func loadMessagesFromJson(messagesArray: [AnyObject]) {
         dispatch_async(dispatch_get_main_queue()) {
-            self.chatsList.removeAll()
-            self.chatsMap.removeAll()
+            // self.chatsList.removeAll()
+            // self.chatsMap.removeAll()
             for element in messagesArray {
                 if let json = element as? [String: AnyObject] {
                     let chat = ChatConversation(json: json)
