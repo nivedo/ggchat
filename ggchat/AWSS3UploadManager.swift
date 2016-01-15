@@ -94,8 +94,37 @@ class S3PhotoManager: S3UploadDelegate {
         }
         
         // Upload images
-        AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey)
-        AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
+        if ConnectionManager.isConnectedToNetwork() {
+            AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey)
+            AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
+        } else {
+            XMPPMessageManager.sendPhoto(
+                id,
+                originalKey: originalKey,
+                thumbnailKey: thumbnailKey,
+                to: to,
+                queueInCoreData: true,
+                completionHandler: nil)
+        }
+    }
+    
+    func resendPhoto(id: String, to: String, originalKey: String, thumbnailKey: String) {
+        print("resending photo \(id)")
+        S3ImageCache.sharedInstance.retrieveImageForKey(originalKey,
+            bucket: GGSetting.awsS3BucketName,
+            completion: { (image: UIImage?) -> Void in
+                if let originalImage = image {
+                    let thumbnailImage = self.thumbnailCompressedImage(originalImage)
+                    let userData: [String: AnyObject] = [
+                        "originalKey"  : originalKey,
+                        "thumbnailKey"  : thumbnailKey,
+                        "to" : to,
+                        "id" : id
+                    ]
+                    AWSS3UploadManager.sharedInstance.upload(originalImage, fileName: originalKey)
+                    AWSS3UploadManager.sharedInstance.upload(thumbnailImage, fileName: thumbnailKey, userData: userData)
+                }
+        })
     }
     
     // S3UploadDelegate methods
@@ -117,6 +146,7 @@ class S3PhotoManager: S3UploadDelegate {
                 originalKey: originalKey,
                 thumbnailKey: thumbnailKey,
                 to: to,
+                queueInCoreData: false,
                 completionHandler: nil)
         }
     }

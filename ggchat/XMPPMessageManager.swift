@@ -148,6 +148,7 @@ public class XMPPMessageManager: NSObject {
         originalKey: String,
         thumbnailKey: String,
         to receiver: String,
+        queueInCoreData: Bool,
         completionHandler completion: MessageCompletionHandler?) {
         
         let messageId = id
@@ -166,8 +167,8 @@ public class XMPPMessageManager: NSObject {
 		photo.addChild(thumbnailKey)
 		body.addChild(photo)
         completeMessage.addChild(body)
-          
-        if XMPPManager.sharedInstance.stream.isAuthenticated() {
+         
+        if !queueInCoreData && XMPPManager.sharedInstance.stream.isAuthenticated() {
             print("XMPP connected, send photo: \(id)")
             sharedInstance.didSendMessageCompletionBlock = completion
         	XMPPManager.sharedInstance.stream.sendElement(completeMessage)
@@ -248,10 +249,23 @@ public class XMPPMessageManager: NSObject {
             var update = false
 			for messageElement in results! {
                 let xmppMessage = try XMPPMessage(XMLString: messageElement.messageStr)
-                XMPPManager.sharedInstance.stream.sendElement(xmppMessage)
                 
+                let xmppElement = xmppMessage as DDXMLElement
+                if let body = xmppElement.elementForName("body"),
+                    let id = xmppElement.attributeStringValueForName("id"),
+                    let to = xmppElement.attributeStringValueForName("to"),
+                    let photo = body.elementForName("photo"),
+                    let originalKey = photo.elementForName("originalKey").stringValue(),
+                    let thumbnailKey = photo.elementForName("thumbnailKey").stringValue()
+                {
+                    S3PhotoManager.sharedInstance.resendPhoto(id, to: to, originalKey: originalKey, thumbnailKey: thumbnailKey)
+                } else {
+                    XMPPManager.sharedInstance.stream.sendElement(xmppMessage)
+                }
+
                 moc!.deleteObject(messageElement as! NSManagedObject)
                 // messageElement.setValue(false, forKey: "isComposing")
+                
                 update = true
             }
             print("Resent \(results!.count) composing messages in core data")
@@ -274,9 +288,9 @@ public class XMPPMessageManager: NSObject {
 		var messages = [Message]()
         var receipts = [ReadReceipt]()
         
-        let sort = NSSortDescriptor(key: "timestamp", ascending: false)
-        request.sortDescriptors = [sort]
-        request.fetchLimit = 30
+        // let sort = NSSortDescriptor(key: "timestamp", ascending: false)
+        // request.sortDescriptors = [sort]
+        // request.fetchLimit = 30
         request.predicate = predicate
 		request.entity = entityDescription
 		

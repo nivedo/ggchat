@@ -687,13 +687,15 @@ class MessageViewController: UIViewController,
 
     func finishReceivingMessageAnimated(animated: Bool) {
         // print("finishReceivingMessageAnimated")
-        self.showTypingIndicator = false
+        if self.messageCollectionView != nil {
+            self.showTypingIndicator = false
 
-        self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-        self.messageCollectionView.reloadData()
+            self.messageCollectionView.messageCollectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+            self.messageCollectionView.reloadData()
 
-        if (self.automaticallyScrollsToMostRecentMessage && !self.gg_isMenuVisible()) {
-            self.scrollToBottomAnimated(animated)
+            if (self.automaticallyScrollsToMostRecentMessage && !self.gg_isMenuVisible()) {
+                self.scrollToBottomAnimated(animated)
+            }
         }
     }
 
