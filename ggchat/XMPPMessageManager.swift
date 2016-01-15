@@ -219,10 +219,10 @@ public class XMPPMessageManager: NSObject {
                 xmppStream: XMPPManager.sharedInstance.stream,
                 archiveDate: date,
                 composing: composing,
-                myJidStr: UserAPI.sharedInstance.jidBareStr
+                myJidStr: UserAPI.sharedInstance.jidBareStr,
+                save: true
             )
             self.archivedMessageIds.insert(id)
-            
             print("archive SUCCESS")
             return true
         }
@@ -232,7 +232,7 @@ public class XMPPMessageManager: NSObject {
     var archivedMessageIds = Set<String>()
 
     func resendArchivedComposingMessagesFrom(jid: String) {
-        if !XMPPManager.sharedInstance.isConnected() {
+        if !XMPPManager.sharedInstance.stream.isAuthenticated() {
             return
         }
         let moc = messageStorage?.mainThreadManagedObjectContext
@@ -288,9 +288,9 @@ public class XMPPMessageManager: NSObject {
 		var messages = [Message]()
         var receipts = [ReadReceipt]()
         
-        // let sort = NSSortDescriptor(key: "timestamp", ascending: false)
-        // request.sortDescriptors = [sort]
-        // request.fetchLimit = 30
+        let sort = NSSortDescriptor(key: "timestamp", ascending: false)
+        request.sortDescriptors = [sort]
+        request.fetchLimit = 30
         request.predicate = predicate
 		request.entity = entityDescription
 		
@@ -298,6 +298,7 @@ public class XMPPMessageManager: NSObject {
 			let results = try moc?.executeFetchRequest(request)
 		
             self.archivedMessageIds.removeAll()
+            print("Fetched \(results!.count) archived messages from core data.")
             
             var composingCount = 0
 			for messageElement in results! {

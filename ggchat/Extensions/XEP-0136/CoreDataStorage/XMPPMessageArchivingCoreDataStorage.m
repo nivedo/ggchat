@@ -336,10 +336,10 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream
 {
-    [self archiveMessage:message outgoing:isOutgoing xmppStream:xmppStream archiveDate: Nil composing: NO myJidStr: Nil];
+    [self archiveMessage:message outgoing:isOutgoing xmppStream:xmppStream archiveDate: Nil composing: NO myJidStr: Nil save: NO];
 }
 
-- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream archiveDate:(NSDate *)date composing:(BOOL)isComposingForced myJidStr:(NSString*)myJidBareStr
+- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream archiveDate:(NSDate *)date composing:(BOOL)isComposingForced myJidStr:(NSString*)myJidBareStr save:(BOOL)saveInsertion
 {
 	// Message should either have a body, or be a composing notification
 	
@@ -452,6 +452,10 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 				[archivedMessage willInsertObject];       // Override hook
 				[self willInsertMessage:archivedMessage]; // Override hook
 				[moc insertObject:archivedMessage];
+                
+                if (saveInsertion) {
+                    [moc save:nil];
+                }
 			}
 			else
 			{

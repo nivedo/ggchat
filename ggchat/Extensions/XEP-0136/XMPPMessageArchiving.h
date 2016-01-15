@@ -100,7 +100,7 @@
  * 
 **/
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream;
-- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream archiveDate:(NSDate*)date composing:(BOOL)isComposingForced myJidStr:(NSString*)myJidBareStr;
+- (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream archiveDate:(NSDate*)date composing:(BOOL)isComposingForced myJidStr:(NSString*)myJidBareStr save:(BOOL)saveInsertion;
 
 @optional
 
