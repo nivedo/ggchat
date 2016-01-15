@@ -19,7 +19,8 @@ public protocol XMPPManagerDelegate {
 }
 
 class XMPPManager: NSObject,
-    XMPPStreamDelegate {
+    XMPPStreamDelegate,
+    XMPPReconnectDelegate {
     // XMPPRosterDelegate {
     // XMPPvCardTempModuleDelegate {
 
@@ -119,6 +120,7 @@ class XMPPManager: NSObject,
         // Initialize reconnector
         self.reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_main_queue())
         self.reconnecter.usesOldSchoolSecureConnect = true
+        self.reconnecter.addDelegate(self, delegateQueue: dispatch_get_main_queue())
         self.reconnecter.activate(self.stream)
        
         // Initialize message delivery receipts
@@ -371,13 +373,19 @@ class XMPPManager: NSObject,
     }
 
     //////////////////////////////////////////////////////////////////////////////
-    // XMPPManager public interface
+    // XMPPReconnectDelegate
     //////////////////////////////////////////////////////////////////////////////
-   
-    /*
-    func sendSubscriptionRequestForRoster(jidStr: String) {
-        let jid = XMPPJID.jidWithString(jidStr)
-        self.roster.addUser(jid, withNickname: nil)
+
+    func xmppReconnect(sender: XMPPReconnect!, didDetectAccidentalDisconnect connectionFlags: SCNetworkConnectionFlags) {
+        print("didDetectAccidentalDisconnect")
     }
-    */
+
+    func xmppReconnect(sender: XMPPReconnect!, shouldAttemptAutoReconnect connectionFlags: SCNetworkConnectionFlags) -> Bool {
+        let shouldReconnect = ConnectionManager.isConnectedToNetwork()
+        print("shouldAttemptAutoReconnect: \(shouldReconnect)")
+        return shouldReconnect
+    }
+    
+    // - (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkReachabilityFlags)connectionFlags;
+    // - (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkReachabilityFlags)reachabilityFlags;}
 }
