@@ -80,10 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
                 if success {
                     print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
-                    XMPPManager.sharedInstance.connectWithJID(
-                        jid: UserAPI.sharedInstance.jid!,
-                        password: UserAPI.sharedInstance.jpassword!,
-                        connectCompletionHandler: self.xmppConnectCallback,
+                    XMPPManager.sharedInstance.connectWithCompletion(
+                        self.xmppConnectCallback,
                         authenticateCompletionHandler: self.xmppAuthenticateCallback)
                 } else {
                     self.segueToLoginViewController()
@@ -152,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
 
-        // XMPPManager.refresh()
+        XMPPManager.refresh()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {

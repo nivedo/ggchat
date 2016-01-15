@@ -112,10 +112,8 @@ class LoginViewController: UIViewController {
                     NSUserDefaults.standardUserDefaults().synchronize()
     
                     print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
-                    XMPPManager.sharedInstance.connectWithJID(
-                        jid: UserAPI.sharedInstance.jid!,
-                        password: UserAPI.sharedInstance.jpassword!,
-                        connectCompletionHandler: self.connectCallback,
+                    XMPPManager.sharedInstance.connectWithCompletion(
+                        self.connectCallback,
                         authenticateCompletionHandler: self.authenticateCallback)
                 } else {
                     MBProgressHUD.hideHUDForView(self.view, animated: true)

@@ -943,6 +943,16 @@ class UserAPI {
             NSUserDefaults.standardUserDefaults().setValue(self.jpassword, forKey: GGKey.userApiJabberdPassword)
         }
     }
+    
+    var jpasswordBareStr: String {
+        get {
+            if let jpassword = self.jpassword {
+                return jpassword
+            } else {
+                return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.userApiJabberdPassword) as! String
+            }
+        }
+    }
    
     var username: String?
     var email: String?

@@ -69,8 +69,8 @@ struct GGConfig_Dark {
 struct GGKey {
     static let email = "email"
     static let password = "password"
-    static let jid = "jid"
-    static let displayName = "displayName"
+    // static let jid = "jid"
+    // static let displayName = "displayName"
     
     static let userApiAuthToken = "user.api.authToken"
     static let userApiPushToken = "user.api.pushToken"

@@ -22,7 +22,7 @@ class XMPPManager: NSObject,
 
     var username: String!
     var password: String!
-    var jid_: String?
+    var jid: String!
     var domain: String = GGSetting.xmppDomain
     var stream: XMPPStream!
     // var roster: XMPPRoster!
@@ -41,31 +41,6 @@ class XMPPManager: NSObject,
     var delegate: XMPPManagerDelegate?
     var connectCompletionHandler: StreamCompletionHandler?
     var authenticateCompletionHandler: StreamCompletionHandler?
-   
-    //////////////////////////////////////////////////////////////////////////////
-    // Class helper methods
-    //////////////////////////////////////////////////////////////////////////////
- 
-    var jid: String {
-        get {
-            if self.jid_ == nil {
-                if (self.isConnected()) {
-                    return self.stream.myJID.bare()
-                } else {
-                    if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.jid) {
-                        return previousJID
-                    } else {
-                        return GGKey.jid
-                    }
-                }
-            } else {
-                return self.jid_!
-            }
-        }
-        set {
-            self.jid_ = newValue
-        }
-    }
    
     //////////////////////////////////////////////////////////////////////////////
     // Initialization
@@ -177,17 +152,12 @@ class XMPPManager: NSObject,
         if !self.isConnected() && !self.stream.isConnecting() &&
             !self.stream.isAuthenticated() && !self.stream.isAuthenticating() {
             print("*************** RECONNECTING ********************")
-            self.connectWithJID(
-                jid: nil,
-                password: nil,
-                connectCompletionHandler: nil,
+            self.connectWithCompletion(nil,
                 authenticateCompletionHandler: nil)
         }
     }
     
-    func connectWithJID(
-        jid jidOrNil: String?,
-        password passwordOrNil: String?,
+    func connectWithCompletion(
         connectCompletionHandler: StreamCompletionHandler?,
         authenticateCompletionHandler: StreamCompletionHandler?) {
             
@@ -209,29 +179,8 @@ class XMPPManager: NSObject,
         }
      
         // Set jid
-        if (jidOrNil == nil) {
-            if let previousJID = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.jid) {
-                self.jid = previousJID
-            } else {
-                print("Error: Please enter jid before trying to connect.")
-                return
-            }
-        } else {
-            self.jid = jidOrNil!
-        }
-            
-        // Set password
-        if (passwordOrNil == nil) {
-            if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
-                self.password = previousPassword
-            } else {
-                print("Error: Please enter password before trying to connect.")
-                return
-            }
-        } else {
-            self.password = passwordOrNil!
-        }
-       
+        self.jid = UserAPI.sharedInstance.jidBareStr
+        self.password = UserAPI.sharedInstance.jpasswordBareStr
         self.stream.myJID = XMPPJID.jidWithString(
             self.jid,
             resource: "ios")
@@ -290,20 +239,6 @@ class XMPPManager: NSObject,
         print("Logged In Successfully\n")
         
         sender.sendElement(XMPPPresence())
-      
-        // Save usernmae
-        // NSUserDefaults.standardUserDefaults().setValue(self.username, forKey: GGKey.username)
-        // NSUserDefaults.standardUserDefaults().setValue(self.password, forKey: GGKey.password)
-        
-        // Save jid and displayName
-        NSUserDefaults.standardUserDefaults().setValue(self.stream.myJID.bare(),
-            forKey: GGKey.jid)
-        NSUserDefaults.standardUserDefaults().setValue(self.stream.myJID.bare(),
-            forKey: GGKey.displayName)
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
-        // Fetch vCard
-        // self.vCardTempModule.fetchvCardTempForJID(self.stream.myJID)
     
         self.authenticateCompletionHandler?(stream: sender, error: nil)
         self.delegate?.onAuthenticate()
