@@ -309,6 +309,7 @@ class GGMessageViewController:
     }
 
     override func didPressInnerButton(sender: UIButton) {
+        /*
         let alert: UIAlertController = UIAlertController(
             title: "Autocomplete",
             message: "Choose game",
@@ -331,6 +332,21 @@ class GGMessageViewController:
         }
         alert.addAction(actionCancel)
         self.presentViewController(alert, animated: true, completion: nil)
+        */
+        
+        if let auto = self.autocompleteController {
+            if auto.active {
+                if let _ = auto.wiki {
+                    auto.active = false
+                    self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.defaultKeyboardButtonItem()
+                }
+            } else {
+                if let wiki = auto.wiki {
+                    auto.active = true
+                    self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(wiki.iconImage)
+                }
+            }
+        }
     }
     
     override func didPressAccessoryButton(sender: UIButton) {

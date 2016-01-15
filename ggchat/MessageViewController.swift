@@ -376,6 +376,7 @@ class MessageViewController: UIViewController,
                         GGWiki.sharedInstance.loadAutocompleteAsync(k)
                         
                         self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
+                        self.autocompleteController?.wiki = v
                 }
                 alert.addAction(action)
             }
@@ -1176,19 +1177,21 @@ class MessageViewController: UIViewController,
         }
         
         let (word, len) = self.gg_currentlyTypedMessageText()
-        if word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
-                if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.autocompleteController?.displaySuggestions(word,
-                            suggestions: suggestions!,
-                            frame: self.inputToolbar.frame)
+        if let auto = self.autocompleteController {
+            if auto.active && word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                    let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
+                    if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.autocompleteController?.displaySuggestions(word,
+                                suggestions: suggestions!,
+                                frame: self.inputToolbar.frame)
+                        }
                     }
                 }
+            } else {
+                auto.hide()
             }
-        } else {
-            self.autocompleteController?.hide()
         }
     }
 
@@ -1201,25 +1204,27 @@ class MessageViewController: UIViewController,
         
         let (word, len) = self.gg_currentlyTypedMessageText()
         print("editing text \"\(word)\" length: \(word.length), count: \(word.characters.count), min: \(UserAPI.sharedInstance.settings.minAutocompleteCharacters)")
-        
-        if word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
-                print("Suggestions: \(suggestions?.count)")
-                dispatch_async(dispatch_get_main_queue()) {
-                    if let s = suggestions {
-                        if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {
-                            self.autocompleteController?.displaySuggestions(word,
-                                suggestions: s,
-                                frame: self.inputToolbar.frame)
-                        } else {
-                            self.autocompleteController?.hide()
+       
+        if let auto = self.autocompleteController {
+            if auto.active && word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                    let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
+                    print("Suggestions: \(suggestions?.count)")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        if let s = suggestions {
+                            if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {
+                                self.autocompleteController?.displaySuggestions(word,
+                                    suggestions: s,
+                                    frame: self.inputToolbar.frame)
+                            } else {
+                                self.autocompleteController?.hide()
+                            }
                         }
                     }
                 }
+            } else {
+                auto.hide()
             }
-        } else {
-            self.autocompleteController?.hide()
         }
         
         self.inputToolbar.toggleSendButtonEnabled()

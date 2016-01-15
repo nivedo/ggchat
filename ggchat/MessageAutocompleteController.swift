@@ -42,6 +42,8 @@ class MessageAutocompleteController: NSObject,
     var tableView: UITableView
     var delegate: MessageAutocompleteControllerDelegate
     var suggestions = [AssetAutocompleteSuggestion]()
+    var active: Bool = true
+    var wiki: WikiResource?
 
     init(delegate: MessageAutocompleteControllerDelegate) {
         self.tableView = UITableView(frame: UIScreen.mainScreen().bounds)

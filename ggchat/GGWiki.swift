@@ -175,49 +175,48 @@ class GGWikiCache {
     }
 }
 
-class GGWiki {
-  
-    class WikiResource {
-        var name: String
-        var icon: String
-        var placeholder: String?
-        var ref: String
-        var jsonURL: String
-        var jsonData: NSData
-        var iconImage: UIImage?
-        var placeholderURL: String?
-        var language: String
-       
-        init(json: [String: String], language: String) {
-            self.name = json["name"]!
-            self.icon = json["icon"]!
-            self.placeholder = json["placeholder"]
-            self.ref = "\(json["ref"]!):\(language)"
-            self.jsonURL = "\(GGWiki.s3url)/config/\(json["bundle"]!)"
-            self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
-            
-            let iconURL = "\(GGWiki.s3url)/assets/\(self.icon)"
-            // self.iconImage = UIImage(data: NSData(contentsOfURL: NSURL(string: iconURL)!)!)
-            self.iconImage = GGWikiCache.sharedInstance.retreiveImage(iconURL)
-           
-            if let placeholder = self.placeholder {
-                self.placeholderURL = "\(GGWiki.s3url)/assets/\(placeholder)"
-                GGWikiCache.sharedInstance.retreiveImage(self.placeholderURL!)
-            }
-            self.language = language
-        }
+class WikiResource {
+    var name: String
+    var icon: String
+    var placeholder: String?
+    var ref: String
+    var jsonURL: String
+    var jsonData: NSData
+    var iconImage: UIImage?
+    var placeholderURL: String?
+    var language: String
+   
+    init(json: [String: String], language: String) {
+        self.name = json["name"]!
+        self.icon = json["icon"]!
+        self.placeholder = json["placeholder"]
+        self.ref = "\(json["ref"]!):\(language)"
+        self.jsonURL = "\(GGWiki.s3url)/config/\(json["bundle"]!)"
+        self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
         
-        var placeholderImage: UIImage? {
-            get {
-                if let url = self.placeholderURL {
-                    return GGWikiCache.sharedInstance.retreiveImage(url)
-                } else {
-                    return nil
-                }
+        let iconURL = "\(GGWiki.s3url)/assets/\(self.icon)"
+        // self.iconImage = UIImage(data: NSData(contentsOfURL: NSURL(string: iconURL)!)!)
+        self.iconImage = GGWikiCache.sharedInstance.retreiveImage(iconURL)
+       
+        if let placeholder = self.placeholder {
+            self.placeholderURL = "\(GGWiki.s3url)/assets/\(placeholder)"
+            GGWikiCache.sharedInstance.retreiveImage(self.placeholderURL!)
+        }
+        self.language = language
+    }
+    
+    var placeholderImage: UIImage? {
+        get {
+            if let url = self.placeholderURL {
+                return GGWikiCache.sharedInstance.retreiveImage(url)
+            } else {
+                return nil
             }
         }
     }
-    
+}
+
+class GGWiki {
     // private static let host = "http://45.33.39.21:1235"
     // private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
     private static let s3url = "http://d1fyt5lxvxva06.cloudfront.net"
