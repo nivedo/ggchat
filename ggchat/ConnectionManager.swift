@@ -10,7 +10,7 @@ import Foundation
 import SystemConfiguration
 import TSMessages
 
-public class Reachability {
+class ConnectionManager {
     class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
@@ -26,13 +26,9 @@ public class Reachability {
         let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
         return (isReachable && !needsConnection)
     }
-}
 
-
-class ConnectionManager {
-    
     class func checkConnection(viewController: UIViewController) {
-        if !Reachability.isConnectedToNetwork() {
+        if !self.isConnectedToNetwork() {
             TSMessage.showNotificationInViewController(viewController,
                 title: "Network error",
                 subtitle: "Couldn't connect to server. Please check network connection",

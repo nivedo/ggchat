@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginIdentifier = "LoginViewController"
       
         var isAuthenticated = UserAPI.sharedInstance.canAuth
-        if Reachability.isConnectedToNetwork() {
+        if ConnectionManager.isConnectedToNetwork() {
             isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
                 if success {
                     print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
