@@ -246,66 +246,6 @@ class XMPPManager: NSObject,
         }
     }
    
-    /*
-    func connect(
-        username usernameOrNil: String?,
-        password passwordOrNil: String?,
-        connectCompletionHandler: StreamCompletionHandler?,
-        authenticateCompletionHandler: StreamCompletionHandler?) {
-            
-        self.connectCompletionHandler = connectCompletionHandler
-        self.authenticateCompletionHandler = authenticateCompletionHandler
-            
-        if (self.stream.isConnected()) {
-            // Already connected
-            if !self.stream.isAuthenticated() {
-                self.xmppStreamDidConnect(self.stream)
-            } else {
-                self.xmppStreamDidAuthenticate(self.stream)
-            }
-            return
-        }
-     
-        // Set username
-        if (usernameOrNil == nil) {
-            if let previousUsername = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.username) {
-                self.username = previousUsername
-            } else {
-                print("Error: Please enter username before trying to connect.")
-                return
-            }
-        } else {
-            self.username = usernameOrNil!
-        }
-        // Set password
-        if (passwordOrNil == nil) {
-            if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
-                self.password = previousPassword
-            } else {
-                print("Error: Please enter password before trying to connect.")
-                return
-            }
-        } else {
-            self.password = passwordOrNil!
-        }
-       
-        self.stream.myJID = XMPPJID.jidWithUser(
-            self.username,
-            domain: self.domain,
-            resource: "ios")
-        
-        do {
-            print("Connecting with \(self.username)@\(self.domain)")
-            // try self.stream.oldSchoolSecureConnectWithTimeout(30.0)
-            // var error: NSError? = nil
-            try self.stream.connectWithTimeout(5) // XMPPStreamTimeoutNone)
-        }
-        catch {
-            print("ERROR: Unable to connect to \(self.username)@\(self.domain)")
-        }
-    }
-    */
-   
     func xmppStream(sender: XMPPStream, willSecureWithSettings settings:NSMutableDictionary) {
         print("willSecureWithSettings")
         settings[GCDAsyncSocketManuallyEvaluateTrust] = true
