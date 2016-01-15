@@ -336,12 +336,10 @@ class GGMessageViewController:
         
         if let auto = self.autocompleteController {
             if auto.active {
-                if let _ = auto.wiki {
-                    auto.active = false
-                    self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.defaultKeyboardButtonItem()
-                }
+                self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.defaultKeyboardButtonItem()
+                auto.active = false
             } else {
-                if let wiki = auto.wiki {
+                if let wiki = GGWiki.sharedInstance.getAutocompleteResource() {
                     auto.active = true
                     self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(wiki.iconImage)
                 }
