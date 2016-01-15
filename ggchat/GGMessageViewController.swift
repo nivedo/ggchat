@@ -12,6 +12,7 @@ import JSQSystemSoundPlayer
 class GGMessageViewController:
     MessageViewController,
     ContactPickerDelegate,
+    XMPPManagerDelegate,
     XMPPMessageManagerDelegate,
     TappableTextDelegate,
     UIImagePickerControllerDelegate,
@@ -48,6 +49,7 @@ class GGMessageViewController:
         
         self.showLoadEarlierMessagesHeader = true
         XMPPMessageManager.sharedInstance.delegate = self
+        XMPPManager.sharedInstance.delegate = self
         
         self.photoPicker.delegate = self
         
@@ -251,7 +253,7 @@ class GGMessageViewController:
         if SettingManager.sharedInstance.tappableMessageText {
             TappableText.sharedInstance.delegate = nil
         }
-        // GGWiki.sharedInstance.delegate = nil
+        XMPPManager.sharedInstance.delegate = nil
         
         super.viewWillDisappear(animated)
     }
@@ -559,7 +561,20 @@ class GGMessageViewController:
     
     func resendFailedMessages() {
         if let recipient = self.recipient {
-            XMPPMessageManager.sharedInstance.resendArchivedComposingMessagesFrom(recipient.jid)
+            dispatch_async(dispatch_get_main_queue()) {
+                for msg in self.messages {
+                    if msg.isFailedToSend {
+                        msg.isFailedToSend = false
+                        msg.isComposing = true
+                    }
+                }
+                self.messageCollectionView.reloadData()
+                XMPPMessageManager.sharedInstance.resendArchivedComposingMessagesFrom(recipient.jid)
+            }
         }
+    }
+    
+    func onAuthenticate() {
+        self.resendFailedMessages()
     }
 }

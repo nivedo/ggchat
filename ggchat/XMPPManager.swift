@@ -10,12 +10,8 @@ import Foundation
 
 public typealias StreamCompletionHandler = (stream: XMPPStream, error: String?) -> Void
 
-public protocol XMPPManagerDelegate {
-    func onStream(sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?)
-    func onStreamDidConnect(sender: XMPPStream)
-    func onStreamDidAuthenticate(sender: XMPPStream)
-    func onStream(sender: XMPPStream, didNotAuthenticate error: DDXMLElement)
-    func onStreamDidDisconnect(sender: XMPPStream, withError error: NSError)
+protocol XMPPManagerDelegate {
+    func onAuthenticate()
 }
 
 class XMPPManager: NSObject,
@@ -86,8 +82,6 @@ class XMPPManager: NSObject,
         sharedInstance.setup()
         
         XMPPMessageManager.sharedInstance.setupArchiving()
-        
-        // XMPPRosterManager.sharedInstance.fetchedResultsController()?.delegate = XMPPRosterManager.sharedInstance
     }
     
     class func refresh() {
@@ -310,6 +304,7 @@ class XMPPManager: NSObject,
         // self.vCardTempModule.fetchvCardTempForJID(self.stream.myJID)
     
         self.authenticateCompletionHandler?(stream: sender, error: nil)
+        self.delegate?.onAuthenticate()
     }
     
     func xmppStream(sender: XMPPStream!, didReceiveIQ iq: XMPPIQ!) -> Bool {

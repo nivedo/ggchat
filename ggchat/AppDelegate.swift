@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Load root view
         self.initializeRootView(true)
         
-        TSMessageView.appearance().alpha = 0.8
+        // TSMessageView.appearance().alpha = 0.8
         // TSMessageView.appearance().backgroundColor = UIColor.blackColor()
         
         return true
