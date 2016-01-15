@@ -244,9 +244,8 @@ public class XMPPMessageManager: NSObject {
                 let xmppMessage = try XMPPMessage(XMLString: messageElement.messageStr)
                 XMPPManager.sharedInstance.stream.sendElement(xmppMessage)
                 
-                // moc!.deleteObject(messageElement as! NSManagedObject)
-                // messageElement.isComposing = false
-                messageElement.setValue(false, forKey: "isComposing")
+                moc!.deleteObject(messageElement as! NSManagedObject)
+                // messageElement.setValue(false, forKey: "isComposing")
                 update = true
             }
             print("Resent \(results!.count) composing messages in core data")
