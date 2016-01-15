@@ -62,7 +62,7 @@ class GGWikiAsset {
     var name: String
     var bundleId: String
     var assetId: String
-    var apiURL: String
+    // var apiURL: String
     var fileType: String
     var imageURL: String
     var placeholderURL: String?
@@ -77,7 +77,7 @@ class GGWikiAsset {
         self.name = name
         self.bundleId = bundleId
         self.assetId = assetId
-        self.apiURL = GGWiki.apiURL(name)
+        // self.apiURL = GGWiki.apiURL(name)
         self.placeholderURL = placeholderURL
         self.fileType = fileType
         
@@ -218,8 +218,9 @@ class GGWiki {
         }
     }
     
-    private static let host = "http://45.33.39.21:1235"
-    private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
+    // private static let host = "http://45.33.39.21:1235"
+    // private static let s3url = "https://s3-us-west-1.amazonaws.com/ggchat"
+    private static let s3url = "http://d1fyt5lxvxva06.cloudfront.net"
     private static let cacheFolderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("wiki")
     static let maxDownloadAttempts = 2
  
@@ -227,7 +228,8 @@ class GGWiki {
         let fileURL = self.cacheFolderURL.URLByAppendingPathComponent(fileName)
         return fileURL
     }
-    
+   
+    /*
     class func apiURL(cardName: String) -> String {
         let urlName = cardName.stringByReplacingOccurrencesOfString(
             " ",
@@ -236,6 +238,7 @@ class GGWiki {
             range: nil)
         return "\(self.host)/images/\(urlName)"
     }
+    */
     
     class var configURL: String {
         let url = "\(self.s3url)/config/config.json"
