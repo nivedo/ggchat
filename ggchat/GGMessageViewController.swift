@@ -42,7 +42,7 @@ class GGMessageViewController:
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.senderId = XMPPManager.sharedInstance.jid
+        self.senderId = UserAPI.sharedInstance.jidBareStr
         self.senderDisplayName = UserAPI.sharedInstance.displayName
         
         // self.messages.appendContentsOf(GGModelData.sharedInstance.messages)

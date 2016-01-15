@@ -96,7 +96,7 @@ public class XMPPMessageManager: NSObject {
     		completeMessage.addChild(ggbody)
     		
     		sharedInstance.didSendMessageCompletionBlock = completion
-            if XMPPManager.sharedInstance.isConnected() {
+            if XMPPManager.sharedInstance.stream.isAuthenticated() {
                 print("XMPP connected, send message: \(messagePacket.description)")
                 XMPPManager.sharedInstance.stream.sendElement(completeMessage)
             } else {
@@ -135,7 +135,7 @@ public class XMPPMessageManager: NSObject {
 		body.addChild(receiptsElement)
 		completeMessage.addChild(body)
 		
-        if XMPPManager.sharedInstance.isConnected() {
+        if XMPPManager.sharedInstance.stream.isAuthenticated() {
             print("XMPP connected, send read receipt: \(ids.count)")
             XMPPManager.sharedInstance.stream.sendElement(completeMessage)
         } else {
@@ -166,9 +166,15 @@ public class XMPPMessageManager: NSObject {
 		photo.addChild(thumbnailKey)
 		body.addChild(photo)
         completeMessage.addChild(body)
-           
-        sharedInstance.didSendMessageCompletionBlock = completion
-    	XMPPManager.sharedInstance.stream.sendElement(completeMessage)
+          
+        if XMPPManager.sharedInstance.stream.isAuthenticated() {
+            print("XMPP connected, send photo: \(id)")
+            sharedInstance.didSendMessageCompletionBlock = completion
+        	XMPPManager.sharedInstance.stream.sendElement(completeMessage)
+        } else {
+            print("XMPP not connected, queue photo: \(id)")
+            XMPPMessageManager.sharedInstance.archiveMessage(messageId, element: completeMessage, date: NSDate(), outgoing: true, composing: true)
+        }
 	}
 	
 	public class func sendIsComposingMessage(recipient: String, completionHandler completion:MessageCompletionHandler) {
