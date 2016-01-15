@@ -304,6 +304,7 @@ class MessageViewController: UIViewController,
         }
         */
         self.initBackButton()
+        self.initOptionButton()
         
         // Tap gesture recognizer to dismiss keyboard
         let tap = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard"))
@@ -345,8 +346,21 @@ class MessageViewController: UIViewController,
         self.navigationItem.leftBarButtonItem = barButton
     }
     
+    func initOptionButton() {
+        let barButton: UIBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "ArrowDown"),
+            style: UIBarButtonItemStyle.Plain,
+            target: self,
+            action: Selector("receivedOptionPressed:"))
+        self.navigationItem.rightBarButtonItem = barButton
+    }
+    
     func receivedBackPressed(button: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func receivedOptionPressed(button: UIBarButtonItem) {
+        
     }
     
     /////////////////////////////////////////////////////////////////////////////
