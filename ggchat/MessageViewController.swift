@@ -192,8 +192,10 @@ class MessageViewController: UIViewController,
     
     var showTypingIndicator: Bool = false {
         didSet {
-            self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
-            self.messageCollectionView.collectionViewLayout.invalidateLayout()
+            if self.messageCollectionView != nil {
+                self.messageCollectionView.collectionViewLayout.invalidateLayoutWithContext(MessagesCollectionViewFlowLayoutInvalidationContext.context())
+                self.messageCollectionView.collectionViewLayout.invalidateLayout()
+            }
         }
     }
 

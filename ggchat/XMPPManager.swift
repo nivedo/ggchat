@@ -119,7 +119,7 @@ class XMPPManager: NSObject,
         
         // Initialize reconnector
         self.reconnecter = XMPPReconnect(dispatchQueue: dispatch_get_main_queue())
-        self.reconnecter.usesOldSchoolSecureConnect = true
+        self.reconnecter.usesOldSchoolSecureConnect = false // true
         self.reconnecter.addDelegate(self, delegateQueue: dispatch_get_main_queue())
         self.reconnecter.activate(self.stream)
        
@@ -197,7 +197,10 @@ class XMPPManager: NSObject,
             
         self.connectCompletionHandler = connectCompletionHandler
         self.authenticateCompletionHandler = authenticateCompletionHandler
-            
+           
+        if self.stream.isConnecting() {
+            return
+        }
         if (self.stream.isConnected()) {
             // Already connected
             print("XMPP stream already connected")
@@ -378,14 +381,23 @@ class XMPPManager: NSObject,
 
     func xmppReconnect(sender: XMPPReconnect!, didDetectAccidentalDisconnect connectionFlags: SCNetworkConnectionFlags) {
         print("didDetectAccidentalDisconnect")
+        // XMPPManager.sharedInstance.stream.asyncDisconnect()
     }
 
     func xmppReconnect(sender: XMPPReconnect!, shouldAttemptAutoReconnect connectionFlags: SCNetworkConnectionFlags) -> Bool {
         let shouldReconnect = ConnectionManager.isConnectedToNetwork()
         print("shouldAttemptAutoReconnect: \(shouldReconnect)")
+        self.stream.myJID = XMPPJID.jidWithString(UserAPI.sharedInstance.jidBareStr,
+            resource: "ios")
+        /*
+        do {
+            try self.stream.connectWithTimeout(5)
+        } catch let error as NSError {
+            print(error)
+        } catch _ {
+            print("Unknown error")
+        }
+        */
         return shouldReconnect
     }
-    
-    // - (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkReachabilityFlags)connectionFlags;
-    // - (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkReachabilityFlags)reachabilityFlags;}
 }
