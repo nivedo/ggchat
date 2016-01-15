@@ -76,8 +76,6 @@ class RosterUser: Hashable {
     
     func initAvatar(avatarCompletion: ((Bool) -> Void)?) {
         if self.avatar.length > 0 {
-            print("Downloading avatar at \(self.avatar)")
-            
             S3ImageCache.sharedInstance.retrieveImageForKey(
                 self.avatar,
                 bucket: GGSetting.awsS3AvatarsBucketName,
@@ -477,7 +475,7 @@ class UserAPI {
         }
         if let avatarPath = json["avatar"] as? String {
             if avatarPath.length > 0 {
-                print("Downloading avatar at \(avatarPath)")
+                // print("Downloading avatar at \(avatarPath)")
                 self.avatarPath = avatarPath
                 S3ImageCache.sharedInstance.retrieveImageForKey(
                     avatarPath,
