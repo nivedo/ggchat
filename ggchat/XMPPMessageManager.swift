@@ -388,6 +388,32 @@ public class XMPPMessageManager: NSObject {
 		}
         return chatsMap
 	}
+    
+    func loadAllContacts() -> [String: ChatConversation] {
+		let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Contact_CoreDataObject", inManagedObjectContext: moc!)
+		let request = NSFetchRequest()
+		request.entity = entityDescription
+       
+        var chatsMap = [String: ChatConversation]()
+        do {
+			let results = try moc?.executeFetchRequest(request)
+			
+			for contactObject in results! {
+                let jid = contactObject.bareJid.description
+                let messageStr = contactObject.mostRecentMessageBody
+                if let chat = chatsMap[jid] {
+                    chat.updateIfMoreRecent(contactObject.mostRecentMessageTimestamp, xmlString: messageStr)
+                } else {
+                    chatsMap[jid] = ChatConversation(jid: jid, date: contactObject.mostRecentMessageTimestamp,
+                        xmlString: messageStr)
+                }
+			}
+		} catch _ {
+			//catch fetch error here
+		}
+        return chatsMap
+    }
 }
 
 extension XMPPManager {

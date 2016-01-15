@@ -734,7 +734,8 @@ class UserAPI {
     
     func loadChatsFromCoreData() {
         dispatch_async(dispatch_get_main_queue()) {
-            self.chatsMap = XMPPMessageManager.sharedInstance.loadAllMostRecentArchivedMessages()
+            // self.chatsMap = XMPPMessageManager.sharedInstance.loadAllMostRecentArchivedMessages()
+            self.chatsMap = XMPPMessageManager.sharedInstance.loadAllContacts()
             self.chatsList.removeAll()
             
             for (_,v) in self.chatsMap {

@@ -486,10 +486,13 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 				
 				contact.streamBareJidStr = archivedMessage.streamBareJidStr;
 				contact.bareJid = archivedMessage.bareJid;
-					
-				contact.mostRecentMessageTimestamp = archivedMessage.timestamp;
-				contact.mostRecentMessageBody = archivedMessage.body;
-				contact.mostRecentMessageOutgoing = @(isOutgoing);
+				
+                if (didCreateNewContact || [archivedMessage.timestamp compare: contact.mostRecentMessageTimestamp] == NSOrderedDescending) {
+    				// contact.mostRecentMessageBody = archivedMessage.body;
+    				contact.mostRecentMessageTimestamp = archivedMessage.timestamp;
+    				contact.mostRecentMessageBody = archivedMessage.messageStr;
+    				contact.mostRecentMessageOutgoing = @(isOutgoing);
+                }
 				
 				XMPPLogVerbose(@"New contact: %@", contact);
 				
