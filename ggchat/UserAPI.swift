@@ -400,13 +400,11 @@ class UserAPI {
                     let jid = json["jid"] as? String,
                     let pass = json["pass"] as? String
                     {
+                        self.hasAuth = true
                         self.authToken = newToken
                         self.jid = jid
                         self.jpassword = pass
                        
-                        // self.loadRosterFromCoreData(nil)
-                        // self.loadChatsFromCoreData()
-                        
                         self.sync()
                         self.updatePushToken()
                         completion?(true)
@@ -897,6 +895,8 @@ class UserAPI {
     }
     
     ////////////////////////////////////////////////////////////////////
+   
+    var hasAuth: Bool = false
     
     var canAuth: Bool {
         get {

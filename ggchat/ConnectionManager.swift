@@ -34,7 +34,9 @@ class ConnectionManager {
                 subtitle: "Couldn't connect to server. Please check network connection",
                 type: TSMessageNotificationType.Error)
         } else {
-            // XMPPManager.refresh()
+            if UserAPI.sharedInstance.hasAuth {
+                XMPPManager.refresh()
+            }
         }
     }
 }

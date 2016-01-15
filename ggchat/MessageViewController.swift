@@ -700,6 +700,9 @@ class MessageViewController: UIViewController,
     }
 
     func scrollToBottomAnimated(animated: Bool) {
+        if self.messageCollectionView == nil {
+            return
+        }
         if (self.messageCollectionView.numberOfSections() == 0) {
             return
         }
@@ -1761,7 +1764,7 @@ class MessageViewController: UIViewController,
                         animated: false)
                     */
                 } else {
-                    print("redrawMessageMedia --> scrollToBottomAnimated")
+                    // print("redrawMessageMedia --> scrollToBottomAnimated")
                     self.scrollToBottomAnimated(false)
                 }
             }
