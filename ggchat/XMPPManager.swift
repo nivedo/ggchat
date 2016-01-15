@@ -85,7 +85,7 @@ class XMPPManager: NSObject,
     }
     
     class func refresh() {
-        sharedInstance.reconnectIfNotConnected()
+        sharedInstance.reconnect()
     }
     
     class func stop() {
@@ -173,8 +173,10 @@ class XMPPManager: NSObject,
         return jid == UserAPI.sharedInstance.jidStr // self.stream.myJID.bare()
     }
     
-    func reconnectIfNotConnected() {
-        if !self.isConnected() {
+    func reconnect() {
+        if !self.isConnected() && !self.stream.isConnecting() &&
+            !self.stream.isAuthenticated() && !self.stream.isAuthenticating() {
+            print("*************** RECONNECTING ********************")
             self.connectWithJID(
                 jid: nil,
                 password: nil,

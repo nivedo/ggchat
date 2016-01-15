@@ -152,13 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
 
-        /*
-        XMPPManager.sharedInstance.connectWithJID(
-            jid: nil,
-            password: nil,
-            connectCompletionHandler: nil,
-            authenticateCompletionHandler: nil)
-        */
+        // XMPPManager.refresh()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
