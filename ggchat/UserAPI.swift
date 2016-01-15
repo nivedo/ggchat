@@ -975,7 +975,7 @@ class UserAPI {
             } else if let email = self.email {
                 return email
             } else {
-                return XMPPManager.sharedInstance.jid
+                return self.jidBareStr
             }
         }
     }

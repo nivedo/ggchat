@@ -131,7 +131,7 @@ public class XMPPMessageManager: NSObject {
             readElement.addAttributeWithName("id", stringValue: id)
             receiptsElement.addChild(readElement)
         }
-        let body = DDXMLElement(name: "body", stringValue: "#read_receipt") // Placeholder for core data archiving
+        let body = DDXMLElement(name: "body", stringValue: "__ggchat.read_receipt__") // Placeholder for core data archiving
 		body.addChild(receiptsElement)
 		completeMessage.addChild(body)
 		
@@ -151,7 +151,7 @@ public class XMPPMessageManager: NSObject {
         completionHandler completion: MessageCompletionHandler?) {
         
         let messageId = id
-        let body = DDXMLElement(name: "body")
+        let body = DDXMLElement(name: "body", stringValue: "__gchat.photo__")
         let completeMessage = DDXMLElement(name: "message")
 		
 		completeMessage.addAttributeWithName("id", stringValue: messageId)
@@ -273,8 +273,11 @@ public class XMPPMessageManager: NSObject {
 		let predicate = NSPredicate(format: predicateFormat, jid)
 		var messages = [Message]()
         var receipts = [ReadReceipt]()
-		
-		request.predicate = predicate
+        
+        let sort = NSSortDescriptor(key: "timestamp", ascending: false)
+        request.sortDescriptors = [sort]
+        request.fetchLimit = 30
+        request.predicate = predicate
 		request.entity = entityDescription
 		
 		do {
