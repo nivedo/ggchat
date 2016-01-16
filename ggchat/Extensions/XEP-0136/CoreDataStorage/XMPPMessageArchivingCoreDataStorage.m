@@ -345,7 +345,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 	
 	NSString *messageBody = [[message elementForName:@"body"] stringValue];
     NSString *contentType = [message attributeStringValueForName:@"content_type"];
-    BOOL isReadReceipt = (contentType != Nil) && (![contentType  isEqual: @"read_receipt"]);
+    BOOL isReadReceipt = (contentType != Nil) && [contentType  isEqual: @"read_receipt"];
 	BOOL isComposing = NO;
 	BOOL shouldDeleteComposingMessage = NO;
 	
@@ -476,6 +476,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 				
 				XMPPMessageArchiving_Contact_CoreDataObject *contact = [self contactForMessage:archivedMessage];
 				XMPPLogVerbose(@"Previous contact: %@", contact);
+				// NSLog(@"Previous contact: %@", contact);
 				
 				if (contact == nil)
 				{
@@ -489,7 +490,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 				contact.streamBareJidStr = archivedMessage.streamBareJidStr;
 				contact.bareJid = archivedMessage.bareJid;
 				
-                BOOL didUpdateContact = !didCreateNewContact && ([date compare: contact.mostRecentMessageTimestamp] == NSOrderedDescending);
+                BOOL didUpdateContact = !didCreateNewContact && ([archivedMessage.timestamp compare: contact.mostRecentMessageTimestamp] == NSOrderedDescending);
                 if (didCreateNewContact || didUpdateContact) {
     				// contact.mostRecentMessageBody = archivedMessage.body;
     				contact.mostRecentMessageTimestamp = archivedMessage.timestamp;
@@ -498,21 +499,26 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
                 }
 				
 				XMPPLogVerbose(@"New contact: %@", contact);
+				// NSLog(@"New contact: %@", contact);
 				
 				if (didCreateNewContact) // [contact isInserted] doesn't seem to work
 				{
 					XMPPLogVerbose(@"Inserting contact...");
+					// NSLog(@"Inserting contact...");
 					
 					[contact willInsertObject];       // Override hook
 					[self willInsertContact:contact]; // Override hook
 					[moc insertObject:contact];
+                    [moc save:nil];
 				}
 				else if (didUpdateContact)
 				{
 					XMPPLogVerbose(@"Updating contact...");
+					// NSLog(@"Updating contact...");
 					
 					[contact didUpdateObject];       // Override hook
 					[self didUpdateContact:contact]; // Override hook
+                    [moc save:nil];
 				}
 			}
 		}
@@ -567,6 +573,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
     		
     		[contact didUpdateObject];       // Override hook
     		[self didUpdateContact:contact]; // Override hook
+            [moc save:nil];
     	}
     }];
 }
