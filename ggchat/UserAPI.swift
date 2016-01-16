@@ -762,6 +762,9 @@ class UserAPI {
                         self.chatsList.append(chat)
                         self.chatsMap[chat.peerJID] = chat
                     }
+                    if let xml = json["xml"] as? String {
+                        XMPPMessageManager.sharedInstance.archiveMostRecentMessage(chat, xmlString: xml)
+                    }
                 }
             }
             self.delegate?.onChatsUpdate(true)

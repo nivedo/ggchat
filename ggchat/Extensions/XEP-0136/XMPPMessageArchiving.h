@@ -101,6 +101,7 @@
 **/
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream;
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream archiveDate:(NSDate*)date composing:(BOOL)isComposingForced myJidStr:(NSString*)myJidBareStr save:(BOOL)saveInsertion;
+- (void)archiveMostRecentMessage:(NSString *)bareJidStr streamBareJidStr:(NSString*)streamBareJidStr outgoing:(BOOL)isOutgoing archiveDate:(NSDate *)date messageStr:(NSString*)messageStr;
 
 @optional
 

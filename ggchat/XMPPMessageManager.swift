@@ -229,6 +229,17 @@ public class XMPPMessageManager: NSObject {
         return false
     }
     
+    func archiveMostRecentMessage(chat: ChatConversation, xmlString: String) {
+        let jid = UserAPI.sharedInstance.jidBareStr
+        if let msg = chat.lastMessage {
+            self.messageStorage?.archiveMostRecentMessage(chat.peerJID,
+                streamBareJidStr: jid,
+                outgoing: msg.isOutgoing,
+                archiveDate: chat.lastTime,
+                messageStr: xmlString)
+        }
+    }
+    
     var archivedMessageIds = Set<String>()
 
     func resendArchivedComposingMessagesFrom(jid: String) {

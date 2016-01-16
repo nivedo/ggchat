@@ -344,6 +344,8 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 	// Message should either have a body, or be a composing notification
 	
 	NSString *messageBody = [[message elementForName:@"body"] stringValue];
+    NSString *contentType = [message attributeStringValueForName:@"content_type"];
+    BOOL isReadReceipt = (contentType != Nil) && (![contentType  isEqual: @"read_receipt"]);
 	BOOL isComposing = NO;
 	BOOL shouldDeleteComposingMessage = NO;
 	
@@ -468,7 +470,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			
 			// Create or update contact (if message with actual content)
 			
-			if ([messageBody length] > 0)
+			if ([messageBody length] > 0 && !isReadReceipt)
 			{
 				BOOL didCreateNewContact = NO;
 				
@@ -487,7 +489,8 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 				contact.streamBareJidStr = archivedMessage.streamBareJidStr;
 				contact.bareJid = archivedMessage.bareJid;
 				
-                if (didCreateNewContact || [archivedMessage.timestamp compare: contact.mostRecentMessageTimestamp] == NSOrderedDescending) {
+                BOOL didUpdateContact = !didCreateNewContact && ([date compare: contact.mostRecentMessageTimestamp] == NSOrderedDescending);
+                if (didCreateNewContact || didUpdateContact) {
     				// contact.mostRecentMessageBody = archivedMessage.body;
     				contact.mostRecentMessageTimestamp = archivedMessage.timestamp;
     				contact.mostRecentMessageBody = archivedMessage.messageStr;
@@ -504,7 +507,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 					[self willInsertContact:contact]; // Override hook
 					[moc insertObject:contact];
 				}
-				else
+				else if (didUpdateContact)
 				{
 					XMPPLogVerbose(@"Updating contact...");
 					
@@ -514,6 +517,58 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			}
 		}
 	}];
+}
+
+- (void)archiveMostRecentMessage:(NSString *)bareJidStr streamBareJidStr:(NSString*)streamBareJidStr outgoing:(BOOL)isOutgoing archiveDate:(NSDate *)date messageStr:(NSString*)messageStr
+{
+    [self scheduleBlock:^{
+		
+		NSManagedObjectContext *moc = [self managedObjectContext];
+        BOOL didCreateNewContact = NO;
+    				
+    	XMPPMessageArchiving_Contact_CoreDataObject *contact = [self contactWithBareJidStr:bareJidStr
+                                                                          streamBareJidStr:streamBareJidStr
+                                                                      managedObjectContext:moc];
+    	XMPPLogVerbose(@"Previous contact: %@", contact);
+    	
+    	if (contact == nil)
+    	{
+    		contact = (XMPPMessageArchiving_Contact_CoreDataObject *)
+    		    [[NSManagedObject alloc] initWithEntity:[self contactEntity:moc]
+    		             insertIntoManagedObjectContext:nil];
+    		
+    		didCreateNewContact = YES;
+    	}
+    	
+    	contact.streamBareJidStr = streamBareJidStr;
+    	contact.bareJid = [XMPPJID jidWithString: bareJidStr];
+    
+        BOOL didUpdateContact = !didCreateNewContact && ([date compare: contact.mostRecentMessageTimestamp] == NSOrderedDescending);
+        if (didCreateNewContact || didUpdateContact) {
+    		contact.mostRecentMessageTimestamp = date;
+    		contact.mostRecentMessageBody = messageStr;
+    		contact.mostRecentMessageOutgoing = @(isOutgoing);
+        }
+    	
+    	XMPPLogVerbose(@"New contact: %@", contact);
+    	
+    	if (didCreateNewContact) // [contact isInserted] doesn't seem to work
+    	{
+    		XMPPLogVerbose(@"Inserting contact...");
+    		
+    		[contact willInsertObject];       // Override hook
+    		[self willInsertContact:contact]; // Override hook
+    		[moc insertObject:contact];
+            [moc save:nil];
+    	}
+    	else if (didUpdateContact)
+    	{
+    		XMPPLogVerbose(@"Updating contact...");
+    		
+    		[contact didUpdateObject];       // Override hook
+    		[self didUpdateContact:contact]; // Override hook
+    	}
+    }];
 }
 
 @end
