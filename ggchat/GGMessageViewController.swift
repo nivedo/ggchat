@@ -168,9 +168,10 @@ class GGMessageViewController:
                     jid: recipient.jid,
                     delegate: self
                 )
+                print("XMPPMessengerManager.loadArchivedMessagesFrom: \(self.messages.count) messages")
                 self.readMessagesFromCoreDataReceipts(receipts)
                 self.readIncomingMessages(recipient.jid)
-                print("XMPPMessengerManager.sharedInstance.loadArchivedMessagesFrom: \(self.messages.count) messages")
+                print("XMPPMessengerManager.readIncomingMessages")
                 if animated {
                     self.finishReceivingMessageAnimated(false)
                     self.scrollToBottomAnimated(false)
