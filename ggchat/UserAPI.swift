@@ -159,8 +159,10 @@ class ChatConversation {
         if self.lastTime.compare(date) == NSComparisonResult.OrderedAscending {
             if let msg = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil) {
                 self.lastTime = date
-                self.lastMessage = msg
-                return true
+                if msg.id != self.lastMessage.id {
+                    self.lastMessage = msg
+                    return true
+                }
             }
         }
         return false
@@ -169,8 +171,10 @@ class ChatConversation {
     func updateIfMoreRecent(date: NSDate, message: Message) -> Bool {
         if self.lastTime.compare(date) == NSComparisonResult.OrderedAscending {
             self.lastTime = date
-            self.lastMessage = message
-            return true
+            if message.id != self.lastMessage.id {
+                self.lastMessage = message
+                return true
+            }
         }
         return false
     }
@@ -755,8 +759,7 @@ class UserAPI {
     
     func loadMessagesFromJson(messagesArray: [AnyObject]) {
         dispatch_async(dispatch_get_main_queue()) {
-            // self.chatsList.removeAll()
-            // self.chatsMap.removeAll()
+            var sort = false
             for element in messagesArray {
                 if let json = element as? [String: AnyObject] {
                     let chat = ChatConversation(json: json)
@@ -769,13 +772,18 @@ class UserAPI {
                         update = true
                     }
                     if update {
+                        sort = true
                         if let xml = json["xml"] as? String {
                             XMPPMessageManager.sharedInstance.archiveMostRecentMessage(chat, xmlString: xml)
                         }
                     }
                 }
             }
-            self.delegate?.onChatsUpdate(true)
+            if sort {
+                print("[SYNC] Updating most recent messages.")
+                self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
+                self.delegate?.onChatsUpdate(true)
+            }
         }
     }
     
