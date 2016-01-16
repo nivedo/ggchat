@@ -206,7 +206,7 @@ class GGMessageViewController:
             let lastId = self.messages.last?.id
             var limit: Int? = nil
             if lastMessage == nil {
-                limit = 20
+                limit = GGConfig.paginationLimit
             }
             let date = self.messages.last?.date
             print("sync message history from \(date), msg: \(self.messages.last?.displayText), id: \(lastId), time: \(lastTimestamp)")

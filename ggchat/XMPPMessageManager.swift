@@ -301,7 +301,7 @@ public class XMPPMessageManager: NSObject {
         
         let sort = NSSortDescriptor(key: "timestamp", ascending: false)
         request.sortDescriptors = [sort]
-        request.fetchLimit = 30
+        request.fetchLimit = GGConfig.paginationLimit
         request.predicate = predicate
 		request.entity = entityDescription
 		
