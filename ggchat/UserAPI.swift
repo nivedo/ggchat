@@ -155,20 +155,24 @@ class ChatConversation {
         self.lastMessage = message
     }
     
-    func updateIfMoreRecent(date: NSDate, xmlString: String) {
+    func updateIfMoreRecent(date: NSDate, xmlString: String) -> Bool {
         if self.lastTime.compare(date) == NSComparisonResult.OrderedAscending {
             if let msg = UserAPI.parseMessageFromString(xmlString, date: date, delegate: nil) {
                 self.lastTime = date
                 self.lastMessage = msg
+                return true
             }
         }
+        return false
     }
     
-    func updateIfMoreRecent(date: NSDate, message: Message) {
+    func updateIfMoreRecent(date: NSDate, message: Message) -> Bool {
         if self.lastTime.compare(date) == NSComparisonResult.OrderedAscending {
             self.lastTime = date
             self.lastMessage = message
+            return true
         }
+        return false
     }
    
     func incrementUnread() {
@@ -756,14 +760,18 @@ class UserAPI {
             for element in messagesArray {
                 if let json = element as? [String: AnyObject] {
                     let chat = ChatConversation(json: json)
+                    var update = false
                     if let existingChat = self.chatsMap[chat.peerJID] {
-                        existingChat.updateIfMoreRecent(chat.lastMessage.date, message: chat.lastMessage)
+                        update = existingChat.updateIfMoreRecent(chat.lastMessage.date, message: chat.lastMessage)
                     } else {
                         self.chatsList.append(chat)
                         self.chatsMap[chat.peerJID] = chat
+                        update = true
                     }
-                    if let xml = json["xml"] as? String {
-                        XMPPMessageManager.sharedInstance.archiveMostRecentMessage(chat, xmlString: xml)
+                    if update {
+                        if let xml = json["xml"] as? String {
+                            XMPPMessageManager.sharedInstance.archiveMostRecentMessage(chat, xmlString: xml)
+                        }
                     }
                 }
             }
