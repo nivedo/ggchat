@@ -162,10 +162,13 @@ class GGWikiCache {
             if let image = self.imageCache[url] {
                 return image
             } else {
-                if let data = NSData(contentsOfURL: NSURL(string: url)!) {
-                    if let image = UIImage(data: data) {
-                        self.imageCache[url] = image
-                        return image
+                // if let data = NSData(contentsOfURL: NSURL(string: url)!) {
+                if let filename = key?.componentsSeparatedByString("/").last {
+                    if let data = GGWiki.retrieveNSData(filename, url: url) {
+                        if let image = UIImage(data: data) {
+                            self.imageCache[url] = image
+                            return image
+                        }
                     }
                 }
             }
@@ -180,7 +183,7 @@ class WikiResource {
     var placeholder: String?
     var ref: String
     var jsonURL: String
-    var jsonData: NSData
+    var jsonData: NSData?
     var iconImage: UIImage?
     var placeholderURL: String?
     var language: String
@@ -190,8 +193,10 @@ class WikiResource {
         self.icon = json["icon"]!
         self.placeholder = json["placeholder"]
         self.ref = "\(json["ref"]!):\(language)"
-        self.jsonURL = "\(GGWiki.s3url)/config/\(json["bundle"]!)"
-        self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
+        let bundle = json["bundle"]!
+        self.jsonURL = "\(GGWiki.s3url)/config/\(bundle)"
+        // self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
+        self.jsonData = GGWiki.retrieveNSData(bundle, url: self.jsonURL)
         
         let iconURL = "\(GGWiki.s3url)/assets/\(self.icon)"
         self.iconImage = GGWikiCache.sharedInstance.retreiveImage(iconURL)
@@ -222,6 +227,8 @@ class GGWiki {
     static let maxDownloadAttempts = 2
  
     class func fileCacheURL(fileName: String) -> NSURL {
+        self.createCacheFolder()
+        assert(NSFileManager.defaultManager().fileExistsAtPath(self.cacheFolderURL.path!), "Cache folder does not exist.")
         let fileURL = self.cacheFolderURL.URLByAppendingPathComponent(fileName)
         return fileURL
     }
@@ -248,7 +255,6 @@ class GGWiki {
     // var delegate: GGWikiDelegate?
     
     init() {
-        self.createCacheFolder()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             self.loadConfig()
             if let autocomplete = self.autocompleteWiki {
@@ -259,21 +265,52 @@ class GGWiki {
         }
     }
    
-    func createCacheFolder() {
-        let error = NSErrorPointer()
-        do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(
-                GGWiki.cacheFolderURL,
-                withIntermediateDirectories: true,
-                attributes: nil)
-        } catch let error1 as NSError {
-            error.memory = error1
-            print("Creating 'wiki' directory failed. Error: \(error)")
+    class func createCacheFolder() {
+        if !NSFileManager.defaultManager().fileExistsAtPath(self.cacheFolderURL.path!) {
+            let error = NSErrorPointer()
+            do {
+                try NSFileManager.defaultManager().createDirectoryAtURL(
+                    self.cacheFolderURL,
+                    withIntermediateDirectories: true,
+                    attributes: nil)
+            } catch let error1 as NSError {
+                error.memory = error1
+                print("Creating 'wiki' directory failed. Error: \(error)")
+            }
         }
+    }
+    
+    class func retrieveNSData(key: String, url: String) -> NSData? {
+        let URL = self.fileCacheURL(key)
+        // print("retrieve NSData key: \(key), url: \(url), local: \(URL.path!)")
+        if !ConnectionManager.isConnectedToNetwork() {
+            if let data = NSData(contentsOfFile: URL.path!) {
+                // print("retrieve NSData locally from \(URL.path!)")
+                return data
+            }
+            if !NSFileManager.defaultManager().fileExistsAtPath(URL.path!) {
+                print("Missing local cached file \(URL.path!)")
+            }
+        }
+        
+        if let data = NSData(contentsOfURL: NSURL(string: url)!) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                let success = data.writeToFile(URL.path!, atomically: true)
+                /*
+                if success {
+                    print("Successfully wrote \(URL.path!)")
+                } else {
+                    print("Failed to write \(URL.path!)")
+                }
+                */
+            }
+            return data
+        }
+        return nil
     }
 
     func loadConfig() {
-        if let configData = NSData(contentsOfURL: NSURL(string: GGWiki.configURL)!) {
+        if let configData = GGWiki.retrieveNSData("config.json", url: GGWiki.configURL) {
             let json = try? NSJSONSerialization.JSONObjectWithData(
             configData,
             options: NSJSONReadingOptions.AllowFragments)
@@ -341,42 +378,44 @@ class GGWiki {
     }
    
     func loadAsset(resource: WikiResource, forAutocomplete: Bool) {
-        let json = try? NSJSONSerialization.JSONObjectWithData(
-            resource.jsonData,
-            options: NSJSONReadingOptions.AllowFragments)
-        if let array = json as? NSArray {
-            for bundle in array {
-                if let dict = bundle as? NSDictionary {
-                    if let cards = dict["assets"] as? NSArray, let bundleIdInt = dict["bundleId"] as? Int, let fileType = dict["ext"] as? String {
-                        let bundleId = "\(bundleIdInt)"
-                        // print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
-                        var cardNamesSet = Set<String>()
-                        for c in cards {
-                            if let card = c as? NSDictionary {
-                                if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
-                                    let id = AssetManager.id(bundleId, assetId: assetId)
-                                    if self.cardAssets[id] == nil {
-                                        self.cardAssets[id] = GGWikiAsset(
-                                            name: cardName,
-                                            bundleId: bundleId,
-                                            assetId: assetId,
-                                            fileType: fileType,
-                                            placeholderURL: resource.placeholderURL)
-                                    }
-                                    if forAutocomplete {
-                                        cardNamesSet.insert(cardName)
-                                        self.cardNameToIdMap[cardName] = id
-                                        self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
+        if let jsonData = resource.jsonData {
+            let json = try? NSJSONSerialization.JSONObjectWithData(
+                jsonData,
+                options: NSJSONReadingOptions.AllowFragments)
+            if let array = json as? NSArray {
+                for bundle in array {
+                    if let dict = bundle as? NSDictionary {
+                        if let cards = dict["assets"] as? NSArray, let bundleIdInt = dict["bundleId"] as? Int, let fileType = dict["ext"] as? String {
+                            let bundleId = "\(bundleIdInt)"
+                            // print("Number of wiki cards for bundle id \(bundleId): \(cards.count)")
+                            var cardNamesSet = Set<String>()
+                            for c in cards {
+                                if let card = c as? NSDictionary {
+                                    if let cardName = card["name"] as? String, let assetId = card["id"] as? String {
+                                        let id = AssetManager.id(bundleId, assetId: assetId)
+                                        if self.cardAssets[id] == nil {
+                                            self.cardAssets[id] = GGWikiAsset(
+                                                name: cardName,
+                                                bundleId: bundleId,
+                                                assetId: assetId,
+                                                fileType: fileType,
+                                                placeholderURL: resource.placeholderURL)
+                                        }
+                                        if forAutocomplete {
+                                            cardNamesSet.insert(cardName)
+                                            self.cardNameToIdMap[cardName] = id
+                                            self.cardMaxTokens = max(self.cardMaxTokens, cardName.numTokens)
+                                        }
                                     }
                                 }
                             }
-                        }
-                        for k in cardNamesSet {
-                            self.cardNamesTrie.addWord(k)
-                            
-                            for (index, word) in k.tokens.enumerate() {
-                                if index > 0 && word.length >= 4 {
-                                    self.cardNamesTrie.addPrefix(word, finalWord: k)
+                            for k in cardNamesSet {
+                                self.cardNamesTrie.addWord(k)
+                                
+                                for (index, word) in k.tokens.enumerate() {
+                                    if index > 0 && word.length >= 4 {
+                                        self.cardNamesTrie.addPrefix(word, finalWord: k)
+                                    }
                                 }
                             }
                         }
