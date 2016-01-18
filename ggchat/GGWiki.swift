@@ -80,7 +80,8 @@ class GGWikiAsset {
         self.fileType = fileType
         
         self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).\(fileType)"
-       
+      
+        /*
         if let bundleURL = NSURL(string: "\(GGWiki.cacheFolderURL)/\(bundleId)") {
             let error = NSErrorPointer()
             do {
@@ -93,6 +94,7 @@ class GGWikiAsset {
                 print("Creating '\(bundleURL)' directory failed. Error: \(error)")
             }
         }
+        */
     }
     
     func getDisplayName() -> String {
