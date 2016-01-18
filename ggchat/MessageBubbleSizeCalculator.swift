@@ -82,7 +82,7 @@ class MessageBubbleSizeCalculator {
                 let timeRect = timeStr.boundingRectWithSize(
                     CGSizeMake(20.0, CGFloat.max),
                     options: NSStringDrawingOptions(rawValue: NSStringDrawingOptions.UsesLineFragmentOrigin.rawValue | NSStringDrawingOptions.UsesFontLeading.rawValue ),
-                    attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(12.0) ],
+                    attributes: [ NSFontAttributeName : GGConfig.messageTimeFont ],
                     context: nil)
                 maximumTextWidth -= timeRect.width
             }
