@@ -8,6 +8,7 @@
 
 import UIKit
 
+/*
 protocol MessageLoadEarlierHeaderViewDelegate {
     /**
      *  Tells the delegate that the loadButton has received a touch event.
@@ -18,28 +19,39 @@ protocol MessageLoadEarlierHeaderViewDelegate {
     func headerView(headerView: MessageLoadEarlierHeaderView,
         didPressLoadButton sender: UIButton)
 }
+*/
 
 class MessageLoadEarlierHeaderView: UICollectionReusableView {
 
     static let kMessagesLoadEarlierHeaderViewHeight: CGFloat = 32.0
-    var delegate: MessageLoadEarlierHeaderViewDelegate!
-    
+    // var delegate: MessageLoadEarlierHeaderViewDelegate!
+   
+    /*
     @IBOutlet weak var loadButton: UIButton!
     @IBAction func loadButtonPressed(sender: AnyObject) {
         self.delegate.headerView(self, didPressLoadButton:sender as! UIButton)
     }
+    */
+    @IBOutlet weak var headerLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = UIColor.clearColor()
-        
+       
+        /*
         self.loadButton.setTitle(
             NSBundle.gg_localizedStringForKey("load_earlier_messages"),
             forState: UIControlState.Normal)
         self.loadButton.titleLabel!.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         self.loadButton.setTitleColor(GGConfig.loadButtonColorNormal, forState: UIControlState.Normal)
+        */
+        
+        self.headerLabel.text = NSBundle.gg_localizedStringForKey("load_earlier_messages")
+        self.headerLabel.font = UIFont.systemFontOfSize(12.0)
+        self.headerLabel.textColor = GGConfig.bubbleTopLabelTextColor
+        
     }
 
     // pragma mark - Class methods
@@ -58,7 +70,7 @@ class MessageLoadEarlierHeaderView: UICollectionReusableView {
 
     override var backgroundColor: UIColor? {
         didSet {
-            self.loadButton.backgroundColor = self.backgroundColor
+            self.headerLabel.backgroundColor = self.backgroundColor
         }
     }
 }

@@ -10,8 +10,8 @@ import UIKit
 
 class MessagesCollectionView:
     UICollectionView,
-    MessageCollectionViewCellDelegate,
-    MessageLoadEarlierHeaderViewDelegate {
+    MessageCollectionViewCellDelegate {
+    // MessageLoadEarlierHeaderViewDelegate {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -101,14 +101,15 @@ class MessagesCollectionView:
             withReuseIdentifier: MessageLoadEarlierHeaderView.headerReuseIdentifier(),
             forIndexPath: indexPath) as! MessageLoadEarlierHeaderView
 
-        headerView.loadButton.tintColor = self.loadEarlierMessagesHeaderTextColor
-        headerView.delegate = self
+        // headerView.loadButton.tintColor = self.loadEarlierMessagesHeaderTextColor
+        // headerView.delegate = self
 
         return headerView
     }
     
     // pragma mark - Load earlier messages header delegate
 
+    /*
     func headerView(
         headerView: MessageLoadEarlierHeaderView,
         didPressLoadButton sender:UIButton) {
@@ -118,6 +119,7 @@ class MessagesCollectionView:
                 didTapLoadEarlierMessagesButton: sender)
         }
     }
+    */
     
     //////////////////////////////////////////////////////////////////////////////////
     // MessageCollectionViewCellDelegate
