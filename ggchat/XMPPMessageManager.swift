@@ -309,6 +309,9 @@ public class XMPPMessageManager: NSObject {
             
             // var composingCount = 0
 			for messageElement in results! {
+                
+                self.hasMoreMessagesToLoad = (results!.count == GGConfig.paginationLimit)
+                
                 if let message = UserAPI.parseMessageFromString(
                     messageElement.messageStr,
                     date: messageElement.timestamp,
@@ -342,7 +345,10 @@ public class XMPPMessageManager: NSObject {
         return messages
     }
     
+    var hasMoreMessagesToLoad: Bool = true
+    
     func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> ([Message], [ReadReceipt]) {
+        self.hasMoreMessagesToLoad = true
         self.resendArchivedComposingMessagesFrom(jid)
         
 		let moc = messageStorage?.mainThreadManagedObjectContext
@@ -364,6 +370,7 @@ public class XMPPMessageManager: NSObject {
 		
             self.archivedMessageIds.removeAll()
             print("Fetched \(results!.count) archived messages from core data.")
+            self.hasMoreMessagesToLoad = (results!.count == GGConfig.paginationLimit)
             
             var composingCount = 0
 			for messageElement in results! {

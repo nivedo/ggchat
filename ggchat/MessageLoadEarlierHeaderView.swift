@@ -48,10 +48,20 @@ class MessageLoadEarlierHeaderView: UICollectionReusableView {
         self.loadButton.setTitleColor(GGConfig.loadButtonColorNormal, forState: UIControlState.Normal)
         */
         
-        self.headerLabel.text = NSBundle.gg_localizedStringForKey("load_earlier_messages")
+        self.headerLabel.text = self.headerText
         self.headerLabel.font = UIFont.systemFontOfSize(12.0)
         self.headerLabel.textColor = GGConfig.bubbleTopLabelTextColor
-        
+    }
+    
+    func refreshHeader() {
+        self.headerLabel.text = self.headerText
+        self.headerLabel.setNeedsDisplay()
+    }
+    
+    var headerText: String {
+        get {
+            return XMPPMessageManager.sharedInstance.hasMoreMessagesToLoad ? NSBundle.gg_localizedStringForKey("load_earlier_messages") : "First Message"
+        }
     }
 
     // pragma mark - Class methods

@@ -1822,7 +1822,6 @@ class MessageViewController: UIViewController,
         if let lastVisibleCell = visibleCells.last {
             self.lastScrollVisibleCellIndexPath = self.messageCollectionView.indexPathForCell(lastVisibleCell)
         }
-        print("scrollViewDidScroll y-offset: \(scrollView.contentOffset.y), y-position: \(scrollView.contentOffset.y), index: \(self.lastScrollVisibleCellIndexPath)")
     }
     
     func presentTransparentViewController(

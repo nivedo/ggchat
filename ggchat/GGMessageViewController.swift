@@ -63,6 +63,35 @@ class GGMessageViewController:
             TappableText.sharedInstance.delegate = self
         }
         self.initImageModalViewController()
+        
+        // Initialize refresh control
+        let refreshController = UIRefreshControl()
+        refreshController.tintColor = UIColor.grayColor()
+        refreshController.addTarget(self, action: Selector("refreshControlAction:"), forControlEvents: UIControlEvents.ValueChanged)
+        self.messageCollectionView.addSubview(refreshController)
+        self.messageCollectionView.alwaysBounceVertical = true
+    }
+    
+    func refreshControlAction(refreshController: UIRefreshControl) {
+        // print("refresh")
+        if let recipient = self.recipient {
+            if let firstMessage = self.messages.first {
+                if XMPPMessageManager.sharedInstance.hasMoreMessagesToLoad {
+                    var moreMessages = XMPPMessageManager.sharedInstance.loadMoreAchivedMessagesFrom(recipient.jid, firstDate: firstMessage.date, delegate: self)
+                    let firstRow = moreMessages.count
+                    print("Load \(moreMessages.count) messages")
+                    moreMessages.appendContentsOf(self.messages)
+                    self.messages = moreMessages
+                    self.messageCollectionView.reloadData()
+                    let firstIndexPath = NSIndexPath(forRow: firstRow, inSection: 0)
+                    self.messageCollectionView.scrollToItemAtIndexPath(firstIndexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+                } else {
+                    self.messageCollectionView.reloadData()
+                    refreshController.removeFromSuperview()
+                }
+            }
+        }
+        refreshController.endRefreshing()
     }
     
     func didSendMessage(sender: XMPPStream, message: XMPPMessage) {
@@ -592,4 +621,26 @@ class GGMessageViewController:
     func onAuthenticate() {
         self.resendFailedMessages()
     }
+  
+    /*
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        if let recipient = self.recipient {
+            if scrollView.contentOffset.y <= 0 && XMPPMessageManager.sharedInstance.hasMoreMessagesToLoad {
+                if let firstMessage = self.messages.first {
+                    let visibleCells = self.messageCollectionView.visibleCells()
+                    
+                    print("scrollViewDidScroll y-offset: \(scrollView.contentOffset.y), y-position: \(scrollView.contentOffset.y), index: \(self.lastScrollVisibleCellIndexPath)")
+                    var moreMessages = XMPPMessageManager.sharedInstance.loadMoreAchivedMessagesFrom(recipient.jid, firstDate: firstMessage.date, delegate: self)
+                    print("Load \(moreMessages.count) messages")
+                    moreMessages.appendContentsOf(self.messages)
+                    self.messages = moreMessages
+                    self.messageCollectionView.reloadData()
+                    if let firstIndexPath = self.firstScrollVisibleCellIndexPath {
+                        self.messageCollectionView.scrollToItemAtIndexPath(firstIndexPath, atScrollPosition: UICollectionViewScrollPosition.None, animated: false)
+                    }
+                }
+            }
+        }
+    }
+    */
 }

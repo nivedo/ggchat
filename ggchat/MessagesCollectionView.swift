@@ -103,6 +103,7 @@ class MessagesCollectionView:
 
         // headerView.loadButton.tintColor = self.loadEarlierMessagesHeaderTextColor
         // headerView.delegate = self
+        headerView.refreshHeader()
 
         return headerView
     }
