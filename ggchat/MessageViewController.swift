@@ -1128,7 +1128,7 @@ class MessageViewController: UIViewController,
         // print("shouldChangeCharactersInRange")
         if (range.length == 1 && text.length == 0) {
             let cursorPosition = range.location //gets cursor current position in the text
-            print("delete, range: \(range), text: \(text), cursorPosition: \(cursorPosition)")
+            // print("delete, range: \(range), text: \(text), cursorPosition: \(cursorPosition)")
             
             var attrRange: NSRange = NSMakeRange(0,1) //will store the range of the text that holds specific attributes
             let attrs: NSDictionary = self.inputToolbar.contentView.textView.attributedText.attributesAtIndex(
@@ -1144,7 +1144,7 @@ class MessageViewController: UIViewController,
                 return false
             }
         } else if (text.length > 0) {
-            print("insert, range: \(range), text: \(text)")
+            // print("insert, range: \(range), text: \(text)")
             self.inputToolbar.contentView.textView.setNormalAttributes()
             
             let cursorPosition = range.location //gets cursor current position in the text
@@ -1207,7 +1207,7 @@ class MessageViewController: UIViewController,
         //     NSCharacterSet.whitespaceCharacterSet()).last {
         
         let (word, len) = self.gg_currentlyTypedMessageText()
-        print("editing text \"\(word)\" length: \(word.length), count: \(word.characters.count), min: \(UserAPI.sharedInstance.settings.minAutocompleteCharacters)")
+        // print("editing text \"\(word)\" length: \(word.length), count: \(word.characters.count), min: \(UserAPI.sharedInstance.settings.minAutocompleteCharacters)")
        
         if let auto = self.autocompleteController {
             if auto.active && word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {

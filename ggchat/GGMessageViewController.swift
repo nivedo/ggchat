@@ -70,6 +70,8 @@ class GGMessageViewController:
         refreshController.addTarget(self, action: Selector("refreshControlAction:"), forControlEvents: UIControlEvents.ValueChanged)
         self.messageCollectionView.addSubview(refreshController)
         self.messageCollectionView.alwaysBounceVertical = true
+        
+        XMPPManager.refresh()
     }
     
     func refreshControlAction(refreshController: UIRefreshControl) {

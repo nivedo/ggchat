@@ -381,12 +381,15 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 		XMPPJID *messageJid = isOutgoing ? [message to] : [message from];
 		
 		// Fetch-n-Update OR Insert new message
-		
+	
+        /*
 		XMPPMessageArchiving_Message_CoreDataObject *archivedMessage =
 		    [self composingMessageWithJid:messageJid
 		                        streamJid:myJid
 		                         outgoing:isOutgoing
 		             managedObjectContext:moc];
+        */
+        XMPPMessageArchiving_Message_CoreDataObject *archivedMessage = nil;
 		
 		if (shouldDeleteComposingMessage)
 		{
@@ -449,7 +452,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			if (didCreateNewArchivedMessage) // [archivedMessage isInserted] doesn't seem to work
 			{
 				XMPPLogVerbose(@"Inserting message...");
-				// NSLog(@"Inserting message...");
+				NSLog(@"Inserting message...");
 				
 				[archivedMessage willInsertObject];       // Override hook
 				[self willInsertMessage:archivedMessage]; // Override hook
@@ -462,10 +465,14 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			else
 			{
 				XMPPLogVerbose(@"Updating message...");
-				// NSLog(@"Updating message...");
+				NSLog(@"Updating message...");
 				
 				[archivedMessage didUpdateObject];       // Override hook
 				[self didUpdateMessage:archivedMessage]; // Override hook
+
+                if (saveInsertion) {
+                    [moc save:nil];
+                }
 			}
 			
 			// Create or update contact (if message with actual content)
