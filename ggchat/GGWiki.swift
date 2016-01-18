@@ -62,7 +62,6 @@ class GGWikiAsset {
     var name: String
     var bundleId: String
     var assetId: String
-    // var apiURL: String
     var fileType: String
     var imageURL: String
     var placeholderURL: String?
@@ -77,12 +76,10 @@ class GGWikiAsset {
         self.name = name
         self.bundleId = bundleId
         self.assetId = assetId
-        // self.apiURL = GGWiki.apiURL(name)
         self.placeholderURL = placeholderURL
         self.fileType = fileType
         
         self.imageURL = "\(GGWiki.s3url)/\(bundleId)/\(assetId).\(fileType)"
-        // self.imageLocalURL = "\(GGWiki.cacheFolderURL)/\(imageName)"
        
         if let bundleURL = NSURL(string: "\(GGWiki.cacheFolderURL)/\(bundleId)") {
             let error = NSErrorPointer()
@@ -227,17 +224,6 @@ class GGWiki {
         return fileURL
     }
    
-    /*
-    class func apiURL(cardName: String) -> String {
-        let urlName = cardName.stringByReplacingOccurrencesOfString(
-            " ",
-            withString: "",
-            options: NSStringCompareOptions.LiteralSearch,
-            range: nil)
-        return "\(self.host)/images/\(urlName)"
-    }
-    */
-    
     class var configURL: String {
         let url = "\(self.s3url)/config/config.json"
         return url
