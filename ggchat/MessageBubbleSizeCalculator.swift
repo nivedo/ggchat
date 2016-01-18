@@ -77,7 +77,14 @@ class MessageBubbleSizeCalculator {
             var maximumTextWidth: CGFloat = self.textBubbleWidthForLayout(layout) - avatarSize.width - layout.messageBubbleLeftRightMargin - horizontalInsetsTotal
             if messageData.isOutgoing {
                 // Adjust for time/read labels
-                maximumTextWidth -= CGFloat(15.0)
+                
+                let timeStr = MessageTimestampFormatter.sharedInstance.timeForDate(messageData.date)
+                let timeRect = timeStr.boundingRectWithSize(
+                    CGSizeMake(20.0, CGFloat.max),
+                    options: NSStringDrawingOptions(rawValue: NSStringDrawingOptions.UsesLineFragmentOrigin.rawValue | NSStringDrawingOptions.UsesFontLeading.rawValue ),
+                    attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(12.0) ],
+                    context: nil)
+                maximumTextWidth -= timeRect.width
             }
             
             let stringRect: CGRect = messageData.displayText.boundingRectWithSize(
