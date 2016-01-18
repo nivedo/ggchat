@@ -288,6 +288,60 @@ public class XMPPMessageManager: NSObject {
         }
     }
     
+    func loadMoreAchivedMessagesFrom(jid: String, firstDate: NSDate, delegate: MessageMediaDelegate?) -> [Message] {
+        let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
+		let request = NSFetchRequest()
+		let predicateFormat = "(bareJidStr like %@) AND (timestamp < %@)"
+		let predicate = NSPredicate(format: predicateFormat, jid, firstDate)
+		var messages = [Message]()
+        
+        let sort = NSSortDescriptor(key: "timestamp", ascending: false)
+        request.sortDescriptors = [sort]
+        request.fetchLimit = GGConfig.paginationLimit
+        request.predicate = predicate
+		request.entity = entityDescription
+        
+ 		do {
+			let results = try moc?.executeFetchRequest(request)
+		
+            print("Fetched \(results!.count) archived messages from core data.")
+            
+            // var composingCount = 0
+			for messageElement in results! {
+                if let message = UserAPI.parseMessageFromString(
+                    messageElement.messageStr,
+                    date: messageElement.timestamp,
+                    delegate: delegate) {
+                    /*
+                    if let composing = messageElement.isComposing {
+                        message.isFailedToSend = composing
+                        if composing {
+                            composingCount++
+                        }
+                    }
+                    */
+                    messages.append(message)
+                    self.archivedMessageIds.insert(message.id)
+                /*
+                } else if let readReceipt = UserAPI.parseReadReceiptFromString(messageElement.messageStr) {
+                    receipts.append(readReceipt)
+                */
+                } else {
+                    print("Unable to parse \(messageElement.messageStr)")
+                }
+               
+                // print("---> composing: \(messageElement.isComposing)")
+                // assert(!messageElement.isComposing, "Found composing \(messageElement)")
+			}
+            // print("Loaded \(composingCount) composing messages from core data")
+		} catch _ {
+			//catch fetch error here
+		}
+        messages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })       
+        return messages
+    }
+    
     func loadArchivedMessagesFrom(jid jid: String, delegate: MessageMediaDelegate?) -> ([Message], [ReadReceipt]) {
         self.resendArchivedComposingMessagesFrom(jid)
         
