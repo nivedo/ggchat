@@ -195,7 +195,6 @@ class WikiResource {
         self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
         
         let iconURL = "\(GGWiki.s3url)/assets/\(self.icon)"
-        // self.iconImage = UIImage(data: NSData(contentsOfURL: NSURL(string: iconURL)!)!)
         self.iconImage = GGWikiCache.sharedInstance.retreiveImage(iconURL)
        
         if let placeholder = self.placeholder {
