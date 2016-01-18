@@ -94,10 +94,6 @@ class GGMessageViewController:
         refreshController.endRefreshing()
     }
     
-    func didSendMessage(sender: XMPPStream, message: XMPPMessage) {
-        // self.loadArchivedMessagesFromCoreData(false, animated: true)
-    }
-    
     //////////////////////////////////////////////////////////////////////////////////
     // UIImagePickerControllerDelegate
     
@@ -574,7 +570,16 @@ class GGMessageViewController:
                     break
                 }
             }
-            if update {
+            if !update {
+                let date = NSDate()
+                if let message = UserAPI.parseMessageFromElement(message as DDXMLElement, date: date, delegate: self),
+                    let recipient = self.recipient {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.appendMessage(recipient.jid, date: date, message: message)
+                        self.finishSendingMessageAnimated(true)
+                    }
+                }
+            } else {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.messageCollectionView.reloadData()
                 }
