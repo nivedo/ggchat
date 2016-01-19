@@ -25,7 +25,7 @@ class WikiMediaItem: MediaItem {
 
     init(imageURL: NSURL, placeholderURL: String?, delegate: MessageMediaDelegate?) {
         super.init()
-        // print(placeholderURL)
+        print(placeholderURL)
         self.placeholderImage = GGWikiCache.sharedInstance.retreiveImage(placeholderURL)
         self.delegate = delegate
         self.imageURL = imageURL

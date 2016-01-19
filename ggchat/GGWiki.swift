@@ -175,6 +175,27 @@ class GGWikiCache {
         }
         return nil
     }
+   
+    /*
+    func retreiveImageAsync(key: String?, completion: ((Bool) -> Void)?) -> UIImage? {
+        if let url = key {
+            if let image = self.imageCache[url] {
+                return image
+            } else {
+                // if let data = NSData(contentsOfURL: NSURL(string: url)!) {
+                if let filename = key?.componentsSeparatedByString("/").last {
+                    if let data = GGWiki.retrieveNSData(filename, url: url) {
+                        if let image = UIImage(data: data) {
+                            self.imageCache[url] = image
+                            return image
+                        }
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    */
 }
 
 class WikiResource {
@@ -284,15 +305,15 @@ class GGWiki {
     class func retrieveNSData(key: String, url: String) -> NSData? {
         let URL = self.fileCacheURL(key)
         // print("retrieve NSData key: \(key), url: \(url), local: \(URL.path!)")
-        if !ConnectionManager.isConnectedToNetwork() {
-            if let data = NSData(contentsOfFile: URL.path!) {
-                // print("retrieve NSData locally from \(URL.path!)")
-                return data
-            }
-            if !NSFileManager.defaultManager().fileExistsAtPath(URL.path!) {
-                print("Missing local cached file \(URL.path!)")
-            }
+        // if !ConnectionManager.isConnectedToNetwork() {
+        if let data = NSData(contentsOfFile: URL.path!) {
+            // print("retrieve NSData locally from \(URL.path!)")
+            return data
         }
+        if !NSFileManager.defaultManager().fileExistsAtPath(URL.path!) {
+            print("Missing local cached file \(URL.path!)")
+        }
+        // }
         
         if let data = NSData(contentsOfURL: NSURL(string: url)!) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
