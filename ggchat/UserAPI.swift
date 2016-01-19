@@ -536,39 +536,6 @@ class UserAPI {
         }
     }
    
-    /*
-    func cacheRoster(completion: ((Bool) -> Void)? = nil) {
-        if let jid = self.jid {
-            UserAPI.sharedInstance.getRoster(jid,
-                arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
-                    if let array = arrayBody {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.buddyList.removeAll()
-                            self.rosterMap.removeAll()
-                            for profile in array {
-                                let user = RosterUser(
-                                    profile: profile as! [String: AnyObject],
-                                    avatarCompletion: completion)
-                                self.buddyList.append(user)
-                                self.rosterMap[user.jid] = user
-                            }
-                            UserAPICoreData.sharedInstance.trimAllUsers(self.rosterMap)
-                            self.buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
-                            completion?(true)
-                            self.delegate?.onRosterUpdate(true)
-                        }
-                    } else {
-                        completion?(false)
-                        self.delegate?.onRosterUpdate(false)
-                    }
-                }
-            )
-        }
-        completion?(false)
-        self.delegate?.onRosterUpdate(false)
-    }
-    */
-   
     class func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
         return self.parseMessageFromString(xmlString, date: date, delegate: delegate)
