@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '8C25C2437883764C964336B3'
-               BlueprintName = 'AWSS3'
+               BlueprintIdentifier = '2464688400F664DB3B020F46'
+               BlueprintName = 'SwiftAddressBook'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'AWSS3.framework'>
+               BuildableName = 'SwiftAddressBook.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

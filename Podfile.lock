@@ -11,6 +11,7 @@ PODS:
   - JSQSystemSoundPlayer (4.3.0)
   - Kingfisher (1.9.0)
   - MBProgressHUD (0.9.1)
+  - SwiftAddressBook (0.6.1)
   - TSMessages (0.9.13):
     - HexColors (~> 2.3.0)
 
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - JSQSystemSoundPlayer
   - Kingfisher (~> 1.9)
   - MBProgressHUD (~> 0.9.1)
+  - SwiftAddressBook
   - TSMessages (from `https://github.com/KrauseFx/TSMessages.git`)
 
 EXTERNAL SOURCES:
@@ -44,6 +46,7 @@ SPEC CHECKSUMS:
   JSQSystemSoundPlayer: 8021a6c823a8d83372c703f49ef7d1f31e7647ff
   Kingfisher: 163bafc1af6ae14d707e76ecba256d8db99dc955
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  SwiftAddressBook: 7b861e75dc4d4188cdbfe1baf93c807a04a72147
   TSMessages: 6e403b790139636c15ab4f51946537095e03e79c
 
 COCOAPODS: 0.39.0

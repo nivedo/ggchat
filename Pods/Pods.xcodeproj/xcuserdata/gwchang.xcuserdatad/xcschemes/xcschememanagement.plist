@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftAddressBook.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>TSMessages.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,6 +57,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>282574180AD4E61B17A037699C3CF387</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3B41A9B1D49827D58E203AF61D34F608</key>
 		<dict>
 			<key>primary</key>
@@ -62,17 +72,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4418ADD45C8D25C8468CE67DB6CBF235</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>74CC32C58E7AE782A588581C72E199BB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B236910177A72A0B5833B8D4E0B2556D</key>
+		<key>83B3740A0D193E9A09B5C9DE7493E2CF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -88,6 +93,11 @@
 			<true/>
 		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F32C988DE4F9F39D5EE9FABE15F74701</key>
 		<dict>
 			<key>primary</key>
 			<true/>

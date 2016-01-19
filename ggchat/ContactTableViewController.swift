@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Crashlytics
+import SwiftAddressBook
 
 protocol ContactPickerDelegate{
     func didSelectContact(recipient: RosterUser)
@@ -57,7 +57,18 @@ class ContactTableViewController: UITableViewController,
     }
     
     func addContactFromAddressBook() {
-        
+        SwiftAddressBook.requestAccessWithCompletion({ (success, error) -> Void in
+            if success {
+                if let people = swiftAddressBook?.allPeople {
+                    for person in people {
+                        print("\(person.emails?.map( {$0.value} ))")
+                        print("\(person.phoneNumbers?.map( {$0.value} ))")
+                    }
+                }
+            } else {
+                print("Access to address book denied.")
+            }
+        })
     }
     
     func addContactFromUsername() {

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'DA8C2F9326A1FBF224DEEF62'
+               BlueprintIdentifier = 'CB08C0D5723120B68E651F3F'
                BlueprintName = 'JSQSystemSoundPlayer'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'JSQSystemSoundPlayer.framework'>

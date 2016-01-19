@@ -91,6 +91,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-ggchat/JSQSystemSoundPlayer.framework"
   install_framework "Pods-ggchat/Kingfisher.framework"
   install_framework "Pods-ggchat/MBProgressHUD.framework"
+  install_framework "Pods-ggchat/SwiftAddressBook.framework"
   install_framework "Pods-ggchat/TSMessages.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -101,5 +102,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-ggchat/JSQSystemSoundPlayer.framework"
   install_framework "Pods-ggchat/Kingfisher.framework"
   install_framework "Pods-ggchat/MBProgressHUD.framework"
+  install_framework "Pods-ggchat/SwiftAddressBook.framework"
   install_framework "Pods-ggchat/TSMessages.framework"
 fi
