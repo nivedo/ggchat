@@ -403,6 +403,60 @@ public class XMPPMessageManager: NSObject {
         messages.sortInPlace({ $0.date.compare($1.date) == NSComparisonResult.OrderedAscending })
         return (messages, receipts)
 	}
+    
+    func deleteAllArchivedMessages() {
+        print("Deleting all archived messages from core data")
+        let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
+		let fetchRequest = NSFetchRequest()
+        fetchRequest.entity = entityDescription
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            let persist = messageStorage?.persistentStoreCoordinator
+            try persist?.executeRequest(deleteRequest, withContext: moc!)
+            // try moc?.save()
+        } catch let error as NSError {
+            print("Error deleting archived message core data: \(error)")
+        }
+    }
+    
+    func deleteAllContactMessages() {
+        print("Deleting all contacts from core data")
+        let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Contact_CoreDataObject", inManagedObjectContext: moc!)
+        /*
+        let request = NSFetchRequest()
+		request.entity = entityDescription
+       
+        do {
+			let results = try moc?.executeFetchRequest(request)
+			
+			for contactObject in results! {
+                moc?.deleteObject(contactObject as! NSManagedObject)
+			}
+            try moc?.save()
+		} catch _ {
+			//catch fetch error here
+		}
+        */
+		let fetchRequest = NSFetchRequest()
+        fetchRequest.entity = entityDescription
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            let persist = messageStorage?.persistentStoreCoordinator
+            try persist?.executeRequest(deleteRequest, withContext: moc!)
+            // try moc?.save()
+        } catch let error as NSError {
+            print("Error deleting contact message core data: \(error)")
+        }
+    }
+    
+    func clearCoreData() {
+        self.deleteAllContactMessages()
+        self.deleteAllArchivedMessages()
+    }
 	
 	public func deleteMessagesFrom(jid jid: String, messages: NSArray) {
 		messages.enumerateObjectsUsingBlock { (message, idx, stop) -> Void in

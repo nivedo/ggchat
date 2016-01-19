@@ -302,9 +302,14 @@ class SettingTableViewController:
             }
         } else if (segue.identifier == "settings.to.login") {
             XMPPManager.stop()
-            UserAPI.sharedInstance.authToken = nil
+            self.logoutAction()
             XMPPManager.start()
         }
+    }
+    
+    func logoutAction() {
+        XMPPMessageManager.sharedInstance.clearCoreData()
+        UserAPI.sharedInstance.authToken = nil
     }
 
     func selectAvatarImage() {
