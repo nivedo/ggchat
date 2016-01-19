@@ -40,20 +40,24 @@ class ContactTableViewController: UITableViewController,
         let actionPickFromContacts = UIAlertAction(
             title: "Pick from Your Contacts",
             style: UIAlertActionStyle.Default) { action -> Void in
-            // GGModelData.sharedInstance.addPhotoMediaMessage()
+            self.addContactFromAddressBook()
         }
+        /*
         let actionEnterPhoneNumber = UIAlertAction(
             title: "Enter Phone Number",
             style: UIAlertActionStyle.Default) { action -> Void in
-            // GGModelData.sharedInstance.addVideoMediaMessage()
-            // Crashlytics.sharedInstance().crash()
         }
+        */
         alert.addAction(actionEnterUsername)
-        alert.addAction(actionEnterPhoneNumber)
+        // alert.addAction(actionEnterPhoneNumber)
         alert.addAction(actionPickFromContacts)
         alert.addAction(actionCancel)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func addContactFromAddressBook() {
+        
     }
     
     func addContactFromUsername() {
