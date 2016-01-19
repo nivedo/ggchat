@@ -20,6 +20,16 @@ class LanguageChoice {
     }
 }
 
+class NotificationMenu {
+    var displayName: String
+    var type: String
+    
+    init(displayName: String, type: String) {
+        self.displayName = displayName
+        self.type = type
+    }
+}
+
 class GGSettingData {
     
     class var sharedInstance: GGSettingData {
@@ -31,10 +41,12 @@ class GGSettingData {
    
     var menus: [[SettingMenu]]!
     var languages: [LanguageChoice]!
+    var notifications: [[NotificationMenu]]!
     
     init() {
         self.loadMenus()
         self.loadLanguages()
+        self.loadNotifications()
     }
     
     func loadMenus() {
@@ -102,6 +114,21 @@ class GGSettingData {
                 native: "日本語",
                 english: "Japanese",
                 language: Language.Japanese)
+        ]
+    }
+    
+    func loadNotifications() {
+        self.notifications = [
+            [
+                NotificationMenu(displayName: "Alert", type: "switch"),
+                NotificationMenu(displayName: "Message Preview", type: "switch"),
+                NotificationMenu(displayName: "Sound", type: "menu"),
+            ],
+            [
+                NotificationMenu(displayName: "In-App Sounds", type: "switch"),
+                NotificationMenu(displayName: "In-App Vibrate", type: "switch"),
+                NotificationMenu(displayName: "In-App Preview", type: "switch"),
+            ],
         ]
     }
 }

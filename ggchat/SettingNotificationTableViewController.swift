@@ -18,6 +18,13 @@ class SettingNotificationTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.navigationItem.title = "Notifications"
+       
+        self.tableView.registerNib(SettingTableSwitchCell.nib(),
+            forCellReuseIdentifier: SettingTableSwitchCell.cellReuseIdentifier())
+        
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,24 +35,22 @@ class SettingNotificationTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return GGSettingData.sharedInstance.notifications.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return GGSettingData.sharedInstance.notifications[section].count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
+        let notification = GGSettingData.sharedInstance.notifications[indexPath.section][indexPath.row]
+       
+        let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableSwitchCell.cellReuseIdentifier(), forIndexPath: indexPath) as! SettingTableSwitchCell
+        
+        cell.cellMainLabel.text = notification.displayName
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
