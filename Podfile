@@ -28,6 +28,7 @@ target 'ggchat' do
   pod 'Kingfisher', '~> 1.9'
   pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
   pod 'SwiftAddressBook'
+  pod 'CustomBadge'
 end
 
 target 'ggchatTests' do

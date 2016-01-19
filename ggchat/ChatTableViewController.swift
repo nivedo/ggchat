@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CustomBadge
 
 class ChatTableViewController:
     UITableViewController,
@@ -154,10 +155,12 @@ class ChatTableViewController:
         // cell.avatarImageView.highlightedImage = avatar.avatarHighlightedImage
         
         if chatConversation.unreadCount == 0 {
-            cell.badgeImageView.image = nil
+            // cell.badgeImageView.image = nil
+            cell.badge = nil
         } else {
             let badge = "\(chatConversation.unreadCount)"
-            cell.badgeImageView.image = MessageAvatarImageFactory.badgeImageWithNumber(badge)
+            cell.badge = CustomBadge(string: badge)
+            // cell.badgeImageView.image = MessageAvatarImageFactory.badgeImageWithNumber(badge)
         }
         
         return cell

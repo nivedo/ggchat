@@ -6,6 +6,7 @@ PODS:
     - AWSCore (= 2.3.1)
   - Crashlytics (3.4.1):
     - Fabric (~> 1.6.0)
+  - CustomBadge (3.0.0)
   - Fabric (1.6.1)
   - HexColors (2.3.0)
   - JSQSystemSoundPlayer (4.3.0)
@@ -20,6 +21,7 @@ DEPENDENCIES:
   - AWSCore
   - AWSS3
   - Crashlytics
+  - CustomBadge
   - Fabric
   - JSQSystemSoundPlayer
   - Kingfisher (~> 1.9)
@@ -41,6 +43,7 @@ SPEC CHECKSUMS:
   AWSCore: 7ad34b4bc285b778a3df699cb6f00aad3d1c446f
   AWSS3: b7f4a0ad4da6dcc172e757dcb2b2423d26b32325
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
+  CustomBadge: c60738d213e7ef019b0bf1caa7948333f280ea9b
   Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
   HexColors: 6ad3947c3447a055a3aa8efa859def096351fe5f
   JSQSystemSoundPlayer: 8021a6c823a8d83372c703f49ef7d1f31e7647ff

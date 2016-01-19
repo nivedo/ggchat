@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CustomBadge.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HexColors.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,7 +62,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>282574180AD4E61B17A037699C3CF387</key>
+		<key>275D094F1EC3CBD95342AED934853D59</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2DAC2D329E25BCDB14B899D7CE72AE25</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,12 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>74CC32C58E7AE782A588581C72E199BB</key>
+		<key>4FD5972E3BBF4F8E4B77AC5A6642D0EB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>83B3740A0D193E9A09B5C9DE7493E2CF</key>
+		<key>74CC32C58E7AE782A588581C72E199BB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,12 +102,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
+		<key>C9C4991E0ABCA8B5D9640FDAEC67C51F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F32C988DE4F9F39D5EE9FABE15F74701</key>
+		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
 		<dict>
 			<key>primary</key>
 			<true/>

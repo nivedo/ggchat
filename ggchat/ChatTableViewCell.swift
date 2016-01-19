@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CustomBadge
 
 class ChatTableViewCell: UITableViewCell {
 
@@ -14,12 +15,24 @@ class ChatTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     
     @IBOutlet weak var badgeContainer: UIView!
-    @IBOutlet weak var badgeImageView: UIImageView!
     
     @IBOutlet weak var cellTopLabel: UILabel!
     @IBOutlet weak var cellBottomLabel: UILabel!
     @IBOutlet weak var cellCornerLabel: UILabel!
 
+    var badge: CustomBadge? {
+        willSet {
+            if let badge = self.badge {
+                badge.removeFromSuperview()
+            }
+        }
+        didSet {
+            if let badge = self.badge {
+                self.badgeContainer.addSubview(badge)
+            }
+        }
+    }
+    
     class func cellReuseIdentifier() -> String {
         return NSStringFromClass(self).componentsSeparatedByString(".").last! as String
     }
@@ -33,7 +46,6 @@ class ChatTableViewCell: UITableViewCell {
         
         self.avatarImageView.image = nil
         self.avatarImageView.highlightedImage = nil
-        self.badgeImageView.image = nil
     }
     
     override func awakeFromNib() {

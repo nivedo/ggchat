@@ -144,28 +144,17 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Cell bottom label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44r-ER-T7S" userLabel="Cell bottom label">
-                                            <rect key="frame" x="60" y="30" width="230" height="30"/>
+                                            <rect key="frame" x="60" y="30" width="210" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6O9-Fm-I7M" userLabel="Badge container">
-                                            <rect key="frame" x="290" y="30" width="30" height="29"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vjf-lK-bc9" userLabel="Badge image">
-                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="29"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="16" id="a2g-eE-5qY"/>
-                                                        <constraint firstAttribute="height" constant="16" id="jPR-Mh-llW"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
+                                            <rect key="frame" x="270" y="30" width="50" height="29"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="vjf-lK-bc9" firstAttribute="top" secondItem="6O9-Fm-I7M" secondAttribute="top" constant="6" id="5RA-wZ-ef3"/>
                                                 <constraint firstAttribute="height" constant="29" id="E4P-RB-w4G"/>
-                                                <constraint firstItem="vjf-lK-bc9" firstAttribute="leading" secondItem="6O9-Fm-I7M" secondAttribute="leading" constant="6" id="It2-u0-BZJ"/>
-                                                <constraint firstAttribute="width" constant="30" id="t5s-W6-UOE"/>
+                                                <constraint firstAttribute="width" constant="50" id="t5s-W6-UOE"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -190,7 +179,6 @@
                                     <outlet property="avatarContainer" destination="R3F-nn-JfU" id="e0b-D7-IxS"/>
                                     <outlet property="avatarImageView" destination="DW2-PH-t9z" id="18Z-eb-dao"/>
                                     <outlet property="badgeContainer" destination="6O9-Fm-I7M" id="Qex-mj-fnT"/>
-                                    <outlet property="badgeImageView" destination="vjf-lK-bc9" id="5Gz-7t-V7d"/>
                                     <outlet property="cellBottomLabel" destination="44r-ER-T7S" id="1b2-sb-sJt"/>
                                     <outlet property="cellCornerLabel" destination="ziM-Es-CrP" id="ams-P3-dHV"/>
                                     <outlet property="cellTopLabel" destination="QmM-0d-thf" id="7k2-hb-GkM"/>
@@ -985,6 +973,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="td0-iI-Ota"/>
-        <segue reference="aIy-Q7-IZA"/>
+        <segue reference="opv-3B-fXB"/>
     </inferredMetricsTieBreakers>
 </document>
