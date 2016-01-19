@@ -44,7 +44,7 @@ class ChatTableViewController:
    
         UserAPI.sharedInstance.delegate = self
         XMPPMessageManager.sharedInstance.delegate = self
-        self.tableView.reloadData()
+        // self.tableView.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
