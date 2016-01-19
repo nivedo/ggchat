@@ -58,12 +58,15 @@ class GGSettingData {
                     id: "language",
                     displayName: "Language",
                     segueName: "settings.to.settings_language"),
+                /*
                 SettingMenu(
                     id: "chat",
                     displayName: "Chat Settings",
                     segueName: ""),
+                */
             ],
             [
+                /*
                 SettingMenu(
                     id: "about",
                     displayName: "About",
@@ -72,6 +75,7 @@ class GGSettingData {
                     id: "help",
                     displayName: "Help",
                     segueName: ""),
+                */
                 SettingMenu(
                     id: "logout",
                     displayName: "Log Out",
