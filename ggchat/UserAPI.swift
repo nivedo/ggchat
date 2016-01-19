@@ -540,12 +540,8 @@ class UserAPI {
     func logout() {
         XMPPMessageManager.sharedInstance.clearCoreData()
         UserAPICoreData.sharedInstance.deleteAllUsers()
-        
-        self.chatsMap.removeAll()
-        self.chatsList.removeAll()
-        self.buddyList.removeAll()
-        self.authToken = nil
-        
+       
+        self.reset()
         let appDomain = NSBundle.mainBundle().bundleIdentifier
         NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain!)
     }
@@ -964,6 +960,26 @@ class UserAPI {
     var chatsList: [ChatConversation] = [ChatConversation]()
     var chatsMap: [String: ChatConversation] = [String: ChatConversation]()
     var settings: UserSetting = UserSetting()
+    
+    func reset() {
+        self.username = nil
+        self.email = nil
+        self.password = nil
+        self.nickname = nil
+        self.avatarPath = nil
+        self.avatarImage = nil
+        self.jid = nil
+        self.jpassword = nil
+        self.authToken = nil
+        self.pushToken = nil
+        self.hasAuth = false
+        
+        self.chatsMap.removeAll()
+        self.chatsList.removeAll()
+        self.buddyList.removeAll()
+        self.rosterMap.removeAll()
+        self.settings = UserSetting()
+    }
     
     var displayName: String {
         get {
