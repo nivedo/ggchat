@@ -53,7 +53,7 @@ class GGSettingData {
                 SettingMenu(
                     id: "notification",
                     displayName: "Notifications and Sounds",
-                    segueName: ""),
+                    segueName: "settings.to.settings_notification"),
                 SettingMenu(
                     id: "language",
                     displayName: "Language",

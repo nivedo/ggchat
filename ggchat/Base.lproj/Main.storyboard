@@ -323,6 +323,7 @@
                         <segue destination="crw-fH-LXf" kind="show" identifier="settings.to.settings_textfield" id="gSi-wr-qvu"/>
                         <segue destination="JxT-rj-XU3" kind="show" identifier="settings.to.settings_language" id="Lvg-FJ-O62"/>
                         <segue destination="UL9-IJ-cUh" kind="presentation" identifier="settings.to.login" id="bL7-l3-dHd"/>
+                        <segue destination="9il-gc-832" kind="show" identifier="settings.to.settings_notification" id="fzj-W3-Gf3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oz-tK-uqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -482,6 +483,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O3f-Bq-MAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5284" y="1791"/>
+        </scene>
+        <!--Setting Notification Table View Controller-->
+        <scene sceneID="CHq-HT-aco">
+            <objects>
+                <tableViewController id="9il-gc-832" customClass="SettingNotificationTableViewController" customModule="ggchat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aDv-6I-gac">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Uo6-ua-HGS">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uo6-ua-HGS" id="704-lM-B7H">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9il-gc-832" id="QP1-gM-N7K"/>
+                            <outlet property="delegate" destination="9il-gc-832" id="P6W-fX-Z96"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WFI-i3-Kdc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5731" y="1799"/>
         </scene>
         <!--Message Image View Controller-->
         <scene sceneID="6cH-Lg-7Kp">

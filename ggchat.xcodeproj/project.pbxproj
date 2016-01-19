@@ -34,6 +34,7 @@
 		D433B16F1C4641530003E100 /* GroupProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B16D1C4641530003E100 /* GroupProfileTableViewCell.swift */; };
 		D433B1701C4641530003E100 /* GroupProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D433B16E1C4641530003E100 /* GroupProfileTableViewCell.xib */; };
 		D433B1721C473FA20003E100 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1711C473FA20003E100 /* ConnectionManager.swift */; };
+		D433B1741C4DE7CC0003E100 /* SettingNotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1731C4DE7CB0003E100 /* SettingNotificationTableViewController.swift */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -322,6 +323,7 @@
 		D433B16D1C4641530003E100 /* GroupProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCell.swift; sourceTree = "<group>"; };
 		D433B16E1C4641530003E100 /* GroupProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupProfileTableViewCell.xib; sourceTree = "<group>"; };
 		D433B1711C473FA20003E100 /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		D433B1731C4DE7CB0003E100 /* SettingNotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingNotificationTableViewController.swift; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -1171,10 +1173,11 @@
 				D42B895D1C05D9EC0043C20A /* LoginViewController.swift */,
 				D45FBD621C04972200E79B4E /* SettingTableViewController.swift */,
 				D4A7864F1C0A93EF00C37427 /* SettingTextFieldTableViewController.swift */,
+				D433B14D1C311E100003E100 /* SettingLanguageTableViewController.swift */,
+				D433B1731C4DE7CB0003E100 /* SettingNotificationTableViewController.swift */,
 				D49447251C1EE3BA0008C582 /* SignupViewController.swift */,
 				D433B1461C2A6EA30003E100 /* MessageImageViewController.swift */,
 				D433B1481C2B951A0003E100 /* ProfileViewController.swift */,
-				D433B14D1C311E100003E100 /* SettingLanguageTableViewController.swift */,
 				D433B15F1C3F77200003E100 /* TabBarController.swift */,
 			);
 			name = Controllers;
@@ -2277,6 +2280,7 @@
 				D43B29301C06897300B3F367 /* XMPPParser.m in Sources */,
 				D469EAAF1C09DC0C00D30C9A /* SettingTableBorderCell.swift in Sources */,
 				D4C8FDFA1C06AA2300992801 /* XMPPRoom.m in Sources */,
+				D433B1741C4DE7CC0003E100 /* SettingNotificationTableViewController.swift in Sources */,
 				D4C8FE1B1C06AA2300992801 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				D44A03401C114ECA0059E530 /* AWSS3UploadManager.swift in Sources */,
 				D43B29441C06897D00B3F367 /* RFImageToDataTransformer.m in Sources */,
