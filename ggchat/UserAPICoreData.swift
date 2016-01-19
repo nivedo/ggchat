@@ -42,7 +42,7 @@ class UserAPICoreData {
     
     func syncUser(rosterUser: RosterUser) {
         let fetchRequest = NSFetchRequest(entityName: "User")
-        fetchRequest.predicate = NSPredicate(format: "jid = %@", rosterUser.jidBare)
+        fetchRequest.predicate = NSPredicate(format: "jid = %@", rosterUser.jid)
        
         do {
             let fetchResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)

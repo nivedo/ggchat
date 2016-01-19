@@ -32,27 +32,25 @@ class ReadReceipt {
 }
 
 func ==(_ lhs: RosterUser, _ rhs: RosterUser) -> Bool {
-    return lhs.jidBare == rhs.jidBare
+    return lhs.jid == rhs.jid
 }
 
 class RosterUser: Hashable {
     var nickname: String
     var jid: String
-    var jidBare: String
     var avatar: String
     var avatarImage: UIImage?
     var isBuddy: Bool = false
    
     var hashValue: Int {
         get {
-            return jidBare.hashValue
+            return jid.hashValue
         }
     }
     
     init(profile: [String: AnyObject],
         avatarCompletion: ((Bool) -> Void)?) {
-        self.jid = profile["jid"] as! String
-        self.jidBare = UserAPI.stripResourceFromJID(self.jid)
+        self.jid = UserAPI.stripResourceFromJID(profile["jid"] as! String)
         self.nickname = profile["nickname"] as! String
         self.avatar = profile["avatar"] as! String
         self.isBuddy = profile["is_buddy"] as! Bool
@@ -63,8 +61,7 @@ class RosterUser: Hashable {
     }
     
     init(user: User, avatarCompletion: ((Bool) -> Void)?) {
-        self.jid = user.jid!
-        self.jidBare = UserAPI.stripResourceFromJID(self.jid)
+        self.jid = UserAPI.stripResourceFromJID(user.jid!)
         self.nickname = user.nickname!
         self.avatar = user.avatar!
         if let isBuddy = user.is_buddy?.boolValue {
@@ -92,7 +89,7 @@ class RosterUser: Hashable {
     
     func isEqual(other: RosterUser?) -> Bool {
         if let otherUser = other {
-            return self.jidBare == otherUser.jidBare
+            return self.jid == otherUser.jid
         } else {
             return false
         }

@@ -423,7 +423,7 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             for receipt in receipts {
                 // print("receipt from \(receipt.from)")
-                if recipient.jidBare == receipt.from || recipient.jidBare == receipt.to {
+                if recipient.jid == receipt.from || recipient.jid == receipt.to {
                     for msg in self.messages {
                         if receipt.ids.contains(msg.id) {
                             // print("market as read --> \(msg.id)")
@@ -456,7 +456,7 @@ class GGMessageViewController:
     
     func receiveMessage(from: String, message: Message) {
         if let recipient = self.recipient {
-            if recipient.jidBare == from {
+            if recipient.jid == from {
                 JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                 message.setMediaDelegate(self)
                 dispatch_async(dispatch_get_main_queue()) {
@@ -471,7 +471,7 @@ class GGMessageViewController:
     
     func receiveComposingMessage(from: String) {
         if let recipient = self.recipient {
-            if recipient.jidBare == from {
+            if recipient.jid == from {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.showTypingIndicator = !self.showTypingIndicator
                     self.scrollToBottomAnimated(true)
@@ -482,7 +482,7 @@ class GGMessageViewController:
     
     func receiveReadReceipt(from: String, readReceipt: ReadReceipt) {
         if let recipient = self.recipient {
-            if recipient.jidBare == from {
+            if recipient.jid == from {
                 print("receivedReadReceipt from \(from)")
                 var update = false
                 for msg in self.messages {

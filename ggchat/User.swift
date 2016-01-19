@@ -15,7 +15,7 @@ class User: NSManagedObject {
 // Insert code here to add functionality to your managed object subclass
     
     func isEqual(rosterUser: RosterUser) -> Bool {
-        return self.jid == rosterUser.jidBare &&
+        return self.jid == rosterUser.jid &&
             self.nickname == rosterUser.nickname &&
             self.avatar == rosterUser.avatar &&
             self.is_buddy?.boolValue == rosterUser.isBuddy
@@ -32,7 +32,7 @@ class User: NSManagedObject {
     }
     
     func set(rosterUser: RosterUser) {
-        self.jid = rosterUser.jidBare
+        self.jid = rosterUser.jid
         self.nickname = rosterUser.nickname
         self.avatar = rosterUser.avatar
         self.is_buddy = NSNumber(bool: rosterUser.isBuddy)
