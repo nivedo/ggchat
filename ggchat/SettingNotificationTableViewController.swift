@@ -23,7 +23,12 @@ class SettingNotificationTableViewController: UITableViewController {
        
         self.tableView.registerNib(SettingTableSwitchCell.nib(),
             forCellReuseIdentifier: SettingTableSwitchCell.cellReuseIdentifier())
+        // self.tableView.registerNib(SettingTableHeaderCell.nib(),
+        //    forCellReuseIdentifier: SettingTableHeaderCell.cellReuseIdentifier())
         
+        self.tableView.tableFooterView = UIView()
+        self.tableView.tableFooterView?.hidden = true
+        self.tableView.backgroundColor = self.tableView.separatorColor
         self.tableView.reloadData()
     }
 
@@ -96,5 +101,15 @@ class SettingNotificationTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableHeaderCell.cellReuseIdentifier()) as! SettingTableHeaderCell
+        cell.backgroundColor = UIColor.clearColor()
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(44.0)
+    }
 }
