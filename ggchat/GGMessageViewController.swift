@@ -391,24 +391,20 @@ class GGMessageViewController:
             self.photoPicker.sourceType = .PhotoLibrary
             self.presentViewController(self.photoPicker, animated: true, completion: nil)
         }
+        /*
         let actionLocation = UIAlertAction(
             title: "Send location",
             style: UIAlertActionStyle.Default) { action -> Void in
-                /*
-                GGModelData.sharedInstance.addLocationMediaMessageCompletion({
-                    self.messageCollectionView.reloadData()
-                })
-                */
         }
         let actionVideo = UIAlertAction(
             title: "Send video",
             style: UIAlertActionStyle.Default) { action -> Void in
-            // GGModelData.sharedInstance.addVideoMediaMessage()
         }
+        */
         alert.addAction(actionCancel)
         alert.addAction(actionPhoto)
-        alert.addAction(actionLocation)
-        alert.addAction(actionVideo)
+        // alert.addAction(actionLocation)
+        // alert.addAction(actionVideo)
         
         self.presentViewController(alert, animated: true, completion: nil)
         
