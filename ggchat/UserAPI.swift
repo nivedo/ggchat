@@ -493,20 +493,27 @@ class UserAPI {
     }
     
     func loadProfilesFromJson(array: [AnyObject], completion: ((Bool) -> Void)? = nil) {
-        self.buddyList.removeAll()
-        self.rosterMap.removeAll()
+        // self.buddyList.removeAll()
+        // self.rosterMap.removeAll()
+        var buddyList = [RosterUser]()
+        var rosterMap = [String: RosterUser]()
         for profile in array {
             let user = RosterUser(
                 profile: profile as! [String: AnyObject],
                 avatarCompletion: completion)
             if user.isBuddy {
-                self.buddyList.append(user)
+                buddyList.append(user)
             }
-            self.rosterMap[user.jid] = user
+            rosterMap[user.jid] = user
         }
-        UserAPICoreData.sharedInstance.trimAllUsers(self.rosterMap)
-        self.buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
-        self.delegate?.onRosterUpdate(true)
+        UserAPICoreData.sharedInstance.trimAllUsers(rosterMap)
+        buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
+       
+        dispatch_async(dispatch_get_main_queue()) {
+            self.buddyList = buddyList
+            self.rosterMap = rosterMap
+            self.delegate?.onRosterUpdate(true)
+        }
     }
     
     func loadRosterFromCoreData(completion: ((Bool) -> Void)? = nil) {
