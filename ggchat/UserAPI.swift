@@ -579,6 +579,7 @@ class UserAPI {
     }
     
     class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
+        let startTime = NSDate()
         if let bodyElement = element?.elementForName("body"),
             let from = element?.attributeStringValueForName("from"),
             let type = element?.attributeStringValueForName("type") {
@@ -593,18 +594,18 @@ class UserAPI {
                 
             let id = element?.attributeStringValueForName("id")
             
-            var text = bodyElement.stringValue()
+            let text = bodyElement.stringValue()
             let packet = MessagePacket(placeholderText: text, encodedText: text)
             if let ggbodyElement = element?.elementForName("ggbody") {
-                text = ggbodyElement.stringValue()
+                // text = ggbodyElement.stringValue()
                 packet.encodedText = ggbodyElement.stringValue()
                 packet.variables = self.parseVariablesFromElement(ggbodyElement)
                 // print("parsed \(variables.count) variables")
             }
             let fromBare = UserAPI.stripResourceFromJID(from)
             
-            if let _ = bodyElement.elementForName("photo") {
-                let photo = bodyElement.elementForName("photo")!
+            if let photo = bodyElement.elementForName("photo") {
+                // let photo = bodyElement.elementForName("photo")!
                 let originalKey = photo.elementForName("originalKey")!.stringValue()
                 let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
             
@@ -623,6 +624,8 @@ class UserAPI {
                     senderId: fromBare,
                     date: date,
                     delegate: delegate)
+                let elapsedTime = NSDate().timeIntervalSinceDate(startTime)
+                print("parse body: \(text), time: \(elapsedTime)")
                 return fullMessage
             }
         }
