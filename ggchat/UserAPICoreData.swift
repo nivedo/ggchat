@@ -81,6 +81,24 @@ class UserAPICoreData {
         }
     }
     
+    func deleteAllUsers() {
+        let fetchRequest = NSFetchRequest(entityName: "User")
+        
+        do {
+            let results = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            var update = false
+            for user in results {
+                self.managedObjectContext.deleteObject(user as! NSManagedObject)
+                update = true
+            }
+            if update {
+                try self.managedObjectContext.save()
+            }
+        } catch let error as NSError {
+            print("Could not delete \(error), \(error.userInfo)")
+        }
+    }
+    
     func trimAllUsers(rosterMap: [String: RosterUser]) {
         var needUpdate = false
         if let users = self.fetchAllUsers() {

@@ -535,6 +535,19 @@ class UserAPI {
             completion?(false)
         }
     }
+    
+    func logout() {
+        XMPPMessageManager.sharedInstance.clearCoreData()
+        UserAPICoreData.sharedInstance.deleteAllUsers()
+        
+        self.chatsMap.removeAll()
+        self.chatsList.removeAll()
+        self.buddyList.removeAll()
+        self.authToken = nil
+        
+        let appDomain = NSBundle.mainBundle().bundleIdentifier
+        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain!)
+    }
    
     class func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
