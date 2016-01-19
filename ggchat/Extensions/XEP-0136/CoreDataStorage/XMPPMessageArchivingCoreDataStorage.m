@@ -452,7 +452,7 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 			if (didCreateNewArchivedMessage) // [archivedMessage isInserted] doesn't seem to work
 			{
 				XMPPLogVerbose(@"Inserting message...");
-				NSLog(@"Inserting message...");
+				// NSLog(@"Inserting message...");
 				
 				[archivedMessage willInsertObject];       // Override hook
 				[self willInsertMessage:archivedMessage]; // Override hook
