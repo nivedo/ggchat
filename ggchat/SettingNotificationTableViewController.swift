@@ -52,7 +52,6 @@ class SettingNotificationTableViewController: UITableViewController {
        
         let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableSwitchCell.cellReuseIdentifier(), forIndexPath: indexPath) as! SettingTableSwitchCell
        
-        notification.switchControl = cell.toggleSwitch
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell.cellMainLabel.text = notification.displayName
         cell.toggleSwitch.addTarget(self, action: Selector("switchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
@@ -61,10 +60,16 @@ class SettingNotificationTableViewController: UITableViewController {
     }
     
     func switchChanged(sender: UISwitch) {
-        if sender.on {
-            print("\(sender) on")
-        } else {
-            print("\(sender) off")
+        // print("switchChanged \(sender.superview?.superview)")
+        if let cell = sender.superview?.superview as? UITableViewCell {
+            if let indexPath = self.tableView.indexPathForCell(cell) {
+                let notification = GGSettingData.sharedInstance.notifications[indexPath.section][indexPath.row]
+                if sender.on {
+                    print("\(notification.displayName) on")
+                } else {
+                    print("\(notification.displayName) off")
+                }
+            }
         }
     }
 

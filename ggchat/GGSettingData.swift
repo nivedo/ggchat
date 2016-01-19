@@ -23,7 +23,6 @@ class LanguageChoice {
 class NotificationMenu {
     var displayName: String
     var type: String
-    var switchControl: UISwitch?
     
     init(displayName: String, type: String) {
         self.displayName = displayName
