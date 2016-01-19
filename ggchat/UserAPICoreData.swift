@@ -88,6 +88,7 @@ class UserAPICoreData {
                 if rosterMap[user.jid!] == nil {
                     needUpdate = true
                     self.managedObjectContext.deleteObject(user)
+                    // print("Delete user \(user.jid) from user core data")
                 }
             }
         }
