@@ -509,6 +509,7 @@ class UserAPI {
         }
         UserAPICoreData.sharedInstance.trimAllUsers(self.rosterMap)
         self.buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
+        self.delegate?.onRosterUpdate(true)
     }
     
     func loadRosterFromCoreData(completion: ((Bool) -> Void)? = nil) {
