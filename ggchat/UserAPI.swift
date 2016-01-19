@@ -579,7 +579,7 @@ class UserAPI {
     }
     
     class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
-        let startTime = NSDate()
+        // let startTime = NSDate()
         if let bodyElement = element?.elementForName("body"),
             let from = element?.attributeStringValueForName("from"),
             let type = element?.attributeStringValueForName("type") {
@@ -597,7 +597,6 @@ class UserAPI {
             let text = bodyElement.stringValue()
             let packet = MessagePacket(placeholderText: text, encodedText: text)
             if let ggbodyElement = element?.elementForName("ggbody") {
-                // text = ggbodyElement.stringValue()
                 packet.encodedText = ggbodyElement.stringValue()
                 packet.variables = self.parseVariablesFromElement(ggbodyElement)
                 // print("parsed \(variables.count) variables")
@@ -605,7 +604,6 @@ class UserAPI {
             let fromBare = UserAPI.stripResourceFromJID(from)
             
             if let photo = bodyElement.elementForName("photo") {
-                // let photo = bodyElement.elementForName("photo")!
                 let originalKey = photo.elementForName("originalKey")!.stringValue()
                 let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
             
@@ -617,15 +615,16 @@ class UserAPI {
                     isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                     date: date,
                     media: photoMedia)
-                // photoMessage.id = id
                 return photoMessage
             } else {
+                // let encodeTime = NSDate()
                 let fullMessage = packet.message(id!,
                     senderId: fromBare,
                     date: date,
                     delegate: delegate)
-                let elapsedTime = NSDate().timeIntervalSinceDate(startTime)
-                print("parse body: \(text), time: \(elapsedTime)")
+                // let elapsedTime1 = NSDate().timeIntervalSinceDate(startTime)
+                // let elapsedTime2 = NSDate().timeIntervalSinceDate(encodeTime)
+                // print("parse body: \(text), time1: \(elapsedTime1), time2: \(elapsedTime2)")
                 return fullMessage
             }
         }

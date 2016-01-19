@@ -86,6 +86,7 @@ class MessagePacket {
             isOutgoing: isOutgoing,
             date: date,
             attributedText: attributedText)
+        
         return fullMessage
     }
     
