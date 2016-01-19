@@ -25,15 +25,14 @@ class WikiMediaItem: MediaItem {
 
     init(imageURL: NSURL, placeholderURL: String?, delegate: MessageMediaDelegate?) {
         super.init()
-        // self.placeholderImage = UIImage(named: "mtg_back")
+        // print(placeholderURL)
         self.placeholderImage = GGWikiCache.sharedInstance.retreiveImage(placeholderURL)
-        // assert(self.placeholderImage != nil, "placeholder image is nil")
         self.delegate = delegate
         self.imageURL = imageURL
-       
+      
         self.initView()
         self.initImageView()
-       
+      
         /*
         let resource = Resource(downloadURL: imageURL)
         KingfisherManager.sharedManager.retrieveImageWithResource(resource,

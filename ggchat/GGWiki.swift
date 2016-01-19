@@ -204,6 +204,7 @@ class WikiResource {
         if let placeholder = self.placeholder {
             self.placeholderURL = "\(GGWiki.s3url)/assets/\(placeholder)"
             GGWikiCache.sharedInstance.retreiveImage(self.placeholderURL!)
+            print("placeholderURL: \(self.placeholderURL!)")
         }
         self.language = language
     }
