@@ -143,7 +143,7 @@ class TappableText: NSObject {
             
             if let tappable = attributes[TappableText.tapAttributeKey] as? Bool {
                 if tappable {
-                    print(attributes, NSStringFromRange(range))
+                    // print(attributes, NSStringFromRange(range))
                     self.delegate?.onTap(attributes)
                     return
                 }

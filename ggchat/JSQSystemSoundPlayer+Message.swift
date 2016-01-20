@@ -45,6 +45,10 @@ extension JSQSystemSoundPlayer {
     }
 
     private class func jsq_playSoundFromJSQMessagesBundleWithName(soundName: String, asAlert: Bool) {
+        if !UserAPI.sharedInstance.settings.sound {
+            return
+        }
+        
         //  save sound player original bundle
         let originalPlayerBundleIdentifier: String = JSQSystemSoundPlayer.sharedPlayer().bundle.bundleIdentifier!
         
