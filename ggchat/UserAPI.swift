@@ -207,6 +207,8 @@ class UserSetting {
             self.updateBrackets(self.language)
         }
     }
+    
+    var sound: Bool = true
 
     // Default settings
     init() {
@@ -477,6 +479,9 @@ class UserAPI {
             if language.length > 0 {
                 self.settings.language = language
             }
+        }
+        if let sound = json["sound"] as? Bool {
+            self.settings.sound = sound
         }
         if let avatarPath = json["avatar"] as? String {
             if avatarPath.length > 0 {
@@ -872,6 +877,15 @@ class UserAPI {
         return self.editProfile(["lang": language], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
                 self.settings.language = language
+            }
+            jsonCompletion?(json: jsonBody)
+        })
+    }
+    
+    func updateSound(sound: Bool, jsonCompletion: HTTPJsonCompletion?) -> Bool {
+        return self.editProfile(["sound": sound], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+            if let _ = jsonBody {
+                self.settings.sound = sound
             }
             jsonCompletion?(json: jsonBody)
         })

@@ -21,10 +21,12 @@ class LanguageChoice {
 }
 
 class NotificationMenu {
+    var id: String
     var displayName: String
     var type: String
     
-    init(displayName: String, type: String) {
+    init(id: String, displayName: String, type: String) {
+        self.id = id.lowercaseString
         self.displayName = displayName
         self.type = type
     }
@@ -120,14 +122,14 @@ class GGSettingData {
     func loadNotifications() {
         self.notifications = [
             [
-                NotificationMenu(displayName: "Alert", type: "switch"),
-                NotificationMenu(displayName: "Message Preview", type: "switch"),
-                NotificationMenu(displayName: "Sound", type: "menu"),
+                NotificationMenu(id: "alert", displayName: "Alert", type: "switch"),
+                NotificationMenu(id: "message_preview", displayName: "Message Preview", type: "switch"),
+                NotificationMenu(id: "sound", displayName: "Sound", type: "menu"),
             ],
             [
-                NotificationMenu(displayName: "In-App Sounds", type: "switch"),
-                NotificationMenu(displayName: "In-App Vibrate", type: "switch"),
-                NotificationMenu(displayName: "In-App Preview", type: "switch"),
+                NotificationMenu(id: "inapp_sound", displayName: "In-App Sounds", type: "switch"),
+                NotificationMenu(id: "inapp_vibrate", displayName: "In-App Vibrate", type: "switch"),
+                NotificationMenu(id: "inapp_preview", displayName: "In-App Preview", type: "switch"),
             ],
         ]
     }

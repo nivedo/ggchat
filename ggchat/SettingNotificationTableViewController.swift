@@ -64,10 +64,8 @@ class SettingNotificationTableViewController: UITableViewController {
         if let cell = sender.superview?.superview as? UITableViewCell {
             if let indexPath = self.tableView.indexPathForCell(cell) {
                 let notification = GGSettingData.sharedInstance.notifications[indexPath.section][indexPath.row]
-                if sender.on {
-                    print("\(notification.displayName) on")
-                } else {
-                    print("\(notification.displayName) off")
+                if notification.id == "sound" {
+                    UserAPI.sharedInstance.updateSound(sender.on, jsonCompletion: nil)
                 }
             }
         }
