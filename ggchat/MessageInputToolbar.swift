@@ -51,7 +51,7 @@ class MessageInputToolbar: UIToolbar {
     
     // pragma mark - Initialization
     override func awakeFromNib() {
-        print("InputToolbar::awakeFromNib()")
+        // print("InputToolbar::awakeFromNib()")
         super.awakeFromNib()
         self.translatesAutoresizingMaskIntoConstraints = false
 

@@ -104,7 +104,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     func gg_configureFlowLayout() {
-        print("gg_configureFlowLayout()")
+        // print("gg_configureFlowLayout()")
         self.scrollDirection = UICollectionViewScrollDirection.Vertical
         self.sectionInset = UIEdgeInsetsMake(10.0, 4.0, 10.0, 4.0)
         self.minimumLineSpacing = 4.0

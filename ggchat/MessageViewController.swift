@@ -396,11 +396,11 @@ class MessageViewController: UIViewController,
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("MessageViewController::awakeFromNib()")
+        // print("MessageViewController::awakeFromNib()")
     }
     
     override func viewDidLoad() {
-        print("MessageViewController::viewDidLoad()")
+        // print("MessageViewController::viewDidLoad()")
         super.viewDidLoad()
         
         // Load outlets to self
@@ -1833,7 +1833,7 @@ class MessageViewController: UIViewController,
                 self.parentViewController!.navigationController!.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
             } else {
                 viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-                print("presentTransparentViewController")
+                // print("presentTransparentViewController")
             }
             
             self.presentViewController(viewControllerToPresent,

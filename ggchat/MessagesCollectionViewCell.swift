@@ -334,7 +334,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     
     // pragma mark - Gesture recognizers
     func gg_handleTapGesture(tap: UITapGestureRecognizer) {
-        print("ViewCell::gg_handleTapGesture()")
+        // print("ViewCell::gg_handleTapGesture()")
         let touchPt: CGPoint = tap.locationInView(self)
         
         if (CGRectContainsPoint(self.avatarContainerView.frame, touchPt)) {

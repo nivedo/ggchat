@@ -38,7 +38,7 @@ class GGMessageViewController:
     
     override func viewDidLoad() {
         // Do any additional setup after loading the view.
-        print("GGMessageViewController::viewDidLoad()")
+        // print("GGMessageViewController::viewDidLoad()")
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.

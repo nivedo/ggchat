@@ -40,7 +40,7 @@ class MessageToolbarContentView: UIView {
     // pragma mark - Initialization
 
     override func awakeFromNib() {
-        print("ToolbarContentView::awakeFromNib()")
+        // print("ToolbarContentView::awakeFromNib()")
         super.awakeFromNib()
 
         self.translatesAutoresizingMaskIntoConstraints = false

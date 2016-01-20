@@ -33,18 +33,18 @@ class MessagesCollectionView:
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         
-        print("MessagesCollectionView:init(frame:,layout:)")
+        // print("MessagesCollectionView:init(frame:,layout:)")
         self.gg_configureCollectionView()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        print("MessagesCollectionView:init(coder:)")
+        // print("MessagesCollectionView:init(coder:)")
         self.gg_configureCollectionView()
     }
     
     override func awakeFromNib() {
-        print("MessagesCollectionView:awakeFromNib()")
+        // print("MessagesCollectionView:awakeFromNib()")
         super.awakeFromNib()
         self.gg_configureCollectionView()
     }

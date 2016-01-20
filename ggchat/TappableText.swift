@@ -129,7 +129,7 @@ class TappableText: NSObject {
         location.x -= textView.textContainerInset.left
         location.y -= textView.textContainerInset.top
         
-        print("location: \(NSStringFromCGPoint(location))")
+        // print("location: \(NSStringFromCGPoint(location))")
         
         // Find the character that's been tapped on
         
