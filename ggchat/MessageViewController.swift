@@ -904,7 +904,7 @@ class MessageViewController: UIViewController,
         cell.messageBubbleTopLabel.attributedText = messageCollectionView.messageDataSource.collectionView(collectionView, attributedTextForMessageBubbleTopLabelAtIndexPath: indexPath)
         cell.cellBottomLabel.attributedText = messageCollectionView.messageDataSource.collectionView(collectionView, attributedTextForCellBottomLabelAtIndexPath:indexPath)
 
-        let bubbleTopLabelInset: CGFloat = (avatarImageDataSource != nil) ? 60.0 : 15.0
+        let bubbleTopLabelInset: CGFloat = (avatarImageDataSource != nil) ? cell.avatarContainerViewWidthConstraint.constant : 15.0
 
         if (isOutgoingMessage) {
             cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, bubbleTopLabelInset)
