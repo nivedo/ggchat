@@ -138,19 +138,19 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     override init() {
-        print("MessagesCollectionViewFlowLayout::init()")
+        // print("MessagesCollectionViewFlowLayout::init()")
         super.init()
         self.gg_configureFlowLayout()
     }
     
     required init?(coder: NSCoder) {
-        print("MessagesCollectionViewFlowLayout::init(coder:)")
+        // print("MessagesCollectionViewFlowLayout::init(coder:)")
         super.init(coder: coder)
         self.gg_configureFlowLayout()
     }
 
     override func awakeFromNib() {
-        print("MessagesCollectionViewFlowLayout::awakeFromNib()")
+        // print("MessagesCollectionViewFlowLayout::awakeFromNib()")
         super.awakeFromNib()
         self.gg_configureFlowLayout()
     }

@@ -134,7 +134,7 @@ class GGMessageViewController:
     }
     
     override func viewWillAppear(animated: Bool) {
-        print("GG::viewWillAppear")
+        // print("GG::viewWillAppear")
         super.viewWillAppear(animated)
       
         if let recipient = self.recipient {
