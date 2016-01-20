@@ -32,6 +32,14 @@ class ContactSelectTableViewCell: UITableViewCell {
         self.textView.layer.borderColor = UIColor.gg_highlightedColor().CGColor
         self.textView.layer.borderWidth = 1.0
         self.textView.layer.cornerRadius = 8.0
+        
+        self.textView.scrollEnabled = false
+    }
+    
+    func resizeTextViewHeight() -> CGFloat {
+        self.textView.sizeToFit()
+        let newFrame = self.textView.frame
+        return max(newFrame.size.height, 50.0)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

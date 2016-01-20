@@ -262,7 +262,9 @@ class GroupMessageTableViewController:
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 1 {
-            return CGFloat(50.0)
+            let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier()) as! ContactSelectTableViewCell
+            cell.textView.text = self.selectedDisplayText
+            return cell.resizeTextViewHeight()
         } else {
             return CGFloat(0.0)
         }
@@ -276,16 +278,20 @@ class GroupMessageTableViewController:
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier()) as! ContactSelectTableViewCell
-            
+    var selectedDisplayText: String {
+        get {
             var selectedDisplayNames = [String]()
             for user in self.selectedBuddySet {
                 selectedDisplayNames.append(user.displayName)
             }
-            // print(selectedDisplayNames.joinWithSeparator(", "))
-            cell.textView.text = "To: \(selectedDisplayNames.joinWithSeparator(", "))"
+            return "To: \(selectedDisplayNames.joinWithSeparator(", "))"
+        }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(ContactSelectTableViewCell.cellReuseIdentifier()) as! ContactSelectTableViewCell
+            cell.textView.text = self.selectedDisplayText
             
             return cell
         } else {
