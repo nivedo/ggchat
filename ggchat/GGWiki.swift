@@ -305,26 +305,27 @@ class GGWiki {
     class func retrieveNSData(key: String, url: String) -> NSData? {
         let URL = self.fileCacheURL(key)
         // print("retrieve NSData key: \(key), url: \(url), local: \(URL.path!)")
-        // if !ConnectionManager.isConnectedToNetwork() {
         if let data = NSData(contentsOfFile: URL.path!) {
             // print("retrieve NSData locally from \(URL.path!)")
+            if ConnectionManager.isConnectedToNetwork() {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                    if let data = NSData(contentsOfURL: NSURL(string: url)!) {
+                        data.writeToFile(URL.path!, atomically: true)
+                    }
+                }
+            }
             return data
         }
         if !NSFileManager.defaultManager().fileExistsAtPath(URL.path!) {
             print("Missing local cached file \(URL.path!)")
         }
-        // }
         
         if let data = NSData(contentsOfURL: NSURL(string: url)!) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                 let success = data.writeToFile(URL.path!, atomically: true)
-                /*
-                if success {
-                    print("Successfully wrote \(URL.path!)")
-                } else {
+                if !success {
                     print("Failed to write \(URL.path!)")
                 }
-                */
             }
             return data
         }

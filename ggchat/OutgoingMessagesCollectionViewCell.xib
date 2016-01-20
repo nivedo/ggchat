@@ -43,23 +43,6 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOk-3d-b4L" userLabel="Avatar container">
-                        <rect key="frame" x="286" y="100" width="34" height="34"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ejy-0n-2DI" userLabel="Avatar image view">
-                                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="34" id="8EI-1C-Lf5"/>
-                            <constraint firstItem="Ejy-0n-2DI" firstAttribute="top" secondItem="WOk-3d-b4L" secondAttribute="top" id="JbU-g9-Sh7"/>
-                            <constraint firstAttribute="bottom" secondItem="Ejy-0n-2DI" secondAttribute="bottom" id="ayM-Ac-Z5e"/>
-                            <constraint firstAttribute="trailing" secondItem="Ejy-0n-2DI" secondAttribute="trailing" id="c7z-y9-tmw"/>
-                            <constraint firstItem="Ejy-0n-2DI" firstAttribute="leading" secondItem="WOk-3d-b4L" secondAttribute="leading" id="k83-ed-CpI"/>
-                            <constraint firstAttribute="width" constant="34" id="vmp-dL-Dhl"/>
-                        </constraints>
-                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYp-dz-DkR" userLabel="Bubble container">
                         <rect key="frame" x="40" y="40" width="244" height="94"/>
                         <subviews>
@@ -105,6 +88,23 @@
                             <constraint firstAttribute="height" constant="16" id="YVs-GP-W3K"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOk-3d-b4L" userLabel="Avatar container">
+                        <rect key="frame" x="286" y="40" width="34" height="34"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ejy-0n-2DI" userLabel="Avatar image view">
+                                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="34" id="8EI-1C-Lf5"/>
+                            <constraint firstItem="Ejy-0n-2DI" firstAttribute="top" secondItem="WOk-3d-b4L" secondAttribute="top" id="JbU-g9-Sh7"/>
+                            <constraint firstAttribute="bottom" secondItem="Ejy-0n-2DI" secondAttribute="bottom" id="ayM-Ac-Z5e"/>
+                            <constraint firstAttribute="trailing" secondItem="Ejy-0n-2DI" secondAttribute="trailing" id="c7z-y9-tmw"/>
+                            <constraint firstItem="Ejy-0n-2DI" firstAttribute="leading" secondItem="WOk-3d-b4L" secondAttribute="leading" id="k83-ed-CpI"/>
+                            <constraint firstAttribute="width" constant="34" id="vmp-dL-Dhl"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -125,11 +125,11 @@
                 <constraint firstItem="iYp-dz-DkR" firstAttribute="leading" secondItem="PcF-y2-k28" secondAttribute="trailing" constant="6" id="jPT-eP-IzP"/>
                 <constraint firstAttribute="trailing" secondItem="WOk-3d-b4L" secondAttribute="trailing" id="jjj-SB-cgF"/>
                 <constraint firstItem="iYp-dz-DkR" firstAttribute="top" secondItem="BGD-qY-E0o" secondAttribute="bottom" id="ldu-Zb-Zcp"/>
-                <constraint firstItem="FyK-BI-YcW" firstAttribute="top" secondItem="WOk-3d-b4L" secondAttribute="bottom" id="lmx-gx-3cE"/>
                 <constraint firstItem="5lo-ql-mSi" firstAttribute="leading" secondItem="dXj-y2-X85" secondAttribute="trailing" id="oKa-14-WyJ"/>
                 <constraint firstItem="DZf-LO-Mjz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ohg-tf-RpQ"/>
                 <constraint firstItem="5lo-ql-mSi" firstAttribute="top" secondItem="PcF-y2-k28" secondAttribute="bottom" id="r12-jx-6Oi"/>
                 <constraint firstItem="BGD-qY-E0o" firstAttribute="top" secondItem="DZf-LO-Mjz" secondAttribute="bottom" id="uEm-BC-0XJ"/>
+                <constraint firstItem="WOk-3d-b4L" firstAttribute="top" secondItem="BGD-qY-E0o" secondAttribute="bottom" id="uxx-bK-FI7"/>
                 <constraint firstItem="BGD-qY-E0o" firstAttribute="top" secondItem="DZf-LO-Mjz" secondAttribute="bottom" id="wYT-ZC-TCL"/>
             </constraints>
             <connections>
