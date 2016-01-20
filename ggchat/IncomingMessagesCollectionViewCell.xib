@@ -59,23 +59,6 @@
                             <constraint firstAttribute="trailing" secondItem="PcV-sU-TcX" secondAttribute="trailing" id="vh5-vq-GuW"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxR-jy-U2S" userLabel="Avatar container">
-                        <rect key="frame" x="0.0" y="100" width="34" height="34"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eYd-Db-U2e" userLabel="Avatar image view">
-                                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="eYd-Db-U2e" secondAttribute="bottom" id="W6O-sR-IHx"/>
-                            <constraint firstAttribute="trailing" secondItem="eYd-Db-U2e" secondAttribute="trailing" id="WIm-DM-qTn"/>
-                            <constraint firstAttribute="width" constant="34" id="Xdt-Ns-TmP"/>
-                            <constraint firstAttribute="height" constant="34" id="dEr-L3-Nk4"/>
-                            <constraint firstItem="eYd-Db-U2e" firstAttribute="leading" secondItem="jxR-jy-U2S" secondAttribute="leading" id="s6F-3C-ezu"/>
-                            <constraint firstItem="eYd-Db-U2e" firstAttribute="top" secondItem="jxR-jy-U2S" secondAttribute="top" id="vfM-Xo-ZUv"/>
-                        </constraints>
-                    </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cell bottom label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h36-eA-i5B" userLabel="Cell bottom label" customClass="MessageLabel" customModule="ggchat" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="134" width="320" height="20"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -92,12 +75,30 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxR-jy-U2S" userLabel="Avatar container">
+                        <rect key="frame" x="0.0" y="40" width="34" height="34"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eYd-Db-U2e" userLabel="Avatar image view">
+                                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="eYd-Db-U2e" secondAttribute="bottom" id="W6O-sR-IHx"/>
+                            <constraint firstAttribute="trailing" secondItem="eYd-Db-U2e" secondAttribute="trailing" id="WIm-DM-qTn"/>
+                            <constraint firstAttribute="width" constant="34" id="Xdt-Ns-TmP"/>
+                            <constraint firstAttribute="height" constant="34" id="dEr-L3-Nk4"/>
+                            <constraint firstItem="eYd-Db-U2e" firstAttribute="leading" secondItem="jxR-jy-U2S" secondAttribute="leading" id="s6F-3C-ezu"/>
+                            <constraint firstItem="eYd-Db-U2e" firstAttribute="top" secondItem="jxR-jy-U2S" secondAttribute="top" id="vfM-Xo-ZUv"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="h36-eA-i5B" secondAttribute="trailing" id="3WS-em-WBX"/>
                 <constraint firstItem="YJb-gP-pVg" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4TR-ak-QlF"/>
+                <constraint firstItem="jxR-jy-U2S" firstAttribute="top" secondItem="XdS-3H-25R" secondAttribute="bottom" id="8Xx-YA-zPi"/>
                 <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="GZ0-1y-QjP" secondAttribute="bottom" id="CeA-bz-Fa4"/>
                 <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="v8H-jC-UHi" secondAttribute="bottom" id="KCJ-WB-JAH"/>
                 <constraint firstAttribute="trailing" secondItem="YJb-gP-pVg" secondAttribute="trailing" id="M7j-iF-MO7"/>
@@ -107,7 +108,6 @@
                 <constraint firstAttribute="trailing" secondItem="XdS-3H-25R" secondAttribute="trailing" id="hdg-EO-pia"/>
                 <constraint firstItem="YJb-gP-pVg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="jID-lN-PJ1"/>
                 <constraint firstAttribute="bottom" secondItem="h36-eA-i5B" secondAttribute="bottom" id="jUv-SU-jRP"/>
-                <constraint firstItem="h36-eA-i5B" firstAttribute="top" secondItem="jxR-jy-U2S" secondAttribute="bottom" id="nvF-yg-Odt"/>
                 <constraint firstItem="XdS-3H-25R" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="q40-1G-x4R"/>
                 <constraint firstItem="XdS-3H-25R" firstAttribute="top" secondItem="YJb-gP-pVg" secondAttribute="bottom" id="sO5-YO-VBb"/>
                 <constraint firstItem="v8H-jC-UHi" firstAttribute="leading" secondItem="GZ0-1y-QjP" secondAttribute="trailing" constant="6" id="wut-p6-V1t"/>
