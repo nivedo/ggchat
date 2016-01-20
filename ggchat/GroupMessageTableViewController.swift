@@ -284,6 +284,7 @@ class GroupMessageTableViewController:
             for user in self.selectedBuddySet {
                 selectedDisplayNames.append(user.displayName)
             }
+            selectedDisplayNames.sortInPlace( { $0.lowercaseString < $1.lowercaseString } )
             return "To: \(selectedDisplayNames.joinWithSeparator(", "))"
         }
     }

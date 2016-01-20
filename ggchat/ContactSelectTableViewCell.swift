@@ -37,8 +37,16 @@ class ContactSelectTableViewCell: UITableViewCell {
     }
     
     func resizeTextViewHeight() -> CGFloat {
+        let fixedWidth = self.textView.frame.size.width
+        self.textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        let newSize = self.textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        var newFrame = self.textView.frame
+        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+        self.textView.frame = newFrame
+        /*
         self.textView.sizeToFit()
         let newFrame = self.textView.frame
+        */
         return max(newFrame.size.height, 50.0)
     }
 
