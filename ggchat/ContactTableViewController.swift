@@ -19,7 +19,7 @@ class ContactTableViewController: UITableViewController,
     UserDelegate {
 
     var searchResultController = UISearchController()
-    var filteredRosterList = [RosterUser]()
+    var filteredBuddyList = [RosterUser]()
     var buddyList = [RosterUser]()
 
     @IBAction func addContactAction(sender: AnyObject) {
@@ -42,14 +42,7 @@ class ContactTableViewController: UITableViewController,
             style: UIAlertActionStyle.Default) { action -> Void in
             self.addContactFromAddressBook()
         }
-        /*
-        let actionEnterPhoneNumber = UIAlertAction(
-            title: "Enter Phone Number",
-            style: UIAlertActionStyle.Default) { action -> Void in
-        }
-        */
         alert.addAction(actionEnterUsername)
-        // alert.addAction(actionEnterPhoneNumber)
         alert.addAction(actionPickFromContacts)
         alert.addAction(actionCancel)
         
@@ -107,14 +100,6 @@ class ContactTableViewController: UITableViewController,
                                 }
                             }
                         })
-                        /*
-                        UserAPI.sharedInstance.getUserinfo(username, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
-                            if let json = jsonBody, let jidStr = json["jid"] as? String {
-                                print("Adding \(jidStr)")
-                                XMPPRosterManager.addUser(jidStr, nickname: "")
-                            }
-                        })
-                        */
                     }
                 }
             })
@@ -211,26 +196,16 @@ class ContactTableViewController: UITableViewController,
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.searchResultController.view.removeFromSuperview()
-        
-        // XMPPRosterManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if (self.inSearchMode) {
             let searchString = searchController.searchBar.text!.lowercaseString
-            self.filteredRosterList = self.buddyList.filter { user in
-                user.displayName.lowercaseString.containsString(searchString)
+            self.filteredBuddyList = self.buddyList.filter { user in
+                return user.displayName.lowercaseString.containsString(searchString)
             }
-            /*
-            let searchPredicate = NSPredicate(format: "self.displayName CONTAINS[cd] %@",
-                searchController.searchBar.text!)
-           
-            self.searchFetchController = XMPPRosterManager.sharedInstance.newFetchedResultsController(searchPredicate)
-            self.searchFetchController?.delegate = self
-            
-            print("updateSearch, active: \(self.searchResultController.active)")
-            */
         }
+        // print("updateSearchResults: \(self.inSearchMode), count: \(self.dataList.count)")
         self.tableView.reloadData()
     }
     
@@ -244,7 +219,7 @@ class ContactTableViewController: UITableViewController,
     var dataList: [RosterUser] {
         get {
             if self.inSearchMode {
-                return self.filteredRosterList
+                return self.filteredBuddyList
             } else {
                 return self.buddyList
             }
@@ -260,14 +235,14 @@ class ContactTableViewController: UITableViewController,
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.buddyList.count
+        return self.dataList.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ContactTableViewCell.cellReuseIdentifier(),
             forIndexPath: indexPath) as! ContactTableViewCell
 
-        let user = self.buddyList[indexPath.row]
+        let user = self.dataList[indexPath.row]
         
         let avatar = user.messageAvatarImage
         cell.avatarImageView.image = avatar.avatarImage
@@ -280,7 +255,7 @@ class ContactTableViewController: UITableViewController,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("clicked \(indexPath)")
         
-        let user = self.buddyList[indexPath.row]
+        let user = self.dataList[indexPath.row]
         
         self.searchResultController.searchBar.resignFirstResponder()
         self.searchResultController.active = false
