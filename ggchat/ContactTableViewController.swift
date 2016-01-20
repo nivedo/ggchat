@@ -141,7 +141,7 @@ class ContactTableViewController: UITableViewController,
         
         UserAPI.sharedInstance.delegate = self
         XMPPMessageManager.sharedInstance.delegate = self
-        self.tableView.reloadData()
+        // self.tableView.reloadData()
        
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self,
@@ -151,9 +151,10 @@ class ContactTableViewController: UITableViewController,
     
     
     func handleRefresh(refreshControl: UIRefreshControl) {
-        print("handleRefresh")
+        // print("handleRefresh")
         UserAPI.sharedInstance.sync({ (success: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
                 refreshControl.endRefreshing()
             }
         })
