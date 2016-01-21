@@ -694,6 +694,10 @@ class MessageViewController: UIViewController,
     func didPressAccessoryButton(sender: UIButton) {
         assert(false, "Error! required method not implemented in subclass. Need to implement didPressAccessoryButton")
     }
+
+    func didPressLeftButton(sender: UIButton) {
+        assert(false, "Error! required method not implemented in subclass. Need to implement didPressLeftButton")
+    }
     
     func didPressInnerButton(sender: UIButton) {
         assert(false, "Error! required method not implemented in subclass. Need to implement didPressInnerButton")
@@ -1027,6 +1031,8 @@ class MessageViewController: UIViewController,
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftBarButton sender: UIButton) {
         print("MVC::didPressLeftBarButton")
+        self.didPressLeftButton(sender)
+        /*
         if (toolbar.sendButtonOnRight) {
             self.didPressAccessoryButton(sender)
         } else {
@@ -1036,13 +1042,15 @@ class MessageViewController: UIViewController,
                 senderDisplayName: self.senderDisplayName,
                 date: NSDate())
         }
+        */
     }
     
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftInnerBarButton sender: UIButton) {
         print("MVC::didPressLeftInnerBarButton")
-        self.autocompleteController?.hide()
-        self.didPressInnerButton(sender)
+        // self.autocompleteController?.hide()
+        // self.didPressInnerButton(sender)
+        self.didPressAccessoryButton(sender)
     }
     
     func messagesInputToolbar(toolbar: MessageInputToolbar,
@@ -1055,6 +1063,12 @@ class MessageViewController: UIViewController,
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressRightBarButton sender: UIButton) {
         print("MVC::didPressRightBarButton")
+        self.didPressSendButton(sender,
+            withMessagePacket: self.gg_currentlyComposedMessageText(),
+            senderId: self.senderId,
+            senderDisplayName: self.senderDisplayName,
+            date: NSDate())
+        /*
         if (toolbar.sendButtonOnRight) {
             self.didPressSendButton(sender,
                 withMessagePacket: self.gg_currentlyComposedMessageText(),
@@ -1064,6 +1078,7 @@ class MessageViewController: UIViewController,
         } else {
             self.didPressAccessoryButton(sender)
         }
+        */
     }
 
     func gg_currentlyComposedMessageText() -> MessagePacket {
