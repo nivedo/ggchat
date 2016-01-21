@@ -91,18 +91,11 @@ class MessageInputToolbar: UIToolbar {
 
         self.toggleSendButtonEnabled()
         
-        // print(self.contentView.leftBarButtonItem?.allControlEvents())
-        // print(self.contentView.rightBarButtonItem?.allControlEvents())
-       
-        var index = 0
-        for (k,v) in GGWiki.sharedInstance.wikis {
-            if v.language == UserAPI.sharedInstance.settings.language {
-                if index == 0 {
-                    self.contentView.middle1BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
-                } else if index == 1 {
-                    self.contentView.middle2BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
-                }
-                index++
+        for (index, resource) in GGWiki.sharedInstance.getKeyboardResources().enumerate() {
+            if index == 0 {
+                self.contentView.middle1BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(resource.iconImage)
+            } else if index == 1 {
+                self.contentView.middle2BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(resource.iconImage)
             }
         }
     }

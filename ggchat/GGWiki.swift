@@ -202,6 +202,7 @@ class WikiResource {
     var name: String
     var icon: String
     var placeholder: String?
+    var ref: String
     var refKey: String
     var jsonURL: String
     var jsonData: NSData?
@@ -213,7 +214,8 @@ class WikiResource {
         self.name = json["name"]!
         self.icon = json["icon"]!
         self.placeholder = json["placeholder"]
-        self.refKey = "\(json["ref"]!):\(language)"
+        self.ref = json["ref"]!
+        self.refKey = "\(self.ref):\(language)"
         let bundle = json["bundle"]!
         self.jsonURL = "\(GGWiki.s3url)/config/\(bundle)"
         self.jsonData = GGWiki.retrieveNSData(bundle, url: self.jsonURL)
@@ -356,6 +358,18 @@ class GGWiki {
             return self.wikis[auto]
         }
         return nil
+    }
+    
+    func getKeyboardResources() -> [WikiResource] {
+        var keyboards = [WikiResource]()
+       
+        for ref in UserAPI.sharedInstance.settings.keyboards {
+            let refKey = "\(ref):\(UserAPI.sharedInstance.settings.language)"
+            if let resource = GGWiki.sharedInstance.wikis[refKey] {
+                keyboards.append(resource)
+            }
+        }
+        return keyboards
     }
    
     func loadAutocompleteAsync(wiki: String) {
