@@ -378,7 +378,7 @@ class MessageViewController: UIViewController,
                 let action = UIAlertAction(
                     title: v.name,
                     style: UIAlertActionStyle.Default) { action -> Void in
-                        GGWiki.sharedInstance.loadAutocompleteAsync(k)
+                        // GGWiki.sharedInstance.loadAutocompleteAsync(k)
                         
                         self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
                         self.autocompleteController?.active = true
