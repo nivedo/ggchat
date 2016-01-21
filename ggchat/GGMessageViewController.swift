@@ -224,14 +224,6 @@ class GGMessageViewController:
                         for i in 0..<msgs.count {
                             let m = msgs[i]
                             let x = xmls[i]
-                            /*
-                            if (lastId == nil || lastId! != m.id) &&
-                                (lastTimestamp == nil || m.date.compare(lastTimestamp!) == NSComparisonResult.OrderedDescending) {
-                                self.messages.append(m)
-                                print("archiving message \(m.displayText)")
-                                XMPPMessageManager.sharedInstance.archiveMessage(m.id, xmlString: x, date: m.date, outgoing: m.isOutgoing)
-                            }
-                            */
                             if XMPPMessageManager.sharedInstance.archiveMessage(m.id, xmlString: x, date: m.date, outgoing: m.isOutgoing) {
                                 self.messages.append(m)
                             }
