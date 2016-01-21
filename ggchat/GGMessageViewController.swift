@@ -302,6 +302,9 @@ class GGMessageViewController:
         }
     }
 
+    override func didPressEllipsisButton(sender: UIButton) {
+        print("didPressEllipsisButton")
+    }
     override func didPressInnerButton(sender: UIButton) {
         /*
         let alert: UIAlertController = UIAlertController(

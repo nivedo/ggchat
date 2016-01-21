@@ -698,6 +698,10 @@ class MessageViewController: UIViewController,
     func didPressInnerButton(sender: UIButton) {
         assert(false, "Error! required method not implemented in subclass. Need to implement didPressInnerButton")
     }
+    
+    func didPressEllipsisButton(sender: UIButton) {
+        assert(false, "Error! required method not implemented in subclass. Need to implement didPressEllipsisButton")
+    }
 
     func finishSendingMessage() {
         self.finishSendingMessageAnimated(true)
@@ -1039,6 +1043,13 @@ class MessageViewController: UIViewController,
         print("MVC::didPressLeftInnerBarButton")
         self.autocompleteController?.hide()
         self.didPressInnerButton(sender)
+    }
+    
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+        didPressRightInnerBarButton sender: UIButton) {
+        print("MVC::didPressRightInnerBarButton")
+        self.autocompleteController?.hide()
+        self.didPressEllipsisButton(sender)
     }
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,

@@ -27,6 +27,22 @@ class MessageToolbarButtonFactory {
         return accessoryButton
     }
     
+    class func defaultEllipsisButtonItem() -> UIButton {
+        let ellipsisImage: UIImage = UIImage.gg_defaultEllipsisImage()
+        let normalImage: UIImage = ellipsisImage.gg_imageMaskedWithColor(UIColor.lightGrayColor())
+        let highlightedImage: UIImage = ellipsisImage.gg_imageMaskedWithColor(UIColor.darkGrayColor())
+
+        let ellipsisButton: UIButton = UIButton(frame: CGRectMake(0.0, 0.0, ellipsisImage.size.width, 32.0))
+        ellipsisButton.setImage(normalImage, forState: UIControlState.Normal)
+        ellipsisButton.setImage(highlightedImage, forState: UIControlState.Highlighted)
+
+        ellipsisButton.contentMode = UIViewContentMode.ScaleAspectFit
+        ellipsisButton.backgroundColor = UIColor.clearColor()
+        ellipsisButton.tintColor = UIColor.lightGrayColor()
+
+        return ellipsisButton
+    }
+    
     class func defaultKeyboardButtonItem() -> UIButton {
         let keyboardImage: UIImage = UIImage.gg_defaultKeyboardImage()
         let normalImage: UIImage = keyboardImage.gg_imageMaskedWithColor(UIColor.lightGrayColor())

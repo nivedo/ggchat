@@ -19,6 +19,9 @@ protocol MessageInputToolbarDelegate: UIToolbarDelegate {
     func messagesInputToolbar(toolbar: MessageInputToolbar,
           didPressRightBarButton sender: UIButton)
 
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+           didPressRightInnerBarButton sender: UIButton)
+    
     /**
      *  Tells the delegate that the toolbar's `leftBarButtonItem` has been pressed.
      *
@@ -74,6 +77,7 @@ class MessageInputToolbar: UIToolbar {
             keyboardImage = resource.iconImage
         }
         self.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(keyboardImage)
+        self.contentView.rightInnerBarButtonItem = MessageToolbarButtonFactory.defaultEllipsisButtonItem()
 
         self.toggleSendButtonEnabled()
         
@@ -117,6 +121,10 @@ class MessageInputToolbar: UIToolbar {
     
     func gg_leftInnerBarButtonPressed(sender: UIButton) {
         self.messageDelegate.messagesInputToolbar(self, didPressLeftInnerBarButton: sender)
+    }
+
+    func gg_rightInnerBarButtonPressed(sender: UIButton) {
+        self.messageDelegate.messagesInputToolbar(self, didPressRightInnerBarButton: sender)
     }
 
     func gg_rightBarButtonPressed(sender: UIButton) {
@@ -174,7 +182,16 @@ class MessageInputToolbar: UIToolbar {
                         action: "gg_rightBarButtonPressed:",
                         forControlEvents: UIControlEvents.TouchUpInside)
                 }
+                else if (keyPath! == NSStringFromSelector(Selector("rightInnerBarButtonItem"))) {
 
+                    self.contentView.rightInnerBarButtonItem!.removeTarget(self,
+                        action: nil,
+                        forControlEvents: UIControlEvents.TouchUpInside)
+
+                    self.contentView.rightInnerBarButtonItem!.addTarget(self,
+                        action: "gg_rightInnerBarButtonPressed:",
+                        forControlEvents: UIControlEvents.TouchUpInside)
+                }
                 self.toggleSendButtonEnabled()
             }
         }
@@ -204,6 +221,12 @@ class MessageInputToolbar: UIToolbar {
             options: NSKeyValueObservingOptions(rawValue: 0),
             context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
 
+        self.contentView.addObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("rightInnerBarButtonItem")),
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
         self.gg_isObserving = true
     }
 
@@ -227,6 +250,11 @@ class MessageInputToolbar: UIToolbar {
             forKeyPath: NSStringFromSelector(Selector("rightBarButtonItem")),
             context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
     
+        self.contentView.removeObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("rightInnerBarButtonItem")),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
         self.gg_isObserving = false
     }
 }

@@ -35,11 +35,19 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lc8-na-YKI" userLabel="Left inner button container">
-                    <rect key="frame" x="50" y="50" width="32" height="32"/>
+                    <rect key="frame" x="50" y="50" width="34" height="32"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="34" id="Hbv-3E-cV7"/>
                         <constraint firstAttribute="height" constant="32" id="VHP-2l-4AM"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aKz-mx-fGl" userLabel="Right inner button container">
+                    <rect key="frame" x="222" y="50" width="34" height="32"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="34" id="Jc7-4R-JiJ"/>
+                        <constraint firstAttribute="height" constant="32" id="M2b-7z-1Gy"/>
                     </constraints>
                 </view>
             </subviews>
@@ -49,13 +57,15 @@
                 <constraint firstAttribute="bottom" secondItem="F7y-DS-i8Y" secondAttribute="bottom" constant="6" id="3V9-iz-PGF"/>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="CUz-aS-m0C"/>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Cvc-cE-iIh"/>
+                <constraint firstAttribute="bottom" secondItem="aKz-mx-fGl" secondAttribute="bottom" constant="8" id="E3C-Xn-oQD"/>
                 <constraint firstAttribute="trailing" secondItem="zbL-Zk-acd" secondAttribute="trailing" constant="8" id="Js0-qA-saa"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="top" secondItem="zbL-Zk-acd" secondAttribute="bottom" constant="8" id="PO5-2R-mRH"/>
                 <constraint firstAttribute="bottom" secondItem="lc8-na-YKI" secondAttribute="bottom" constant="6" id="Y50-qW-nsT"/>
                 <constraint firstAttribute="bottom" secondItem="ga3-AL-pKl" secondAttribute="bottom" constant="6" id="kqp-0X-dBA"/>
-                <constraint firstItem="lc8-na-YKI" firstAttribute="leading" secondItem="F7y-DS-i8Y" secondAttribute="trailing" constant="2" id="lT2-2v-wI2"/>
+                <constraint firstItem="lc8-na-YKI" firstAttribute="leading" secondItem="F7y-DS-i8Y" secondAttribute="trailing" constant="6" id="lT2-2v-wI2"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="qiX-SD-Lq8"/>
                 <constraint firstAttribute="trailing" secondItem="ga3-AL-pKl" secondAttribute="trailing" constant="8" id="sGI-8Z-ES2"/>
+                <constraint firstItem="ga3-AL-pKl" firstAttribute="leading" secondItem="aKz-mx-fGl" secondAttribute="trailing" constant="8" id="vf4-8G-exZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -68,6 +78,8 @@
                 <outlet property="rightBarButtonContainerView" destination="ga3-AL-pKl" id="jAX-cK-KCa"/>
                 <outlet property="rightBarButtonContainerViewWidthConstraint" destination="1NA-Dk-W5Y" id="QFS-7u-b7M"/>
                 <outlet property="rightHorizontalSpacingConstraint" destination="sGI-8Z-ES2" id="dVc-jW-XX1"/>
+                <outlet property="rightInnerBarButtonContainerView" destination="aKz-mx-fGl" id="Zww-sr-6Tn"/>
+                <outlet property="rightInnerBarButtonContainerViewWidthConstraint" destination="Jc7-4R-JiJ" id="IxA-18-34F"/>
                 <outlet property="textView" destination="zbL-Zk-acd" id="alL-Ev-Zmt"/>
             </connections>
         </view>

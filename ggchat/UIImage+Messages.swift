@@ -137,6 +137,10 @@ extension UIImage {
     class func gg_defaultKeyboardImage() -> UIImage {
         return UIImage(named: "Keyboard")!
     }
+
+    class func gg_defaultEllipsisImage() -> UIImage {
+        return UIImage.gg_bubbleImageFromBundleWithName("typing")
+    }
     
     class func gg_defaultTypingIndicatorImage() -> UIImage {
         return UIImage.gg_bubbleImageFromBundleWithName("typing")
