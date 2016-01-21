@@ -203,44 +203,18 @@ class GGMessageViewController:
                     self.finishReceivingMessageAnimated(false)
                     self.scrollToBottomAnimated(false)
                 }
-                if sync {
-                    self.syncArchivedMessages(animated)
+                if sync && self.messages.count == 0 {
+                    self.syncHistoryMessages(animated)
                 }
             })
         }
     }
-    
-    func syncArchivedMessages(animated: Bool) {
-        if let recipient = self.recipient {
-            var syncNeeded = true
-            if let lastArchivedMessageId = self.messages.last?.id {
-                if let chatConversation = UserAPI.sharedInstance.chatsMap[recipient.jid] {
-                    syncNeeded = (lastArchivedMessageId != chatConversation.lastMessage.id)
-                }
-            }
-            
-            if syncNeeded {
-                self.syncHistoryMessages(animated)
-            } else {
-                print("sync NOT NEEDED for \(recipient.jid)")
-            }
-        }
-    }
-    
+   
     func syncHistoryMessages(animated: Bool) {
         if let recipient = self.recipient {
-            let lastMessage = self.messages.last
-            let lastTimestamp = self.messages.last?.date
-            let lastId = self.messages.last?.id
-            var limit: Int? = nil
-            if lastMessage == nil {
-                limit = GGConfig.paginationLimit
-            }
-            let date = self.messages.last?.date
-            print("sync message history from \(date), msg: \(self.messages.last?.displayText), id: \(lastId), time: \(lastTimestamp)")
             UserAPI.sharedInstance.getHistory(recipient.jid,
-                limit: limit,
-                end: date,
+                limit: GGConfig.paginationLimit,
+                end: nil,
                 delegate: self,
                 completion: { (messages: [Message]?, xmls: [String]?) -> Void in
                 if let msgs = messages, let xmls = xmls {
