@@ -25,6 +25,10 @@ class MessageToolbarContentView: UIView {
     @IBOutlet weak var rightInnerBarButtonContainerView: UIView!
     @IBOutlet weak var textView: MessageComposerTextView!
     
+    @IBOutlet weak var middle1BarButtonContainerView: UIView!
+    @IBOutlet weak var middle2BarButtonContainerView: UIView!
+    @IBOutlet weak var middle3BarButtonContainerView: UIView!
+    
     @IBOutlet weak var leftBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftInnerBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightBarButtonContainerViewWidthConstraint: NSLayoutConstraint!
@@ -40,6 +44,8 @@ class MessageToolbarContentView: UIView {
     }
     
     // pragma mark - Initialization
+    
+    var middleBarButtonContainerViews = [UIView]()
 
     override func awakeFromNib() {
         // print("ToolbarContentView::awakeFromNib()")
@@ -80,9 +86,47 @@ class MessageToolbarContentView: UIView {
             if (self.rightInnerBarButtonContainerView != nil) {
                 self.rightInnerBarButtonContainerView.backgroundColor = backgroundColor
             }
+        
+            if (self.middle1BarButtonContainerView != nil) {
+                self.middle1BarButtonContainerView.backgroundColor = backgroundColor
+            }
+            if (self.middle2BarButtonContainerView != nil) {
+                self.middle2BarButtonContainerView.backgroundColor = backgroundColor
+            }
+            if (self.middle3BarButtonContainerView != nil) {
+                self.middle3BarButtonContainerView.backgroundColor = backgroundColor
+            }
         }
     }
+    
+    dynamic var middle1BarButtonItem: UIButton? {
+        willSet (middle1BarButtonItem) {
+            if (self.middle1BarButtonItem != nil) {
+                self.middle1BarButtonItem!.removeFromSuperview()
+            }
 
+            if (middle1BarButtonItem == nil) {
+                self.middle1BarButtonItem = nil
+                // self.middle1BarButtonItemWidth = 0.0
+                self.middle1BarButtonContainerView.hidden = true
+                return
+            }
+
+            if (CGRectEqualToRect(middle1BarButtonItem!.frame, CGRectZero)) {
+                middle1BarButtonItem!.frame = self.middle1BarButtonContainerView.bounds
+            }
+
+            self.middle1BarButtonContainerView.hidden = false
+            // self.middle1BarButtonItemWidth = CGRectGetWidth(middle1BarButtonItem!.frame)
+
+            middle1BarButtonItem!.translatesAutoresizingMaskIntoConstraints = false
+
+            self.middle1BarButtonContainerView.addSubview(middle1BarButtonItem!)
+            self.middle1BarButtonContainerView.gg_pinAllEdgesOfSubview(middle1BarButtonItem!)
+            self.setNeedsUpdateConstraints()
+        }
+    }
+    
     dynamic var leftBarButtonItem: UIButton? {
         willSet (leftBarButtonItem) {
             if (self.leftBarButtonItem != nil) {

@@ -1027,7 +1027,21 @@ class MessageViewController: UIViewController,
     //////////////////////////////////////////////////////////////////////////////////
     // MessageInputToolbarDelegate methods
     //////////////////////////////////////////////////////////////////////////////////
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+        didPressMiddle1BarButton sender: UIButton) {
+        print("MVC::didPressMiddle1BarButton")
+    }
+    
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+        didPressMiddle2BarButton sender: UIButton) {
+        print("MVC::didPressMiddle2BarButton")
+    }
 
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+        didPressMiddle3BarButton sender: UIButton) {
+        print("MVC::didPressMiddle3BarButton")
+    }
+    
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftBarButton sender: UIButton) {
         print("MVC::didPressLeftBarButton")

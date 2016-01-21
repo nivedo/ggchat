@@ -33,6 +33,13 @@ protocol MessageInputToolbarDelegate: UIToolbarDelegate {
 
     func messagesInputToolbar(toolbar: MessageInputToolbar,
            didPressLeftInnerBarButton sender: UIButton)
+
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+           didPressMiddle1BarButton sender: UIButton)
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+           didPressMiddle2BarButton sender: UIButton)
+    func messagesInputToolbar(toolbar: MessageInputToolbar,
+           didPressMiddle3BarButton sender: UIButton)
 }
 
 class MessageInputToolbar: UIToolbar {
@@ -86,6 +93,16 @@ class MessageInputToolbar: UIToolbar {
         
         // print(self.contentView.leftBarButtonItem?.allControlEvents())
         // print(self.contentView.rightBarButtonItem?.allControlEvents())
+       
+        var index = 0
+        for (k,v) in GGWiki.sharedInstance.wikis {
+            if v.language == UserAPI.sharedInstance.settings.language {
+                if index == 0 {
+                    self.contentView.middle1BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
+                }
+                index++
+            }
+        }
     }
     
     deinit {
@@ -128,6 +145,18 @@ class MessageInputToolbar: UIToolbar {
 
     func gg_rightInnerBarButtonPressed(sender: UIButton) {
         self.messageDelegate.messagesInputToolbar(self, didPressRightInnerBarButton: sender)
+    }
+    
+    func gg_middle1BarButtonPressed(sender: UIButton) {
+        self.messageDelegate.messagesInputToolbar(self, didPressMiddle1BarButton: sender)
+    }
+    
+    func gg_middle2BarButtonPressed(sender: UIButton) {
+        self.messageDelegate.messagesInputToolbar(self, didPressMiddle2BarButton: sender)
+    }
+
+    func gg_middle3BarButtonPressed(sender: UIButton) {
+        self.messageDelegate.messagesInputToolbar(self, didPressMiddle3BarButton: sender)
     }
 
     func gg_rightBarButtonPressed(sender: UIButton) {
@@ -195,6 +224,36 @@ class MessageInputToolbar: UIToolbar {
                         action: "gg_rightInnerBarButtonPressed:",
                         forControlEvents: UIControlEvents.TouchUpInside)
                 }
+                else if (keyPath! == NSStringFromSelector(Selector("middle1BarButtonItem"))) {
+
+                    self.contentView.middle1BarButtonItem!.removeTarget(self,
+                        action: nil,
+                        forControlEvents: UIControlEvents.TouchUpInside)
+
+                    self.contentView.middle1BarButtonItem!.addTarget(self,
+                        action: "gg_middle1BarButtonPressed:",
+                        forControlEvents: UIControlEvents.TouchUpInside)
+                }
+                else if (keyPath! == NSStringFromSelector(Selector("middle2BarButtonItem"))) {
+
+                    self.contentView.middle1BarButtonItem!.removeTarget(self,
+                        action: nil,
+                        forControlEvents: UIControlEvents.TouchUpInside)
+
+                    self.contentView.middle1BarButtonItem!.addTarget(self,
+                        action: "gg_middle2BarButtonPressed:",
+                        forControlEvents: UIControlEvents.TouchUpInside)
+                }
+                else if (keyPath! == NSStringFromSelector(Selector("middle3BarButtonItem"))) {
+
+                    self.contentView.middle1BarButtonItem!.removeTarget(self,
+                        action: nil,
+                        forControlEvents: UIControlEvents.TouchUpInside)
+
+                    self.contentView.middle1BarButtonItem!.addTarget(self,
+                        action: "gg_middle3BarButtonPressed:",
+                        forControlEvents: UIControlEvents.TouchUpInside)
+                }
                 self.toggleSendButtonEnabled()
             }
         }
@@ -230,6 +289,24 @@ class MessageInputToolbar: UIToolbar {
             options: NSKeyValueObservingOptions(rawValue: 0),
             context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
 
+        self.contentView.addObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("middle1BarButtonItem")),
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.addObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("middle2BarButtonItem")),
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.addObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("middle3BarButtonItem")),
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+        
         self.gg_isObserving = true
     }
 
@@ -256,6 +333,21 @@ class MessageInputToolbar: UIToolbar {
         self.contentView.removeObserver(
             self,
             forKeyPath: NSStringFromSelector(Selector("rightInnerBarButtonItem")),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+    
+        self.contentView.removeObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("middle1BarButtonItem")),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.removeObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("middle2BarButtonItem")),
+            context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
+
+        self.contentView.removeObserver(
+            self,
+            forKeyPath: NSStringFromSelector(Selector("middle3BarButtonItem")),
             context: MessageInputToolbar.kMessagesInputToolbarKeyValueObservingContext)
 
         self.gg_isObserving = false

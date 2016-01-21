@@ -50,17 +50,47 @@
                         <constraint firstAttribute="height" constant="32" id="M2b-7z-1Gy"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HHt-Q4-MpJ" userLabel="Middle 1 button container">
+                    <rect key="frame" x="92" y="50" width="34" height="32"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="MR7-Pa-z5a"/>
+                        <constraint firstAttribute="width" constant="34" id="rJX-uG-rSD"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ibT-bK-0WH" userLabel="Middle 3 button container">
+                    <rect key="frame" x="134" y="50" width="34" height="32"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="Nc6-v9-tVx"/>
+                        <constraint firstAttribute="width" constant="34" id="o8J-Lk-f7Y"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qey-Tq-5Tp" userLabel="Middle 2 button container">
+                    <rect key="frame" x="176" y="50" width="34" height="32"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="34" id="3Yr-2M-XmW"/>
+                        <constraint firstAttribute="height" constant="32" id="UKy-La-fMp"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <accessibility key="accessibilityConfiguration" label=""/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="HHt-Q4-MpJ" secondAttribute="bottom" constant="6" id="0m5-fq-ycd"/>
                 <constraint firstAttribute="bottom" secondItem="F7y-DS-i8Y" secondAttribute="bottom" constant="6" id="3V9-iz-PGF"/>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="CUz-aS-m0C"/>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Cvc-cE-iIh"/>
                 <constraint firstAttribute="bottom" secondItem="aKz-mx-fGl" secondAttribute="bottom" constant="6" id="E3C-Xn-oQD"/>
+                <constraint firstItem="qey-Tq-5Tp" firstAttribute="leading" secondItem="ibT-bK-0WH" secondAttribute="trailing" constant="6" id="Jfn-C5-2n8"/>
                 <constraint firstAttribute="trailing" secondItem="zbL-Zk-acd" secondAttribute="trailing" constant="8" id="Js0-qA-saa"/>
+                <constraint firstItem="ibT-bK-0WH" firstAttribute="leading" secondItem="HHt-Q4-MpJ" secondAttribute="trailing" constant="6" id="KcD-hF-Qtk"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="top" secondItem="zbL-Zk-acd" secondAttribute="bottom" constant="8" id="PO5-2R-mRH"/>
+                <constraint firstItem="HHt-Q4-MpJ" firstAttribute="leading" secondItem="lc8-na-YKI" secondAttribute="trailing" constant="6" id="UXG-DE-fFC"/>
                 <constraint firstAttribute="bottom" secondItem="lc8-na-YKI" secondAttribute="bottom" constant="6" id="Y50-qW-nsT"/>
+                <constraint firstAttribute="bottom" secondItem="qey-Tq-5Tp" secondAttribute="bottom" constant="6" id="YiK-Mf-K7n"/>
+                <constraint firstAttribute="bottom" secondItem="ibT-bK-0WH" secondAttribute="bottom" constant="6" id="YkG-yH-fF6"/>
                 <constraint firstAttribute="bottom" secondItem="ga3-AL-pKl" secondAttribute="bottom" constant="6" id="kqp-0X-dBA"/>
                 <constraint firstItem="lc8-na-YKI" firstAttribute="leading" secondItem="F7y-DS-i8Y" secondAttribute="trailing" constant="6" id="lT2-2v-wI2"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="qiX-SD-Lq8"/>
@@ -75,6 +105,9 @@
                 <outlet property="leftHorizontalSpacingConstraint" destination="qiX-SD-Lq8" id="r8D-u1-lWC"/>
                 <outlet property="leftInnerBarButtonContainerView" destination="lc8-na-YKI" id="KIo-2S-eBh"/>
                 <outlet property="leftInnerBarButtonContainerViewWidthConstraint" destination="Hbv-3E-cV7" id="8bd-SG-hcf"/>
+                <outlet property="middle1BarButtonContainerView" destination="HHt-Q4-MpJ" id="kqo-Pg-em5"/>
+                <outlet property="middle2BarButtonContainerView" destination="ibT-bK-0WH" id="pkP-g6-wJO"/>
+                <outlet property="middle3BarButtonContainerView" destination="qey-Tq-5Tp" id="btS-16-wJP"/>
                 <outlet property="rightBarButtonContainerView" destination="ga3-AL-pKl" id="jAX-cK-KCa"/>
                 <outlet property="rightBarButtonContainerViewWidthConstraint" destination="1NA-Dk-W5Y" id="QFS-7u-b7M"/>
                 <outlet property="rightHorizontalSpacingConstraint" destination="sGI-8Z-ES2" id="dVc-jW-XX1"/>
