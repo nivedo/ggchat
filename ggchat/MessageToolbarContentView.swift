@@ -107,7 +107,6 @@ class MessageToolbarContentView: UIView {
 
             if (middle1BarButtonItem == nil) {
                 self.middle1BarButtonItem = nil
-                // self.middle1BarButtonItemWidth = 0.0
                 self.middle1BarButtonContainerView.hidden = true
                 return
             }
@@ -117,12 +116,63 @@ class MessageToolbarContentView: UIView {
             }
 
             self.middle1BarButtonContainerView.hidden = false
-            // self.middle1BarButtonItemWidth = CGRectGetWidth(middle1BarButtonItem!.frame)
 
             middle1BarButtonItem!.translatesAutoresizingMaskIntoConstraints = false
 
             self.middle1BarButtonContainerView.addSubview(middle1BarButtonItem!)
             self.middle1BarButtonContainerView.gg_pinAllEdgesOfSubview(middle1BarButtonItem!)
+            self.setNeedsUpdateConstraints()
+        }
+    }
+    
+    dynamic var middle2BarButtonItem: UIButton? {
+        willSet (middle2BarButtonItem) {
+            if (self.middle2BarButtonItem != nil) {
+                self.middle2BarButtonItem!.removeFromSuperview()
+            }
+
+            if (middle2BarButtonItem == nil) {
+                self.middle2BarButtonItem = nil
+                self.middle2BarButtonContainerView.hidden = true
+                return
+            }
+
+            if (CGRectEqualToRect(middle2BarButtonItem!.frame, CGRectZero)) {
+                middle2BarButtonItem!.frame = self.middle2BarButtonContainerView.bounds
+            }
+
+            self.middle2BarButtonContainerView.hidden = false
+
+            middle2BarButtonItem!.translatesAutoresizingMaskIntoConstraints = false
+
+            self.middle2BarButtonContainerView.addSubview(middle2BarButtonItem!)
+            self.middle2BarButtonContainerView.gg_pinAllEdgesOfSubview(middle2BarButtonItem!)
+            self.setNeedsUpdateConstraints()
+        }
+    }
+    
+    dynamic var middle3BarButtonItem: UIButton? {
+        willSet (middle3BarButtonItem) {
+            if (self.middle3BarButtonItem != nil) {
+                self.middle3BarButtonItem!.removeFromSuperview()
+            }
+
+            if (middle3BarButtonItem == nil) {
+                self.middle3BarButtonItem = nil
+                self.middle3BarButtonContainerView.hidden = true
+                return
+            }
+
+            if (CGRectEqualToRect(middle3BarButtonItem!.frame, CGRectZero)) {
+                middle3BarButtonItem!.frame = self.middle3BarButtonContainerView.bounds
+            }
+
+            self.middle3BarButtonContainerView.hidden = false
+
+            middle3BarButtonItem!.translatesAutoresizingMaskIntoConstraints = false
+
+            self.middle3BarButtonContainerView.addSubview(middle3BarButtonItem!)
+            self.middle3BarButtonContainerView.gg_pinAllEdgesOfSubview(middle3BarButtonItem!)
             self.setNeedsUpdateConstraints()
         }
     }

@@ -99,6 +99,8 @@ class MessageInputToolbar: UIToolbar {
             if v.language == UserAPI.sharedInstance.settings.language {
                 if index == 0 {
                     self.contentView.middle1BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
+                } else if index == 1 {
+                    self.contentView.middle2BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
                 }
                 index++
             }
@@ -236,21 +238,21 @@ class MessageInputToolbar: UIToolbar {
                 }
                 else if (keyPath! == NSStringFromSelector(Selector("middle2BarButtonItem"))) {
 
-                    self.contentView.middle1BarButtonItem!.removeTarget(self,
+                    self.contentView.middle2BarButtonItem!.removeTarget(self,
                         action: nil,
                         forControlEvents: UIControlEvents.TouchUpInside)
 
-                    self.contentView.middle1BarButtonItem!.addTarget(self,
+                    self.contentView.middle2BarButtonItem!.addTarget(self,
                         action: "gg_middle2BarButtonPressed:",
                         forControlEvents: UIControlEvents.TouchUpInside)
                 }
                 else if (keyPath! == NSStringFromSelector(Selector("middle3BarButtonItem"))) {
 
-                    self.contentView.middle1BarButtonItem!.removeTarget(self,
+                    self.contentView.middle3BarButtonItem!.removeTarget(self,
                         action: nil,
                         forControlEvents: UIControlEvents.TouchUpInside)
 
-                    self.contentView.middle1BarButtonItem!.addTarget(self,
+                    self.contentView.middle3BarButtonItem!.addTarget(self,
                         action: "gg_middle3BarButtonPressed:",
                         forControlEvents: UIControlEvents.TouchUpInside)
                 }
