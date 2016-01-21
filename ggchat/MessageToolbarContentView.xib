@@ -57,7 +57,7 @@
                 <constraint firstAttribute="bottom" secondItem="F7y-DS-i8Y" secondAttribute="bottom" constant="6" id="3V9-iz-PGF"/>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="CUz-aS-m0C"/>
                 <constraint firstItem="zbL-Zk-acd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Cvc-cE-iIh"/>
-                <constraint firstAttribute="bottom" secondItem="aKz-mx-fGl" secondAttribute="bottom" constant="8" id="E3C-Xn-oQD"/>
+                <constraint firstAttribute="bottom" secondItem="aKz-mx-fGl" secondAttribute="bottom" constant="6" id="E3C-Xn-oQD"/>
                 <constraint firstAttribute="trailing" secondItem="zbL-Zk-acd" secondAttribute="trailing" constant="8" id="Js0-qA-saa"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="top" secondItem="zbL-Zk-acd" secondAttribute="bottom" constant="8" id="PO5-2R-mRH"/>
                 <constraint firstAttribute="bottom" secondItem="lc8-na-YKI" secondAttribute="bottom" constant="6" id="Y50-qW-nsT"/>
@@ -65,7 +65,7 @@
                 <constraint firstItem="lc8-na-YKI" firstAttribute="leading" secondItem="F7y-DS-i8Y" secondAttribute="trailing" constant="6" id="lT2-2v-wI2"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="qiX-SD-Lq8"/>
                 <constraint firstAttribute="trailing" secondItem="ga3-AL-pKl" secondAttribute="trailing" constant="8" id="sGI-8Z-ES2"/>
-                <constraint firstItem="ga3-AL-pKl" firstAttribute="leading" secondItem="aKz-mx-fGl" secondAttribute="trailing" constant="8" id="vf4-8G-exZ"/>
+                <constraint firstItem="ga3-AL-pKl" firstAttribute="leading" secondItem="aKz-mx-fGl" secondAttribute="trailing" constant="10" id="vf4-8G-exZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

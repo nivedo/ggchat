@@ -239,7 +239,7 @@ class MessageToolbarContentView: UIView {
             self.setNeedsUpdateConstraints()
         }
         get {
-            return self.leftBarButtonContainerViewWidthConstraint.constant;
+            return self.rightBarButtonContainerViewWidthConstraint.constant;
         }
     }
     

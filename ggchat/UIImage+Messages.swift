@@ -139,7 +139,7 @@ extension UIImage {
     }
 
     class func gg_defaultEllipsisImage() -> UIImage {
-        return UIImage.gg_bubbleImageFromBundleWithName("typing")
+        return UIImage(named: "Plus")!
     }
     
     class func gg_defaultTypingIndicatorImage() -> UIImage {
