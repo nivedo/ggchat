@@ -41,9 +41,12 @@ class MessageComposerTextView: UITextView {
         let cornerRadius: CGFloat = 6.0
         
         self.backgroundColor = UIColor.whiteColor()
+        /*
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.layer.cornerRadius = cornerRadius
+        */
+        self.layer.borderWidth = 0.0
         
         self.scrollIndicatorInsets = UIEdgeInsetsMake(cornerRadius, 0.0, cornerRadius, 0.0)
         

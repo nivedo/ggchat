@@ -48,7 +48,8 @@ class MessageToolbarContentView: UIView {
         self.leftHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
         self.rightHorizontalSpacingConstraint.constant = MessageToolbarContentView.kMessagesToolbarContentViewHorizontalSpacingDefault
         
-        self.backgroundColor = UIColor.clearColor()
+        // self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.whiteColor()
         // self.userInteractionEnabled = true
     }
     

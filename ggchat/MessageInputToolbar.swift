@@ -103,7 +103,7 @@ class MessageInputToolbar: UIToolbar {
 
     // pragma mark - Setters
 
-    var preferredDefaultHeight: CGFloat = 44.0 {
+    var preferredDefaultHeight: CGFloat = 90.0 {
         willSet {
             assert(preferredDefaultHeight > 0.0)
         }
