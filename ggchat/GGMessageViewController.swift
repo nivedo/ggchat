@@ -303,8 +303,32 @@ class GGMessageViewController:
     }
 
     override func didPressEllipsisButton(sender: UIButton) {
-        print("didPressEllipsisButton")
+        // print("didPressEllipsisButton")
+        let alert: UIAlertController = UIAlertController(
+            title: "Autocomplete",
+            message: "Choose game",
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionCancel = UIAlertAction(
+            title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
+        for (k,v) in GGWiki.sharedInstance.wikis {
+            if v.language == UserAPI.sharedInstance.settings.language {
+                let action = UIAlertAction(
+                    title: v.name,
+                    style: UIAlertActionStyle.Default) { action -> Void in
+                        GGWiki.sharedInstance.loadAutocompleteAsync(k)
+                        
+                        self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
+                        self.autocompleteController?.active = true
+                }
+                alert.addAction(action)
+            }
+        }
+        alert.addAction(actionCancel)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
+    
     override func didPressInnerButton(sender: UIButton) {
         /*
         let alert: UIAlertController = UIAlertController(
