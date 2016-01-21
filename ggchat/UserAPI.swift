@@ -209,16 +209,15 @@ class UserSetting {
     }
     
     var sound: Bool = true
+    var keyboards = [String]()
 
     // Default settings
     init() {
         self.language = Language.English
         self.minAutocompleteCharacters = 2
         self.updateBrackets(self.language)
-        /*
-        self.language = Language.ChineseTraditional
-        self.minAutocompleteCharacters = 1
-        */
+        
+        self.keyboards = [ "hearthstone", "mtg" ]
     }
     
     func updateBrackets(language: String) {

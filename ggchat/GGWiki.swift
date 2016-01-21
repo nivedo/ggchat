@@ -202,7 +202,7 @@ class WikiResource {
     var name: String
     var icon: String
     var placeholder: String?
-    var ref: String
+    var refKey: String
     var jsonURL: String
     var jsonData: NSData?
     var iconImage: UIImage?
@@ -213,10 +213,9 @@ class WikiResource {
         self.name = json["name"]!
         self.icon = json["icon"]!
         self.placeholder = json["placeholder"]
-        self.ref = "\(json["ref"]!):\(language)"
+        self.refKey = "\(json["ref"]!):\(language)"
         let bundle = json["bundle"]!
         self.jsonURL = "\(GGWiki.s3url)/config/\(bundle)"
-        // self.jsonData = NSData(contentsOfURL: NSURL(string: self.jsonURL)!)!
         self.jsonData = GGWiki.retrieveNSData(bundle, url: self.jsonURL)
         
         let iconURL = "\(GGWiki.s3url)/assets/\(self.icon)"
@@ -225,7 +224,6 @@ class WikiResource {
         if let placeholder = self.placeholder {
             self.placeholderURL = "\(GGWiki.s3url)/assets/\(placeholder)"
             GGWikiCache.sharedInstance.retreiveImage(self.placeholderURL!)
-            // print("placeholderURL: \(self.placeholderURL!)")
         }
         self.language = language
     }
@@ -345,7 +343,7 @@ class GGWiki {
                             let resource = WikiResource(
                                 json: wikiJson as! [String: String],
                                 language: language as! String)
-                            self.wikis[resource.ref] = resource
+                            self.wikis[resource.refKey] = resource
                         }
                     }
                 }
@@ -380,13 +378,13 @@ class GGWiki {
         // Load asset bundles in the user's language first
         for (_, v) in self.wikis {
             if v.language == UserAPI.sharedInstance.settings.language {
-                print("Load asset \(v.ref)")
+                print("Load asset \(v.refKey)")
                 self.loadAsset(v, forAutocomplete: false)
             }
         }
         for (_, v) in self.wikis {
             if v.language != UserAPI.sharedInstance.settings.language {
-                print("Load asset \(v.ref)")
+                print("Load asset \(v.refKey)")
                 self.loadAsset(v, forAutocomplete: false)
             }
         }
