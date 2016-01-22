@@ -271,11 +271,14 @@ class MessageViewController: UIViewController,
             self.autocompleteController = MessageAutocompleteController(
                 delegate: self)
             self.view.addSubview(self.autocompleteController!.tableView)
-            
+           
+            /*
             if let wiki = GGWiki.sharedInstance.getAutocompleteResource() {
                 self.autocompleteController?.active = true
                 self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(wiki.iconImage)
             }
+            */
+            GGWiki.sharedInstance.setAutocompleteResource(nil)
         }
         
         // Navigation bar
@@ -1035,6 +1038,7 @@ class MessageViewController: UIViewController,
             let resource = keyboards[0]
             self.inputToolbar.contentView.textView.placeHolder = resource.name
             GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
+            self.autocompleteController?.active = true
         }
     }
     
@@ -1046,6 +1050,7 @@ class MessageViewController: UIViewController,
             let resource = keyboards[1]
             self.inputToolbar.contentView.textView.placeHolder = resource.name
             GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
+            self.autocompleteController?.active = true
         }
     }
 
@@ -1057,6 +1062,7 @@ class MessageViewController: UIViewController,
             let resource = keyboards[2]
             self.inputToolbar.contentView.textView.placeHolder = resource.name
             GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
+            self.autocompleteController?.active = true
         }
     }
     

@@ -505,7 +505,7 @@ class GGWiki {
         return nil
     }
     
-    func setAutocompleteResource(refKey: String) {
+    func setAutocompleteResource(refKey: String?) {
         self.autocompleteWiki = refKey
     }
     
@@ -514,7 +514,7 @@ class GGWiki {
        
         for ref in UserAPI.sharedInstance.settings.keyboards {
             let refKey = "\(ref):\(UserAPI.sharedInstance.settings.language)"
-            print(refKey)
+            // print(refKey)
             if let resource = self.wikis[refKey] {
                 keyboards.append(resource)
             }

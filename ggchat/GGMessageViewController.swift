@@ -318,9 +318,8 @@ class GGMessageViewController:
                     title: v.name,
                     style: UIAlertActionStyle.Default) { action -> Void in
                         // GGWiki.sharedInstance.loadAutocompleteAsync(k)
-                        
-                        self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
-                        self.autocompleteController?.active = true
+                        // self.inputToolbar.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(v.iconImage)
+                        // self.autocompleteController?.active = true
                 }
                 alert.addAction(action)
             }
@@ -332,8 +331,10 @@ class GGMessageViewController:
     override func didPressLeftButton(sender: UIButton) {
         self.inputToolbar.contentView.textView.becomeFirstResponder()
         self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")
+        self.autocompleteController?.active = false
     }
-    
+   
+    /*
     override func didPressInnerButton(sender: UIButton) {
         if let auto = self.autocompleteController {
             if auto.active {
@@ -347,6 +348,7 @@ class GGMessageViewController:
             }
         }
     }
+    */
     
     override func didPressAccessoryButton(sender: UIButton) {
         let alert: UIAlertController = UIAlertController(
