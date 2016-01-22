@@ -24,7 +24,7 @@ class MessageToolbarContentView: UIView {
     @IBOutlet weak var rightBarButtonContainerView: UIView!
     @IBOutlet weak var rightInnerBarButtonContainerView: UIView!
     @IBOutlet weak var textView: MessageComposerTextView!
-    @IBOutlet weak var searchBar: UITextView!
+    @IBOutlet weak var searchBar: MessageComposerTextView!
     @IBOutlet weak var textInputContainer: UIView!
     
     @IBOutlet weak var middle1BarButtonContainerView: UIView!
@@ -61,10 +61,14 @@ class MessageToolbarContentView: UIView {
     func showSearchBar(searchPlaceholder: String) {
         self.textView.hidden = true
         self.searchBar.hidden = false
-        self.searchBar.text = searchPlaceholder
-        self.searchBar.textColor = UIColor.darkGrayColor()
+        self.searchBar.placeHolder = searchPlaceholder
         self.searchBar.becomeFirstResponder()
         self.inSearchMode = true
+        
+        self.searchBar.backgroundColor = GGConfig.backgroundColor
+        self.searchBar.layer.cornerRadius = 5
+        self.searchBar.clipsToBounds = true
+        self.searchBar.setNeedsDisplay()
     }
     
     var activeTextView: UITextView {
@@ -85,9 +89,6 @@ class MessageToolbarContentView: UIView {
         // self.backgroundColor = UIColor.clearColor()
         self.backgroundColor = UIColor.whiteColor()
         // self.userInteractionEnabled = true
-        self.searchBar.backgroundColor = GGConfig.backgroundColor
-        self.searchBar.layer.cornerRadius = 5
-        self.searchBar.clipsToBounds = true
         self.showTextView(false)
     }
     

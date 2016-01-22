@@ -502,8 +502,10 @@ class GGWiki {
         return nil
     }
     
-    func setAutocompleteResource(refKey: String?) {
+    func setAutocompleteResource(refKey: String?) -> Bool {
+        let changed = (refKey != self.autocompleteWiki)
         self.autocompleteWiki = refKey
+        return changed
     }
     
     func getKeyboardResources() -> [WikiResource] {

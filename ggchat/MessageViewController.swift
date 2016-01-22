@@ -252,6 +252,7 @@ class MessageViewController: UIViewController,
         self.inputToolbar.delegate = self
         self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")
         self.inputToolbar.contentView.textView.delegate = self
+        self.inputToolbar.contentView.searchBar.delegate = self
         self.messageCollectionView.messageCollectionViewLayout.outgoingAvatarViewSize = CGSizeZero
         
         // NOTE: let this behavior be opt-in for now
@@ -1042,10 +1043,7 @@ class MessageViewController: UIViewController,
         let keyboards = GGWiki.sharedInstance.getKeyboardResources()
         if keyboards.count > 0 {
             let resource = keyboards[0]
-            self.inputToolbar.contentView.textView.placeHolder = resource.name
-            GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
-            self.autocompleteController?.active = true
-            self.inputToolbar.contentView.showSearchBar(resource.name)
+            self.selectKeyboard(resource)
         }
     }
     
@@ -1055,10 +1053,7 @@ class MessageViewController: UIViewController,
         let keyboards = GGWiki.sharedInstance.getKeyboardResources()
         if keyboards.count > 1 {
             let resource = keyboards[1]
-            self.inputToolbar.contentView.textView.placeHolder = resource.name
-            GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
-            self.autocompleteController?.active = true
-            self.inputToolbar.contentView.showSearchBar(resource.name)
+            self.selectKeyboard(resource)
         }
     }
 
@@ -1068,28 +1063,29 @@ class MessageViewController: UIViewController,
         let keyboards = GGWiki.sharedInstance.getKeyboardResources()
         if keyboards.count > 2 {
             let resource = keyboards[2]
-            self.inputToolbar.contentView.textView.placeHolder = resource.name
-            GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
+            self.selectKeyboard(resource)
+        }
+    }
+    
+    func selectKeyboard(wikiResource: WikiResource?) {
+        if let resource = wikiResource {
+            if GGWiki.sharedInstance.setAutocompleteResource(resource.refKey) {
+                self.autocompleteController?.hide()
+                self.inputToolbar.contentView.searchBar.text = nil
+            }
             self.autocompleteController?.active = true
             self.inputToolbar.contentView.showSearchBar(resource.name)
+        } else {
+            self.autocompleteController?.hide()
+            self.inputToolbar.contentView.searchBar.text = nil
+            self.autocompleteController?.active = false
+            self.inputToolbar.contentView.showTextView()
         }
     }
     
     func messagesInputToolbar(toolbar: MessageInputToolbar,
         didPressLeftBarButton sender: UIButton) {
-        print("MVC::didPressLeftBarButton")
-        self.didPressLeftButton(sender)
-        /*
-        if (toolbar.sendButtonOnRight) {
-            self.didPressAccessoryButton(sender)
-        } else {
-            self.didPressSendButton(sender,
-                withMessagePacket: self.gg_currentlyComposedMessageText(),
-                senderId: self.senderId,
-                senderDisplayName: self.senderDisplayName,
-                date: NSDate())
-        }
-        */
+        self.selectKeyboard(nil)
     }
     
     func messagesInputToolbar(toolbar: MessageInputToolbar,
@@ -1167,10 +1163,10 @@ class MessageViewController: UIViewController,
         return packet
     }
     
-    func gg_currentlyTypedMessageText() -> (String, Int) {
+    func gg_currentlyTypedMessageText(textView: MessageComposerTextView) -> (String, Int) {
         var index: Int = 0
         
-        let currentAttributedText = NSAttributedString(attributedString: self.inputToolbar.contentView.textView.attributedText)
+        let currentAttributedText = NSAttributedString(attributedString: textView.attributedText)
         currentAttributedText.enumerateAttribute(
             TappableText.tapAttributeKey,
             inRange: NSMakeRange(0, currentAttributedText.length),
@@ -1244,66 +1240,76 @@ class MessageViewController: UIViewController,
     */
     
     func textViewDidBeginEditing(textView: UITextView) {
+        print("textViewDidBeginEditing")
+        /*
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
+        */
 
         textView.becomeFirstResponder()
 
         if (self.automaticallyScrollsToMostRecentMessage) {
             self.scrollToBottomAnimated(true)
         }
-        
-        let (word, len) = self.gg_currentlyTypedMessageText()
-        if let auto = self.autocompleteController {
-            if auto.active && word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                    let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
-                    if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.autocompleteController?.displaySuggestions(word,
-                                suggestions: suggestions!,
-                                frame: self.inputToolbar.frame)
+       
+        if textView == self.inputToolbar.contentView.searchBar {
+            let (word, len) = self.gg_currentlyTypedMessageText(textView as! MessageComposerTextView)
+            if let auto = self.autocompleteController {
+                if auto.active && word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                        let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
+                        if suggestions != nil && textView.text != nil && suggestions!.count > 0 {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.autocompleteController?.displaySuggestions(word,
+                                    suggestions: suggestions!,
+                                    frame: self.inputToolbar.frame)
+                            }
                         }
                     }
+                } else {
+                    auto.hide()
                 }
-            } else {
-                auto.hide()
             }
         }
     }
 
     func textViewDidChange(textView: UITextView) {
+        print("textViewDidChange")
+        /*
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
-        
-        let (word, len) = self.gg_currentlyTypedMessageText()
-        // print("editing text \"\(word)\" length: \(word.length), count: \(word.characters.count), min: \(UserAPI.sharedInstance.settings.minAutocompleteCharacters)")
+        */
        
-        if let auto = self.autocompleteController {
-            if auto.active && word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                    let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
-                    print("Suggestions: \(suggestions?.count)")
-                    dispatch_async(dispatch_get_main_queue()) {
-                        if let s = suggestions {
-                            if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {
-                                self.autocompleteController?.displaySuggestions(word,
-                                    suggestions: s,
-                                    frame: self.inputToolbar.frame)
-                            } else {
-                                self.autocompleteController?.hide()
+        if textView == self.inputToolbar.contentView.searchBar {
+            let (word, len) = self.gg_currentlyTypedMessageText(textView as! MessageComposerTextView)
+            // print("editing text \"\(word)\" length: \(word.length), count: \(word.characters.count), min: \(UserAPI.sharedInstance.settings.minAutocompleteCharacters)")
+           
+            if let auto = self.autocompleteController {
+                if auto.active && word.characters.count >= UserAPI.sharedInstance.settings.minAutocompleteCharacters {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                        let suggestions = GGWiki.sharedInstance.getCardSuggestions(word, inputLength: len)
+                        print("Suggestions: \(suggestions?.count)")
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if let s = suggestions {
+                                if s.count > 0 && textView.text != nil && textView.text?.characters.count > 0 {
+                                    self.autocompleteController?.displaySuggestions(word,
+                                        suggestions: s,
+                                        frame: self.inputToolbar.frame)
+                                } else {
+                                    self.autocompleteController?.hide()
+                                }
                             }
                         }
                     }
+                } else {
+                    auto.hide()
                 }
-            } else {
-                auto.hide()
             }
+        } else {
+            self.inputToolbar.toggleSendButtonEnabled()
         }
-        
-        self.inputToolbar.toggleSendButtonEnabled()
     }
 
     /*
