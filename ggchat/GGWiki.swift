@@ -409,7 +409,7 @@ class GGWiki {
     // var cardNameToIdMap = [String : String]()
     var wikis = [String: WikiResource]()
     var wikisForBundleId = [String: WikiResource]()
-    var autocompleteWiki: String? = nil
+    private var autocompleteWiki: String? = nil
     
     init() {
         self.loadConfig()
@@ -503,6 +503,10 @@ class GGWiki {
             return self.wikis[auto]
         }
         return nil
+    }
+    
+    func setAutocompleteResource(refKey: String) {
+        self.autocompleteWiki = refKey
     }
     
     func getKeyboardResources() -> [WikiResource] {

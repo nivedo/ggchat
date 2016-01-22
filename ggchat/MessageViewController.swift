@@ -1027,19 +1027,37 @@ class MessageViewController: UIViewController,
     //////////////////////////////////////////////////////////////////////////////////
     // MessageInputToolbarDelegate methods
     //////////////////////////////////////////////////////////////////////////////////
-    func messagesInputToolbar(toolbar: MessageInputToolbar,
-        didPressMiddle1BarButton sender: UIButton) {
+    func messagesInputToolbar(toolbar: MessageInputToolbar, didPressMiddle1BarButton sender: UIButton) {
         print("MVC::didPressMiddle1BarButton")
+            
+        let keyboards = GGWiki.sharedInstance.getKeyboardResources()
+        if keyboards.count > 0 {
+            let resource = keyboards[0]
+            self.inputToolbar.contentView.textView.placeHolder = resource.name
+            GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
+        }
     }
     
-    func messagesInputToolbar(toolbar: MessageInputToolbar,
-        didPressMiddle2BarButton sender: UIButton) {
+    func messagesInputToolbar(toolbar: MessageInputToolbar, didPressMiddle2BarButton sender: UIButton) {
         print("MVC::didPressMiddle2BarButton")
+        
+        let keyboards = GGWiki.sharedInstance.getKeyboardResources()
+        if keyboards.count > 1 {
+            let resource = keyboards[1]
+            self.inputToolbar.contentView.textView.placeHolder = resource.name
+            GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
+        }
     }
 
-    func messagesInputToolbar(toolbar: MessageInputToolbar,
-        didPressMiddle3BarButton sender: UIButton) {
+    func messagesInputToolbar(toolbar: MessageInputToolbar, didPressMiddle3BarButton sender: UIButton) {
         print("MVC::didPressMiddle3BarButton")
+
+        let keyboards = GGWiki.sharedInstance.getKeyboardResources()
+        if keyboards.count > 2 {
+            let resource = keyboards[2]
+            self.inputToolbar.contentView.textView.placeHolder = resource.name
+            GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
+        }
     }
     
     func messagesInputToolbar(toolbar: MessageInputToolbar,
