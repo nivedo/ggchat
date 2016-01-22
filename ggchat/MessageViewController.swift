@@ -1268,8 +1268,6 @@ class MessageViewController: UIViewController,
         if (textView != self.inputToolbar.contentView.textView) {
             return
         }
-        // if let lastWord = textView.text.componentsSeparatedByCharactersInSet(
-        //     NSCharacterSet.whitespaceCharacterSet()).last {
         
         let (word, len) = self.gg_currentlyTypedMessageText()
         // print("editing text \"\(word)\" length: \(word.length), count: \(word.characters.count), min: \(UserAPI.sharedInstance.settings.minAutocompleteCharacters)")

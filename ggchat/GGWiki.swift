@@ -414,12 +414,9 @@ class GGWiki {
     init() {
         self.loadConfig()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-          
-            /*
             for keyboard in self.getKeyboardResources() {
                 keyboard.loadAutocomplete()
             }
-            */
             
             /*
             if let autocomplete = self.autocompleteWiki {
