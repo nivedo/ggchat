@@ -248,7 +248,6 @@ class MessageViewController: UIViewController,
         
         self.messageCollectionView.dataSource = self
         self.messageCollectionView.delegate = self
-        // self.inputToolbar.contentView.textView.delegate = self
         
         self.inputToolbar.delegate = self
         self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")
@@ -1046,6 +1045,7 @@ class MessageViewController: UIViewController,
             self.inputToolbar.contentView.textView.placeHolder = resource.name
             GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
             self.autocompleteController?.active = true
+            self.inputToolbar.contentView.showSearchBar(resource.name)
         }
     }
     
@@ -1058,6 +1058,7 @@ class MessageViewController: UIViewController,
             self.inputToolbar.contentView.textView.placeHolder = resource.name
             GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
             self.autocompleteController?.active = true
+            self.inputToolbar.contentView.showSearchBar(resource.name)
         }
     }
 
@@ -1070,6 +1071,7 @@ class MessageViewController: UIViewController,
             self.inputToolbar.contentView.textView.placeHolder = resource.name
             GGWiki.sharedInstance.setAutocompleteResource(resource.refKey)
             self.autocompleteController?.active = true
+            self.inputToolbar.contentView.showSearchBar(resource.name)
         }
     }
     
@@ -1304,6 +1306,7 @@ class MessageViewController: UIViewController,
         self.inputToolbar.toggleSendButtonEnabled()
     }
 
+    /*
     func textViewDidEndEditing(textView: UITextView) {
         if (textView != self.inputToolbar.contentView.textView) {
             return
@@ -1312,11 +1315,12 @@ class MessageViewController: UIViewController,
         textView.resignFirstResponder()
         self.autocompleteController?.hide()
     }
+    */
     
     func dismissKeyboard() {
         print("dismissKeyboard")
         self.autocompleteController?.hide()
-        self.textViewDidEndEditing(self.inputToolbar.contentView.textView)
+        self.inputToolbar.contentView.activeTextView.resignFirstResponder()
     }
 
     // pragma mark - Notifications
@@ -1398,7 +1402,7 @@ class MessageViewController: UIViewController,
         keyboardDidChangeFrame keyboardFrame: CGRect) {
         // print("****************************************************")
         // print("MVC::keyboardDidChangeFrame")
-        if (!self.inputToolbar.contentView.textView.isFirstResponder() && self.toolbarBottomLayoutGuide.constant == 0.0) {
+        if (!self.inputToolbar.contentView.activeTextView.isFirstResponder() && self.toolbarBottomLayoutGuide.constant == 0.0) {
             return
         }
 
@@ -1408,6 +1412,10 @@ class MessageViewController: UIViewController,
         // print(heightFromBottom)
 
         self.gg_setToolbarBottomLayoutGuideConstant(heightFromBottom)
+            
+        if heightFromBottom > 0.0 {
+            self.scrollToBottomAnimated(false)
+        }
     }
 
     func gg_setToolbarBottomLayoutGuideConstant(constant: CGFloat) {

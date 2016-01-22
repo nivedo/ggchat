@@ -24,6 +24,7 @@ class MessageToolbarContentView: UIView {
     @IBOutlet weak var rightBarButtonContainerView: UIView!
     @IBOutlet weak var rightInnerBarButtonContainerView: UIView!
     @IBOutlet weak var textView: MessageComposerTextView!
+    @IBOutlet weak var searchBar: UITextView!
     @IBOutlet weak var textInputContainer: UIView!
     
     @IBOutlet weak var middle1BarButtonContainerView: UIView!
@@ -45,8 +46,32 @@ class MessageToolbarContentView: UIView {
     }
     
     // pragma mark - Initialization
+   
+    var inSearchMode: Bool = false
     
-    var middleBarButtonContainerViews = [UIView]()
+    func showTextView(firstResponder: Bool = true) {
+        self.textView.hidden = false
+        self.searchBar.hidden = true
+        if firstResponder {
+            self.textView.becomeFirstResponder()
+        }
+        self.inSearchMode = false
+    }
+    
+    func showSearchBar(searchPlaceholder: String) {
+        self.textView.hidden = true
+        self.searchBar.hidden = false
+        self.searchBar.text = searchPlaceholder
+        self.searchBar.textColor = UIColor.darkGrayColor()
+        self.searchBar.becomeFirstResponder()
+        self.inSearchMode = true
+    }
+    
+    var activeTextView: UITextView {
+        get {
+            return self.inSearchMode ? self.searchBar : self.textView
+        }
+    }
 
     override func awakeFromNib() {
         // print("ToolbarContentView::awakeFromNib()")
@@ -60,6 +85,10 @@ class MessageToolbarContentView: UIView {
         // self.backgroundColor = UIColor.clearColor()
         self.backgroundColor = UIColor.whiteColor()
         // self.userInteractionEnabled = true
+        self.searchBar.backgroundColor = GGConfig.backgroundColor
+        self.searchBar.layer.cornerRadius = 5
+        self.searchBar.clipsToBounds = true
+        self.showTextView(false)
     }
     
     required init?(coder aDecoder: NSCoder) {

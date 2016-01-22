@@ -329,9 +329,10 @@ class GGMessageViewController:
     }
     
     override func didPressLeftButton(sender: UIButton) {
-        self.inputToolbar.contentView.textView.becomeFirstResponder()
+        // self.inputToolbar.contentView.textView.becomeFirstResponder()
         self.inputToolbar.contentView.textView.placeHolder = NSBundle.gg_localizedStringForKey("new_message")
         self.autocompleteController?.active = false
+        self.inputToolbar.contentView.showTextView()
     }
    
     /*
