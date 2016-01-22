@@ -1861,7 +1861,8 @@ class MessageViewController: UIViewController,
         autocompleteController: MessageAutocompleteController,
         assetSuggestion: AssetAutocompleteSuggestion) {
         let originalText = self.inputToolbar.contentView.textView.attributedText.string
-        let replaceBy = min(assetSuggestion.replaceIndex, originalText.characters.count)
+        // let replaceBy = min(assetSuggestion.replaceIndex, originalText.characters.count)
+        let replaceBy = originalText.characters.count
         let replaceText = self.inputToolbar.contentView.textView.attributedText.attributedSubstringFromRange(
             NSMakeRange(0, replaceBy))
         /*
