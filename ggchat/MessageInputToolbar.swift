@@ -79,15 +79,8 @@ class MessageInputToolbar: UIToolbar {
         self.contentView.leftBarButtonItem = MessageToolbarButtonFactory.defaultKeyboardButtonItem()
         self.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.defaultAccessoryButtonItem()
         self.contentView.rightBarButtonItem = MessageToolbarButtonFactory.defaultSendButtonItem()
-
-        /*
-        var keyboardImage: UIImage? = nil
-        if let resource = GGWiki.sharedInstance.getAutocompleteResource() {
-            keyboardImage = resource.iconImage
-        }
-        self.contentView.leftInnerBarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(keyboardImage)
-        */
-        self.contentView.rightInnerBarButtonItem = MessageToolbarButtonFactory.defaultEllipsisButtonItem()
+        // Hide until we have more game integrations
+        // self.contentView.rightInnerBarButtonItem = MessageToolbarButtonFactory.defaultEllipsisButtonItem()
 
         self.toggleSendButtonEnabled()
        

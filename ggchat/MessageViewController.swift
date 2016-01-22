@@ -312,7 +312,8 @@ class MessageViewController: UIViewController,
         }
         */
         self.initBackButton()
-        self.initOptionButton()
+        // TEMP: Hide options arrow for now
+        // self.initOptionButton()
         
         // Tap gesture recognizer to dismiss keyboard
         let tap = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard"))
