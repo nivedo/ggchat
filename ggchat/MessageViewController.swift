@@ -1193,6 +1193,9 @@ class MessageViewController: UIViewController,
     func textView(_ textView: UITextView,
         shouldChangeTextInRange range: NSRange,
         replacementText text: String) -> Bool {
+        if textView != self.inputToolbar.contentView.textView {
+            return true
+        }
             
         // If this is true, then the user just deleted a character by using backspace
         // print("shouldChangeCharactersInRange")
