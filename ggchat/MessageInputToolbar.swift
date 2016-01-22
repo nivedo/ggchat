@@ -90,12 +90,15 @@ class MessageInputToolbar: UIToolbar {
         self.contentView.rightInnerBarButtonItem = MessageToolbarButtonFactory.defaultEllipsisButtonItem()
 
         self.toggleSendButtonEnabled()
-        
-        for (index, resource) in GGWiki.sharedInstance.getKeyboardResources().enumerate() {
-            if index == 0 {
-                self.contentView.middle1BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(resource.iconImage)
-            } else if index == 1 {
-                self.contentView.middle2BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(resource.iconImage)
+       
+        let keyboards = GGWiki.sharedInstance.getKeyboardResources()
+        if keyboards.count > 0 {
+            for (index, resource) in keyboards.enumerate() {
+                if index == 0 {
+                    self.contentView.middle1BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(resource.iconImage)
+                } else if index == 1 {
+                    self.contentView.middle2BarButtonItem = MessageToolbarButtonFactory.customKeyboardButtonItem(resource.iconImage)
+                }
             }
         }
     }

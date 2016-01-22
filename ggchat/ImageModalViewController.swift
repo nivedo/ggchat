@@ -93,7 +93,7 @@ class ImageModalViewController: UIViewController {
                         hud.hide(true)
                 })
             } else {
-                assert(false, "Cannot find asset id \(id)")
+                assert(false, "Cannot find asset id \(id), total size: \(GGWiki.sharedInstance.cardAssets.count)")
             }
         }
        
