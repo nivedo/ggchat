@@ -804,6 +804,12 @@ class MessageViewController: UIViewController,
         self.messageCollectionView.scrollToItemAtIndexPath(finalIndexPath,
             atScrollPosition: scrollPosition,
             animated: animated)
+
+        /*
+        // let bottomOffset = CGPointMake(0, self.messageCollectionView.contentSize.height) // - self.messageCollectionView.bounds.size.height)
+        let bottomOffset = CGPointMake(0, self.messageCollectionView.contentSize.height - self.messageCollectionView.bounds.size.height)
+        self.messageCollectionView.setContentOffset(bottomOffset, animated: false)
+        */
     }
 
     // pragma mark - Collection view data source
