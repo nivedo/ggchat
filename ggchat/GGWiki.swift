@@ -297,7 +297,40 @@ class WikiResource {
             }
         }
     }
+   
+    func getCardSuggestions(name: String, inputLength: Int) -> [AssetAutocompleteSuggestion]? {
+        
+        var suggestions = [AssetSortHelper]()
+        var suggestionIds = Set<String>()
+        
+        let replaceIndex = inputLength - name.characters.count
+        if let s = self.computeCardSuggestion(name, replaceIndex: replaceIndex) {
+            for h in s {
+                // Remove duplicate suggestions
+                if !suggestionIds.contains(h.id) {
+                    suggestions.append(h)
+                }
+                suggestionIds.insert(h.id)
+            }
+        } else {
+            return nil
+        }
+        
+        var results = [AssetAutocompleteSuggestion]()
+        if suggestions.count > 0 {
+            results = suggestions.map {
+                (let helper) -> AssetAutocompleteSuggestion in
+                return AssetAutocompleteSuggestion(
+                    displayString: helper.str,
+                    replaceIndex: helper.replaceIndex,
+                    id: helper.id)
+            }
+        }
+       
+        return results
+    }
     
+    /*
     func getCardSuggestions(name: String, inputLength: Int) -> [AssetAutocompleteSuggestion]? {
         
         let numTokens = min(name.numTokens, self.cardMaxTokens)
@@ -339,6 +372,7 @@ class WikiResource {
        
         return results
     }
+    */
     
     var activeSuggestionJobs: Int = 0
     
