@@ -518,6 +518,10 @@ class GGMessageViewController:
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
+        if textView != self.inputToolbar.contentView.textView {
+            return
+        }
+        
         let range: NSRange = textView.selectedRange
         let cursorPosition = range.location
         if range.length == 0 && cursorPosition < self.inputToolbar.contentView.textView.attributedText.length {

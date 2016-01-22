@@ -1274,6 +1274,11 @@ class MessageViewController: UIViewController,
                     auto.hide()
                 }
             }
+        } else {
+            if textView.text.length > 0 {
+                textView.selectedRange = NSMakeRange(textView.text.length, 0)
+                self.inputToolbar.toggleSendButtonEnabled()
+            }
         }
     }
 
@@ -1872,7 +1877,8 @@ class MessageViewController: UIViewController,
             textFont: GGConfig.messageComposerFont,
             prevAttributedString: replaceText)
         // print(self.inputToolbar.contentView.textView.attributedText)
-        self.autocompleteController?.hide()
+        // self.autocompleteController?.hide()
+        self.selectKeyboard(nil)
     }
     
     func redrawMessageMedia() {
