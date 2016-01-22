@@ -24,6 +24,7 @@ class MessageToolbarContentView: UIView {
     @IBOutlet weak var rightBarButtonContainerView: UIView!
     @IBOutlet weak var rightInnerBarButtonContainerView: UIView!
     @IBOutlet weak var textView: MessageComposerTextView!
+    @IBOutlet weak var textInputContainer: UIView!
     
     @IBOutlet weak var middle1BarButtonContainerView: UIView!
     @IBOutlet weak var middle2BarButtonContainerView: UIView!

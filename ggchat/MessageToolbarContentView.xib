@@ -27,13 +27,6 @@
                         <constraint firstAttribute="height" constant="32" id="qtM-q1-gBY"/>
                     </constraints>
                 </view>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zbL-Zk-acd" customClass="MessageComposerTextView" customModule="ggchat" customModuleProvider="target">
-                    <rect key="frame" x="8" y="10" width="304" height="32"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lc8-na-YKI" userLabel="Left inner button container">
                     <rect key="frame" x="50" y="50" width="34" height="32"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -74,26 +67,45 @@
                         <constraint firstAttribute="height" constant="32" id="UKy-La-fMp"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="syV-JF-N7b" userLabel="Input container">
+                    <rect key="frame" x="8" y="10" width="304" height="32"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zbL-Zk-acd" customClass="MessageComposerTextView" customModule="ggchat" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="304" height="32"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="zbL-Zk-acd" firstAttribute="top" secondItem="syV-JF-N7b" secondAttribute="top" id="Lm1-by-bcR"/>
+                        <constraint firstItem="zbL-Zk-acd" firstAttribute="leading" secondItem="syV-JF-N7b" secondAttribute="leading" id="OSE-ll-I4s"/>
+                        <constraint firstAttribute="bottom" secondItem="zbL-Zk-acd" secondAttribute="bottom" id="QPt-FZ-7DQ"/>
+                        <constraint firstAttribute="trailing" secondItem="zbL-Zk-acd" secondAttribute="trailing" id="WB2-dj-279"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <accessibility key="accessibilityConfiguration" label=""/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="HHt-Q4-MpJ" secondAttribute="bottom" constant="6" id="0m5-fq-ycd"/>
                 <constraint firstAttribute="bottom" secondItem="F7y-DS-i8Y" secondAttribute="bottom" constant="6" id="3V9-iz-PGF"/>
-                <constraint firstItem="zbL-Zk-acd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="CUz-aS-m0C"/>
-                <constraint firstItem="zbL-Zk-acd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Cvc-cE-iIh"/>
                 <constraint firstAttribute="bottom" secondItem="aKz-mx-fGl" secondAttribute="bottom" constant="6" id="E3C-Xn-oQD"/>
                 <constraint firstItem="qey-Tq-5Tp" firstAttribute="leading" secondItem="ibT-bK-0WH" secondAttribute="trailing" constant="6" id="Jfn-C5-2n8"/>
-                <constraint firstAttribute="trailing" secondItem="zbL-Zk-acd" secondAttribute="trailing" constant="8" id="Js0-qA-saa"/>
+                <constraint firstItem="F7y-DS-i8Y" firstAttribute="top" secondItem="syV-JF-N7b" secondAttribute="bottom" constant="8" id="Jrf-f8-DV6"/>
                 <constraint firstItem="ibT-bK-0WH" firstAttribute="leading" secondItem="HHt-Q4-MpJ" secondAttribute="trailing" constant="6" id="KcD-hF-Qtk"/>
-                <constraint firstItem="F7y-DS-i8Y" firstAttribute="top" secondItem="zbL-Zk-acd" secondAttribute="bottom" constant="8" id="PO5-2R-mRH"/>
+                <constraint firstAttribute="trailing" secondItem="syV-JF-N7b" secondAttribute="trailing" constant="8" id="NYJ-Vg-Z64"/>
                 <constraint firstItem="HHt-Q4-MpJ" firstAttribute="leading" secondItem="lc8-na-YKI" secondAttribute="trailing" constant="6" id="UXG-DE-fFC"/>
                 <constraint firstAttribute="bottom" secondItem="lc8-na-YKI" secondAttribute="bottom" constant="6" id="Y50-qW-nsT"/>
                 <constraint firstAttribute="bottom" secondItem="qey-Tq-5Tp" secondAttribute="bottom" constant="6" id="YiK-Mf-K7n"/>
                 <constraint firstAttribute="bottom" secondItem="ibT-bK-0WH" secondAttribute="bottom" constant="6" id="YkG-yH-fF6"/>
                 <constraint firstAttribute="bottom" secondItem="ga3-AL-pKl" secondAttribute="bottom" constant="6" id="kqp-0X-dBA"/>
+                <constraint firstItem="syV-JF-N7b" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="lLy-e5-Qba"/>
                 <constraint firstItem="lc8-na-YKI" firstAttribute="leading" secondItem="F7y-DS-i8Y" secondAttribute="trailing" constant="6" id="lT2-2v-wI2"/>
                 <constraint firstItem="F7y-DS-i8Y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="qiX-SD-Lq8"/>
+                <constraint firstItem="syV-JF-N7b" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ruf-Me-6Ud"/>
                 <constraint firstAttribute="trailing" secondItem="ga3-AL-pKl" secondAttribute="trailing" constant="8" id="sGI-8Z-ES2"/>
                 <constraint firstItem="ga3-AL-pKl" firstAttribute="leading" secondItem="aKz-mx-fGl" secondAttribute="trailing" constant="10" id="vf4-8G-exZ"/>
             </constraints>
@@ -113,6 +125,7 @@
                 <outlet property="rightHorizontalSpacingConstraint" destination="sGI-8Z-ES2" id="dVc-jW-XX1"/>
                 <outlet property="rightInnerBarButtonContainerView" destination="aKz-mx-fGl" id="Zww-sr-6Tn"/>
                 <outlet property="rightInnerBarButtonContainerViewWidthConstraint" destination="Jc7-4R-JiJ" id="IxA-18-34F"/>
+                <outlet property="textInputContainer" destination="syV-JF-N7b" id="q0p-jK-b4U"/>
                 <outlet property="textView" destination="zbL-Zk-acd" id="alL-Ev-Zmt"/>
             </connections>
         </view>
