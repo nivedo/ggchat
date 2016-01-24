@@ -273,18 +273,6 @@ class ContactTableViewController: UITableViewController,
     */
 
     /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
 
@@ -311,7 +299,12 @@ class ContactTableViewController: UITableViewController,
                 refreshAlert.addAction(UIAlertAction(title: "Delete contact",
                     style: .Destructive,
                     handler: { (action: UIAlertAction!) in
-                        // XMPPChatManager.removeUserAtIndexPath(indexPath)
+                        let user = self.dataList[indexPath.row]
+                        UserAPI.sharedInstance.deleteBuddy(user.jid, completion: { (jsonBody: [String: AnyObject]?) -> Void in
+                            print(jsonBody)
+                            // dispatch_async(dispatch_get_main_queue()) {
+                            // }
+                        })
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                 }))
                 
