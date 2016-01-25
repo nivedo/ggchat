@@ -313,7 +313,7 @@ class ContactTableViewController: UITableViewController,
                                     } else {
                                         self.buddyList = UserAPI.sharedInstance.removeBuddy(user.jid)
                                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                                        // UserAPI.sharedInstance.sync()
+                                        UserAPI.sharedInstance.sync()
                                     }
                                 }
                             }
