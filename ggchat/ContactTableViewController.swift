@@ -301,11 +301,23 @@ class ContactTableViewController: UITableViewController,
                     handler: { (action: UIAlertAction!) in
                         let user = self.dataList[indexPath.row]
                         UserAPI.sharedInstance.deleteBuddy(user.jid, completion: { (jsonBody: [String: AnyObject]?) -> Void in
-                            print(jsonBody)
-                            // dispatch_async(dispatch_get_main_queue()) {
-                            // }
+                            if let json = jsonBody {
+                                print(json)
+                                if let errorMsg = json["error"] as? String {
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        let alert = UIAlertView()
+                                        alert.title = "Alert"
+                                        alert.message = errorMsg
+                                        alert.addButtonWithTitle("OK")
+                                        alert.show()
+                                    }
+                                } else {
+                                    self.buddyList = UserAPI.sharedInstance.removeBuddy(user.jid)
+                                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                                    // UserAPI.sharedInstance.sync()
+                                }
+                            }
                         })
-                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                 }))
                 
                 refreshAlert.addAction(UIAlertAction(title: "Cancel",

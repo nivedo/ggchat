@@ -743,6 +743,19 @@ class UserAPI {
         }
     }
     
+    func removeBuddy(jid: String) -> [RosterUser] {
+        for (index, user) in self.buddyList.enumerate() {
+            if user.jid == jid {
+                self.buddyList.removeAtIndex(index)
+                break
+            }
+        }
+        if let user = self.rosterMap[jid] {
+            user.isBuddy = false
+        }
+        return self.buddyList
+    }
+    
     func loadChatsFromCoreData() {
         dispatch_async(dispatch_get_main_queue()) {
             // self.chatsMap = XMPPMessageManager.sharedInstance.loadAllMostRecentArchivedMessages()
