@@ -11,6 +11,7 @@ import UIKit
 class SettingTableMenuCell: UITableViewCell {
     
     @IBOutlet weak var cellMainLabel: UILabel!
+    @IBOutlet weak var cellSubLabel: UILabel!
     @IBOutlet weak var arrowImageView: UIImageView!
     
     class func nib() -> UINib {
@@ -26,6 +27,9 @@ class SettingTableMenuCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.cellSubLabel.text = nil
+        self.cellSubLabel.textColor = UIColor.lightGrayColor()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

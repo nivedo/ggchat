@@ -32,6 +32,18 @@ class NotificationMenu {
     }
 }
 
+class SettingMenu {
+    var id: String
+    var displayName: String
+    var segueName: String
+    
+    init(id: String, displayName: String, segueName: String) {
+        self.id = id
+        self.displayName = displayName
+        self.segueName = segueName
+    }
+}
+
 class GGSettingData {
     
     class var sharedInstance: GGSettingData {
@@ -57,7 +69,7 @@ class GGSettingData {
                 SettingMenu(
                     id: "username",
                     displayName: "Username",
-                    segueName: "settings.to.settings_textfield"),
+                    segueName: ""),
                 SettingMenu(
                     id: "phone_number",
                     displayName: "Phone Number",

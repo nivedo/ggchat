@@ -104,7 +104,6 @@
 		D45FBD6C1C054EE200E79B4E /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45FBD691C05499000E79B4E /* ContactTableViewCell.xib */; };
 		D45FBD6E1C05525200E79B4E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD6D1C05525200E79B4E /* Contact.swift */; };
 		D45FBD741C056A3F00E79B4E /* GGSettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD731C056A3F00E79B4E /* GGSettingData.swift */; };
-		D45FBD761C05721D00E79B4E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD751C05721D00E79B4E /* Setting.swift */; };
 		D45FBD781C05754400E79B4E /* SettingTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
 		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
@@ -2308,7 +2307,6 @@
 				D4C8FDF21C06AA2300992801 /* XMPPRoomHybridStorage.m in Sources */,
 				D4A9F5A31BFC3B1F00FA4444 /* MessageLoadEarlierHeaderView.swift in Sources */,
 				D43B28DC1C06894D00B3F367 /* NSString+DDXML.m in Sources */,
-				D45FBD761C05721D00E79B4E /* Setting.swift in Sources */,
 				D4C8FE051C06AA2300992801 /* XMPPvCardTempLabel.m in Sources */,
 				D4C8FE081C06AA2300992801 /* NSXMLElement+XEP_0059.m in Sources */,
 				D433B14E1C311E100003E100 /* SettingLanguageTableViewController.swift in Sources */,

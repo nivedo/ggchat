@@ -14,15 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmf-76-2V7">
-                        <rect key="frame" x="10" y="8" width="160" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="Pgs-Th-Kiv"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxi-or-bbY">
                         <rect key="frame" x="276" y="0.0" width="44" height="44"/>
                         <subviews>
@@ -42,10 +33,31 @@
                             <constraint firstAttribute="width" constant="44" id="lSD-3V-EJv"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldF-Dg-ZJC" userLabel="Cell Sub Label">
+                        <rect key="frame" x="178" y="8" width="90" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="lf1-Wg-s5u"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmf-76-2V7">
+                        <rect key="frame" x="10" y="8" width="160" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Pgs-Th-Kiv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="vmf-76-2V7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Fo5-0T-y1y"/>
+                    <constraint firstItem="yxi-or-bbY" firstAttribute="leading" secondItem="ldF-Dg-ZJC" secondAttribute="trailing" constant="8" id="6Hy-Lw-6p6"/>
+                    <constraint firstItem="ldF-Dg-ZJC" firstAttribute="leading" secondItem="vmf-76-2V7" secondAttribute="trailing" constant="8" id="J7e-x4-ccJ"/>
                     <constraint firstAttribute="trailing" secondItem="yxi-or-bbY" secondAttribute="trailing" id="gnu-YI-UDQ"/>
+                    <constraint firstItem="ldF-Dg-ZJC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hDp-16-gp7"/>
+                    <constraint firstItem="vmf-76-2V7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lRg-so-CkP"/>
                     <constraint firstItem="yxi-or-bbY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="y2P-gK-lAX"/>
                     <constraint firstItem="vmf-76-2V7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="y99-5Y-cHs"/>
                 </constraints>
@@ -53,6 +65,7 @@
             <connections>
                 <outlet property="arrowImageView" destination="g45-fi-hPz" id="5q3-zS-ya9"/>
                 <outlet property="cellMainLabel" destination="vmf-76-2V7" id="Cxi-50-OTa"/>
+                <outlet property="cellSubLabel" destination="ldF-Dg-ZJC" id="rrk-cX-0EE"/>
             </connections>
         </tableViewCell>
     </objects>

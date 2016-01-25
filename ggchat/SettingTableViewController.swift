@@ -216,6 +216,8 @@ class SettingTableViewController:
                 let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableMenuCell.cellReuseIdentifier(),
                     forIndexPath: indexPath) as! SettingTableMenuCell
                 cell.cellMainLabel.attributedText = NSAttributedString(string: "Set Display Name")
+                cell.cellSubLabel.attributedText = NSAttributedString(string: UserAPI.sharedInstance.displayName)
+                cell.hideArrow()
                 return cell
             }
         } else {
@@ -225,6 +227,19 @@ class SettingTableViewController:
             // Configure the cell...
             let menu = GGSettingData.sharedInstance.menus[indexPath.section-1][indexPath.row]
             cell.cellMainLabel.attributedText = NSAttributedString(string: menu.displayName)
+            if menu.id == "username" {
+                cell.cellSubLabel.text = UserAPI.sharedInstance.username
+            } else if menu.id == "phone_number" {
+                cell.cellSubLabel.text = UserAPI.sharedInstance.phoneNumber
+            } else {
+                cell.cellSubLabel.text = nil
+            }
+            if menu.segueName == "" {
+                cell.hideArrow()
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+            } else {
+                cell.selectionStyle = UITableViewCellSelectionStyle.Default
+            }
             
             return cell
         }
