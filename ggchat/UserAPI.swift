@@ -998,8 +998,31 @@ class UserAPI {
     }
    
     var username: String?
-    var email: String?
-    var password: String?
+    
+    var email: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
+        }
+    }
+    
+    var emailFromUserDefaults: String? {
+        get {
+            return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.email) as? String
+        }
+    }
+    
+    var password: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(self.password, forKey: GGKey.password)
+        }
+    }
+    
+    var passwordFromUserDefaults: String? {
+        get {
+            return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.password) as? String
+        }
+    }
+    
     var nickname: String?
     var avatarPath: String?
     var avatarImage: UIImage?
