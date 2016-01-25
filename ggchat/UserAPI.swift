@@ -209,6 +209,7 @@ class UserSetting {
     }
     
     var sound: Bool = true
+    var alert: Bool = true
     var keyboards = [String]()
 
     // Default settings
@@ -920,6 +921,15 @@ class UserAPI {
         return self.editProfile(["sound": sound], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
                 self.settings.sound = sound
+            }
+            jsonCompletion?(json: jsonBody)
+        })
+    }
+    
+    func updateAlert(alert: Bool, jsonCompletion: HTTPJsonCompletion?) -> Bool {
+        return self.editProfile(["alert": alert], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+            if let _ = jsonBody {
+                self.settings.alert = alert
             }
             jsonCompletion?(json: jsonBody)
         })

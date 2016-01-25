@@ -66,6 +66,8 @@ class SettingNotificationTableViewController: UITableViewController {
                 let notification = GGSettingData.sharedInstance.notifications[indexPath.section][indexPath.row]
                 if notification.id == "sound" {
                     UserAPI.sharedInstance.updateSound(sender.on, jsonCompletion: nil)
+                } else if notification.id == "alert" {
+                    UserAPI.sharedInstance.updateAlert(sender.on, jsonCompletion: nil)
                 }
             }
         }
