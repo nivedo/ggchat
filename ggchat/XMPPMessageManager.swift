@@ -457,7 +457,74 @@ public class XMPPMessageManager: NSObject {
         self.deleteAllContactMessages()
         self.deleteAllArchivedMessages()
     }
+   
+    func clearCoreDataFor(jid: String) {
+        self.deleteContactMessageFrom(jid)
+        self.deleteArchivedMessagesFrom(jid)
+    }
+    
+    func deleteContactMessageFrom(jid: String) {
+        print("Deleting contact from \(jid) in core data")
+        let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Contact_CoreDataObject", inManagedObjectContext: moc!)
+        
+        let request = NSFetchRequest()
+		let predicateFormat = "bareJid like %@ "
+		let predicate = NSPredicate(format: predicateFormat, jid)
+        
+        request.predicate = predicate
+		request.entity = entityDescription
 	
+        do {
+			let results = try moc?.executeFetchRequest(request)
+           
+            var update = false
+			for messageElement in results! {
+                moc?.deleteObject(messageElement as! NSManagedObject)
+                update = true
+			}
+            if update {
+                try moc?.save()
+            }
+		} catch _ {
+			//catch fetch error here
+		}
+    }
+    
+    func deleteArchivedMessagesFrom(jid: String) {
+        let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Message_CoreDataObject", inManagedObjectContext: moc!)
+		let request = NSFetchRequest()
+		let predicateFormat = "bareJidStr like %@ "
+		let predicate = NSPredicate(format: predicateFormat, jid)
+        
+        request.predicate = predicate
+		request.entity = entityDescription
+	
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        
+		do {
+            let persist = messageStorage?.persistentStoreCoordinator
+            try persist?.executeRequest(deleteRequest, withContext: moc!)
+            /*
+			let results = try moc?.executeFetchRequest(request)
+            self.archivedMessageIds.removeAll()
+           
+            var update = false
+			for messageElement in results! {
+                moc?.deleteObject(messageElement as! NSManagedObject)
+                update = true
+			}
+            if update {
+                try moc?.save()
+            }
+            */
+		} catch _ {
+			//catch fetch error here
+		}
+    }
+    
+    /*
 	public func deleteMessagesFrom(jid jid: String, messages: NSArray) {
 		messages.enumerateObjectsUsingBlock { (message, idx, stop) -> Void in
 			let moc = self.messageStorage?.mainThreadManagedObjectContext
@@ -489,6 +556,7 @@ public class XMPPMessageManager: NSObject {
 			}
 		}
 	}
+    */
     
     func loadAllMostRecentArchivedMessages() -> [String: ChatConversation] {
 		let moc = messageStorage?.mainThreadManagedObjectContext
