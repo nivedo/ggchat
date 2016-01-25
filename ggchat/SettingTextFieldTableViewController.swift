@@ -16,6 +16,7 @@ class SettingTextFieldTableViewController: UITableViewController, UITextFieldDel
     var textField: UITextField?
     
     var keyName: String!
+    var numericOnly: Bool = false
     var completionHandler: SettingTextFieldCompletionHandler!
     
     
@@ -53,8 +54,9 @@ class SettingTextFieldTableViewController: UITableViewController, UITextFieldDel
         self.tableView.backgroundColor = self.tableView.separatorColor
     }
     
-    func beforeSegue(keyName: String, completionHandler: SettingTextFieldCompletionHandler) {
+    func beforeSegue(keyName: String, numericOnly: Bool, completionHandler: SettingTextFieldCompletionHandler) {
         self.keyName = keyName
+        self.numericOnly = numericOnly
         self.completionHandler = completionHandler
     }
     
@@ -111,6 +113,10 @@ class SettingTextFieldTableViewController: UITableViewController, UITextFieldDel
         cell.cellLabel.attributedText = NSAttributedString(string: self.keyName)
         cell.cellTextField.delegate = self
         self.textField = cell.cellTextField
+        self.textField!.keyboardType = UIKeyboardType.Default
+        if self.numericOnly {
+            self.textField!.keyboardType = UIKeyboardType.NumberPad
+        }
 
         return cell
     }

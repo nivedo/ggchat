@@ -33,6 +33,7 @@ class SignupViewController: UIViewController {
         
         self.usernameTextField.placeholder = "Username"
         self.emailTextField.placeholder = "Email"
+        self.emailTextField.keyboardType = UIKeyboardType.DecimalPad
         self.passwordTextField.placeholder = "Password"
         self.passwordTextField.secureTextEntry = true
         

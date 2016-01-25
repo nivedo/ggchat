@@ -61,7 +61,7 @@ class GGSettingData {
                 SettingMenu(
                     id: "phone_number",
                     displayName: "Phone Number",
-                    segueName: ""),
+                    segueName: "settings.to.settings_textfield"),
             ],
             [
                 SettingMenu(

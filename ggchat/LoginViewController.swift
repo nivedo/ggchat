@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
         self.usernameTextField.layer.borderColor = UIColor.darkGrayColor().CGColor
         self.usernameTextField.layer.borderWidth = 1
         self.usernameTextField.layer.cornerRadius = CGFloat(5.0)
+        self.usernameTextField.keyboardType = UIKeyboardType.EmailAddress
         
         self.passwordTextField.placeholder = "Password"
         self.passwordTextField.secureTextEntry = true
