@@ -306,8 +306,8 @@ class UserAPI {
         return "\(self.route("addbuddy?username=\(username)"))"
     }
 
-    class func deletebuddyUrl(username: String) -> String {
-        return "\(self.route("deletebuddy?username=\(username)"))"
+    class func deletebuddyUrl(jid: String) -> String {
+        return "\(self.route("deletebuddy?jid=\(jid)"))"
     }
 
     class var rosterUrl: String {
@@ -731,9 +731,9 @@ class UserAPI {
         }
     }
     
-    func deleteBuddy(username: String, completion: HTTPJsonCompletion?) {
+    func deleteBuddy(jid: String, completion: HTTPJsonCompletion?) {
         if let token = self.authToken {
-            self.post(UserAPI.deletebuddyUrl(username),
+            self.post(UserAPI.deletebuddyUrl(jid),
                 authToken: token,
                 jsonBody: nil,
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in

@@ -303,18 +303,18 @@ class ContactTableViewController: UITableViewController,
                         UserAPI.sharedInstance.deleteBuddy(user.jid, completion: { (jsonBody: [String: AnyObject]?) -> Void in
                             if let json = jsonBody {
                                 print(json)
-                                if let errorMsg = json["error"] as? String {
-                                    dispatch_async(dispatch_get_main_queue()) {
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    if let errorMsg = json["error"] as? String {
                                         let alert = UIAlertView()
                                         alert.title = "Alert"
                                         alert.message = errorMsg
                                         alert.addButtonWithTitle("OK")
                                         alert.show()
+                                    } else {
+                                        self.buddyList = UserAPI.sharedInstance.removeBuddy(user.jid)
+                                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                                        // UserAPI.sharedInstance.sync()
                                     }
-                                } else {
-                                    self.buddyList = UserAPI.sharedInstance.removeBuddy(user.jid)
-                                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                                    // UserAPI.sharedInstance.sync()
                                 }
                             }
                         })
