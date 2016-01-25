@@ -1244,7 +1244,7 @@ class MessageViewController: UIViewController,
     */
     
     func textViewDidBeginEditing(textView: UITextView) {
-        print("textViewDidBeginEditing")
+        // print("textViewDidBeginEditing")
         /*
         if (textView != self.inputToolbar.contentView.textView) {
             return
@@ -1284,7 +1284,7 @@ class MessageViewController: UIViewController,
     }
 
     func textViewDidChange(textView: UITextView) {
-        print("textViewDidChange")
+        // print("textViewDidChange")
         /*
         if (textView != self.inputToolbar.contentView.textView) {
             return
