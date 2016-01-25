@@ -88,12 +88,55 @@ class GGMessageViewController:
                     let firstIndexPath = NSIndexPath(forRow: firstRow, inSection: 0)
                     self.messageCollectionView.scrollToItemAtIndexPath(firstIndexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
                 } else {
-                    self.messageCollectionView.reloadData()
-                    refreshController.removeFromSuperview()
+                    // self.messageCollectionView.reloadData()
+                    // refreshController.removeFromSuperview()
+                    self.syncEarlierHistoryMessages(refreshController)
                 }
             }
         }
         refreshController.endRefreshing()
+    }
+    
+    func syncEarlierHistoryMessages(refreshController: UIRefreshControl) {
+        if let recipient = self.recipient {
+            if let firstDate = self.messages.first?.date {
+                UserAPI.sharedInstance.getHistory(recipient.jid,
+                    limit: GGConfig.paginationLimit,
+                    end: firstDate,
+                    delegate: self,
+                    completion: { (messages: [Message]?, xmls: [String]?) -> Void in
+                    if let msgs = messages, let xmls = xmls {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            var earlierMessages = [Message]()
+                            for i in 0..<msgs.count {
+                                let m = msgs[i]
+                                let x = xmls[i]
+                                if XMPPMessageManager.sharedInstance.archiveMessage(m.id, xmlString: x, date: m.date, outgoing: m.isOutgoing) {
+                                    earlierMessages.append(m)
+                                }
+                            }
+                            let firstRow = earlierMessages.count
+                            print("Loaded \(msgs.count) earlier messages from history")
+                            earlierMessages.appendContentsOf(self.messages)
+                            self.messages = earlierMessages
+                            
+                            self.messageCollectionView.reloadData()
+                            let firstIndexPath = NSIndexPath(forRow: firstRow, inSection: 0)
+                            self.messageCollectionView.scrollToItemAtIndexPath(firstIndexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+                            
+                            if firstRow < GGConfig.paginationLimit {
+                                refreshController.removeFromSuperview()
+                            }
+                        }
+                    } else {
+                        refreshController.removeFromSuperview()
+                    }
+                })
+            } else {
+                self.messageCollectionView.reloadData()
+                refreshController.removeFromSuperview()
+            }
+        }
     }
     
     //////////////////////////////////////////////////////////////////////////////////
