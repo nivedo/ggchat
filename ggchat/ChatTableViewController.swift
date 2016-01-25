@@ -187,8 +187,10 @@ class ChatTableViewController:
                 refreshAlert.addAction(UIAlertAction(title: "Clear message history",
                     style: .Destructive,
                     handler: { (action: UIAlertAction!) in
-                        // XMPPChatManager.removeUserAtIndexPath(indexPath)
+                        let chat = self.dataList[indexPath.row]
+                        self.chatsList = UserAPI.sharedInstance.removeChatConversation(chat.peerJID)
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                        XMPPMessageManager.sharedInstance.clearCoreDataFor(chat.peerJID)
                 }))
                 
                 refreshAlert.addAction(UIAlertAction(title: "Cancel",

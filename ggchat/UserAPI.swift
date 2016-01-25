@@ -785,6 +785,17 @@ class UserAPI {
         return self.buddyList
     }
     
+    func removeChatConversation(jid: String) -> [ChatConversation] {
+        for (index, chat) in self.chatsList.enumerate() {
+            if chat.peerJID == jid {
+                self.chatsList.removeAtIndex(index)
+                break
+            }
+        }
+        self.chatsMap.removeValueForKey(jid)
+        return self.chatsList
+    }
+    
     func loadChatsFromCoreData() {
         dispatch_async(dispatch_get_main_queue()) {
             // self.chatsMap = XMPPMessageManager.sharedInstance.loadAllMostRecentArchivedMessages()

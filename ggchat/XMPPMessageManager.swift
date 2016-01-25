@@ -469,7 +469,7 @@ public class XMPPMessageManager: NSObject {
 		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Contact_CoreDataObject", inManagedObjectContext: moc!)
         
         let request = NSFetchRequest()
-		let predicateFormat = "bareJid like %@ "
+		let predicateFormat = "bareJidStr like %@ "
 		let predicate = NSPredicate(format: predicateFormat, jid)
         
         request.predicate = predicate
