@@ -71,10 +71,11 @@ class LoginViewController: UIViewController {
     }
     
     func loadUserDefaults() {
-        if let previousEmail = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.email) {
+        // if let previousEmail = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.email) {
+        if let previousEmail = UserAPI.sharedInstance.emailFromUserDefaults {
             self.usernameTextField.text = previousEmail
         }
-        if let previousPassword = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.password) {
+        if let previousPassword = UserAPI.sharedInstance.passwordFromUserDefaults {
             self.passwordTextField.text = previousPassword
         }
     }

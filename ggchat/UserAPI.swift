@@ -368,6 +368,12 @@ class UserAPI {
     }
     
     func login(email: String, password: String, completion: ((Bool) -> Void)?) {
+        if let prevEmail = self.emailFromUserDefaults {
+            if prevEmail != email {
+                self.logout()
+            }
+        }
+        
         self.post(UserAPI.loginUrl,
             authToken: nil,
             jsonBody: [ "email": email, "password": password ],
