@@ -291,7 +291,12 @@ class SettingTableViewController:
                         stf.beforeSegue("Phone Number",
                             numericOnly: true,
                             completionHandler: { (textValue: String) -> Void in
-                        })
+                                UserAPI.sharedInstance.updatePhoneNumber(textValue, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                                    print(jsonBody)
+                                })
+                            },
+                            placeholderText: UserAPI.sharedInstance.phoneNumber
+                        )
                     } else if id == "displayName" {
                         stf.beforeSegue("Display Name",
                             numericOnly: false,

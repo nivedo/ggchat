@@ -392,6 +392,7 @@ class UserAPI {
                     self.jpassword = pass
                     self.password = password
                     self.email = email
+                    self.phoneNumber = json["phonenumber"] as? String
                     self.sync()
                     self.updatePushToken()
                     completion?(true)
@@ -489,6 +490,11 @@ class UserAPI {
         if let language = json["lang"] as? String {
             if language.length > 0 {
                 self.settings.language = language
+            }
+        }
+        if let phoneNumber = json["phonenumber"] as? String {
+            if phoneNumber.length > 0 {
+                self.phoneNumber = phoneNumber
             }
         }
         if let sound = json["sound"] as? String {
@@ -939,6 +945,15 @@ class UserAPI {
         })
     }
     
+    func updatePhoneNumber(phoneNumber: String, jsonCompletion: HTTPJsonCompletion?) -> Bool {
+        return self.editProfile(["phonenumber": phoneNumber], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+            if let _ = jsonBody {
+                self.phoneNumber = phoneNumber
+            }
+            jsonCompletion?(json: jsonBody)
+        })
+    }
+    
     func getAvatarImage(jid: String) -> MessageAvatarImage {
         if let user = self.rosterMap[jid] {
             if user.jid == jid {
@@ -1018,6 +1033,7 @@ class UserAPI {
     }
    
     var username: String?
+    var phoneNumber: String?
     
     var email: String? {
         didSet {
@@ -1055,6 +1071,7 @@ class UserAPI {
     func reset() {
         self.username = nil
         self.email = nil
+        self.phoneNumber = nil
         self.password = nil
         self.nickname = nil
         self.avatarPath = nil

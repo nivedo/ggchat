@@ -16,6 +16,7 @@ class SettingTextFieldTableViewController: UITableViewController, UITextFieldDel
     var textField: UITextField?
     
     var keyName: String!
+    var placeholderText: String?
     var numericOnly: Bool = false
     var completionHandler: SettingTextFieldCompletionHandler!
     
@@ -54,8 +55,9 @@ class SettingTextFieldTableViewController: UITableViewController, UITextFieldDel
         self.tableView.backgroundColor = self.tableView.separatorColor
     }
     
-    func beforeSegue(keyName: String, numericOnly: Bool, completionHandler: SettingTextFieldCompletionHandler) {
+    func beforeSegue(keyName: String, numericOnly: Bool, completionHandler: SettingTextFieldCompletionHandler, placeholderText: String? = nil) {
         self.keyName = keyName
+        self.placeholderText = placeholderText
         self.numericOnly = numericOnly
         self.completionHandler = completionHandler
     }
@@ -116,6 +118,9 @@ class SettingTextFieldTableViewController: UITableViewController, UITextFieldDel
         self.textField!.keyboardType = UIKeyboardType.Default
         if self.numericOnly {
             self.textField!.keyboardType = UIKeyboardType.NumberPad
+        }
+        if let placeholder = self.placeholderText {
+            self.textField!.placeholder = placeholder
         }
 
         return cell
