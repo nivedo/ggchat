@@ -45,7 +45,7 @@ extension JSQSystemSoundPlayer {
     }
 
     private class func jsq_playSoundFromJSQMessagesBundleWithName(soundName: String, asAlert: Bool) {
-        if !UserAPI.sharedInstance.settings.sound {
+        if UserAPI.sharedInstance.settings.sound == "off" {
             return
         }
         

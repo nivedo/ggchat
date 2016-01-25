@@ -56,6 +56,12 @@ class SettingNotificationTableViewController: UITableViewController {
         cell.cellMainLabel.text = notification.displayName
         cell.toggleSwitch.addTarget(self, action: Selector("switchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
 
+        if notification.id == "sound" {
+            cell.toggleSwitch.on = (UserAPI.sharedInstance.settings.sound == "on")
+        } else if notification.id == "alert" {
+            cell.toggleSwitch.on = (UserAPI.sharedInstance.settings.alert == "on")
+        }
+        
         return cell
     }
     
@@ -64,10 +70,13 @@ class SettingNotificationTableViewController: UITableViewController {
         if let cell = sender.superview?.superview as? UITableViewCell {
             if let indexPath = self.tableView.indexPathForCell(cell) {
                 let notification = GGSettingData.sharedInstance.notifications[indexPath.section][indexPath.row]
+                let value = sender.on ? "on" : "off"
                 if notification.id == "sound" {
-                    UserAPI.sharedInstance.updateSound(sender.on, jsonCompletion: nil)
+                    UserAPI.sharedInstance.updateSound(value, jsonCompletion: nil)
                 } else if notification.id == "alert" {
-                    UserAPI.sharedInstance.updateAlert(sender.on, jsonCompletion: nil)
+                    UserAPI.sharedInstance.updateAlert(value, jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                        print(jsonBody)
+                    })
                 }
             }
         }

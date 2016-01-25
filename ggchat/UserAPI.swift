@@ -208,8 +208,8 @@ class UserSetting {
         }
     }
     
-    var sound: Bool = true
-    var alert: Bool = true
+    var sound: String = "on"
+    var alert: String = "on"
     var keyboards = [String]()
 
     // Default settings
@@ -475,6 +475,7 @@ class UserAPI {
     }
     
     func loadProfileFromJson(json: [String: AnyObject]) {
+        print(json)
         if let nickname = json["nickname"] as? String {
             if nickname.length > 0 {
                 self.nickname = nickname
@@ -490,8 +491,11 @@ class UserAPI {
                 self.settings.language = language
             }
         }
-        if let sound = json["sound"] as? Bool {
+        if let sound = json["sound"] as? String {
             self.settings.sound = sound
+        }
+        if let alert = json["alert"] as? String {
+            self.settings.alert = alert
         }
         if let avatarPath = json["avatar"] as? String {
             if avatarPath.length > 0 {
@@ -917,7 +921,7 @@ class UserAPI {
         })
     }
     
-    func updateSound(sound: Bool, jsonCompletion: HTTPJsonCompletion?) -> Bool {
+    func updateSound(sound: String, jsonCompletion: HTTPJsonCompletion?) -> Bool {
         return self.editProfile(["sound": sound], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
                 self.settings.sound = sound
@@ -926,7 +930,7 @@ class UserAPI {
         })
     }
     
-    func updateAlert(alert: Bool, jsonCompletion: HTTPJsonCompletion?) -> Bool {
+    func updateAlert(alert: String, jsonCompletion: HTTPJsonCompletion?) -> Bool {
         return self.editProfile(["alert": alert], jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
             if let _ = jsonBody {
                 self.settings.alert = alert
