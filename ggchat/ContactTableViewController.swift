@@ -53,10 +53,26 @@ class ContactTableViewController: UITableViewController,
         SwiftAddressBook.requestAccessWithCompletion({ (success, error) -> Void in
             if success {
                 if let people = swiftAddressBook?.allPeople {
+                    var persons = [[String: AnyObject]]()
                     for person in people {
-                        print("\(person.emails?.map( {$0.value} ))")
-                        print("\(person.phoneNumbers?.map( {$0.value} ))")
+                        var json = [String: AnyObject]()
+                        json["firstName"] = person.firstName
+                        json["lastName"] = person.lastName
+                       
+                        var identity = false
+                        if let emails = person.emails?.map( {$0.value} ) {
+                            json["emails"] = emails
+                            identity = true
+                        }
+                        if let phoneNumbers = person.phoneNumbers?.map( {$0.value} ) {
+                            json["phoneNumbers"] = phoneNumbers
+                            identity = true
+                        }
+                        if identity {
+                            persons.append(json)
+                        }
                     }
+                    print("Parsed \(persons.count) in contacts")
                 }
             } else {
                 print("Access to address book denied.")
