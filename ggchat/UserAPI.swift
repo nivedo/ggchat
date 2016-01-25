@@ -434,6 +434,18 @@ class UserAPI {
     }
     
     func loadCoreData() {
+        if let nickname = self.nicknameFromUserDefaults {
+            self.nickname = nickname
+        }
+        if let avatarPath = self.avatarPathFromUserDefaults {
+            self.avatarPath = avatarPath
+            S3ImageCache.sharedInstance.retrieveImageForKey(
+                avatarPath,
+                bucket: GGSetting.awsS3AvatarsBucketName,
+                completion: { (image: UIImage?) -> Void in
+                    self.avatarImage = image
+            })
+        }
         self.loadRosterFromCoreData(nil)
         self.loadChatsFromCoreData()
     }
@@ -1040,7 +1052,6 @@ class UserAPI {
             NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
         }
     }
-    
     var emailFromUserDefaults: String? {
         get {
             return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.email) as? String
@@ -1052,15 +1063,34 @@ class UserAPI {
             NSUserDefaults.standardUserDefaults().setValue(self.password, forKey: GGKey.password)
         }
     }
-    
     var passwordFromUserDefaults: String? {
         get {
             return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.password) as? String
         }
     }
     
-    var nickname: String?
-    var avatarPath: String?
+    var nickname: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(self.nickname, forKey: GGKey.userApiNickname)
+        }
+    }
+    var nicknameFromUserDefaults: String? {
+        get {
+            return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.userApiNickname) as? String
+        }
+    }
+    
+    var avatarPath: String? {
+        didSet {
+            NSUserDefaults.standardUserDefaults().setValue(self.nickname, forKey: GGKey.userApiAvatarPath)
+        }
+    }
+    var avatarPathFromUserDefaults: String? {
+        get {
+            return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.userApiAvatarPath) as? String
+        }
+    }
+    
     var avatarImage: UIImage?
     var buddyList: [RosterUser] = [RosterUser]()
     var rosterMap: [String: RosterUser] = [String: RosterUser]()
