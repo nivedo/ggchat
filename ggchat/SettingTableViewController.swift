@@ -13,6 +13,7 @@ class SettingTableViewController:
     UITableViewController,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
+    XMPPManagerDelegate,
     XMPPMessageManagerDelegate {
 
     let photoPicker = UIImagePickerController()
@@ -36,6 +37,7 @@ class SettingTableViewController:
         
         // Initialize photo and camera delegates
         self.photoPicker.delegate = self
+        XMPPManager.sharedInstance.delegate = self
         XMPPMessageManager.sharedInstance.delegate = self
     }
     
@@ -128,7 +130,14 @@ class SettingTableViewController:
    
     //////////////////////////////////////////////////////////////////////////////////
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        XMPPManager.sharedInstance.delegate = nil
+    }
+    
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         // This call is necessary because popViewControllerAnimated will not
         // call viewDidLoad() or refresh the tableView after the pop
         
@@ -194,7 +203,7 @@ class SettingTableViewController:
                 cell.cellTopLabel.attributedText = NSAttributedString(string: UserAPI.sharedInstance.displayName)
                 cell.cellTopLabel.font = UIFont.boldSystemFontOfSize(CGFloat(18.0))
                 
-                let status = XMPPManager.sharedInstance.isConnected() ? "online" : "offline"
+                let status = XMPPManager.sharedInstance.stream.isAuthenticated() ? "online" : "offline"
                 cell.cellBottomLabel.attributedText = NSAttributedString(string: status)
                
                 let avatar = UserAPI.sharedInstance.avatar
@@ -378,5 +387,11 @@ class SettingTableViewController:
     
     func receiveReadReceipt(from: String, readReceipt: ReadReceipt) {
         
+    }
+    
+    func onAuthenticate() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
     }
 }
