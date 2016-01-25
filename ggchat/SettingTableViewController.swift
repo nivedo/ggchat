@@ -308,7 +308,9 @@ class SettingTableViewController:
                                         }
                                     }
                                 })
-                        })
+                            },
+                            placeholderText: UserAPI.sharedInstance.displayName
+                        )
                     }
                 }
             }
