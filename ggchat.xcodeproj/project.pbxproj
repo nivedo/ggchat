@@ -35,6 +35,9 @@
 		D433B1701C4641530003E100 /* GroupProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D433B16E1C4641530003E100 /* GroupProfileTableViewCell.xib */; };
 		D433B1721C473FA20003E100 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1711C473FA20003E100 /* ConnectionManager.swift */; };
 		D433B1741C4DE7CC0003E100 /* SettingNotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1731C4DE7CB0003E100 /* SettingNotificationTableViewController.swift */; };
+		D433B17A1C5738290003E100 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1791C5738290003E100 /* FacebookManager.swift */; };
+		D433B17C1C5763A60003E100 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D433B17B1C5763A60003E100 /* FBSDKCoreKit.framework */; };
+		D433B17E1C5763AD0003E100 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D433B17D1C5763AD0003E100 /* FBSDKLoginKit.framework */; };
 		D43B28B11C06893200B3F367 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */; };
 		D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B41C06894100B3F367 /* DDAbstractDatabaseLogger.m */; };
 		D43B28C71C06894100B3F367 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D43B28B61C06894100B3F367 /* DDASLLogger.m */; };
@@ -106,7 +109,6 @@
 		D45FBD741C056A3F00E79B4E /* GGSettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD731C056A3F00E79B4E /* GGSettingData.swift */; };
 		D45FBD781C05754400E79B4E /* SettingTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */; };
 		D4683E561BF0486F00E02886 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E551BF0486F00E02886 /* AppDelegate.swift */; };
-		D4683E581BF0486F00E02886 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4683E571BF0486F00E02886 /* ViewController.swift */; };
 		D4683E5B1BF0486F00E02886 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E591BF0486F00E02886 /* Main.storyboard */; };
 		D4683E5D1BF0486F00E02886 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4683E5C1BF0486F00E02886 /* Assets.xcassets */; };
 		D4683E601BF0486F00E02886 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4683E5E1BF0486F00E02886 /* LaunchScreen.storyboard */; };
@@ -323,6 +325,9 @@
 		D433B16E1C4641530003E100 /* GroupProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupProfileTableViewCell.xib; sourceTree = "<group>"; };
 		D433B1711C473FA20003E100 /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		D433B1731C4DE7CB0003E100 /* SettingNotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingNotificationTableViewController.swift; sourceTree = "<group>"; };
+		D433B1791C5738290003E100 /* FacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
+		D433B17B1C5763A60003E100 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "FacebookSDKs-iOS-20160115/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		D433B17D1C5763AD0003E100 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "FacebookSDKs-iOS-20160115/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		D43B28AF1C06893200B3F367 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		D43B28B01C06893200B3F367 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D43B28B31C06894100B3F367 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -446,7 +451,6 @@
 		D45FBD771C05754400E79B4E /* SettingTableHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableHeaderCell.swift; sourceTree = "<group>"; };
 		D4683E521BF0486F00E02886 /* ggchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4683E551BF0486F00E02886 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D4683E571BF0486F00E02886 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D4683E5A1BF0486F00E02886 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D4683E5C1BF0486F00E02886 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4683E5F1BF0486F00E02886 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -736,7 +740,9 @@
 				D4C8FCC91C068C4300992801 /* libxml2.2.dylib in Frameworks */,
 				D43B294D1C068A2800B3F367 /* Security.framework in Frameworks */,
 				D43B294B1C068A1F00B3F367 /* CFNetwork.framework in Frameworks */,
+				D433B17C1C5763A60003E100 /* FBSDKCoreKit.framework in Frameworks */,
 				D43B28E61C06895600B3F367 /* libidn.a in Frameworks */,
+				D433B17E1C5763AD0003E100 /* FBSDKLoginKit.framework in Frameworks */,
 				3F433B1F4560FA944F8B188D /* Pods_ggchat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,6 +776,8 @@
 		BDAD08421CB58D0D76AE60DD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D433B17D1C5763AD0003E100 /* FBSDKLoginKit.framework */,
+				D433B17B1C5763A60003E100 /* FBSDKCoreKit.framework */,
 				01E47DB7245DB9A6BC4F13DE /* Pods_ggchat.framework */,
 			);
 			name = Frameworks;
@@ -1108,7 +1116,6 @@
 				D4A7866B1C0E90AC00C37427 /* Extensions */,
 				D42B01771C11B81C00643835 /* Modules */,
 				D4683E551BF0486F00E02886 /* AppDelegate.swift */,
-				D4683E571BF0486F00E02886 /* ViewController.swift */,
 				D4C8FCCD1C069FC100992801 /* GGBridge.h */,
 				D45FBD421BFDB1B300E79B4E /* GGConfig.swift */,
 				D45FBD731C056A3F00E79B4E /* GGSettingData.swift */,
@@ -1309,6 +1316,7 @@
 				D433B1631C45E2340003E100 /* XMPPRoomManager.swift */,
 				D4A7866E1C0EA0F700C37427 /* SettingManager.swift */,
 				D433B1711C473FA20003E100 /* ConnectionManager.swift */,
+				D433B1791C5738290003E100 /* FacebookManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2233,6 +2241,7 @@
 				D4A786691C0D5A7E00C37427 /* SettingTableSwitchCell.swift in Sources */,
 				D4C8FDEF1C06AA2300992801 /* XMPPRoomMessageCoreDataStorageObject.m in Sources */,
 				D4C8FDF11C06AA2300992801 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
+				D433B17A1C5738290003E100 /* FacebookManager.swift in Sources */,
 				D433B1681C45F8E80003E100 /* GroupMessageTableViewController.swift in Sources */,
 				D4A9F4E81BF2778A00FA4444 /* MessagesCollectionViewCell.swift in Sources */,
 				D4C8FE131C06AA2300992801 /* XMPPSoftwareVersion.m in Sources */,
@@ -2273,7 +2282,6 @@
 				D4C8FE101C06AA2300992801 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				D433B1551C3282DD0003E100 /* WikiMediaItem.swift in Sources */,
 				D43B29051C06896200B3F367 /* XMPPDigestMD5Authentication.m in Sources */,
-				D4683E581BF0486F00E02886 /* ViewController.swift in Sources */,
 				D433B16F1C4641530003E100 /* GroupProfileTableViewCell.swift in Sources */,
 				D478409F1BF067D300441A2D /* MessageBubbleImage.swift in Sources */,
 				D43B29301C06897300B3F367 /* XMPPParser.m in Sources */,
@@ -2539,7 +2547,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FacebookSDKs-iOS-20160115",
+				);
 				HEADER_SEARCH_PATHS = (
 					/usr/include/libxml2,
 					"$(inherited)",
@@ -2567,7 +2578,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FacebookSDKs-iOS-20160115",
+				);
 				HEADER_SEARCH_PATHS = (
 					/usr/include/libxml2,
 					"$(inherited)",

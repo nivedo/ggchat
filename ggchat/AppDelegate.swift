@@ -16,7 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(app,
+            openURL: url,
+            sourceApplication: options["UIApplicationOpenURLOptionsSourceApplicationKey"] as! String,
+            annotation: nil)
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -56,6 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        // Facebook initialization, must be BEFORE initializeRootView
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         // Crash reporting
         Fabric.with([Crashlytics.self])
         
@@ -68,13 +77,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TSMessageView.appearance().alpha = 0.8
         // TSMessageView.appearance().backgroundColor = UIColor.blackColor()
         
+        
         return true
     }
     
     func initializeRootView(animated: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let loginIdentifier = "LoginViewController"
-      
+     
+        if (FBSDKAccessToken.currentAccessToken() != nil) {
+            print("Facebook access token valid")
+            FacebookManager.userData()
+            FacebookManager.friendsData()
+        }
+        
         var isAuthenticated = UserAPI.sharedInstance.canAuth
         if ConnectionManager.isConnectedToNetwork() {
             isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
@@ -156,6 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         print("applicationDidBecomeActive")
+        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(application: UIApplication) {
