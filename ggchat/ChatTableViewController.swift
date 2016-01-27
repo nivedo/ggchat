@@ -188,9 +188,22 @@ class ChatTableViewController:
                     style: .Destructive,
                     handler: { (action: UIAlertAction!) in
                         let chat = self.dataList[indexPath.row]
-                        self.chatsList = UserAPI.sharedInstance.removeChatConversation(chat.peerJID)
-                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                        XMPPMessageManager.sharedInstance.clearCoreDataFor(chat.peerJID)
+                        UserAPI.sharedInstance.deleteHistory(chat.peerJID, completion: { (jsonBody: [String: AnyObject]?) -> Void in
+                            print("deleteHistory --> \(jsonBody)")
+                            dispatch_async(dispatch_get_main_queue()) {
+                                if let _ = jsonBody {
+                                    self.chatsList = UserAPI.sharedInstance.removeChatConversation(chat.peerJID)
+                                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                                    XMPPMessageManager.sharedInstance.clearCoreDataFor(chat.peerJID)
+                                } else {
+                                    let alert = UIAlertView()
+                                    alert.title = "Alert"
+                                    alert.message = "Unable to delete message history"
+                                    alert.addButtonWithTitle("OK")
+                                    alert.show()                                }
+                                }
+                            }
+                        )
                 }))
                 
                 refreshAlert.addAction(UIAlertAction(title: "Cancel",

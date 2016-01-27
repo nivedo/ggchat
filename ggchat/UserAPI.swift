@@ -340,6 +340,15 @@ class UserAPI {
         return url
     }
     
+    class func deleteHistoryUrl(peerJID: String) -> String {
+        let tokens = peerJID.componentsSeparatedByString("@")
+        let peerUUID = tokens[0]
+        let path = "deletehistory?peer=\(peerUUID)"
+        let url = "\(self.route(path))"
+        print(url)
+        return url
+    }
+    
     ////////////////////////////////////////////////////////////////////
     
     func register(username: String, email: String, password: String, completion: ((Bool) -> Void)?) {
@@ -745,6 +754,18 @@ class UserAPI {
                         completion?(messages: nil, xmls: nil)
                     }
                 })
+        }
+    }
+    
+    func deleteHistory(peerJID: String, completion: HTTPJsonCompletion? = nil) {
+        if let token = self.authToken {
+            self.post(UserAPI.deleteHistoryUrl(peerJID),
+                authToken: token,
+                jsonBody: nil,
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    completion?(json: jsonBody)
+                }
+            )
         }
     }
     
