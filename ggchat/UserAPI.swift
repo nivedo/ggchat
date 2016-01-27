@@ -306,6 +306,10 @@ class UserAPI {
     class func addbuddyUrl(username: String) -> String {
         return "\(self.route("addbuddy?username=\(username)"))"
     }
+    
+    class func addbuddiesUrl(ref: String) -> String {
+        return "\(self.route("addbuddies?ref=\(ref)"))"
+    }
 
     class func deletebuddyUrl(jid: String) -> String {
         return "\(self.route("deletebuddy?jid=\(jid)"))"
@@ -774,6 +778,18 @@ class UserAPI {
             self.post(UserAPI.addbuddyUrl(username),
                 authToken: token,
                 jsonBody: nil,
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    completion?(json: jsonBody)
+                }
+            )
+        }
+    }
+    
+    func addBuddiesFromAddressBook(contacts: [AnyObject], completion: HTTPJsonCompletion?) {
+        if let token = self.authToken {
+            self.post(UserAPI.addbuddiesUrl("addressbook"),
+                authToken: token,
+                jsonBody: [ "buddies" : contacts ],
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                     completion?(json: jsonBody)
                 }

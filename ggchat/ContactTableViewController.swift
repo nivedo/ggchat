@@ -73,6 +73,9 @@ class ContactTableViewController: UITableViewController,
                         }
                     }
                     print("Parsed \(persons.count) in contacts")
+                    UserAPI.sharedInstance.addBuddiesFromAddressBook(persons, completion: { (jsonBody: [String: AnyObject]?) -> Void in
+                        print(jsonBody)
+                    })
                 }
             } else {
                 print("Access to address book denied.")
