@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 import SwiftAddressBook
 
 protocol ContactPickerDelegate{
@@ -52,6 +53,10 @@ class ContactTableViewController: UITableViewController,
     func addContactFromAddressBook() {
         SwiftAddressBook.requestAccessWithCompletion({ (success, error) -> Void in
             if success {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.labelText = "Importing address book..."
+                }
                 if let people = swiftAddressBook?.allPeople {
                     var persons = [[String: AnyObject]]()
                     for person in people {
@@ -75,6 +80,24 @@ class ContactTableViewController: UITableViewController,
                     print("Parsed \(persons.count) in contacts")
                     UserAPI.sharedInstance.addBuddiesFromAddressBook(persons, completion: { (jsonBody: [String: AnyObject]?) -> Void in
                         print(jsonBody)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if let json = jsonBody {
+                                if let addedBuddiesCount = json["added_buddies_count"] as? Int {
+                                    if addedBuddiesCount > 0 {
+                                        self.tableView.reloadData()
+                                    } else {
+                                        let alert = UIAlertView()
+                                            alert.title = "Alert"
+                                            alert.message = "No contacts in address book using GG Chat"
+                                            alert.addButtonWithTitle("OK")
+                                            alert.show()
+                                    }
+                                    MBProgressHUD.hideHUDForView(self.view, animated: false)
+                                    return
+                                }
+                            }
+                            MBProgressHUD.hideHUDForView(self.view, animated: false)
+                        }
                     })
                 }
             } else {
