@@ -155,12 +155,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             completion: { (success: Bool) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 if success {
-                    /*
-                    NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
-                    NSUserDefaults.standardUserDefaults().setValue(password, forKey: GGKey.password)
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    */
-    
                     print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
                     XMPPManager.sharedInstance.connectWithCompletion(
                         self.connectCallback,
