@@ -92,19 +92,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if ConnectionManager.isConnectedToNetwork() {
-            UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
-                if success {
-                    print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
-                    XMPPManager.sharedInstance.connectWithCompletion(
-                        self.xmppConnectCallback,
-                        authenticateCompletionHandler: self.xmppAuthenticateCallback)
-                } else {
-                    self.segueToLoginViewController()
-                }
-            })
+            if UserAPI.sharedInstance.canAuth {
+                UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
+                    if success {
+                        print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
+                        XMPPManager.sharedInstance.connectWithCompletion(
+                            self.xmppConnectCallback,
+                            authenticateCompletionHandler: self.xmppAuthenticateCallback)
+                    } else {
+                        self.segueToLoginViewController()
+                    }
+                })
+            } else if let facebookAuth = FBSDKAccessToken.currentAccessToken() {
+                let fbToken = facebookAuth.tokenString
+                let fbId = facebookAuth.userID
+                UserAPI.sharedInstance.authenticateWithFacebook(fbId, facebookToken: fbToken, completion: { (success: Bool) -> Void in
+                    print(success)
+                })
+            }
         }
         
-        let identifier = UserAPI.sharedInstance.canAuth ? "TabBarController" : loginIdentifier
+        let identifier = UserAPI.sharedInstance.sameUserAuth ? "TabBarController" : loginIdentifier
         let viewController = storyboard.instantiateViewControllerWithIdentifier(identifier)
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = viewController

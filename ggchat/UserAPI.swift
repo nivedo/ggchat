@@ -1055,6 +1055,18 @@ class UserAPI {
             return NSUserDefaults.standardUserDefaults().stringForKey(GGKey.userApiAuthToken) != nil
         }
     }
+    var canAuthWithFacebook: Bool {
+        get {
+            return FBSDKAccessToken.currentAccessToken() != nil
+            // return NSUserDefaults.standardUserDefaults().stringForKey(GGKey.facebookToken) != nil
+        }
+    }
+    
+    var sameUserAuth: Bool {
+        get {
+            return self.canAuth || self.canAuthWithFacebook
+        }
+    }
     
     var authToken: String? {
         didSet {
