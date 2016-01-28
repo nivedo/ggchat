@@ -299,6 +299,10 @@ class UserAPI {
         return self.route("auth")
     }
     
+    class func authUrl(thirdparty: String) -> String {
+        return self.route("auth?thirdparty=\(thirdparty)")
+    }
+    
     class func userinfoUrl(username: String) -> String {
         return "\(self.route("userinfo"))?username=\(username)"
     }
@@ -379,6 +383,16 @@ class UserAPI {
                     completion?(false)
                 }
             })
+    }
+    
+    func loginWithFacebook(facebookId: String, facebookToken: String, completion: ((Bool) -> Void)?) {
+         self.post(UserAPI.authUrl("facebook"),
+            authToken: nil,
+            jsonBody: [ "facebook_id": facebookId, "facebook_token": facebookToken ],
+            jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
+                print(jsonDict)
+            }
+        )
     }
     
     func login(email: String, password: String, completion: ((Bool) -> Void)?) {
@@ -1136,6 +1150,36 @@ class UserAPI {
     var avatarPathFromUserDefaults: String? {
         get {
             return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.userApiAvatarPath) as? String
+        }
+    }
+    
+    private var facebookId_: String?
+    var facebookId: String? {
+        get {
+            if let id = self.facebookId {
+                return id
+            } else {
+                return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.facebookId) as? String
+            }
+        }
+        set (id) {
+            self.facebookId = id
+            NSUserDefaults.standardUserDefaults().setValue(id, forKey: GGKey.facebookId)
+        }
+    }
+    
+    private var facebookToken_: String?
+    var facebookToken: String? {
+        get {
+            if let token = self.facebookToken {
+                return token
+            } else {
+                return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.facebookToken) as? String
+            }
+        }
+        set (token) {
+            self.facebookToken = token
+            NSUserDefaults.standardUserDefaults().setValue(token, forKey: GGKey.facebookToken)
         }
     }
     

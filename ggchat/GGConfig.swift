@@ -80,6 +80,9 @@ struct GGKey {
     static let userApiJabberdPassword = "user.api.jpassword"
     static let userApiNickname = "user.api.nickname"
     static let userApiAvatarPath = "user.api.avatarPath"
+    
+    static let facebookId = "facebook.id"
+    static let facebookToken = "facebook.token"
 }
 
 struct GGSetting {
