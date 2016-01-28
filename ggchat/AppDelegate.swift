@@ -91,9 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FacebookManager.friendsData()
         }
         
-        var isAuthenticated = UserAPI.sharedInstance.canAuth
         if ConnectionManager.isConnectedToNetwork() {
-            isAuthenticated = UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
+            UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
                 if success {
                     print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
                     XMPPManager.sharedInstance.connectWithCompletion(
@@ -105,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
-        let identifier = isAuthenticated ? "TabBarController" : loginIdentifier
+        let identifier = UserAPI.sharedInstance.canAuth ? "TabBarController" : loginIdentifier
         let viewController = storyboard.instantiateViewControllerWithIdentifier(identifier)
         self.window?.makeKeyAndVisible()
         self.window?.rootViewController = viewController
