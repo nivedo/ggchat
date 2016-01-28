@@ -20,6 +20,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
+   
+    let facebookReadPermissions = ["public_profile", "email", "user_friends"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +69,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Initialize facebook login
         let fbLoginButton = FBSDKLoginButton()
         fbLoginButton.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 230.0)
-        fbLoginButton.readPermissions = ["public_profile", "email", "user_friends"]
+        fbLoginButton.readPermissions = self.facebookReadPermissions
         fbLoginButton.delegate = self
         /*
         fbLoginButton.addTarget(self,
@@ -98,13 +100,23 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
         else {
             print("Login success")
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
-            if result.grantedPermissions.contains("email")
-            {
-                // Do work
+            var allPermsGranted = true
+            
+            //result.grantedPermissions returns an array of _NSCFString pointers
+            let grantedPermissions = result.grantedPermissions.map( {"\($0)"} )
+            for permission in self.facebookReadPermissions {
+                if !grantedPermissions.contains(permission) {
+                    allPermsGranted = false
+                    break
+                }
             }
-            FacebookManager.userData()
+            if allPermsGranted {
+                let fbToken = result.token.tokenString
+                let fbID = result.token.userID
+                UserAPI.sharedInstance.authenticateWithFacebook(fbID, facebookToken: fbToken, completion: { (success: Bool) -> Void in
+                    print(success)
+                })
+            }
         }
     }
     

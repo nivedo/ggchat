@@ -385,7 +385,7 @@ class UserAPI {
             })
     }
     
-    func loginWithFacebook(facebookId: String, facebookToken: String, completion: ((Bool) -> Void)?) {
+    func authenticateWithFacebook(facebookId: String, facebookToken: String, completion: ((Bool) -> Void)?) {
          self.post(UserAPI.authUrl("facebook"),
             authToken: nil,
             jsonBody: [ "facebook_id": facebookId, "facebook_token": facebookToken ],
