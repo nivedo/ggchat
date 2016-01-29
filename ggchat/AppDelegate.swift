@@ -107,7 +107,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let fbToken = facebookAuth.tokenString
                 let fbId = facebookAuth.userID
                 UserAPI.sharedInstance.authenticateWithFacebook(fbId, facebookToken: fbToken, completion: { (success: Bool) -> Void in
-                    print(success)
+                    if success {
+                        print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
+                        XMPPManager.sharedInstance.connectWithCompletion(
+                            self.xmppConnectCallback,
+                            authenticateCompletionHandler: self.xmppAuthenticateCallback)
+                    } else {
+                        FacebookManager.sharedInstance.loginManager.logOut()
+                        self.segueToLoginViewController()
+                    }
                 })
             }
         }

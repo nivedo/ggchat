@@ -300,7 +300,7 @@ class UserAPI {
     }
     
     class func thirdpartyauthUrl(thirdparty: String) -> String {
-        return self.route("auth?thirdparty=\(thirdparty)")
+        return self.route("thirdpartyauth?ref=\(thirdparty)")
     }
     
     class func userinfoUrl(username: String) -> String {
@@ -391,6 +391,21 @@ class UserAPI {
             jsonBody: [ "facebook_id": facebookdId, "facebook_token": facebookToken],
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                 print(jsonDict)
+                if let json = jsonDict,
+                let newToken = json["token"] as? String,
+                let jid = json["jid"] as? String,
+                let pass = json["pass"] as? String {
+                    self.authToken = newToken
+                    self.jid = jid
+                    self.jpassword = pass
+                    
+                    self.sync()
+                    self.updatePushToken()
+                    completion?(true)
+                } else {
+                    completion?(false)
+                }
+                
             }
         )
     }
