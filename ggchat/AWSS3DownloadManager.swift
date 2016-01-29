@@ -95,19 +95,27 @@ class S3ImageCache {
     }
     
     private func downloadImageForKey(key: String, bucket: String, completion: ((image: UIImage?) -> Void)?) {
-        AWSS3DownloadManager.sharedInstance.download(
-            key,
-            userData: nil,
-            completion: { (fileURL: NSURL) -> Void in
-                let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
-                let image = UIImage(data: data)
-                completion?(image: image)
-                if let cache = self.caches[bucket], let img = image {
-                    cache.storeImage(img, originalData: data, forKey: key)
-                }
-            },
-            bucket: bucket
-        )
+        if key.hasPrefix("http") {
+            if let data = NSData(contentsOfURL: NSURL(string: key)!), let cache = self.caches[bucket] {
+                let webImage = UIImage(data: data)
+                cache.storeImage(webImage!, originalData: data, forKey: key)
+                completion?(image: webImage)
+            }
+        } else {
+            AWSS3DownloadManager.sharedInstance.download(
+                key,
+                userData: nil,
+                completion: { (fileURL: NSURL) -> Void in
+                    let data: NSData = NSFileManager.defaultManager().contentsAtPath(fileURL.path!)!
+                    let image = UIImage(data: data)
+                    completion?(image: image)
+                    if let cache = self.caches[bucket], let img = image {
+                        cache.storeImage(img, originalData: data, forKey: key)
+                    }
+                },
+                bucket: bucket
+            )
+        }
     }
 }
 
