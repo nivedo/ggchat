@@ -303,6 +303,10 @@ class UserAPI {
         return self.route("thirdpartyauth?ref=\(thirdparty)")
     }
     
+    class func thirdpartyloginUrl(thirdparty: String) -> String {
+        return self.route("thirdpartylogin?ref=\(thirdparty)")
+    }
+    
     class func userinfoUrl(username: String) -> String {
         return "\(self.route("userinfo"))?username=\(username)"
     }
@@ -408,6 +412,15 @@ class UserAPI {
                 
             }
         )
+    }
+    
+    func loginWithFacebook(facebookUser: FacebookUser, completion: ((Bool) -> Void)?) {
+        self.post(UserAPI.thirdpartyloginUrl("facebook"),
+            authToken: nil,
+            jsonBody: facebookUser.userProfileJson,
+            jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
+                print(jsonDict)
+        })
     }
     
     func login(email: String, password: String, completion: ((Bool) -> Void)?) {
