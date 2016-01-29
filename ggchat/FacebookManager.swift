@@ -8,6 +8,28 @@
 
 import Foundation
 
+class FacebookUser {
+    var name: String?
+    var email: String?
+    var firstName: String?
+    var lastName: String?
+    var avatarUrl: String?
+    
+    init(result: AnyObject) {
+        self.name = result.valueForKey("name") as? String
+        self.email = result.valueForKey("email") as? String
+        self.firstName = result.valueForKey("first_name") as? String
+        self.lastName = result.valueForKey("last_name") as? String
+        if let picture = result.valueForKey("picture") {
+            if let data = picture.valueForKey("data") {
+                if let url = data.valueForKey("url") as? String {
+                    self.avatarUrl = url
+                }
+            }
+        }
+    }
+}
+
 class FacebookManager {
     
     var loginManager: FBSDKLoginManager!
@@ -23,30 +45,21 @@ class FacebookManager {
         self.loginManager = FBSDKLoginManager()
     }
     
-    class func userData() {
+    class func fetchUserData(completion: ((FacebookUser?, String?) -> Void)?) {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(
             graphPath: "me",
             parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
             if ((error) != nil) {
-                // Process error
-                print("Error: \(error)")
+                completion?(nil, error.description)
             } else {
-                print("fetched user: \(result)")
-                let userName : NSString = result.valueForKey("name") as! NSString
-                print("User Name is: \(userName)")
-                let userEmail = result.valueForKey("email") as? String
-                print("User Email is: \(userEmail)")
-                let token = FBSDKAccessToken.currentAccessToken()
-                let userToken = token.tokenString
-                let userId = token.userID
-                print("User token: \(userToken), id: \(userId)")
+                completion?(FacebookUser(result: result), nil)
             }
         })
     }
     
-    class func friendsData() {
+    class func fetchFriendsData() {
         let fbRequest = FBSDKGraphRequest(
             graphPath:"/me/friends",
             // graphPath:"/me/taggable_friends",

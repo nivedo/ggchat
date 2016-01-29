@@ -84,12 +84,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initializeRootView(animated: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let loginIdentifier = "LoginViewController"
-     
+    
+        /*
         if (FBSDKAccessToken.currentAccessToken() != nil) {
             print("Facebook access token valid")
             FacebookManager.userData()
             FacebookManager.friendsData()
         }
+        */
         
         if ConnectionManager.isConnectedToNetwork() {
             if UserAPI.sharedInstance.canAuth {
