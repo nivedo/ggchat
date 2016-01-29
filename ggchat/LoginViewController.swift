@@ -112,8 +112,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             }
             if allPermsGranted {
                 let fbToken = result.token.tokenString
-                let fbID = result.token.userID
-                UserAPI.sharedInstance.authenticateWithFacebook(fbID, facebookToken: fbToken, completion: { (success: Bool) -> Void in
+                let fbId = result.token.userID
+                UserAPI.sharedInstance.authenticateWithFacebook(fbId, facebookToken: fbToken, completion: { (success: Bool) -> Void in
                     print(success)
                 })
             }

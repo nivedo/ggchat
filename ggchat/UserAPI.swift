@@ -299,7 +299,7 @@ class UserAPI {
         return self.route("auth")
     }
     
-    class func authUrl(thirdparty: String) -> String {
+    class func thirdpartyauthUrl(thirdparty: String) -> String {
         return self.route("auth?thirdparty=\(thirdparty)")
     }
     
@@ -385,10 +385,10 @@ class UserAPI {
             })
     }
     
-    func authenticateWithFacebook(facebookId: String, facebookToken: String, completion: ((Bool) -> Void)?) {
-         self.post(UserAPI.authUrl("facebook"),
+    func authenticateWithFacebook(facebookdId: String, facebookToken: String, completion: ((Bool) -> Void)?) {
+        self.post(UserAPI.thirdpartyauthUrl("facebook"),
             authToken: nil,
-            jsonBody: [ "facebook_id": facebookId, "facebook_token": facebookToken ],
+            jsonBody: [ "facebook_id": facebookdId, "facebook_token": facebookToken],
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                 print(jsonDict)
             }
@@ -447,6 +447,7 @@ class UserAPI {
                         self.authToken = newToken
                         self.jid = jid
                         self.jpassword = pass
+                        // self.phoneNumber = json["phonenumber"] as? String
                        
                         self.sync()
                         self.updatePushToken()
