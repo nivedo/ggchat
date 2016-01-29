@@ -414,11 +414,12 @@ class UserAPI {
     }
     
     func loginWithFacebook(facebookUser: FacebookUser, completion: ((Bool) -> Void)?) {
+        print(facebookUser.userProfileJson)
         self.post(UserAPI.thirdpartyloginUrl("facebook"),
             authToken: nil,
             jsonBody: facebookUser.userProfileJson,
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                // print(jsonDict)
+                print(jsonDict)
                 if let json = jsonDict,
                 let newToken = json["token"] as? String,
                 let jid = json["jid"] as? String,
@@ -651,7 +652,7 @@ class UserAPI {
     func logout() {
         XMPPMessageManager.sharedInstance.clearCoreData()
         UserAPICoreData.sharedInstance.deleteAllUsers()
-       
+        FacebookManager.sharedInstance.loginManager.logOut()
         self.reset()
         let appDomain = NSBundle.mainBundle().bundleIdentifier
         NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain!)

@@ -99,10 +99,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             FacebookManager.sharedInstance.loginManager.logOut()
         }
         else {
-            print("Login success")
-            var allPermsGranted = true
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "Logging in with Facebook"
             
-            //result.grantedPermissions returns an array of _NSCFString pointers
+            var allPermsGranted = true
             let grantedPermissions = result.grantedPermissions.map( {"\($0)"} )
             for permission in self.facebookReadPermissions {
                 if !grantedPermissions.contains(permission) {
@@ -113,10 +113,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             if allPermsGranted {
                 FacebookManager.fetchUserData({ (facebookUser: FacebookUser?, errorMsg: String?) -> Void in
                     if let fbUser = facebookUser {
-                        print(fbUser)
+                        print(fbUser.description)
                         UserAPI.sharedInstance.loginWithFacebook(fbUser, completion: self.loginCompletion)
                     }
                 })
+            } else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
+                }
             }
         }
     }

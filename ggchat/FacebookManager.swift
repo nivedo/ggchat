@@ -35,13 +35,19 @@ class FacebookUser {
     
     var userProfileJson: [String: AnyObject] {
         return [
-            "facebook_id" : self.id,
-            "facebook_token" : self.token,
+            "facebookid" : self.id,
+            "facebooktoken" : self.token,
             "nickname" : self.name,
             "username" : "facebookid_\(self.id)",
             "email" : self.email,
             "avatar" : (self.avatarUrl != nil) ? self.avatarUrl! : ""
         ]
+    }
+    
+    var description: String {
+        get {
+            return "fbuser email: \(self.email), name: \(self.name)"
+        }
     }
 }
 
