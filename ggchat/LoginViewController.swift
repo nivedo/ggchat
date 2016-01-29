@@ -205,12 +205,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             // Send notification
             let notification = NSNotification(name: "loginSuccessful", object: self)
             NSNotificationCenter.defaultCenter().postNotification(notification)
+           
+            // Update friends list from graph if logged in using facebook
+            if let _ = FBSDKAccessToken.currentAccessToken() {
+                FacebookManager.fetchFriendsData({ (friendsArray: [NSDictionary]?, errorMsg: String?) -> Void in
+                    if let friends = friendsArray {
+                        print(friends)
+                    }
+                })
+            }
             
-            // TODO: Not sure if this the best place for this function
-            // AppManager.sharedInstance.updateClusterList()
-            
-            // Dismiss login screen
-            // self.dismissViewControllerAnimated(true, completion: nil)
             performSegueWithIdentifier("login.to.chats", sender: self)
         } else {
             let alert = UIAlertView()

@@ -84,21 +84,22 @@ class FacebookManager {
         }
     }
     
-    class func fetchFriendsData() {
+    class func fetchFriendsData(completion: (([NSDictionary]?, String?) -> Void)?) {
         let fbRequest = FBSDKGraphRequest(
             graphPath:"/me/friends",
             // graphPath:"/me/taggable_friends",
             parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
             if error == nil {
-                print("Friends are : \(result)")
-                let friendObjects = result["data"] as! [NSDictionary]
-                for friendObject in friendObjects {
-                    print(friendObject["id"])
+                if let friendObjects = result["data"] as? [NSDictionary] {
+                    if friendObjects.count > 0 {
+                        completion?(friendObjects, nil)
+                        return
+                    }
                 }
-                print("Count of friends with app: \(friendObjects.count)")
+                completion?(nil, "No friends using GG Chat")
             } else {
-                print("Error Getting Friends \(error)");
+                completion?(nil, error.description)
             }
         }
     }
