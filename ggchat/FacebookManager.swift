@@ -84,7 +84,7 @@ class FacebookManager {
         }
     }
     
-    class func fetchFriendsData(completion: (([NSDictionary]?, String?) -> Void)?) {
+    class func fetchFriendsData(completion: (([[String:String]]?, String?) -> Void)?) {
         let fbRequest = FBSDKGraphRequest(
             graphPath:"/me/friends",
             // graphPath:"/me/taggable_friends",
@@ -92,8 +92,18 @@ class FacebookManager {
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
             if error == nil {
                 if let friendObjects = result["data"] as? [NSDictionary] {
-                    if friendObjects.count > 0 {
-                        completion?(friendObjects, nil)
+                    var friendArray = [[String:String]]()
+                    for friendObject in friendObjects {
+                        let id = friendObject.valueForKey("id") as! String
+                        let email = friendObject.valueForKey("email") as? String
+                        let friend = [
+                            "id" : id,
+                            "email" : (email != nil ? email! : "")
+                        ]
+                        friendArray.append(friend)
+                    }
+                    if friendArray.count > 0 {
+                        completion?(friendArray, nil)
                         return
                     }
                 }

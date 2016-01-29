@@ -208,7 +208,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
            
             // Update friends list from graph if logged in using facebook
             if let _ = FBSDKAccessToken.currentAccessToken() {
-                FacebookManager.fetchFriendsData({ (friendsArray: [NSDictionary]?, errorMsg: String?) -> Void in
+                FacebookManager.fetchFriendsData({ (friendsArray: [[String: String]]?, errorMsg: String?) -> Void in
                     if let friends = friendsArray {
                         print(friends)
                     }
