@@ -114,9 +114,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 FacebookManager.fetchUserData({ (facebookUser: FacebookUser?, errorMsg: String?) -> Void in
                     if let fbUser = facebookUser {
                         print(fbUser)
-                        UserAPI.sharedInstance.loginWithFacebook(fbUser, completion: { (success: Bool) -> Void in
-                            print(success)
-                        })
+                        UserAPI.sharedInstance.loginWithFacebook(fbUser, completion: self.loginCompletion)
                     }
                 })
             }
@@ -167,23 +165,25 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         UserAPI.sharedInstance.login(email,
             password: password,
-            completion: { (success: Bool) -> Void in
-            dispatch_async(dispatch_get_main_queue()) {
-                if success {
-                    print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
-                    XMPPManager.sharedInstance.connectWithCompletion(
-                        self.connectCallback,
-                        authenticateCompletionHandler: self.authenticateCallback)
-                } else {
-                    MBProgressHUD.hideHUDForView(self.view, animated: true)
-                    let alert = UIAlertView()
-                    alert.title = "Login Failed"
-                    alert.message = "Incorrect username or password"
-                    alert.addButtonWithTitle("Retry")
-                    alert.show()
-                }
+            completion: self.loginCompletion)
+    }
+    
+    func loginCompletion(success: Bool) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if success {
+                print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
+                XMPPManager.sharedInstance.connectWithCompletion(
+                    self.connectCallback,
+                    authenticateCompletionHandler: self.authenticateCallback)
+            } else {
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
+                let alert = UIAlertView()
+                alert.title = "Login Failed"
+                alert.message = "Incorrect username or password"
+                alert.addButtonWithTitle("Retry")
+                alert.show()
             }
-        })
+        }
     }
    
     func connectCallback(stream: XMPPStream, error: String?) {

@@ -394,7 +394,7 @@ class UserAPI {
             authToken: nil,
             jsonBody: [ "facebook_id": facebookdId, "facebook_token": facebookToken],
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                print(jsonDict)
+                // print(jsonDict)
                 if let json = jsonDict,
                 let newToken = json["token"] as? String,
                 let jid = json["jid"] as? String,
@@ -409,7 +409,6 @@ class UserAPI {
                 } else {
                     completion?(false)
                 }
-                
             }
         )
     }
@@ -419,8 +418,23 @@ class UserAPI {
             authToken: nil,
             jsonBody: facebookUser.userProfileJson,
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                print(jsonDict)
-        })
+                // print(jsonDict)
+                if let json = jsonDict,
+                let newToken = json["token"] as? String,
+                let jid = json["jid"] as? String,
+                let pass = json["pass"] as? String {
+                    self.authToken = newToken
+                    self.jid = jid
+                    self.jpassword = pass
+                    
+                    self.sync()
+                    self.updatePushToken()
+                    completion?(true)
+                } else {
+                    completion?(false)
+                }
+            }
+        )
     }
     
     func login(email: String, password: String, completion: ((Bool) -> Void)?) {
