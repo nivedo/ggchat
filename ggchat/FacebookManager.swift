@@ -53,6 +53,8 @@ class FacebookUser {
 
 class FacebookManager {
     
+    static let readPermissions = ["public_profile", "email", "user_friends"]
+    
     var loginManager: FBSDKLoginManager!
     
     class var sharedInstance: FacebookManager {

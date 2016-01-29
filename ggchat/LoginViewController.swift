@@ -21,8 +21,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
    
-    let facebookReadPermissions = ["public_profile", "email", "user_friends"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -69,7 +67,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Initialize facebook login
         let fbLoginButton = FBSDKLoginButton()
         fbLoginButton.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 230.0)
-        fbLoginButton.readPermissions = self.facebookReadPermissions
+        fbLoginButton.readPermissions = FacebookManager.readPermissions
         fbLoginButton.delegate = self
         /*
         fbLoginButton.addTarget(self,
@@ -104,7 +102,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             
             var allPermsGranted = true
             let grantedPermissions = result.grantedPermissions.map( {"\($0)"} )
-            for permission in self.facebookReadPermissions {
+            for permission in FacebookManager.readPermissions {
                 if !grantedPermissions.contains(permission) {
                     allPermsGranted = false
                     break

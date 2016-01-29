@@ -38,16 +38,40 @@ class ContactTableViewController: UITableViewController,
             style: UIAlertActionStyle.Default) { action -> Void in
             self.addContactFromUsername()
         }
-        let actionPickFromContacts = UIAlertAction(
-            title: "Pick from Your Contacts",
+        let actionImportFromContacts = UIAlertAction(
+            title: "Import from Contacts",
             style: UIAlertActionStyle.Default) { action -> Void in
             self.addContactFromAddressBook()
         }
+        let actionImportFromFacebook = UIAlertAction(
+            title: "Import from Facebook",
+            style: UIAlertActionStyle.Default) { action -> Void in
+            self.addContactFromFacebook()
+        }
         alert.addAction(actionEnterUsername)
-        alert.addAction(actionPickFromContacts)
+        alert.addAction(actionImportFromContacts)
+        alert.addAction(actionImportFromFacebook)
         alert.addAction(actionCancel)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func addContactFromFacebook() {
+        if let fbAccess = FBSDKAccessToken.currentAccessToken() {
+            
+        } else {
+            FacebookManager.sharedInstance.loginManager.logInWithReadPermissions(FacebookManager.readPermissions,
+                fromViewController: self,
+                handler: { (result, error) -> Void in
+                if error != nil {
+                    FacebookManager.sharedInstance.loginManager.logOut()
+                } else if (result.isCancelled) {
+                    FacebookManager.sharedInstance.loginManager.logOut()
+                } else {
+                    //
+                }
+            })
+        }
     }
     
     func addContactFromAddressBook() {
