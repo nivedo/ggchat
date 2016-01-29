@@ -855,6 +855,18 @@ class UserAPI {
         }
     }
     
+    func addBuddiesFromFacebook(friends: [[String:String]], completion: HTTPJsonCompletion?) {
+        if let token = self.authToken {
+            self.post(UserAPI.addbuddiesUrl("facebook"),
+                authToken: token,
+                jsonBody: [ "friends" : friends ],
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    completion?(json: jsonBody)
+                }
+            )
+        }
+    }
+    
     func deleteBuddy(jid: String, completion: HTTPJsonCompletion?) {
         if let token = self.authToken {
             self.post(UserAPI.deletebuddyUrl(jid),

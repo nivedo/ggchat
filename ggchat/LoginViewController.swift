@@ -210,7 +210,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             if let _ = FBSDKAccessToken.currentAccessToken() {
                 FacebookManager.fetchFriendsData({ (friendsArray: [[String: String]]?, errorMsg: String?) -> Void in
                     if let friends = friendsArray {
-                        print(friends)
+                        UserAPI.sharedInstance.addBuddiesFromFacebook(friends, completion: { (jsonBody: [String: AnyObject]?) -> Void in
+                            print(jsonBody)
+                        })
                     }
                 })
             }
