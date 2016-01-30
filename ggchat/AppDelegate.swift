@@ -147,6 +147,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func xmppAuthenticateCallback(stream: XMPPStream, error: String?) {
         if (error != nil) {
             self.segueToLoginViewController()
+        } else {
+            FacebookManager.addFriendsData(nil)
         }
     }
     

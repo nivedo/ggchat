@@ -91,6 +91,7 @@ class FacebookManager {
             parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
             if error == nil {
+                // print(result)
                 if let friendObjects = result["data"] as? [NSDictionary] {
                     var friendArray = [[String:String]]()
                     for friendObject in friendObjects {
@@ -113,6 +114,7 @@ class FacebookManager {
     }
    
     class func addFriendsData(completion: (([String: AnyObject]?, String?) -> Void)?) {
+        print("addFriendsData ----------->")
         if let fbAccess = FBSDKAccessToken.currentAccessToken() {
             let fbId = fbAccess.userID
             FacebookManager.fetchFriendsData({ (friendsArray: [[String: String]]?, errorMsg: String?) -> Void in
