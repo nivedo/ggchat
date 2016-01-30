@@ -65,13 +65,19 @@ class ChatTableViewController:
     func onAvatarUpdate(jid: String, success: Bool) {
         if success {
             dispatch_async(dispatch_get_main_queue()) {
+                self.chatsList = UserAPI.sharedInstance.chatsList
                 self.tableView.reloadData()
             }
         }
     }
     
     func onRosterUpdate(success: Bool) {
-        // Nothing to do
+        if success {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.chatsList = UserAPI.sharedInstance.chatsList
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func onChatsUpdate(success: Bool) {
@@ -263,6 +269,7 @@ class ChatTableViewController:
     
     func receiveMessage(from: String, message: Message) {
         dispatch_async(dispatch_get_main_queue()) {
+            self.chatsList = UserAPI.sharedInstance.chatsList
             self.tableView.reloadData()
             TabBarController.incrementChatsBadge(self.tabBarController)
         }
