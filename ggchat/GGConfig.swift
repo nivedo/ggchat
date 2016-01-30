@@ -51,7 +51,8 @@ struct GGConfig {
     static let badgeSize: CGFloat = 16.0
     static let messageBubbleFont: UIFont = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
     static let messageComposerFont: UIFont = UIFont.systemFontOfSize(16.0)
-    static let messageTimeFont: UIFont = UIFont.systemFontOfSize(12.0)
+    static let messageReadFont: UIFont = UIFont.systemFontOfSize(10.0)
+    static let messageTimeFont: UIFont = UIFont.systemFontOfSize(10.0)
     static let messageTopFont: UIFont = UIFont.systemFontOfSize(12.0)
     static let messageBottomFont: UIFont = UIFont.systemFontOfSize(11.0)
     static let paginationLimit: Int = 30

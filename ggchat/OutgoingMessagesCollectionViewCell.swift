@@ -19,7 +19,7 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
         self.cellBottomLabel.textAlignment = NSTextAlignment.Right;
         
         self.readLabel.text = nil
-        self.readLabel.font = UIFont.systemFontOfSize(10.0)
+        self.readLabel.font = GGConfig.messageReadFont
         self.readLabel.textColor = GGConfig.cellTopLabelTextColor
         
         self.arrowImageView.image = UIImage(named: "ArrowUp")
@@ -40,7 +40,7 @@ class OutgoingMessagesCollectionViewCell: MessagesCollectionViewCell {
     }
     
     func resetReadLabel() {
-        self.readLabel.font = UIFont.systemFontOfSize(10.0)
+        self.readLabel.font = GGConfig.messageReadFont
         self.readLabel.textColor = GGConfig.cellTopLabelTextColor
         self.readLabel.text = ""
     }
