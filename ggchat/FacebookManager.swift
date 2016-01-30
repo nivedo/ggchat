@@ -113,4 +113,19 @@ class FacebookManager {
             }
         }
     }
+   
+    class func addFriendsData(completion: (([String: AnyObject]?, String?) -> Void)?) {
+        if let fbAccess = FBSDKAccessToken.currentAccessToken() {
+            let fbId = fbAccess.userID
+            FacebookManager.fetchFriendsData({ (friendsArray: [[String: String]]?, errorMsg: String?) -> Void in
+                if let friends = friendsArray {
+                    UserAPI.sharedInstance.addBuddiesFromFacebook(friends, facebookId: fbId, completion: { (jsonBody: [String: AnyObject]?) -> Void in
+                        completion?(jsonBody, nil)
+                    })
+                } else {
+                    completion?(nil, errorMsg)
+                }
+            })
+        }
+    }
 }

@@ -855,11 +855,11 @@ class UserAPI {
         }
     }
     
-    func addBuddiesFromFacebook(friends: [[String:String]], completion: HTTPJsonCompletion?) {
+    func addBuddiesFromFacebook(friends: [[String:String]], facebookId: String, completion: HTTPJsonCompletion?) {
         if let token = self.authToken {
             self.post(UserAPI.addbuddiesUrl("facebook"),
                 authToken: token,
-                jsonBody: [ "friends" : friends ],
+                jsonBody: [ "friends" : friends, "facebookid" : facebookId ],
                 jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
                     completion?(json: jsonBody)
                 }

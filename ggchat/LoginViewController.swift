@@ -207,15 +207,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             NSNotificationCenter.defaultCenter().postNotification(notification)
            
             // Update friends list from graph if logged in using facebook
-            if let _ = FBSDKAccessToken.currentAccessToken() {
+            /*
+            if let fbAccess = FBSDKAccessToken.currentAccessToken() {
+                let fbId = fbAccess.userID
                 FacebookManager.fetchFriendsData({ (friendsArray: [[String: String]]?, errorMsg: String?) -> Void in
                     if let friends = friendsArray {
-                        UserAPI.sharedInstance.addBuddiesFromFacebook(friends, completion: { (jsonBody: [String: AnyObject]?) -> Void in
+                        UserAPI.sharedInstance.addBuddiesFromFacebook(friends, facebookId: fbId, completion: { (jsonBody: [String: AnyObject]?) -> Void in
                             print(jsonBody)
                         })
                     }
                 })
             }
+            */
+            FacebookManager.addFriendsData({ (jsonBody: [String: AnyObject]?, errorMsg: String?) -> Void in
+                print(jsonBody)
+            })
             
             performSegueWithIdentifier("login.to.chats", sender: self)
         } else {

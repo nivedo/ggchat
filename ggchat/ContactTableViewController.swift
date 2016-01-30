@@ -58,7 +58,7 @@ class ContactTableViewController: UITableViewController,
     
     func addContactFromFacebook() {
         if let fbAccess = FBSDKAccessToken.currentAccessToken() {
-            
+            self.addFriendFromFacebook()
         } else {
             FacebookManager.sharedInstance.loginManager.logInWithReadPermissions(FacebookManager.readPermissions,
                 fromViewController: self,
@@ -68,10 +68,41 @@ class ContactTableViewController: UITableViewController,
                 } else if (result.isCancelled) {
                     FacebookManager.sharedInstance.loginManager.logOut()
                 } else {
-                    //
+                    self.addFriendFromFacebook()
                 }
             })
         }
+    }
+    
+    func addFriendFromFacebook() {
+        dispatch_async(dispatch_get_main_queue()) {
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "Importing Facebook friends"
+        }
+        FacebookManager.addFriendsData({ (jsonBody: [String: AnyObject]?, errorMsg: String?) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                MBProgressHUD.hideHUDForView(self.view, animated: false)
+            }
+            if let json = jsonBody {
+                if let addedBuddiesCount = json["added_buddies_count"] as? Int {
+                    if addedBuddiesCount > 0 {
+                        UserAPI.sharedInstance.sync()
+                    } else {
+                        let alert = UIAlertView()
+                        alert.title = "Alert"
+                        alert.message = "No Facebook friends using GG Chat"
+                        alert.addButtonWithTitle("OK")
+                        alert.show()
+                    }
+                }
+            } else if let err = errorMsg {
+                let alert = UIAlertView()
+                alert.title = "Alert"
+                alert.message = err
+                alert.addButtonWithTitle("OK")
+                alert.show()
+            }
+        })
     }
     
     func addContactFromAddressBook() {
@@ -108,7 +139,8 @@ class ContactTableViewController: UITableViewController,
                             if let json = jsonBody {
                                 if let addedBuddiesCount = json["added_buddies_count"] as? Int {
                                     if addedBuddiesCount > 0 {
-                                        self.tableView.reloadData()
+                                        // self.tableView.reloadData()
+                                        UserAPI.sharedInstance.sync()
                                     } else {
                                         let alert = UIAlertView()
                                             alert.title = "Alert"
