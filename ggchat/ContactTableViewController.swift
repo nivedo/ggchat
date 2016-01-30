@@ -82,25 +82,25 @@ class ContactTableViewController: UITableViewController,
         FacebookManager.addFriendsData({ (jsonBody: [String: AnyObject]?, errorMsg: String?) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 MBProgressHUD.hideHUDForView(self.view, animated: false)
-            }
-            if let json = jsonBody {
-                if let addedBuddiesCount = json["added_buddies_count"] as? Int {
-                    if addedBuddiesCount > 0 {
-                        UserAPI.sharedInstance.sync()
-                    } else {
-                        let alert = UIAlertView()
-                        alert.title = "Alert"
-                        alert.message = "No Facebook friends using GG Chat"
-                        alert.addButtonWithTitle("OK")
-                        alert.show()
+                if let json = jsonBody {
+                    if let addedBuddiesCount = json["added_buddies_count"] as? Int {
+                        if addedBuddiesCount > 0 {
+                            UserAPI.sharedInstance.sync()
+                        } else {
+                            let alert = UIAlertView()
+                            alert.title = "Alert"
+                            alert.message = "No Facebook friends using GG Chat"
+                            alert.addButtonWithTitle("OK")
+                            alert.show()
+                        }
                     }
+                } else if let err = errorMsg {
+                    let alert = UIAlertView()
+                    alert.title = "Alert"
+                    alert.message = err
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
                 }
-            } else if let err = errorMsg {
-                let alert = UIAlertView()
-                alert.title = "Alert"
-                alert.message = err
-                alert.addButtonWithTitle("OK")
-                alert.show()
             }
         })
     }

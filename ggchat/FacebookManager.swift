@@ -102,12 +102,10 @@ class FacebookManager {
                         ]
                         friendArray.append(friend)
                     }
-                    if friendArray.count > 0 {
-                        completion?(friendArray, nil)
-                        return
-                    }
+                    completion?(friendArray, nil)
+                    return
                 }
-                completion?(nil, "No friends using GG Chat")
+                completion?(nil, "Parse error")
             } else {
                 completion?(nil, error.description)
             }
