@@ -295,6 +295,10 @@ class UserAPI {
         return self.route("profile")
     }
     
+    class func updatedevicetokenUrl(ref: String) -> String {
+        return self.route("updatedevicetoken?ref=\(ref)")
+    }
+    
     class var authUrl: String {
         return self.route("auth")
     }
@@ -1038,12 +1042,16 @@ class UserAPI {
     }
     
     func updatePushToken() {
-        if let token = self.pushToken {
-            let success = self.editProfile(["pushToken": token] , jsonCompletion: { HTTPJsonCompletion in
-                print("Successfully pushed token for \(self.authToken!)")
+        if let token = self.authToken, let pushToken = self.pushToken {
+            let success = self.editProfile(["pushToken": pushToken] , jsonCompletion: { HTTPJsonCompletion in
+                print("Successfully pushed token for \(self.displayName)")
             })
+            self.post(UserAPI.updatedevicetokenUrl("apple"),
+                authToken: token,
+                jsonBody: [ "pushToken" : pushToken ],
+                jsonCompletion: nil)
             if !success {
-                print("Unable to push token for \(self.authToken!)")
+                print("Unable to push token for \(self.displayName)")
             }
         }
     }
