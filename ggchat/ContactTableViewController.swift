@@ -181,20 +181,23 @@ class ContactTableViewController: UITableViewController,
             handler: { (action: UIAlertAction) -> Void in
                 if let usernameTextField = alert.textFields?.first {
                     if let username = usernameTextField.text {
-                        print(username)
+                        // print(username)
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.labelText = "Search for \(username)"
                         UserAPI.sharedInstance.addBuddy(username, completion: { (jsonBody: [String: AnyObject]?) -> Void in
-                            if let json = jsonBody {
-                                print(json)
-                                if let errorMsg = json["error"] as? String {
-                                    dispatch_async(dispatch_get_main_queue()) {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                MBProgressHUD.hideHUDForView(self.view, animated: false)
+                                if let json = jsonBody {
+                                    print(json)
+                                    if let errorMsg = json["error"] as? String {
                                         let alert = UIAlertView()
                                         alert.title = "Alert"
                                         alert.message = errorMsg
                                         alert.addButtonWithTitle("OK")
                                         alert.show()
+                                    } else {
+                                        UserAPI.sharedInstance.sync()
                                     }
-                                } else {
-                                    UserAPI.sharedInstance.sync()
                                 }
                             }
                         })
