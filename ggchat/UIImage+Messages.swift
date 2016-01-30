@@ -77,6 +77,28 @@ extension UIImage {
         }
     }
     
+    func gg_imageByCroppingToSquare() -> UIImage {
+        let size = self.size
+        let minDimension = min(size.width, size.height)
+        let squareSize = CGSizeMake(minDimension, minDimension)
+        return self.gg_imageByCroppingImage(squareSize)
+    }
+    
+    func gg_imageByCroppingImage(size: CGSize) -> UIImage {
+        // not equivalent to image.size (which depends on the imageOrientation)!
+        let refWidth = CGFloat(CGImageGetWidth(self.CGImage))
+        let refHeight = CGFloat(CGImageGetHeight(self.CGImage))
+        
+        let x = (refWidth - size.width) / 2.0
+        let y = (refHeight - size.height) / 2.0
+        
+        let cropRect = CGRectMake(x, y, size.height, size.width)
+        let imageRef = CGImageCreateWithImageInRect(self.CGImage, cropRect)
+        
+        let cropped = UIImage(CGImage: imageRef!, scale: 0.0, orientation: self.imageOrientation)
+        return cropped
+    }
+    
     func gg_imageMaskedWithColor(maskColor: UIColor) -> UIImage {
         
         let imageRect = CGRectMake(0.0, 0.0, self.size.width, self.size.height)

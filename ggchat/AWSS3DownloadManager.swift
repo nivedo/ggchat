@@ -98,8 +98,10 @@ class S3ImageCache {
         if key.hasPrefix("http") {
             if let data = NSData(contentsOfURL: NSURL(string: key)!), let cache = self.caches[bucket] {
                 let webImage = UIImage(data: data)
-                cache.storeImage(webImage!, originalData: data, forKey: key)
-                completion?(image: webImage)
+                let squareImage = webImage?.gg_imageByCroppingToSquare()
+                print("SQUARE \(squareImage!.size)")
+                cache.storeImage(squareImage!, originalData: data, forKey: key)
+                completion?(image: squareImage)
             }
         } else {
             AWSS3DownloadManager.sharedInstance.download(
