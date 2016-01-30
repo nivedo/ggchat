@@ -133,7 +133,7 @@ class SignupViewController: UIViewController {
                     print("Logging in with \(email):\(password)")
                         UserAPI.sharedInstance.login(email,
                             password: password,
-                            completion: { (success: Bool) -> Void in
+                            completion: { (success: Bool, errorMsg: String?) -> Void in
                                 dispatch_async(dispatch_get_main_queue()) {
                                     if success {
                                         NSUserDefaults.standardUserDefaults().setValue(email, forKey: GGKey.email)
@@ -147,7 +147,7 @@ class SignupViewController: UIViewController {
                                     } else {
                                         let alert = UIAlertView()
                                         alert.title = "Login Failed"
-                                        alert.message = "Incorrect username or password"
+                                        alert.message = errorMsg
                                         alert.addButtonWithTitle("Retry")
                                         alert.show()
                                     }

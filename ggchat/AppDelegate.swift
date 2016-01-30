@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if ConnectionManager.isConnectedToNetwork() {
             if UserAPI.sharedInstance.canAuth {
-                UserAPI.sharedInstance.authenticate({(success: Bool) -> Void in
+                UserAPI.sharedInstance.authenticate({(success: Bool, errorMsg: String?) -> Void in
                     if success {
                         print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
                         XMPPManager.sharedInstance.connectWithCompletion(
@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else if let facebookAuth = FBSDKAccessToken.currentAccessToken() {
                 let fbToken = facebookAuth.tokenString
                 let fbId = facebookAuth.userID
-                UserAPI.sharedInstance.authenticateWithFacebook(fbId, facebookToken: fbToken, completion: { (success: Bool) -> Void in
+                UserAPI.sharedInstance.authenticateWithFacebook(fbId, facebookToken: fbToken, completion: { (success: Bool, errorMsg: String?) -> Void in
                     if success {
                         print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
                         XMPPManager.sharedInstance.connectWithCompletion(

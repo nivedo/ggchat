@@ -394,56 +394,68 @@ class UserAPI {
             })
     }
     
-    func authenticateWithFacebook(facebookdId: String, facebookToken: String, completion: ((Bool) -> Void)?) {
+    func authenticateWithFacebook(facebookdId: String, facebookToken: String, completion: ((Bool, String?) -> Void)?) {
         self.post(UserAPI.thirdpartyauthUrl("facebook"),
             authToken: nil,
             jsonBody: [ "facebook_id": facebookdId, "facebook_token": facebookToken],
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                 // print(jsonDict)
-                if let json = jsonDict,
-                let newToken = json["token"] as? String,
-                let jid = json["jid"] as? String,
-                let pass = json["pass"] as? String {
-                    self.authToken = newToken
-                    self.jid = jid
-                    self.jpassword = pass
-                    
-                    self.sync()
-                    self.updatePushToken()
-                    completion?(true)
+                if let json = jsonDict {
+                    if let errorMsg = json["error"] as? String {
+                        completion?(false, errorMsg)
+                    } else if let newToken = json["token"] as? String,
+                        let jid = json["jid"] as? String,
+                        let pass = json["pass"] as? String
+                    {
+                        self.authToken = newToken
+                        self.jid = jid
+                        self.jpassword = pass
+                        
+                        self.sync()
+                        self.updatePushToken()
+                        completion?(true, nil)
+                    } else {
+                        completion?(false, nil)
+                    }
                 } else {
-                    completion?(false)
+                    completion?(false, nil)
                 }
             }
         )
     }
     
-    func loginWithFacebook(facebookUser: FacebookUser, completion: ((Bool) -> Void)?) {
+    func loginWithFacebook(facebookUser: FacebookUser, completion: ((Bool, String?) -> Void)?) {
         print(facebookUser.userProfileJson)
         self.post(UserAPI.thirdpartyloginUrl("facebook"),
             authToken: nil,
             jsonBody: facebookUser.userProfileJson,
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                 print(jsonDict)
-                if let json = jsonDict,
-                let newToken = json["token"] as? String,
-                let jid = json["jid"] as? String,
-                let pass = json["pass"] as? String {
-                    self.authToken = newToken
-                    self.jid = jid
-                    self.jpassword = pass
-                    
-                    self.sync()
-                    self.updatePushToken()
-                    completion?(true)
+                if let json = jsonDict {
+                    if let errorMsg = json["error"] as? String {
+                        completion?(false, errorMsg)
+                    } else if let newToken = json["token"] as? String,
+                        let jid = json["jid"] as? String,
+                        let pass = json["pass"] as? String
+                    {
+                        self.authToken = newToken
+                        self.jid = jid
+                        self.jpassword = pass
+                        
+                        self.sync()
+                        self.updatePushToken()
+                        completion?(true, nil)
+                    } else {
+                        completion?(false, nil)
+                    }
                 } else {
-                    completion?(false)
+                    completion?(false, nil)
                 }
             }
         )
     }
     
-    func login(email: String, password: String, completion: ((Bool) -> Void)?) {
+    func login(email: String, password: String, completion: ((Bool, String?) -> Void)?) {
         if let prevEmail = self.emailFromUserDefaults {
             if prevEmail != email {
                 self.logout()
@@ -454,30 +466,35 @@ class UserAPI {
             authToken: nil,
             jsonBody: [ "email": email, "password": password ],
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                if let json = jsonDict,
-                let newToken = json["token"] as? String,
-                let jid = json["jid"] as? String,
-                let pass = json["pass"] as? String
-                {
-                    self.authToken = newToken
-                    print("------------------------------")
-                    print(self.authToken)
-                    print("------------------------------")
-                    self.jid = jid
-                    self.jpassword = pass
-                    self.password = password
-                    self.email = email
-                    self.phoneNumber = json["phonenumber"] as? String
-                    self.sync()
-                    self.updatePushToken()
-                    completion?(true)
+                if let json = jsonDict {
+                    if let errorMsg = json["error"] as? String {
+                        completion?(false, errorMsg)
+                    } else if let newToken = json["token"] as? String,
+                        let jid = json["jid"] as? String,
+                        let pass = json["pass"] as? String
+                    {
+                        self.authToken = newToken
+                        print("------------------------------")
+                        print(self.authToken)
+                        print("------------------------------")
+                        self.jid = jid
+                        self.jpassword = pass
+                        self.password = password
+                        self.email = email
+                        self.phoneNumber = json["phonenumber"] as? String
+                        self.sync()
+                        self.updatePushToken()
+                        completion?(true, nil)
+                    } else {
+                        completion?(false, nil)
+                    }
                 } else {
-                    completion?(false)
+                    completion?(false, nil)
                 }
             })
     }
    
-    func authenticate(completion: ((Bool) -> Void)?) -> Bool {
+    func authenticate(completion: ((Bool, String?) -> Void)?) -> Bool {
         if self.authToken == nil {
             self.authToken = NSUserDefaults.standardUserDefaults().stringForKey(GGKey.userApiAuthToken)
         }
@@ -486,22 +503,27 @@ class UserAPI {
             self.get(UserAPI.authUrl,
                 authToken: token,
                 jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                    if let json = jsonDict,
-                    let newToken = json["token"] as? String,
-                    let jid = json["jid"] as? String,
-                    let pass = json["pass"] as? String
-                    {
-                        self.hasAuth = true
-                        self.authToken = newToken
-                        self.jid = jid
-                        self.jpassword = pass
-                        // self.phoneNumber = json["phonenumber"] as? String
-                       
-                        self.sync()
-                        self.updatePushToken()
-                        completion?(true)
+                    if let json = jsonDict {
+                        if let errorMsg = json["error"] as? String {
+                            completion?(false, errorMsg)
+                        } else if let newToken = json["token"] as? String,
+                            let jid = json["jid"] as? String,
+                            let pass = json["pass"] as? String
+                        {
+                            self.hasAuth = true
+                            self.authToken = newToken
+                            self.jid = jid
+                            self.jpassword = pass
+                            // self.phoneNumber = json["phonenumber"] as? String
+                           
+                            self.sync()
+                            self.updatePushToken()
+                            completion?(true, nil)
+                        } else {
+                            completion?(true, nil)
+                        }
                     } else {
-                        completion?(false)
+                        completion?(false, nil)
                     }
             })
             return true

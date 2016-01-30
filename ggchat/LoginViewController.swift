@@ -170,7 +170,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             completion: self.loginCompletion)
     }
     
-    func loginCompletion(success: Bool) {
+    func loginCompletion(success: Bool, errorMsg: String?) {
         dispatch_async(dispatch_get_main_queue()) {
             if success {
                 print("Connecting with \(UserAPI.sharedInstance.jid!):\(UserAPI.sharedInstance.jpassword!)")
@@ -181,7 +181,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 MBProgressHUD.hideHUDForView(self.view, animated: true)
                 let alert = UIAlertView()
                 alert.title = "Login Failed"
-                alert.message = "Incorrect username or password"
+                alert.message = errorMsg // "Incorrect username or password"
                 alert.addButtonWithTitle("Retry")
                 alert.show()
             }
