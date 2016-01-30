@@ -75,17 +75,16 @@ class MessageBubbleSizeCalculator {
             
             let horizontalInsetsTotal: CGFloat = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble
             var maximumTextWidth: CGFloat = self.textBubbleWidthForLayout(layout) - avatarSize.width - layout.messageBubbleLeftRightMargin - horizontalInsetsTotal
-            if messageData.isOutgoing {
-                // Adjust for time/read labels
-                
-                let timeStr = MessageTimestampFormatter.sharedInstance.timeForDate(messageData.date)
-                let timeRect = timeStr.boundingRectWithSize(
-                    CGSizeMake(20.0, CGFloat.max),
-                    options: NSStringDrawingOptions(rawValue: NSStringDrawingOptions.UsesLineFragmentOrigin.rawValue | NSStringDrawingOptions.UsesFontLeading.rawValue ),
-                    attributes: [ NSFontAttributeName : GGConfig.messageTimeFont ],
-                    context: nil)
-                maximumTextWidth -= timeRect.width
-            }
+            // if messageData.isOutgoing {
+            // Adjust for time/read labels
+            let timeStr = MessageTimestampFormatter.sharedInstance.timeForDate(messageData.date)
+            let timeRect = timeStr.boundingRectWithSize(
+                CGSizeMake(20.0, CGFloat.max),
+                options: NSStringDrawingOptions(rawValue: NSStringDrawingOptions.UsesLineFragmentOrigin.rawValue | NSStringDrawingOptions.UsesFontLeading.rawValue ),
+                attributes: [ NSFontAttributeName : GGConfig.messageTimeFont ],
+                context: nil)
+            maximumTextWidth -= timeRect.width
+            // }
             
             let stringRect: CGRect = messageData.displayText.boundingRectWithSize(
                 CGSizeMake(maximumTextWidth, CGFloat.max),
