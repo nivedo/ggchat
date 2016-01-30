@@ -117,7 +117,7 @@ class SignupViewController: UIViewController {
         UserAPI.sharedInstance.register(username,
             email: email,
             password: password,
-            completion: { (success: Bool) -> Void in
+            completion: { (success: Bool, errorMsg: String?) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 if success {
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -155,7 +155,8 @@ class SignupViewController: UIViewController {
                     })
                 } else {
                     MBProgressHUD.hideHUDForView(self.view, animated: false)
-                    self.errorTextView.text = "User name \(username) already exists."
+                    // self.errorTextView.text = "User name \(username) already exists."
+                    self.errorTextView.text = errorMsg
                 }
             }
         })

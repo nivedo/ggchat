@@ -363,7 +363,7 @@ class UserAPI {
     
     ////////////////////////////////////////////////////////////////////
     
-    func register(username: String, email: String, password: String, completion: ((Bool) -> Void)?) {
+    func register(username: String, email: String, password: String, completion: ((Bool, String?) -> Void)?) {
         self.post(UserAPI.registerUrl,
             authToken: nil,
             jsonBody: [
@@ -371,20 +371,25 @@ class UserAPI {
                 "email": email,
                 "password": password ],
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                if let json = jsonDict,
-                let newToken = json["token"] as? String,
-                let jid = json["jid"] as? String,
-                let pass = json["pass"] as? String
-                {
-                    self.authToken = newToken
-                    self.jid = jid
-                    self.jpassword = pass
-                    self.password = password
-                    self.email = email
-                    self.username = username
-                    completion?(true)
+                if let json = jsonDict {
+                    if let errorMsg = json["error"] as? String {
+                        completion?(false, errorMsg)
+                    } else if let newToken = json["token"] as? String,
+                        let jid = json["jid"] as? String,
+                        let pass = json["pass"] as? String
+                    {
+                        self.authToken = newToken
+                        self.jid = jid
+                        self.jpassword = pass
+                        self.password = password
+                        self.email = email
+                        self.username = username
+                        completion?(true, nil)
+                    } else {
+                        completion?(false, nil)
+                    }
                 } else {
-                    completion?(false)
+                    completion?(false, nil)
                 }
             })
     }
@@ -1333,11 +1338,11 @@ class UserAPI {
             if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 { // check for http errors
                 print("StatusCode should be 200, but is \(httpStatus.statusCode)")
                 print("Response = \(response)")
-                jsonCompletion?(json: nil)
-            } else {
+            }
+            if let jsonData = data {
                 do {
                     if let response = try NSJSONSerialization.JSONObjectWithData(
-                        data!,
+                        jsonData,
                         options: NSJSONReadingOptions.AllowFragments) as? [String: AnyObject] {
                         jsonCompletion?(json: response)
                     } else {
@@ -1370,11 +1375,12 @@ class UserAPI {
             if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 { // check for http errors
                 print("StatusCode should be 200, but is \(httpStatus.statusCode)")
                 print("Response = \(response)")
-                jsonCompletion?(json: nil)
-            } else {
+                // jsonCompletion?(json: nil)
+            }
+            if let jsonData = data {
                 do {
                     if let response = try NSJSONSerialization.JSONObjectWithData(
-                        data!,
+                        jsonData,
                         options: NSJSONReadingOptions.AllowFragments) as? [String: AnyObject] {
                         jsonCompletion?(json: response)
                     } else {
@@ -1407,11 +1413,12 @@ class UserAPI {
             if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 { // check for http errors
                 print("StatusCode should be 200, but is \(httpStatus.statusCode)")
                 print("Response = \(response)")
-                arrayCompletion?(array: nil)
-            } else {
+                // arrayCompletion?(array: nil)
+            }
+            if let arrayData = data {
                 do {
                     if let response = try NSJSONSerialization.JSONObjectWithData(
-                        data!,
+                        arrayData,
                         options: NSJSONReadingOptions.AllowFragments) as? [AnyObject] {
                         arrayCompletion?(array: response)
                     } else {
