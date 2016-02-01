@@ -1043,16 +1043,21 @@ class UserAPI {
     
     func updatePushToken() {
         if let token = self.authToken, let pushToken = self.pushToken {
+            /*
             let success = self.editProfile(["pushToken": pushToken] , jsonCompletion: { HTTPJsonCompletion in
                 print("Successfully pushed token for \(self.displayName)")
             })
+            */
             self.post(UserAPI.updatedevicetokenUrl("apple"),
                 authToken: token,
                 jsonBody: [ "pushToken" : pushToken ],
-                jsonCompletion: nil)
-            if !success {
-                print("Unable to push token for \(self.displayName)")
-            }
+                jsonCompletion: { (jsonBody: [String: AnyObject]?) -> Void in
+                    if let json = jsonBody {
+                        if let errorMsg = json["error"] as? String {
+                            print("Unable to push token for \(self.displayName), reason: \(errorMsg)")
+                        }
+                    }
+            })
         }
     }
     
