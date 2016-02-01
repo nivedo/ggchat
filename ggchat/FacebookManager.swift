@@ -38,7 +38,7 @@ class FacebookUser {
             "facebookid" : self.id,
             "facebooktoken" : self.token,
             "nickname" : self.name,
-            "username" : "facebookid_\(self.id)",
+            "username" : "",
             "email" : self.email,
             "avatar" : (self.avatarUrl != nil) ? self.avatarUrl! : ""
         ]

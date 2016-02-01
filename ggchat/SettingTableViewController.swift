@@ -189,7 +189,7 @@ class SettingTableViewController:
             }
         } else {
             let menu = GGSettingData.sharedInstance.menus[indexPath.section-1][indexPath.row]
-            if (menu.segueName != "") {
+            if menu.selectable {
                 self.performSegueWithIdentifier(menu.segueName, sender: menu.id)
             }
         }
@@ -243,11 +243,11 @@ class SettingTableViewController:
             } else {
                 cell.cellSubLabel.text = nil
             }
-            if menu.segueName == "" {
+            if menu.selectable {
+                cell.selectionStyle = UITableViewCellSelectionStyle.Default
+            } else {
                 cell.hideArrow()
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
-            } else {
-                cell.selectionStyle = UITableViewCellSelectionStyle.Default
             }
             
             return cell
