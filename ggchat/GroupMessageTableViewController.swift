@@ -14,7 +14,7 @@ class GroupMessageTableViewController:
     UISearchResultsUpdating,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
-    XMPPRoomManagerDelegate,
+    // XMPPRoomManagerDelegate,
     UserDelegate {
    
     var searchResultController = UISearchController()
@@ -83,7 +83,7 @@ class GroupMessageTableViewController:
        
         self.photoPicker.delegate = self
         UserAPI.sharedInstance.delegate = self
-        XMPPRoomManager.sharedInstance.delegate = self
+        // XMPPRoomManager.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
@@ -138,16 +138,18 @@ class GroupMessageTableViewController:
             )
         }
     }
-    
+   
+    /*
     func didJoinRoom(room: XMPPRoom) {
         print("didJoinRoom --> \(room.myRoomJID.bare())")
     }
+    */
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         UserAPI.sharedInstance.delegate = self
-        XMPPRoomManager.sharedInstance.delegate = self
+        // XMPPRoomManager.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
@@ -156,7 +158,7 @@ class GroupMessageTableViewController:
         super.viewWillDisappear(animated)
         self.searchResultController.view.removeFromSuperview()
         
-        XMPPRoomManager.sharedInstance.delegate = nil
+        // XMPPRoomManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
