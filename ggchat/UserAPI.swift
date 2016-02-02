@@ -286,6 +286,10 @@ class UserAPI {
     class var registerUrl: String {
         return self.route("register")
     }
+    
+    class var creategroupUrl: String {
+        return self.route("creategroup")
+    }
    
     class var loginUrl: String {
         return self.route("login")
@@ -366,6 +370,20 @@ class UserAPI {
     }
     
     ////////////////////////////////////////////////////////////////////
+   
+    func createGroup(groupname: String, users: Set<RosterUser>, completion: ((Bool, String?) -> Void)?) {
+        self.post(UserAPI.creategroupUrl,
+            authToken: nil,
+            jsonBody: [
+                "groupname": groupname,
+                ],
+            jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
+                print(jsonDict)
+                if let json = jsonDict {
+                }
+        })
+        let jids = users.map{ return UserAPI.stripDomainFromJID($0.jid) }
+    }
     
     func register(username: String, email: String, password: String, completion: ((Bool, String?) -> Void)?) {
         self.post(UserAPI.registerUrl,
@@ -814,6 +832,11 @@ class UserAPI {
     
     class func stripResourceFromJID(jid: String) -> String {
         let tokens = jid.componentsSeparatedByString("/")
+        return tokens[0]
+    }
+    
+    class func stripDomainFromJID(jid: String) -> String {
+        let tokens = jid.componentsSeparatedByString("@")
         return tokens[0]
     }
     

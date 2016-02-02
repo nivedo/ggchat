@@ -112,14 +112,21 @@ class GroupMessageTableViewController:
     }
     
     func receivedCreatePressed(sender: UIButton) {
-        if self.selectedBuddySet.count < 3 {
+        if self.selectedBuddySet.count < 2 {
             let alert = UIAlertView()
             alert.title = "Please Add More People"
             alert.message = "Groups must be at least 3 people"
             alert.addButtonWithTitle("OK")
             alert.show()
         } else {
-            
+            self.groupNameTextField?.text = self.groupName
+            UserAPI.sharedInstance.createGroup(self.groupName,
+                users: self.selectedBuddySet,
+                completion: { (success: Bool, errorMsg: String?) -> Void in
+                    print(success)
+                    print(errorMsg)
+                }
+            )
         }
     }
     
@@ -213,6 +220,26 @@ class GroupMessageTableViewController:
             return 1
         }
     }
+    
+    var groupNameTextField: UITextField?
+    var groupName: String {
+        get {
+            if let name = self.groupNameTextField?.text {
+                if name.length > 0 {
+                    return name
+                }
+            }
+            var name = ""
+            for (index, user) in self.selectedBuddySet.enumerate() {
+                if index < self.selectedBuddySet.count-1 {
+                    name += "\(user.displayName), "
+                } else {
+                    name += "\(user.displayName) (\(self.selectedBuddySet.count+1))"
+                }
+            }
+            return name
+        }
+    }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 1 {
@@ -233,9 +260,11 @@ class GroupMessageTableViewController:
                 forIndexPath: indexPath) as! GroupProfileTableViewCell
             
             cell.avatarImageView.image = self.groupAvatar.avatarImage
+            self.groupNameTextField = cell.textField
             
             let gesture = UITapGestureRecognizer(target: self, action: "selectAvatarImage")
             cell.avatarContainer.addGestureRecognizer(gesture)
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
             return cell
         }
