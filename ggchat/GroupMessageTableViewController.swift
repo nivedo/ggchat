@@ -234,7 +234,7 @@ class GroupMessageTableViewController:
                 if index < self.selectedBuddySet.count-1 {
                     name += "\(user.displayName), "
                 } else {
-                    name += "\(user.displayName) (\(self.selectedBuddySet.count+1))"
+                    name += user.displayName
                 }
             }
             return name

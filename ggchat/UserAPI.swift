@@ -380,9 +380,21 @@ class UserAPI {
             jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                 print(jsonDict)
                 if let json = jsonDict {
+                    if let errorMsg = json["error"] as? String {
+                        completion?(false, errorMsg)
+                    } else if let roomJID = json["jid"] as? String {
+                        let jids = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
+                        XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: jids)
+                    }
                 }
         })
-        let jids = users.map{ return UserAPI.stripDomainFromJID($0.jid) }
+        /*
+        let uuid = NSUUID().UUIDString
+        let roomJID = "\(uuid)@chatgroup.blub.io"
+        print(roomJID)
+        let jids = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
+        XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: jids)
+        */
     }
     
     func register(username: String, email: String, password: String, completion: ((Bool, String?) -> Void)?) {
