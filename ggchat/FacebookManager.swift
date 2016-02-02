@@ -38,7 +38,7 @@ class FacebookUser {
             "facebookid" : self.id,
             "facebooktoken" : self.token,
             "nickname" : self.name,
-            "username" : "",
+            "username" : self.defaultUsername,
             "email" : self.email,
             "avatar" : (self.avatarUrl != nil) ? self.avatarUrl! : ""
         ]
@@ -47,6 +47,12 @@ class FacebookUser {
     var description: String {
         get {
             return "fbuser email: \(self.email), name: \(self.name)"
+        }
+    }
+    
+    var defaultUsername: String {
+        get {
+            return "facebookid_\(self.id)"
         }
     }
 }

@@ -45,12 +45,14 @@ class SettingMenu {
     
     var selectable: Bool {
         get {
+            /*
             if self.id == "username" {
                 if let username = UserAPI.sharedInstance.username {
-                    return username.length == 0
+                    return username == ""
                 }
                 return false
             }
+            */
             return self.segueName != ""
         }
     }
@@ -81,7 +83,8 @@ class GGSettingData {
                 SettingMenu(
                     id: "username",
                     displayName: "Username",
-                    segueName: "settings.to.settings_textfield"),
+                    // segueName: "settings.to.settings_textfield"),
+                    segueName: ""),
                 SettingMenu(
                     id: "phone_number",
                     displayName: "Phone Number",
