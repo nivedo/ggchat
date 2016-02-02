@@ -18,6 +18,10 @@ class ChatRoom {
     }
 }
 
+protocol XMPPRoomManagerDelegate : NSObjectProtocol {
+    func didJoinRoom(room: XMPPRoom)
+}
+
 class XMPPRoomManager: NSObject,
     XMPPRoomDelegate {
     
@@ -27,10 +31,11 @@ class XMPPRoomManager: NSObject,
         }
         return XMPPRoomManagerSingleton.instance
     }
-
+   
+    var delegate: XMPPRoomManagerDelegate?
     var rooms = [String: ChatRoom]()
    
-    func joinOrCreateRoom(roomID: String, invitees: [String]) {
+    func joinRoom(roomID: String, invitees: [String]) {
         if !XMPPManager.sharedInstance.isConnected() {
             return
         }
@@ -52,7 +57,7 @@ class XMPPRoomManager: NSObject,
             self.rooms[roomID] = ChatRoom(xmppRoom: xmppRoom, inviteList: invitees)
             xmppRoom.activate(XMPPManager.sharedInstance.stream)
             xmppRoom.addDelegate(self, delegateQueue: dispatch_get_main_queue())
-            xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.displayName,
+            xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.jidBareStr,
                 history: nil,
                 password: nil)
         }
@@ -81,6 +86,7 @@ class XMPPRoomManager: NSObject,
     
     func xmppRoomDidJoin(sender: XMPPRoom) {
         print("xmppRoomDidJoin")
+        self.delegate?.didJoinRoom(sender)
         let roomJID = UserAPI.stripResourceFromJID(sender.myRoomJID.bare())
         if let chatRoom = self.rooms[roomJID] {
             for jid in chatRoom.inviteList {

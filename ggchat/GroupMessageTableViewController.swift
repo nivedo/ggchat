@@ -14,8 +14,9 @@ class GroupMessageTableViewController:
     UISearchResultsUpdating,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
+    XMPPRoomManagerDelegate,
     UserDelegate {
-    
+   
     var searchResultController = UISearchController()
     var filteredBuddyList = [RosterUser]()
     var buddyList = [RosterUser]()
@@ -82,6 +83,7 @@ class GroupMessageTableViewController:
        
         self.photoPicker.delegate = self
         UserAPI.sharedInstance.delegate = self
+        XMPPRoomManager.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
@@ -122,18 +124,30 @@ class GroupMessageTableViewController:
             self.groupNameTextField?.text = self.groupName
             UserAPI.sharedInstance.createGroup(self.groupName,
                 users: self.selectedBuddySet,
-                completion: { (success: Bool, errorMsg: String?) -> Void in
-                    print(success)
-                    print(errorMsg)
+                completion: { (success: Bool, result: String?) -> Void in
+                    if !success {
+                        if let errorMsg = result {
+                            let alert = UIAlertView()
+                            alert.title = "Unable to create group \(self.groupName)"
+                            alert.message = errorMsg
+                            alert.addButtonWithTitle("OK")
+                            alert.show()
+                        }
+                    }
                 }
             )
         }
+    }
+    
+    func didJoinRoom(room: XMPPRoom) {
+        print("didJoinRoom --> \(room.myRoomJID.bare())")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         UserAPI.sharedInstance.delegate = self
+        XMPPRoomManager.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
@@ -141,6 +155,8 @@ class GroupMessageTableViewController:
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.searchResultController.view.removeFromSuperview()
+        
+        XMPPRoomManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
