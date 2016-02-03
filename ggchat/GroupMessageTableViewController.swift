@@ -121,21 +121,9 @@ class GroupMessageTableViewController:
             alert.addButtonWithTitle("OK")
             alert.show()
         } else {
-            self.groupNameTextField?.text = self.groupName
-            UserAPI.sharedInstance.createGroup(self.groupName,
-                users: self.selectedBuddySet,
-                completion: { (success: Bool, result: String?) -> Void in
-                    if !success {
-                        if let errorMsg = result {
-                            let alert = UIAlertView()
-                            alert.title = "Unable to create group \(self.groupName)"
-                            alert.message = errorMsg
-                            alert.addButtonWithTitle("OK")
-                            alert.show()
-                        }
-                    }
-                }
-            )
+            let inviteesJID = self.selectedBuddySet.map{ return UserAPI.stripResourceFromJID($0.jid) }
+            let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
+            XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: inviteesJID, groupName: self.groupName, avatar: "")
         }
     }
    

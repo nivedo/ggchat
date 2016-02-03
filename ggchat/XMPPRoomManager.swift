@@ -9,14 +9,19 @@
 import Foundation
 
 class ChatRoom {
+    var jid: String
     var xmppRoom: XMPPRoom
     var inviteList: [String]
     var user: RosterUser
     
-    init(xmppRoom: XMPPRoom, inviteList: [String], json: [String: AnyObject]) {
+    init(jid: String, xmppRoom: XMPPRoom, inviteList: [String], groupName: String, avatar: String) {
+        self.jid = jid
         self.xmppRoom = xmppRoom
         self.inviteList = inviteList
-        self.user = RosterUser(groupProfile: json)
+        self.user = RosterUser(
+            jid: jid,
+            groupName: groupName,
+            avatar: avatar)
     }
 }
 
@@ -45,7 +50,7 @@ class XMPPRoomManager: NSObject,
         self.muc!.addDelegate(self, delegateQueue: dispatch_get_main_queue())
     }
     
-    func joinRoom(roomID: String, invitees: [String], json: [String: AnyObject]) {
+    func joinOrCreateRoom(roomID: String, invitees: [String], groupName: String, avatar: String) {
         if !XMPPManager.sharedInstance.isConnected() {
             return
         }
@@ -65,7 +70,7 @@ class XMPPRoomManager: NSObject,
                 roomStorage: roomMemory,
                 jid:roomJID,
                 dispatchQueue: dispatch_get_main_queue())
-            self.rooms[roomID] = ChatRoom(xmppRoom: xmppRoom, inviteList: invitees, json: json)
+            self.rooms[roomID] = ChatRoom(jid: roomID, xmppRoom: xmppRoom, inviteList: invitees, groupName: groupName, avatar: avatar)
             xmppRoom.activate(XMPPManager.sharedInstance.stream)
             xmppRoom.addDelegate(self, delegateQueue: dispatch_get_main_queue())
             xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.uuidStr,

@@ -48,10 +48,10 @@ class RosterUser: Hashable {
         }
     }
    
-    init(groupProfile: [String: AnyObject]) {
-        self.jid = UserAPI.stripResourceFromJID(groupProfile["jid"] as! String)
-        self.nickname = groupProfile["groupname"] as! String
-        self.avatar = groupProfile["avatar"] as! String
+    init(jid: String, groupName: String, avatar: String) {
+        self.jid = UserAPI.stripResourceFromJID(jid)
+        self.nickname = groupName
+        self.avatar = avatar
     }
     
     init(profile: [String: AnyObject],
@@ -376,8 +376,9 @@ class UserAPI {
     }
     
     ////////////////////////////////////////////////////////////////////
-   
-    func createGroup(groupname: String, users: Set<RosterUser>, completion: ((Bool, String?) -> Void)?) {
+  
+    /*
+    func createGroup(groupname: String, users: Set<RosterUser>, avatar: String) {
         if let token = self.authToken {
             self.post(UserAPI.creategroupUrl,
                 authToken: token,
@@ -393,12 +394,16 @@ class UserAPI {
                             print("Room \(roomJID) created \(json)")
                             completion?(true, roomJID)
                             let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
-                            XMPPRoomManager.sharedInstance.joinRoom(roomJID, invitees: inviteesJID, json: json)
+                            XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: inviteesJID, json: json)
                         }
                     }
             })
         }
+        let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
+        let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
+        XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: inviteesJID, groupname: groupname, avatar: avatar)
     }
+    */
     
     func register(username: String, email: String, password: String, completion: ((Bool, String?) -> Void)?) {
         self.post(UserAPI.registerUrl,
