@@ -341,6 +341,10 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream archiveDate:(NSDate *)date composing:(BOOL)isComposingForced myJidStr:(NSString*)myJidBareStr save:(BOOL)saveInsertion
 {
+    if (![message isChatMessage]) {
+        return;
+    }
+    
 	// Message should either have a body, or be a composing notification
 	
 	NSString *messageBody = [[message elementForName:@"body"] stringValue];
@@ -534,6 +538,11 @@ static XMPPMessageArchivingCoreDataStorage *sharedInstance;
 
 - (void)archiveMostRecentMessage:(NSString *)bareJidStr streamBareJidStr:(NSString*)streamBareJidStr outgoing:(BOOL)isOutgoing archiveDate:(NSDate *)date messageStr:(NSString*)messageStr
 {
+    XMPPMessage *message = [[XMPPMessage alloc] initWithXMLString:messageStr error:nil];
+    if (![message isChatMessage]) {
+        return;
+    }
+    
     [self scheduleBlock:^{
 		
 		NSManagedObjectContext *moc = [self managedObjectContext];
