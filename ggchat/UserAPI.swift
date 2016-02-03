@@ -385,11 +385,12 @@ class UserAPI {
                     "groupname": groupname,
                     ],
                 jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                    print(jsonDict)
+                    // print(jsonDict)
                     if let json = jsonDict {
                         if let errorMsg = json["error"] as? String {
                             completion?(false, errorMsg)
                         } else if let roomJID = json["jid"] as? String {
+                            print("Room \(roomJID) created \(json)")
                             completion?(true, roomJID)
                             let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
                             XMPPRoomManager.sharedInstance.joinRoom(roomJID, invitees: inviteesJID, json: json)
@@ -1232,6 +1233,12 @@ class UserAPI {
     var jidBareStr: String {
         get {
             return UserAPI.stripResourceFromJID(self.jidStr)
+        }
+    }
+    
+    var uuidStr: String {
+        get {
+            return UserAPI.stripDomainFromJID(self.jidBareStr)
         }
     }
     

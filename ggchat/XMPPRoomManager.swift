@@ -58,6 +58,7 @@ class XMPPRoomManager: NSObject,
                 chatRoom.inviteList = invitees
             }
         } else {
+            print("joinRoomUserNickname: \(UserAPI.sharedInstance.uuidStr)")
             let roomJID = XMPPJID.jidWithString(roomID)
             let roomMemory = XMPPRoomMemoryStorage()
             let xmppRoom = XMPPRoom(
@@ -67,7 +68,7 @@ class XMPPRoomManager: NSObject,
             self.rooms[roomID] = ChatRoom(xmppRoom: xmppRoom, inviteList: invitees, json: json)
             xmppRoom.activate(XMPPManager.sharedInstance.stream)
             xmppRoom.addDelegate(self, delegateQueue: dispatch_get_main_queue())
-            xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.jidBareStr,
+            xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.uuidStr,
                 history: nil,
                 password: nil)
         }
@@ -106,11 +107,16 @@ class XMPPRoomManager: NSObject,
     }
    
     func xmppMUC(sender: XMPPMUC!, roomJID: XMPPJID!, didReceiveInvitation message: XMPPMessage!) {
-        print("MUC didReceiveInvitation")
-        let x = message.elementForName("x", xmlns:XMPPMUCUserNamespace)
-        if let _ = x.elementForName("invite") {
-            let conferenceRoomJID = message.attributeForName("from").stringValue
-            // self.joinMultiUserChatRoom(conferenceRoomJID)
+        print("MUC didReceiveInvitation: \(roomJID.bare())")
+        print(message)
+        let type = message.attributeStringValueForName("type")
+        if type != "error" {
+            let x = message.elementForName("x", xmlns:XMPPMUCUserNamespace)
+            if let _ = x.elementForName("invite") {
+                let from = message.attributeForName("from").stringValue
+                print("from \(from)")
+                // self.joinMultiUserChatRoom(conferenceRoomJID)
+            }
         }
     }
 }
