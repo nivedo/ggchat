@@ -47,6 +47,12 @@ class RosterUser: Hashable {
             return jid.hashValue
         }
     }
+   
+    init(groupProfile: [String: AnyObject]) {
+        self.jid = UserAPI.stripResourceFromJID(groupProfile["jid"] as! String)
+        self.nickname = groupProfile["groupname"] as! String
+        self.avatar = groupProfile["avatar"] as! String
+    }
     
     init(profile: [String: AnyObject],
         avatarCompletion: ((Bool) -> Void)?) {
@@ -59,7 +65,7 @@ class RosterUser: Hashable {
             
         self.initAvatar(avatarCompletion)
     }
-    
+   
     init(user: User, avatarCompletion: ((Bool) -> Void)?) {
         self.jid = UserAPI.stripResourceFromJID(user.jid!)
         self.nickname = user.nickname!
@@ -372,23 +378,25 @@ class UserAPI {
     ////////////////////////////////////////////////////////////////////
    
     func createGroup(groupname: String, users: Set<RosterUser>, completion: ((Bool, String?) -> Void)?) {
-        self.post(UserAPI.creategroupUrl,
-            authToken: nil,
-            jsonBody: [
-                "groupname": groupname,
-                ],
-            jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                print(jsonDict)
-                if let json = jsonDict {
-                    if let errorMsg = json["error"] as? String {
-                        completion?(false, errorMsg)
-                    } else if let roomJID = json["jid"] as? String {
-                        completion?(true, roomJID)
-                        let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
-                        XMPPRoomManager.sharedInstance.joinRoom(roomJID, invitees: inviteesJID)
+        if let token = self.authToken {
+            self.post(UserAPI.creategroupUrl,
+                authToken: token,
+                jsonBody: [
+                    "groupname": groupname,
+                    ],
+                jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
+                    print(jsonDict)
+                    if let json = jsonDict {
+                        if let errorMsg = json["error"] as? String {
+                            completion?(false, errorMsg)
+                        } else if let roomJID = json["jid"] as? String {
+                            completion?(true, roomJID)
+                            let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
+                            XMPPRoomManager.sharedInstance.joinRoom(roomJID, invitees: inviteesJID, json: json)
+                        }
                     }
-                }
-        })
+            })
+        }
     }
     
     func register(username: String, email: String, password: String, completion: ((Bool, String?) -> Void)?) {

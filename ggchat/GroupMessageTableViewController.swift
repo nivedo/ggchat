@@ -14,7 +14,7 @@ class GroupMessageTableViewController:
     UISearchResultsUpdating,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
-    // XMPPRoomManagerDelegate,
+    XMPPRoomManagerDelegate,
     UserDelegate {
    
     var searchResultController = UISearchController()
@@ -83,7 +83,7 @@ class GroupMessageTableViewController:
        
         self.photoPicker.delegate = self
         UserAPI.sharedInstance.delegate = self
-        // XMPPRoomManager.sharedInstance.delegate = self
+        XMPPRoomManager.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
@@ -139,17 +139,16 @@ class GroupMessageTableViewController:
         }
     }
    
-    /*
-    func didJoinRoom(room: XMPPRoom) {
-        print("didJoinRoom --> \(room.myRoomJID.bare())")
+    func didJoinRoom(room: ChatRoom) {
+        // print("didJoinRoom --> \(room.myRoomJID.bare())")
+        self.performSegueWithIdentifier("group_message.to.messages", sender: room)
     }
-    */
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         UserAPI.sharedInstance.delegate = self
-        // XMPPRoomManager.sharedInstance.delegate = self
+        XMPPRoomManager.sharedInstance.delegate = self
         self.buddyList = UserAPI.sharedInstance.buddyList
         self.tableView.reloadData()
     }
@@ -158,7 +157,7 @@ class GroupMessageTableViewController:
         super.viewWillDisappear(animated)
         self.searchResultController.view.removeFromSuperview()
         
-        // XMPPRoomManager.sharedInstance.delegate = nil
+        XMPPRoomManager.sharedInstance.delegate = nil
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
@@ -382,15 +381,15 @@ class GroupMessageTableViewController:
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "group_message.to.messages" {
+            let room = sender as! ChatRoom
+            
+        }
     }
-    */
     
     // MARK: - UserDelegate
     func onAvatarUpdate(jid: String, success: Bool) {

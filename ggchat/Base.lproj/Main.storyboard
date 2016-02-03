@@ -94,6 +94,9 @@
                     </tableView>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <segue destination="k3J-sf-ZBR" kind="show" identifier="group_message.to.messages" id="PtV-QG-q6V"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vH3-d3-HeO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -973,6 +976,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="td0-iI-Ota"/>
-        <segue reference="opv-3B-fXB"/>
+        <segue reference="PtV-QG-q6V"/>
     </inferredMetricsTieBreakers>
 </document>
