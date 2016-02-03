@@ -57,6 +57,7 @@ class XMPPManager: NSObject,
         sharedInstance.setup()
         
         XMPPMessageManager.sharedInstance.setupArchiving()
+        XMPPRoomManager.sharedInstance.setupMUC()
     }
     
     class func refresh() {

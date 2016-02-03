@@ -386,7 +386,10 @@ class GroupMessageTableViewController:
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "group_message.to.messages" {
-            let room = sender as! ChatRoom
+            let user = (sender as! ChatRoom).user
+            if let cpd = segue.destinationViewController as? ContactPickerDelegate {
+                cpd.didSelectContact(user)
+            }
             
         }
     }

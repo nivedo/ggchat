@@ -11,10 +11,12 @@ import Foundation
 class ChatRoom {
     var xmppRoom: XMPPRoom
     var inviteList: [String]
+    var user: RosterUser
     
     init(xmppRoom: XMPPRoom, inviteList: [String], json: [String: AnyObject]) {
         self.xmppRoom = xmppRoom
         self.inviteList = inviteList
+        self.user = RosterUser(groupProfile: json)
     }
 }
 
@@ -23,7 +25,8 @@ protocol XMPPRoomManagerDelegate : NSObjectProtocol {
 }
 
 class XMPPRoomManager: NSObject,
-    XMPPRoomDelegate {
+    XMPPRoomDelegate,
+    XMPPMUCDelegate {
     
     class var sharedInstance : XMPPRoomManager {
         struct XMPPRoomManagerSingleton {
@@ -34,7 +37,14 @@ class XMPPRoomManager: NSObject,
    
     var delegate: XMPPRoomManagerDelegate?
     var rooms = [String: ChatRoom]()
-   
+    var muc: XMPPMUC?
+  
+    func setupMUC() {
+        self.muc = XMPPMUC(dispatchQueue: dispatch_get_main_queue())
+        self.muc!.activate(XMPPManager.sharedInstance.stream)
+        self.muc!.addDelegate(self, delegateQueue: dispatch_get_main_queue())
+    }
+    
     func joinRoom(roomID: String, invitees: [String], json: [String: AnyObject]) {
         if !XMPPManager.sharedInstance.isConnected() {
             return
@@ -94,5 +104,13 @@ class XMPPRoomManager: NSObject,
             }
         }
     }
-    
+   
+    func xmppMUC(sender: XMPPMUC!, roomJID: XMPPJID!, didReceiveInvitation message: XMPPMessage!) {
+        print("MUC didReceiveInvitation")
+        let x = message.elementForName("x", xmlns:XMPPMUCUserNamespace)
+        if let _ = x.elementForName("invite") {
+            let conferenceRoomJID = message.attributeForName("from").stringValue
+            // self.joinMultiUserChatRoom(conferenceRoomJID)
+        }
+    }
 }
