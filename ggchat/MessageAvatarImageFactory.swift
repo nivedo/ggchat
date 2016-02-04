@@ -87,8 +87,9 @@ class MessageAvatarImageFactory: NSObject {
         let attributes: [String:AnyObject] = [
             NSFontAttributeName : font,
             NSForegroundColorAttributeName : textColor ]
-        
-        let textFrame: CGRect = initials.boundingRectWithSize(frame.size,
+       
+        let initialsCapitalized = initials.uppercaseString
+        let textFrame: CGRect = initialsCapitalized.boundingRectWithSize(frame.size,
             options: NSStringDrawingOptions(rawValue: NSStringDrawingOptions.UsesLineFragmentOrigin.rawValue | NSStringDrawingOptions.UsesFontLeading.rawValue),
             attributes: attributes,
             context: nil)
@@ -106,7 +107,7 @@ class MessageAvatarImageFactory: NSObject {
         
         CGContextSetFillColorWithColor(context, backgroundColor.CGColor)
         CGContextFillRect(context, frame)
-        initials.drawAtPoint(drawPoint, withAttributes:attributes)
+        initialsCapitalized.drawAtPoint(drawPoint, withAttributes:attributes)
         
         image = UIGraphicsGetImageFromCurrentImageContext()
             
