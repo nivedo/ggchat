@@ -392,16 +392,16 @@ class UserAPI {
         }
     }
     
-    /*
-    func createGroup(groupname: String, users: Set<RosterUser>, avatar: String) {
+    func createGroup(groupName: String, avatar: String, users: Set<RosterUser>, completion: ((Bool, String?) -> Void)?) {
         if let token = self.authToken {
             self.post(UserAPI.creategroupUrl,
                 authToken: token,
                 jsonBody: [
-                    "groupname": groupname,
+                    "groupname": groupName,
+                    "avatar": avatar
                     ],
                 jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
-                    // print(jsonDict)
+                    print(jsonDict)
                     if let json = jsonDict {
                         if let errorMsg = json["error"] as? String {
                             completion?(false, errorMsg)
@@ -409,16 +409,16 @@ class UserAPI {
                             print("Room \(roomJID) created \(json)")
                             completion?(true, roomJID)
                             let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
-                            XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: inviteesJID, json: json)
+                            let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
+                            XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID,
+                                invitees: inviteesJID,
+                                groupName: groupName,
+                                avatar: avatar)
                         }
                     }
             })
         }
-        let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
-        let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
-        XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: inviteesJID, groupname: groupname, avatar: avatar)
     }
-    */
     
     func register(username: String, email: String, password: String, completion: ((Bool, String?) -> Void)?) {
         self.post(UserAPI.registerUrl,

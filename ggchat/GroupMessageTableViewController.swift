@@ -121,9 +121,15 @@ class GroupMessageTableViewController:
             alert.addButtonWithTitle("OK")
             alert.show()
         } else {
+            /*
             let inviteesJID = self.selectedBuddySet.map{ return UserAPI.stripResourceFromJID($0.jid) }
             let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
             XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: inviteesJID, groupName: self.groupName, avatar: "")
+            */
+            UserAPI.sharedInstance.createGroup(self.groupName,
+                avatar: "",
+                users: self.selectedBuddySet,
+                completion: nil)
         }
     }
    
