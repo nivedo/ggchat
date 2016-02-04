@@ -446,8 +446,8 @@ class GGWiki {
     private var autocompleteWiki: String? = nil
     
     init() {
-        self.loadConfig()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            self.loadConfig()
             for keyboard in self.getKeyboardResources() {
                 keyboard.loadAutocomplete()
             }

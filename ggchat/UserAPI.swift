@@ -775,53 +775,69 @@ class UserAPI {
     }
     
     class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
-        // let startTime = NSDate()
-        if let bodyElement = element?.elementForName("body"),
-            let from = element?.attributeStringValueForName("from"),
-            let type = element?.attributeStringValueForName("type") {
-            if type != "chat" {
-                return nil
-            }
-            if let content_type = element?.attributeStringValueForName("content_type") {
-                if content_type == "read_receipt" {
-                    return nil
+        if let type = element?.attributeStringValueForName("type") {
+            if type == "chat" {
+                if let bodyElement = element?.elementForName("body"),
+                    let from = element?.attributeStringValueForName("from") {
+                    if let content_type = element?.attributeStringValueForName("content_type") {
+                        if content_type == "read_receipt" {
+                            return nil
+                        }
+                    }
+                        
+                    let id = element?.attributeStringValueForName("id")
+                    
+                    let text = bodyElement.stringValue()
+                    let packet = MessagePacket(placeholderText: text, encodedText: text)
+                    if let ggbodyElement = element?.elementForName("ggbody") {
+                        packet.encodedText = ggbodyElement.stringValue()
+                        packet.variables = self.parseVariablesFromElement(ggbodyElement)
+                        // print("parsed \(variables.count) variables")
+                    }
+                    let fromBare = UserAPI.stripResourceFromJID(from)
+                    
+                    if let photo = bodyElement.elementForName("photo") {
+                        let originalKey = photo.elementForName("originalKey")!.stringValue()
+                        let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
+                    
+                        let photoMedia = PhotoMediaItem(thumbnailKey: thumbnailKey, originalKey: originalKey, delegate: delegate)
+                        let photoMessage = Message(
+                            id: id!,
+                            senderId: fromBare,
+                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
+                            isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
+                            date: date,
+                            media: photoMedia)
+                        return photoMessage
+                    } else {
+                        // let encodeTime = NSDate()
+                        let fullMessage = packet.message(id!,
+                            senderId: fromBare,
+                            date: date,
+                            delegate: delegate)
+                        // let elapsedTime1 = NSDate().timeIntervalSinceDate(startTime)
+                        // let elapsedTime2 = NSDate().timeIntervalSinceDate(encodeTime)
+                        // print("parse body: \(text), time1: \(elapsedTime1), time2: \(elapsedTime2)")
+                        return fullMessage
+                    }
                 }
-            }
-                
-            let id = element?.attributeStringValueForName("id")
-            
-            let text = bodyElement.stringValue()
-            let packet = MessagePacket(placeholderText: text, encodedText: text)
-            if let ggbodyElement = element?.elementForName("ggbody") {
-                packet.encodedText = ggbodyElement.stringValue()
-                packet.variables = self.parseVariablesFromElement(ggbodyElement)
-                // print("parsed \(variables.count) variables")
-            }
-            let fromBare = UserAPI.stripResourceFromJID(from)
-            
-            if let photo = bodyElement.elementForName("photo") {
-                let originalKey = photo.elementForName("originalKey")!.stringValue()
-                let thumbnailKey = photo.elementForName("thumbnailKey")!.stringValue()
-            
-                let photoMedia = PhotoMediaItem(thumbnailKey: thumbnailKey, originalKey: originalKey, delegate: delegate)
-                let photoMessage = Message(
-                    id: id!,
-                    senderId: fromBare,
-                    senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
-                    isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
-                    date: date,
-                    media: photoMedia)
-                return photoMessage
-            } else {
-                // let encodeTime = NSDate()
-                let fullMessage = packet.message(id!,
-                    senderId: fromBare,
-                    date: date,
-                    delegate: delegate)
-                // let elapsedTime1 = NSDate().timeIntervalSinceDate(startTime)
-                // let elapsedTime2 = NSDate().timeIntervalSinceDate(encodeTime)
-                // print("parse body: \(text), time1: \(elapsedTime1), time2: \(elapsedTime2)")
-                return fullMessage
+            } else if type == "normal" {
+                if let xElement = element?.elementForName("x", xmlns: "http://jabber.org/protocol/muc#user"),
+                    let inviteElement = xElement.elementForName("invite"),
+                    let from = element?.attributeStringValueForName("from"),
+                    let inviter = inviteElement.attributeStringValueForName("from"),
+                    let reasonElement = inviteElement.elementForName("reason") {
+                    
+                    let reason = reasonElement.stringValue()
+                    let fromBare = UserAPI.stripResourceFromJID(from)
+                    let id = "\(fromBare):\(inviter)"
+                    let packet = MessagePacket(placeholderText: reason, encodedText: reason)
+                    let fullMessage = packet.message(id,
+                        senderId: fromBare,
+                        date: date,
+                        delegate: delegate)
+                    return fullMessage
+                }
             }
         }
         return nil
@@ -1237,6 +1253,12 @@ class UserAPI {
     var jid: String? {
         didSet {
             NSUserDefaults.standardUserDefaults().setValue(self.jid, forKey: GGKey.userApiJID)
+        }
+    }
+   
+    var hasJID: Bool {
+        get {
+            return NSUserDefaults.standardUserDefaults().valueForKey(GGKey.userApiJID) != nil
         }
     }
     

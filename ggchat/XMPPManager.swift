@@ -150,7 +150,7 @@ class XMPPManager: NSObject,
     }
     
     func reconnect() {
-        if !self.isConnected() && !self.stream.isConnecting() &&
+        if UserAPI.sharedInstance.hasJID && !self.isConnected() && !self.stream.isConnecting() &&
             !self.stream.isAuthenticated() && !self.stream.isAuthenticating() {
             print("*************** RECONNECTING ********************")
             self.connectWithCompletion(nil,
