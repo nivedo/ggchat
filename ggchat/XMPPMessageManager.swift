@@ -463,6 +463,31 @@ public class XMPPMessageManager: NSObject {
         self.deleteArchivedMessagesFrom(jid)
     }
     
+    func trimAllContacts(rosterMap: [String: RosterUser]) {
+        let moc = messageStorage?.mainThreadManagedObjectContext
+		let entityDescription = NSEntityDescription.entityForName("XMPPMessageArchiving_Contact_CoreDataObject", inManagedObjectContext: moc!)
+        
+        let request = NSFetchRequest()
+		request.entity = entityDescription
+	
+        do {
+			let results = try moc?.executeFetchRequest(request)
+           
+            var update = false
+			for messageElement in results! {
+                if rosterMap[messageElement.bareJidStr] == nil {
+                    moc?.deleteObject(messageElement as! NSManagedObject)
+                    update = true
+                }
+			}
+            if update {
+                try moc?.save()
+            }
+		} catch _ {
+			//catch fetch error here
+		}
+    }
+    
     func deleteContactMessageFrom(jid: String) {
         print("Deleting contact from \(jid) in core data")
         let moc = messageStorage?.mainThreadManagedObjectContext

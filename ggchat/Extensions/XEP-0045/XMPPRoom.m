@@ -850,6 +850,7 @@ enum XMPPRoomState
 		
 		XMPPMessage *message = [XMPPMessage message];
 		[message addAttributeWithName:@"to" stringValue:[roomJID full]];
+        [message addAttributeWithName:@"from" stringValue:xmppStream.myJID.bare];
 		[message addChild:x];
 		
 		[xmppStream sendElement:message];

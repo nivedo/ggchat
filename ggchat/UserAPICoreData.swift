@@ -103,10 +103,12 @@ class UserAPICoreData {
         var needUpdate = false
         if let users = self.fetchAllUsers() {
             for user in users {
-                if rosterMap[user.jid!] == nil {
-                    needUpdate = true
-                    self.managedObjectContext.deleteObject(user)
-                    // print("Delete user \(user.jid) from user core data")
+                if let jid = user.jid {
+                    if rosterMap[jid] == nil {
+                        needUpdate = true
+                        self.managedObjectContext.deleteObject(user)
+                        // print("Delete user \(jid) from user core data")
+                    }
                 }
             }
         }

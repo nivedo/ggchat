@@ -685,6 +685,7 @@ class UserAPI {
     }
     
     func loadProfilesFromJson(array: [AnyObject], completion: ((Bool) -> Void)? = nil) {
+        print(array)
         // self.buddyList.removeAll()
         // self.rosterMap.removeAll()
         var buddyList = [RosterUser]()
@@ -699,6 +700,7 @@ class UserAPI {
             rosterMap[user.jid] = user
         }
         UserAPICoreData.sharedInstance.trimAllUsers(rosterMap)
+        // XMPPMessageManager.sharedInstance.trimAllContacts(rosterMap)
         buddyList.sortInPlace({ $0.displayName.lowercaseString < $1.displayName.lowercaseString })
        
         dispatch_async(dispatch_get_main_queue()) {
@@ -1109,7 +1111,7 @@ class UserAPI {
             self.chatsList.sortInPlace({ $0.lastTime.compare($1.lastTime) == NSComparisonResult.OrderedDescending})
             
             // New chat or user, sync
-            self.sync()
+            // self.sync()
             return chat
         }
     }
