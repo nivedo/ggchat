@@ -785,7 +785,7 @@ class UserAPI {
     
     class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
         if let type = element?.attributeStringValueForName("type") {
-            if type == "chat" {
+            if type == "chat" || type == "groupchat" {
                 if let bodyElement = element?.elementForName("body"),
                     let from = element?.attributeStringValueForName("from") {
                     if let content_type = element?.attributeStringValueForName("content_type") {

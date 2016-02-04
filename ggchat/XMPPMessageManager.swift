@@ -72,9 +72,10 @@ public class XMPPMessageManager: NSObject {
             let body = DDXMLElement(name: "body", stringValue: messagePacket.placeholderText)
             let ggbody = DDXMLElement(name: "ggbody", stringValue: messagePacket.encodedText)
             let completeMessage = DDXMLElement(name: "message")
-    		
+    
+            let type = receiver.rangeOfString("conference") != nil ? "groupchat" : "chat"
     		completeMessage.addAttributeWithName("id", stringValue: messageId)
-    		completeMessage.addAttributeWithName("type", stringValue: "chat")
+    		completeMessage.addAttributeWithName("type", stringValue: type)
             completeMessage.addAttributeWithName("content_type", stringValue: "text")
     		completeMessage.addAttributeWithName("to", stringValue: receiver)
             completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr) // XMPPManager.sharedInstance.stream.myJID.bare())
@@ -653,11 +654,10 @@ extension XMPPManager {
 	
 	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
-        print("didReceiveMessage")
-     
         let now = NSDate()
         let jid = UserAPI.stripResourceFromJID(message.from().bare())
-        if message.isChatMessageWithBody() {
+        print("didReceiveMessage from \(jid) --> \(message)")
+        if message.isChatOrGroupMessageWithBody() {
             if let msg = UserAPI.parseMessageFromElement(message as DDXMLElement, date: now, delegate: nil) {
                 let chat = UserAPI.sharedInstance.newMessage(jid, date: now, message: msg)
                 chat.incrementUnread()
@@ -691,4 +691,18 @@ extension XMPPMessage {
         return false
     }
     
+    func isGroupChatMessage() -> Bool {
+        if let type = self.attributeStringValueForName("type") {
+            return type == "groupchat"
+        }
+        return false
+        // return self.attributeForName("type").stringValue() == "groupchat"
+    }
+    
+    func isChatOrGroupMessageWithBody() -> Bool {
+        if self.isChatMessage() || self.isGroupChatMessage() {
+            return self.isMessageWithBody()
+        }
+        return false
+    }
 }
