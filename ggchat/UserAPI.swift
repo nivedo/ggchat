@@ -733,6 +733,13 @@ class UserAPI {
         }
     }
     
+    func addRosterUser(user: RosterUser) {
+        let jid = user.jid
+        if self.rosterMap[jid] == nil {
+            self.rosterMap[jid] = user
+        }
+    }
+    
     func logout() {
         XMPPMessageManager.sharedInstance.clearCoreData()
         UserAPICoreData.sharedInstance.deleteAllUsers()
@@ -824,18 +831,27 @@ class UserAPI {
             } else if type == "normal" {
                 if let xElement = element?.elementForName("x", xmlns: "http://jabber.org/protocol/muc#user"),
                     let inviteElement = xElement.elementForName("invite"),
-                    let from = element?.attributeStringValueForName("from"),
-                    let inviter = inviteElement.attributeStringValueForName("from"),
                     let reasonElement = inviteElement.elementForName("reason") {
                     
                     let reason = reasonElement.stringValue()
-                    let fromBare = UserAPI.stripResourceFromJID(from)
+                    var fromBare: String!
+                    var inviter: String!
+                    if let from = element?.attributeStringValueForName("from") {
+                        inviter = inviteElement.attributeStringValueForName("from")
+                        fromBare = UserAPI.stripResourceFromJID(from)
+                    } else if let _ = element?.attributeStringValueForName("to") {
+                        inviter = inviteElement.attributeStringValueForName("to")
+                        fromBare = UserAPI.sharedInstance.jidBareStr
+                    } else {
+                        return nil
+                    }
                     let id = "\(fromBare):\(inviter)"
                     let packet = MessagePacket(placeholderText: reason, encodedText: reason)
                     let fullMessage = packet.message(id,
                         senderId: fromBare,
                         date: date,
                         delegate: delegate)
+                    fullMessage.isInvitation = true
                     return fullMessage
                 }
             }

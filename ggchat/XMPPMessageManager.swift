@@ -619,8 +619,8 @@ extension XMPPManager {
     
 	func xmppStream(sender: XMPPStream!, didSendMessage message: XMPPMessage!) {
         print("didSendMessage")
-        XMPPMessageManager.sharedInstance.delegate?.didSendMessage(message)
         
+        XMPPMessageManager.sharedInstance.delegate?.didSendMessage(message)
 		if let completion = XMPPMessageManager.sharedInstance.didSendMessageCompletionBlock {
 			completion(stream: sender, message: message)
 		}
@@ -650,4 +650,20 @@ extension XMPPManager {
             }
         }
 	}
+}
+
+extension XMPPMessage {
+    
+    func isChatInvite() -> Bool {
+        if let type = self.attributeStringValueForName("type") {
+            if type == "normal" {
+                if let xElement = self.elementForName("x", xmlns: "http://jabber.org/protocol/muc#user"),
+                    let _ = xElement.elementForName("invite") {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
 }

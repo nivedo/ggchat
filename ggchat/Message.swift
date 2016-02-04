@@ -23,6 +23,7 @@ class Message {
     var media: MessageMediaData?
     var id: String
     var readCount: Int = 0
+    var isInvitation: Bool = false
     
     var displayText: String {
         get {

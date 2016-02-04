@@ -15,13 +15,14 @@ class ChatRoom {
     var user: RosterUser
     
     init(jid: String, xmppRoom: XMPPRoom, inviteList: [String], groupName: String, avatar: String) {
-        self.jid = jid
+        self.jid = UserAPI.stripResourceFromJID(jid)
         self.xmppRoom = xmppRoom
         self.inviteList = inviteList
         self.user = RosterUser(
-            jid: jid,
+            jid: self.jid,
             groupName: groupName,
             avatar: avatar)
+        UserAPI.sharedInstance.addRosterUser(self.user)
     }
 }
 
@@ -86,6 +87,7 @@ class XMPPRoomManager: NSObject,
         }
     }
     
+    /*
     func inviteUsersToRoom(roomID: String, usersJID: [String]) {
         if !XMPPManager.sharedInstance.isConnected() {
             return
@@ -96,6 +98,7 @@ class XMPPRoomManager: NSObject,
             }
         }
     }
+    */
     
     func xmppRoomDidCreate(sender: XMPPRoom) {
         print("xmppRoomDidCreate \(sender.myRoomJID.bare())")
@@ -112,6 +115,18 @@ class XMPPRoomManager: NSObject,
             self.delegate?.didJoinRoom(chatRoom)
             for jid in chatRoom.inviteList {
                 chatRoom.xmppRoom.inviteUser(XMPPJID.jidWithString(jid), withMessage: self.welcome)
+            }
+            if chatRoom.inviteList.count > 0 {
+                let now = NSDate()
+                let id = "\(roomJID):\(now.description)"
+                let msg = Message(
+                    id: id,
+                    senderId: UserAPI.sharedInstance.jidBareStr,
+                    senderDisplayName: UserAPI.sharedInstance.displayName,
+                    isOutgoing: true,
+                    date: now,
+                    attributedText: NSAttributedString(string: self.welcome))
+                UserAPI.sharedInstance.newMessage(roomJID, date: now, message: msg)
             }
         }
     }
