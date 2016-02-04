@@ -102,6 +102,10 @@ class XMPPRoomManager: NSObject,
     }
     
     func xmppRoomDidJoin(sender: XMPPRoom) {
+        UserAPI.sharedInstance.syncGroups({(success: Bool, errorMsg: String?) -> Void in
+            print("sync groups \(success)")
+        })
+        
         let roomJID = UserAPI.stripResourceFromJID(sender.myRoomJID.bare())
         print("xmppRoomDidJoin \(roomJID)")
         if let chatRoom = self.rooms[roomJID] {

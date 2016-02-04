@@ -180,7 +180,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             } else {
                 MBProgressHUD.hideHUDForView(self.view, animated: true)
                 let alert = UIAlertView()
-                alert.title = "Login Failed"
+                alert.title = "Oops, something went wrong, try again later."
                 alert.message = errorMsg // "Incorrect username or password"
                 alert.addButtonWithTitle("Retry")
                 alert.show()
@@ -192,7 +192,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         if (error != nil) {
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             let alert = UIAlertView()
-            alert.title = "Login Failed"
+            alert.title = "Unable to connect to GG Chat server."
             alert.message = error!
             alert.addButtonWithTitle("Retry")
             alert.show()

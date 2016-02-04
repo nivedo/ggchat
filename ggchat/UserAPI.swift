@@ -296,6 +296,10 @@ class UserAPI {
     class var creategroupUrl: String {
         return self.route("creategroup")
     }
+
+    class var syncgroupsUrl: String {
+        return self.route("syncgroups")
+    }
    
     class var loginUrl: String {
         return self.route("login")
@@ -376,7 +380,18 @@ class UserAPI {
     }
     
     ////////////////////////////////////////////////////////////////////
-  
+ 
+    func syncGroups(completion: ((Bool, String?) -> Void)?) {
+        if let token = self.authToken {
+            self.post(UserAPI.syncgroupsUrl,
+                authToken: token,
+                jsonBody: nil,
+                jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
+                    print(jsonDict)
+            })
+        }
+    }
+    
     /*
     func createGroup(groupname: String, users: Set<RosterUser>, avatar: String) {
         if let token = self.authToken {
