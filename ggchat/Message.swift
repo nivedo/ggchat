@@ -155,7 +155,6 @@ class Message {
                         if let ggbodyElement = element?.elementForName("ggbody") {
                             packet.encodedText = ggbodyElement.stringValue()
                             packet.variables = self.parseVariablesFromElement(ggbodyElement)
-                            // print("parsed \(variables.count) variables")
                         }
                         let fromBare = UserAPI.stripResourceFromJID(from)
                         
@@ -172,14 +171,10 @@ class Message {
                                 media: photoMedia)
                             return photoMessage
                         } else {
-                            // let encodeTime = NSDate()
                             let fullMessage = packet.message(id!,
                                 senderId: fromBare,
                                 date: date,
                                 delegate: delegate)
-                            // let elapsedTime1 = NSDate().timeIntervalSinceDate(startTime)
-                            // let elapsedTime2 = NSDate().timeIntervalSinceDate(encodeTime)
-                            // print("parse body: \(text), time1: \(elapsedTime1), time2: \(elapsedTime2)")
                             return fullMessage
                         }
                 }
