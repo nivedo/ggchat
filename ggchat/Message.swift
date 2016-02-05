@@ -9,7 +9,8 @@
 import Foundation
 
 class Message {
-    
+   
+    var fromId: String
     var senderId: String
     var senderDisplayName: String {
         get {
@@ -29,17 +30,18 @@ class Message {
     var isOutgoing: Bool
     var isComposing: Bool = false
     var isFailedToSend: Bool = false
+    var isInvitation: Bool = false
+    var isGroupChat: Bool = false
     var media: MessageMediaData?
     var id: String
     var readCount: Int = 0
-    var isInvitation: Bool = false
     
     var displayText: String {
         get {
             if let text = self.attributedText?.string {
                 return text
             } else {
-                if self.senderId == UserAPI.sharedInstance.jidBareStr {
+                if self.isOutgoing {
                     return "You sent a photo."
                 } else {
                     return "\(self.senderDisplayName) sent a photo."
@@ -50,6 +52,7 @@ class Message {
     
     init(id: String, senderId: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
         self.id = id
+        self.fromId = senderId
         self.senderId = senderId
         self.date = date
         self.attributedText = attributedText
@@ -61,6 +64,7 @@ class Message {
    
     init(id: String, senderId: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
         self.id = id
+        self.fromId = senderId
         self.senderId = senderId
         self.isOutgoing = isOutgoing
         self.date = date
