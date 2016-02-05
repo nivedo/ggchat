@@ -580,7 +580,7 @@ class GGMessageViewController:
             }
             if !update {
                 let date = NSDate()
-                if let message = UserAPI.parseMessageFromElement(message as DDXMLElement, date: date, delegate: self),
+                if let message = Message.parseMessageFromElement(message as DDXMLElement, date: date, delegate: self),
                     let recipient = self.recipient {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.appendMessage(recipient.jid, date: date, message: message)

@@ -313,7 +313,7 @@ public class XMPPMessageManager: NSObject {
                 
                 self.hasMoreMessagesToLoad = (results!.count == GGConfig.paginationLimit)
                 
-                if let message = UserAPI.parseMessageFromString(
+                if let message = Message.parseMessageFromString(
                     messageElement.messageStr,
                     date: messageElement.timestamp,
                     delegate: delegate) {
@@ -371,7 +371,7 @@ public class XMPPMessageManager: NSObject {
             
             var composingCount = 0
 			for messageElement in results! {
-                if let message = UserAPI.parseMessageFromString(
+                if let message = Message.parseMessageFromString(
                     messageElement.messageStr,
                     date: messageElement.timestamp,
                     delegate: delegate) {
@@ -383,7 +383,7 @@ public class XMPPMessageManager: NSObject {
                     }
                     messages.append(message)
                     self.archivedMessageIds.insert(message.id)
-                } else if let readReceipt = ReadReceipt.parseFromString(messageElement.messageStr) {
+                } else if let readReceipt = ReadReceipt.parseReadReceiptFromString(messageElement.messageStr) {
                     // print("Loaded archived read receipt: \(readReceipt.ids.count)")
                     receipts.append(readReceipt)
                 } else {
@@ -654,11 +654,11 @@ extension XMPPManager {
         let jid = UserAPI.stripResourceFromJID(message.from().bare())
         print("didReceiveMessage from \(jid) --> \(message)")
         if message.isChatOrGroupMessageWithBody() {
-            if let msg = UserAPI.parseMessageFromElement(message as DDXMLElement, date: now, delegate: nil) {
+            if let msg = Message.parseMessageFromElement(message as DDXMLElement, date: now, delegate: nil) {
                 let chat = UserAPI.sharedInstance.newMessage(jid, date: now, message: msg)
                 chat.incrementUnread()
                 XMPPMessageManager.sharedInstance.delegate?.receiveMessage(jid, message: msg)
-            } else if let readReceipt = ReadReceipt.parseFromElement(message as DDXMLElement) {
+            } else if let readReceipt = ReadReceipt.parseReadReceiptFromElement(message as DDXMLElement) {
                 // print("Received read receipts from \(readReceipt.from)")
                 XMPPMessageManager.sharedInstance.delegate?.receiveReadReceipt(jid, readReceipt: readReceipt)
             } else {

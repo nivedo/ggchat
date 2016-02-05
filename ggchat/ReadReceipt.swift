@@ -19,7 +19,7 @@ class ReadReceipt {
         self.ids = ids
     }
     
-    class func parseFromString(xmlString: String) -> ReadReceipt? {
+    class func parseReadReceiptFromString(xmlString: String) -> ReadReceipt? {
         var element: DDXMLElement?
         do {
             element = try DDXMLElement(XMLString: xmlString)
@@ -27,10 +27,10 @@ class ReadReceipt {
             element = nil
         }
         
-        return self.parseFromElement(element)
+        return self.parseReadReceiptFromElement(element)
     }
     
-    class func parseFromElement(element: DDXMLElement?) -> ReadReceipt? {
+    class func parseReadReceiptFromElement(element: DDXMLElement?) -> ReadReceipt? {
         if let bodyElement = element?.elementForName("body"),
             let from = element?.attributeStringValueForName("from"),
             let to = element?.attributeStringValueForName("to"),
