@@ -46,6 +46,7 @@
 - (void)addThread:(NSString *)thread;
 
 - (BOOL)isChatMessage;
+- (BOOL)isGroupChatMessage;
 - (BOOL)isChatMessageWithBody;
 - (BOOL)isErrorMessage;
 - (BOOL)isMessageWithBody;
