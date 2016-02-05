@@ -11,7 +11,16 @@ import Foundation
 class Message {
     
     var senderId: String
-    var senderDisplayName: String
+    var senderDisplayName: String {
+        get {
+            if self.isOutgoing {
+                return UserAPI.sharedInstance.displayName
+            } else {
+                return UserAPI.sharedInstance.getDisplayName(self.senderId)
+            }
+        }
+    }
+    
     var date: NSDate
     private var text: String?
     var rawText: String?
@@ -39,10 +48,9 @@ class Message {
         }
     }
     
-    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
+    init(id: String, senderId: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
         self.id = id
         self.senderId = senderId
-        self.senderDisplayName = senderDisplayName
         self.date = date
         self.attributedText = attributedText
         self.text = self.attributedText!.string
@@ -51,10 +59,9 @@ class Message {
         self.isOutgoing = isOutgoing
     }
    
-    init(id: String, senderId: String, senderDisplayName: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
+    init(id: String, senderId: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
         self.id = id
         self.senderId = senderId
-        self.senderDisplayName = senderDisplayName
         self.isOutgoing = isOutgoing
         self.date = date
         self.isMediaMessage = true

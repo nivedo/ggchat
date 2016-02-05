@@ -72,7 +72,6 @@ class MessagePacket {
             let message = Message(
                 id: id,
                 senderId: senderId,
-                senderDisplayName: UserAPI.sharedInstance.getDisplayName(senderId),
                 isOutgoing: isOutgoing,
                 date: date,
                 media: wikiMedia,
@@ -82,7 +81,6 @@ class MessagePacket {
         let fullMessage = Message(
             id: id,
             senderId: senderId,
-            senderDisplayName: UserAPI.sharedInstance.getDisplayName(senderId),
             isOutgoing: isOutgoing,
             date: date,
             attributedText: attributedText)
@@ -223,8 +221,6 @@ class MessageViewController: UIViewController,
     @IBOutlet weak var toolbarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottomLayoutGuide: NSLayoutConstraint!
     
-    var senderId: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
-    var senderDisplayName: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
     let incomingBubble = MessageBubbleImageFactory().incomingMessagesBubbleImageWithColor(
         UIColor(red: 10/255, green: 180/255, blue: 230/255, alpha: 1.0))
     let outgoingBubble = MessageBubbleImageFactory().outgoingMessagesBubbleImageWithColor(
@@ -514,7 +510,7 @@ class MessageViewController: UIViewController,
         // return nil
         let message: Message = self.messages[indexPath.item]
     
-        if (message.senderId == self.senderId) {
+        if (message.isOutgoing) {
             return self.outgoingBubbleImage
         }
         
@@ -544,7 +540,7 @@ class MessageViewController: UIViewController,
         *  Override the defaults in `viewDidLoad`
         */
         let message: Message = self.messages[indexPath.item]
-        if (message.senderId == self.senderId) {
+        if (message.isOutgoing) {
             return nil
         }
 
@@ -580,7 +576,7 @@ class MessageViewController: UIViewController,
         /**
         *  iOS7-style sender name labels
         */
-        if (message.senderId == self.senderId) {
+        if (message.isOutgoing) {
             return nil
         }
         
@@ -690,7 +686,6 @@ class MessageViewController: UIViewController,
         button: UIButton,
         withMessagePacket packet: MessagePacket,
         senderId: String,
-        senderDisplayName: String,
         date: NSDate) {
         assert(false, "Error! required method not implemented in subclass. Need to implement didPressSendButton")
     }
@@ -823,7 +818,7 @@ class MessageViewController: UIViewController,
         let messageItem: Message = self.messageCollectionView.messageDelegate.collectionView(collectionView, messageDataForItemAtIndexPath:indexPath)
         let messageSenderId: String = messageItem.senderId
 
-        let isOutgoingMessage: Bool = messageSenderId == self.senderId
+        let isOutgoingMessage: Bool = messageItem.isOutgoing
         let isMediaMessage: Bool = messageItem.isMediaMessage
 
         var cellIdentifier: String
@@ -1109,20 +1104,8 @@ class MessageViewController: UIViewController,
         print("MVC::didPressRightBarButton")
         self.didPressSendButton(sender,
             withMessagePacket: self.gg_currentlyComposedMessageText(),
-            senderId: self.senderId,
-            senderDisplayName: self.senderDisplayName,
+            senderId: UserAPI.sharedInstance.jidBareStr,
             date: NSDate())
-        /*
-        if (toolbar.sendButtonOnRight) {
-            self.didPressSendButton(sender,
-                withMessagePacket: self.gg_currentlyComposedMessageText(),
-                senderId: self.senderId,
-                senderDisplayName: self.senderDisplayName,
-                date: NSDate())
-        } else {
-            self.didPressAccessoryButton(sender)
-        }
-        */
     }
 
     func gg_currentlyComposedMessageText() -> MessagePacket {
@@ -1730,7 +1713,7 @@ class MessageViewController: UIViewController,
         *  iOS7-style sender name labels
         */
         let currentMessage: Message = self.messages[indexPath.item]
-        if (currentMessage.senderId == self.senderId) {
+        if (currentMessage.isOutgoing) {
             return 0.0
         }
         
@@ -1846,8 +1829,7 @@ class MessageViewController: UIViewController,
                 delegate: self)
             let message: Message = Message(
                 id: XMPPManager.sharedInstance.stream.generateUUID(),
-                senderId: self.senderId,
-                senderDisplayName: self.senderDisplayName,
+                senderId: UserAPI.sharedInstance.jidBareStr,
                 isOutgoing: true,
                 date: NSDate(),
                 media: item)

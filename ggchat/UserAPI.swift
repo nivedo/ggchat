@@ -813,7 +813,6 @@ class UserAPI {
                         let photoMessage = Message(
                             id: id!,
                             senderId: fromBare,
-                            senderDisplayName: UserAPI.sharedInstance.getDisplayName(fromBare),
                             isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
                             date: date,
                             media: photoMedia)

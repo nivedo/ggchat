@@ -122,7 +122,6 @@ class XMPPRoomManager: NSObject,
                 let msg = Message(
                     id: id,
                     senderId: UserAPI.sharedInstance.jidBareStr,
-                    senderDisplayName: UserAPI.sharedInstance.displayName,
                     isOutgoing: true,
                     date: now,
                     attributedText: NSAttributedString(string: self.welcome))

@@ -37,26 +37,13 @@ class GGMessageViewController:
     // Initialization
     
     override func viewDidLoad() {
-        // Do any additional setup after loading the view.
-        // print("GGMessageViewController::viewDidLoad()")
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        self.senderId = UserAPI.sharedInstance.jidBareStr
-        self.senderDisplayName = UserAPI.sharedInstance.displayName
-        
-        // self.messages.appendContentsOf(GGModelData.sharedInstance.messages)
         
         self.showLoadEarlierMessagesHeader = true
         XMPPMessageManager.sharedInstance.delegate = self
         XMPPManager.sharedInstance.delegate = self
         
         self.photoPicker.delegate = self
-        
-        // GGWiki.sharedInstance.delegate = self
-        // self.loadArchivedMessagesFromCoreData(false, animated: false)
-        // self.loadLastActivity(true)
-        
         self.messageCollectionView.reloadData()
    
         if SettingManager.sharedInstance.tappableMessageText {
@@ -154,8 +141,7 @@ class GGMessageViewController:
                 let id = XMPPManager.sharedInstance.stream.generateUUID()
                 let message: Message = Message(
                     id: id,
-                    senderId: senderId,
-                    senderDisplayName: senderDisplayName,
+                    senderId: UserAPI.sharedInstance.jidBareStr,
                     isOutgoing: true,
                     date: now,
                     media: photoMedia)
@@ -320,7 +306,6 @@ class GGMessageViewController:
         button: UIButton,
         withMessagePacket packet: MessagePacket,
         senderId: String,
-        senderDisplayName: String,
         date: NSDate) {
             
         if let recipient = self.recipient {
