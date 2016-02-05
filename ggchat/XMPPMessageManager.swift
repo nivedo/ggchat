@@ -655,7 +655,8 @@ extension XMPPManager {
         // let jid = UserAPI.stripResourceFromJID(message.from().bare())
         let (jid, senderId) = Message.stripJID(message.fromStr(), type: message.type())
         print("didReceiveMessage type: \(message.type()), from: \(jid), sender: \(senderId) --> \(message)")
-        if message.isGroupChatMessage() && UserAPI.sharedInstance.isOutgoingJID(senderId) {
+        // if message.isGroupChatMessage() && UserAPI.sharedInstance.isOutgoingJID(senderId) {
+        if Message.isGroupChatEchoMessage(message) {
             // Ignore group chat message sent by self
             return
         }

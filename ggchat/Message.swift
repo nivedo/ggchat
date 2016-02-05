@@ -149,6 +149,24 @@ class Message {
         return variablesArray
     }
     
+    class func isGroupChatEchoMessage(element: DDXMLElement?) -> Bool {
+        if let type = element?.attributeStringValueForName("type"),
+            let from = element?.attributeStringValueForName("from") {
+            if type == "groupchat" {
+                let (_, senderId) = self.stripJID(from, type: type)
+                if let to = element?.attributeStringValueForName("to") {
+                    let toBare = UserAPI.stripResourceFromJID(to)
+                    let jidBare = UserAPI.sharedInstance.jidBareStr
+                    if (toBare == jidBare) && (senderId == jidBare) {
+                        // Ignore group message sent by self
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
     class func parseMessageFromElement(element: DDXMLElement?, date: NSDate, delegate: MessageMediaDelegate?) -> Message? {
         if let type = element?.attributeStringValueForName("type") {
             if type == "chat" || type == "groupchat" {
