@@ -66,6 +66,7 @@ public class XMPPMessageManager: NSObject {
         to receiver: String,
         date: NSDate,
         isOutgoing: Bool,
+        isGroup: Bool,
         completionHandler completion: MessageCompletionHandler?) {
         if (messagePacket.encodedText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0) {
             // let messageId = XMPPManager.sharedInstance.stream.generateUUID()
@@ -73,7 +74,7 @@ public class XMPPMessageManager: NSObject {
             let ggbody = DDXMLElement(name: "ggbody", stringValue: messagePacket.encodedText)
             let completeMessage = DDXMLElement(name: "message")
     
-            let type = receiver.rangeOfString("conference") != nil ? "groupchat" : "chat"
+            let type = isGroup ? "groupchat" : "chat"
     		completeMessage.addAttributeWithName("id", stringValue: messageId)
     		completeMessage.addAttributeWithName("type", stringValue: type)
             completeMessage.addAttributeWithName("content_type", stringValue: "text")

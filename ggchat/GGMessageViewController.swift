@@ -339,6 +339,7 @@ class GGMessageViewController:
                 to: recipient.jid,
                 date: date,
                 isOutgoing: message.isOutgoing,
+                isGroup: recipient.isGroup,
                 completionHandler: nil)
         
             self.finishSendingMessageAnimated(true)
