@@ -327,10 +327,6 @@ public class XMPPMessageManager: NSObject {
                     */
                     messages.append(message)
                     self.archivedMessageIds.insert(message.id)
-                /*
-                } else if let readReceipt = UserAPI.parseReadReceiptFromString(messageElement.messageStr) {
-                    receipts.append(readReceipt)
-                */
                 } else {
                     print("Unable to parse \(messageElement.messageStr)")
                 }
@@ -387,7 +383,7 @@ public class XMPPMessageManager: NSObject {
                     }
                     messages.append(message)
                     self.archivedMessageIds.insert(message.id)
-                } else if let readReceipt = UserAPI.parseReadReceiptFromString(messageElement.messageStr) {
+                } else if let readReceipt = ReadReceipt.parseFromString(messageElement.messageStr) {
                     // print("Loaded archived read receipt: \(readReceipt.ids.count)")
                     receipts.append(readReceipt)
                 } else {
@@ -662,7 +658,7 @@ extension XMPPManager {
                 let chat = UserAPI.sharedInstance.newMessage(jid, date: now, message: msg)
                 chat.incrementUnread()
                 XMPPMessageManager.sharedInstance.delegate?.receiveMessage(jid, message: msg)
-            } else if let readReceipt = UserAPI.parseReadReceiptFromElement(message as DDXMLElement) {
+            } else if let readReceipt = ReadReceipt.parseFromElement(message as DDXMLElement) {
                 // print("Received read receipts from \(readReceipt.from)")
                 XMPPMessageManager.sharedInstance.delegate?.receiveReadReceipt(jid, readReceipt: readReceipt)
             } else {

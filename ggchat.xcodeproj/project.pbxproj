@@ -276,6 +276,7 @@
 		D4C8FE3B1C08275200992801 /* XMPPMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */; };
 		D4C8FE3D1C08421100992801 /* XMPPRosterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */; };
 		D4C8FE3F1C08522D00992801 /* XMPPPresenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */; };
+		D4D7EAAA1C6434EB000A9099 /* ReadReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7EAA91C6434EB000A9099 /* ReadReceipt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -729,6 +730,7 @@
 		D4C8FE3A1C08275200992801 /* XMPPMessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPMessageManager.swift; sourceTree = "<group>"; };
 		D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPRosterManager.swift; sourceTree = "<group>"; };
 		D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPPresenceManager.swift; sourceTree = "<group>"; };
+		D4D7EAA91C6434EB000A9099 /* ReadReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadReceipt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1149,6 +1151,7 @@
 		D4683E831BF048CC00E02886 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D4D7EAA91C6434EB000A9099 /* ReadReceipt.swift */,
 				D4683E851BF0494B00E02886 /* Message.swift */,
 				D4683E891BF04C6C00E02886 /* MessageMediaData.swift */,
 				D478409E1BF067D300441A2D /* MessageBubbleImage.swift */,
@@ -2187,6 +2190,7 @@
 				D4C8FE061C06AA2300992801 /* XMPPvCardTempModule.m in Sources */,
 				D4C8FE0A1C06AA2300992801 /* XMPPIQ+XEP_0060.m in Sources */,
 				D43B29131C06896C00B3F367 /* NSXMLElement+XMPP.m in Sources */,
+				D4D7EAAA1C6434EB000A9099 /* ReadReceipt.swift in Sources */,
 				D45FBD671C05478400E79B4E /* NewMessageTableViewController.swift in Sources */,
 				D4A9F5231BFBC22700FA4444 /* MessageTimestampFormatter.swift in Sources */,
 				D43B28C61C06894100B3F367 /* DDAbstractDatabaseLogger.m in Sources */,
