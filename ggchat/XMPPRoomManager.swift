@@ -121,6 +121,7 @@ class XMPPRoomManager: NSObject,
                 let id = "\(roomJID):\(now.description)"
                 let msg = Message(
                     id: id,
+                    fromId: roomJID,
                     senderId: UserAPI.sharedInstance.jidBareStr,
                     isOutgoing: true,
                     date: now,

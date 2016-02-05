@@ -31,7 +31,6 @@ class Message {
     var isComposing: Bool = false
     var isFailedToSend: Bool = false
     var isInvitation: Bool = false
-    var isGroupChat: Bool = false
     var media: MessageMediaData?
     var id: String
     var readCount: Int = 0
@@ -50,9 +49,9 @@ class Message {
         }
     }
     
-    init(id: String, senderId: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
+    init(id: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
         self.id = id
-        self.fromId = senderId
+        self.fromId = fromId
         self.senderId = senderId
         self.date = date
         self.attributedText = attributedText
@@ -62,9 +61,9 @@ class Message {
         self.isOutgoing = isOutgoing
     }
    
-    init(id: String, senderId: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
+    init(id: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
         self.id = id
-        self.fromId = senderId
+        self.fromId = fromId
         self.senderId = senderId
         self.isOutgoing = isOutgoing
         self.date = date
@@ -104,6 +103,19 @@ class Message {
     }
     
     ////////////////////////////////////////////////////////////////////////
+    
+    class func stripJID(jid: String, type: String) -> (String, String) {
+        let tokens = jid.componentsSeparatedByString("/")
+        if type == "groupchat" {
+            if tokens.count >= 2 {
+                return (tokens[0], tokens[1])
+            } else {
+                return (tokens[0], tokens[0])
+            }
+        } else {
+            return (tokens[0], tokens[0])
+        }
+    }
     
     class func parseMessageFromString(xmlString: String, timestamp: NSTimeInterval, delegate: MessageMediaDelegate?) -> Message? {
         let date: NSDate = NSDate(timeIntervalSince1970: timestamp)
@@ -156,7 +168,7 @@ class Message {
                             packet.encodedText = ggbodyElement.stringValue()
                             packet.variables = self.parseVariablesFromElement(ggbodyElement)
                         }
-                        let fromBare = UserAPI.stripResourceFromJID(from)
+                        let (fromId, senderId) = self.stripJID(from, type: type)
                         
                         if let photo = bodyElement.elementForName("photo") {
                             let originalKey = photo.elementForName("originalKey")!.stringValue()
@@ -165,14 +177,16 @@ class Message {
                             let photoMedia = PhotoMediaItem(thumbnailKey: thumbnailKey, originalKey: originalKey, delegate: delegate)
                             let photoMessage = Message(
                                 id: id!,
-                                senderId: fromBare,
-                                isOutgoing: UserAPI.sharedInstance.isOutgoingJID(fromBare),
+                                fromId: fromId,
+                                senderId: senderId,
+                                isOutgoing: UserAPI.sharedInstance.isOutgoingJID(senderId),
                                 date: date,
                                 media: photoMedia)
                             return photoMessage
                         } else {
                             let fullMessage = packet.message(id!,
-                                senderId: fromBare,
+                                fromId: fromId,
+                                senderId: senderId,
                                 date: date,
                                 delegate: delegate)
                             return fullMessage
@@ -184,21 +198,22 @@ class Message {
                     let reasonElement = inviteElement.elementForName("reason") {
                         
                         let reason = reasonElement.stringValue()
-                        var fromBare: String!
-                        var inviter: String!
+                        var fromId: String!
+                        var senderId: String!
                         if let from = element?.attributeStringValueForName("from") {
-                            inviter = inviteElement.attributeStringValueForName("from")
-                            fromBare = UserAPI.stripResourceFromJID(from)
+                            senderId = inviteElement.attributeStringValueForName("from")
+                            fromId = UserAPI.stripResourceFromJID(from)
                         } else if let _ = element?.attributeStringValueForName("to") {
-                            inviter = inviteElement.attributeStringValueForName("to")
-                            fromBare = UserAPI.sharedInstance.jidBareStr
+                            senderId = inviteElement.attributeStringValueForName("to")
+                            fromId = UserAPI.sharedInstance.jidBareStr
                         } else {
                             return nil
                         }
-                        let id = "\(fromBare):\(inviter)"
+                        let id = "\(fromId):\(senderId)"
                         let packet = MessagePacket(placeholderText: reason, encodedText: reason)
                         let fullMessage = packet.message(id,
-                            senderId: fromBare,
+                            fromId: fromId,
+                            senderId: senderId,
                             date: date,
                             delegate: delegate)
                         fullMessage.isInvitation = true
@@ -207,5 +222,151 @@ class Message {
             }
         }
         return nil
+    }
+}
+
+class MessageVariable {
+    var variableName: String
+    var displayText: String
+    var assetId: String
+    var assetURL: String
+    var placeholderURL: String?
+    
+    init(variableName: String, displayText: String, assetId: String, assetURL: String, placeholderURL: String?) {
+        self.variableName = variableName
+        self.displayText = displayText
+        self.assetId = assetId
+        self.assetURL = assetURL
+        self.placeholderURL = placeholderURL
+    }
+}
+
+class MessagePacket {
+    static let delimiter = "__ggchat::link__"
+    
+    var placeholderText: String
+    var encodedText: String
+    var variables = [MessageVariable]()
+    
+    init(placeholderText: String, encodedText: String) {
+        self.placeholderText = placeholderText
+        self.encodedText = encodedText
+    }
+    
+    var description: String {
+        get {
+            return self.encodedText
+        }
+    }
+    
+    var isSingleEncodedAsset: Bool {
+        get {
+            if self.variables.count == 1 {
+                return self.encodedText == MessagePacket.delimiter
+            }
+            return false
+        }
+    }
+    
+    func getSingleEncodedAsset() -> GGWikiAsset? {
+        // print("isSingleEncodedAsset: \(self.encodedText) --> \(self.isSingleEncodedAsset)")
+        if self.isSingleEncodedAsset {
+            let v = self.variables[0]
+            return GGWiki.sharedInstance.addAsset(v.assetId, url: v.assetURL, displayName: v.displayText, placeholderURL: v.placeholderURL)
+        }
+        return nil
+    }
+    
+    func message(id: String,
+        fromId: String,
+        senderId: String,
+        date: NSDate,
+        delegate: MessageMediaDelegate?) -> Message {
+            let isOutgoing = UserAPI.sharedInstance.isOutgoingJID(senderId)
+            
+            let attributedText = self.tappableText(isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
+            if let asset = self.getSingleEncodedAsset() {
+                let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
+                let message = Message(
+                    id: id,
+                    fromId: fromId,
+                    senderId: senderId,
+                    isOutgoing: isOutgoing,
+                    date: date,
+                    media: wikiMedia,
+                    attributedText: attributedText)
+                return message
+            }
+            let fullMessage = Message(
+                id: id,
+                fromId: fromId,
+                senderId: senderId,
+                isOutgoing: isOutgoing,
+                date: date,
+                attributedText: attributedText)
+            
+            return fullMessage
+    }
+    
+    func tappableText(textColor: UIColor) -> NSAttributedString {
+        let paragraph = NSMutableAttributedString(string: "")
+        let tokens = self.encodedText.componentsSeparatedByString(MessagePacket.delimiter)
+        if tokens.count == self.variables.count+1 {
+            for (i, token) in tokens.enumerate() {
+                if token.length > 0 {
+                    let str = token
+                    let attr: [String : NSObject] = [
+                        NSFontAttributeName : GGConfig.messageBubbleFont,
+                        NSForegroundColorAttributeName : textColor
+                    ]
+                    let attributedString = NSAttributedString(
+                        string: str,
+                        attributes: attr)
+                    paragraph.appendAttributedString(attributedString)
+                }
+                if i < self.variables.count {
+                    let variable = self.variables[i]
+                    var attr: [String : NSObject] = [
+                        NSFontAttributeName : GGConfig.messageBubbleFont,
+                        NSForegroundColorAttributeName : textColor
+                    ]
+                    attr[TappableText.tapAttributeKey] = true
+                    attr[TappableText.tapAssetId] = variable.assetId
+                    attr[NSForegroundColorAttributeName] = UIColor.gg_highlightedColor()
+                    
+                    GGWiki.sharedInstance.addAsset(
+                        variable.assetId,
+                        url: variable.assetURL,
+                        displayName: variable.displayText,
+                        placeholderURL: variable.placeholderURL)
+                    let attributedString = NSAttributedString(
+                        string: variable.displayText,
+                        attributes: attr)
+                    paragraph.appendAttributedString(attributedString)
+                }
+            }
+        } else {
+            let str = self.placeholderText
+            let attr: [String : NSObject] = [
+                NSFontAttributeName : GGConfig.messageBubbleFont,
+                NSForegroundColorAttributeName : textColor
+            ]
+            let attributedString = NSAttributedString(
+                string: str,
+                attributes: attr)
+            paragraph.appendAttributedString(attributedString)
+        }
+        
+        return paragraph.copy() as! NSAttributedString
+    }
+    
+    func addVariable(variableName: String, displayText: String, assetId: String, assetURL: String, placeholderURL: String?) {
+        self.variables.append(MessageVariable(
+            variableName: variableName,
+            displayText: displayText,
+            assetId: assetId,
+            assetURL: assetURL,
+            placeholderURL: placeholderURL
+            ))
     }
 }

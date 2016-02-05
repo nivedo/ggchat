@@ -29,6 +29,7 @@ class RosterUser: Hashable {
     var avatar: String
     var avatarImage: UIImage?
     var isBuddy: Bool = false
+    var isGroup: Bool = false
    
     var hashValue: Int {
         get {
@@ -40,6 +41,7 @@ class RosterUser: Hashable {
         self.jid = UserAPI.stripResourceFromJID(jid)
         self.nickname = groupName
         self.avatar = avatar
+        self.isGroup = true
     }
     
     init(profile: [String: AnyObject],

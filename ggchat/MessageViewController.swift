@@ -8,149 +8,6 @@
 
 import UIKit
 
-class MessageVariable {
-    var variableName: String
-    var displayText: String
-    var assetId: String
-    var assetURL: String
-    var placeholderURL: String?
-    
-    init(variableName: String, displayText: String, assetId: String, assetURL: String, placeholderURL: String?) {
-        self.variableName = variableName
-        self.displayText = displayText
-        self.assetId = assetId
-        self.assetURL = assetURL
-        self.placeholderURL = placeholderURL
-    }
-}
-
-class MessagePacket {
-    static let delimiter = "__ggchat::link__"
-    
-    var placeholderText: String
-    var encodedText: String
-    var variables = [MessageVariable]()
-    
-    init(placeholderText: String, encodedText: String) {
-        self.placeholderText = placeholderText
-        self.encodedText = encodedText
-    }
-    
-    var description: String {
-        get {
-            return self.encodedText
-        }
-    }
-    
-    var isSingleEncodedAsset: Bool {
-        get {
-            if self.variables.count == 1 {
-                return self.encodedText == MessagePacket.delimiter
-            }
-            return false
-        }
-    }
-    
-    func getSingleEncodedAsset() -> GGWikiAsset? {
-        // print("isSingleEncodedAsset: \(self.encodedText) --> \(self.isSingleEncodedAsset)")
-        if self.isSingleEncodedAsset {
-            let v = self.variables[0]
-            return GGWiki.sharedInstance.addAsset(v.assetId, url: v.assetURL, displayName: v.displayText, placeholderURL: v.placeholderURL)
-        }
-        return nil
-    }
-    
-    func message(id: String,
-        senderId: String,
-        date: NSDate,
-        delegate: MessageMediaDelegate?) -> Message {
-        let isOutgoing = UserAPI.sharedInstance.isOutgoingJID(senderId)
-            
-        let attributedText = self.tappableText(isOutgoing ? GGConfig.outgoingTextColor : GGConfig.incomingTextColor)
-        if let asset = self.getSingleEncodedAsset() {
-            let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
-            let message = Message(
-                id: id,
-                senderId: senderId,
-                isOutgoing: isOutgoing,
-                date: date,
-                media: wikiMedia,
-                attributedText: attributedText)
-            return message
-        }
-        let fullMessage = Message(
-            id: id,
-            senderId: senderId,
-            isOutgoing: isOutgoing,
-            date: date,
-            attributedText: attributedText)
-        
-        return fullMessage
-    }
-    
-    func tappableText(textColor: UIColor) -> NSAttributedString {
-        let paragraph = NSMutableAttributedString(string: "")
-        let tokens = self.encodedText.componentsSeparatedByString(MessagePacket.delimiter)
-        if tokens.count == self.variables.count+1 {
-            for (i, token) in tokens.enumerate() {
-                if token.length > 0 {
-                    let str = token
-                    let attr: [String : NSObject] = [
-                        NSFontAttributeName : GGConfig.messageBubbleFont,
-                        NSForegroundColorAttributeName : textColor
-                    ]
-                    let attributedString = NSAttributedString(
-                        string: str,
-                        attributes: attr)
-                    paragraph.appendAttributedString(attributedString)
-                }
-                if i < self.variables.count {
-                    let variable = self.variables[i]
-                    var attr: [String : NSObject] = [
-                        NSFontAttributeName : GGConfig.messageBubbleFont,
-                        NSForegroundColorAttributeName : textColor
-                    ]
-                    attr[TappableText.tapAttributeKey] = true
-                    attr[TappableText.tapAssetId] = variable.assetId
-                    attr[NSForegroundColorAttributeName] = UIColor.gg_highlightedColor()
-                        
-                    GGWiki.sharedInstance.addAsset(
-                        variable.assetId,
-                        url: variable.assetURL,
-                        displayName: variable.displayText,
-                        placeholderURL: variable.placeholderURL)
-                    let attributedString = NSAttributedString(
-                        string: variable.displayText,
-                        attributes: attr)
-                    paragraph.appendAttributedString(attributedString)
-                }
-            }
-        } else {
-            let str = self.placeholderText
-            let attr: [String : NSObject] = [
-                NSFontAttributeName : GGConfig.messageBubbleFont,
-                NSForegroundColorAttributeName : textColor
-            ]
-            let attributedString = NSAttributedString(
-                string: str,
-                attributes: attr)
-            paragraph.appendAttributedString(attributedString)
-        }
-        
-        return paragraph.copy() as! NSAttributedString
-    }
-    
-    func addVariable(variableName: String, displayText: String, assetId: String, assetURL: String, placeholderURL: String?) {
-        self.variables.append(MessageVariable(
-            variableName: variableName,
-            displayText: displayText,
-            assetId: assetId,
-            assetURL: assetURL,
-            placeholderURL: placeholderURL
-            ))
-    }
-}
-
 class MessageViewController: UIViewController,
     UICollectionViewDataSource,
     UICollectionViewDelegateFlowLayout,
@@ -685,7 +542,6 @@ class MessageViewController: UIViewController,
     func didPressSendButton(
         button: UIButton,
         withMessagePacket packet: MessagePacket,
-        senderId: String,
         date: NSDate) {
         assert(false, "Error! required method not implemented in subclass. Need to implement didPressSendButton")
     }
@@ -1104,7 +960,6 @@ class MessageViewController: UIViewController,
         print("MVC::didPressRightBarButton")
         self.didPressSendButton(sender,
             withMessagePacket: self.gg_currentlyComposedMessageText(),
-            senderId: UserAPI.sharedInstance.jidBareStr,
             date: NSDate())
     }
 
@@ -1822,22 +1677,7 @@ class MessageViewController: UIViewController,
     
     func composerTextView(textView: MessageComposerTextView,
         shouldPasteWithSender sender: AnyObject?) -> Bool {
-        if ((UIPasteboard.generalPasteboard().image) != nil) {
-            // If there's an image in the pasteboard, construct a media item with that image and `send` it.
-            let item: PhotoMediaItem = PhotoMediaItem(
-                image: UIPasteboard.generalPasteboard().image!,
-                delegate: self)
-            let message: Message = Message(
-                id: XMPPManager.sharedInstance.stream.generateUUID(),
-                senderId: UserAPI.sharedInstance.jidBareStr,
-                isOutgoing: true,
-                date: NSDate(),
-                media: item)
-            self.messages.append(message)
-            self.finishSendingMessage()
-            return false
-        }
-        return true
+        assert(false, "Error! required method not implemented in subclass. Need to implement composerTextView")
     }
     
     func autocompleteSelect(

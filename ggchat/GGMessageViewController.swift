@@ -33,6 +33,17 @@ class GGMessageViewController:
     var recipientDetails: UIView?
     var photoPicker = UIImagePickerController()
     var imageModelViewController: ImageModalViewController?
+    
+    var fromId: String {
+        get {
+            if let recipient = self.recipient {
+                if recipient.isGroup {
+                    return recipient.jid
+                }
+            }
+            return UserAPI.sharedInstance.jidBareStr
+        }
+    }
    
     // Initialization
     
@@ -141,6 +152,7 @@ class GGMessageViewController:
                 let id = XMPPManager.sharedInstance.stream.generateUUID()
                 let message: Message = Message(
                     id: id,
+                    fromId: self.fromId,
                     senderId: UserAPI.sharedInstance.jidBareStr,
                     isOutgoing: true,
                     date: now,
@@ -305,7 +317,6 @@ class GGMessageViewController:
     override func didPressSendButton(
         button: UIButton,
         withMessagePacket packet: MessagePacket,
-        senderId: String,
         date: NSDate) {
             
         if let recipient = self.recipient {
@@ -313,7 +324,11 @@ class GGMessageViewController:
 
             // let text = packet.encodedText
             let id = XMPPManager.sharedInstance.stream.generateUUID()
-            let message = packet.message(id, senderId: senderId, date: date, delegate: self)
+            let message = packet.message(id,
+                fromId: self.fromId,
+                senderId: UserAPI.sharedInstance.jidBareStr,
+                date: date,
+                delegate: self)
            
             message.isComposing = true
             self.appendMessage(recipient.jid, date: date, message: message)
@@ -329,7 +344,28 @@ class GGMessageViewController:
             self.finishSendingMessageAnimated(true)
         }
     }
-
+    
+    override func composerTextView(textView: MessageComposerTextView,
+        shouldPasteWithSender sender: AnyObject?) -> Bool {
+        if ((UIPasteboard.generalPasteboard().image) != nil) {
+            // If there's an image in the pasteboard, construct a media item with that image and `send` it.
+            let item: PhotoMediaItem = PhotoMediaItem(
+                image: UIPasteboard.generalPasteboard().image!,
+                delegate: self)
+            let message: Message = Message(
+                id: XMPPManager.sharedInstance.stream.generateUUID(),
+                fromId: self.fromId,
+                senderId: UserAPI.sharedInstance.jidBareStr,
+                isOutgoing: true,
+                date: NSDate(),
+                media: item)
+            self.messages.append(message)
+            self.finishSendingMessage()
+            return false
+        }
+        return true
+    }
+    
     override func didPressEllipsisButton(sender: UIButton) {
         // print("didPressEllipsisButton")
         let alert: UIAlertController = UIAlertController(
