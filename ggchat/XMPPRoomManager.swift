@@ -123,7 +123,6 @@ class XMPPRoomManager: NSObject,
                         toId: jid,
                         fromId: roomJID,
                         senderId: UserAPI.sharedInstance.jidBareStr,
-                        isOutgoing: true,
                         date: now,
                         attributedText: NSAttributedString(string: self.welcome))
                     UserAPI.sharedInstance.newMessage(roomJID, date: now, message: msg)

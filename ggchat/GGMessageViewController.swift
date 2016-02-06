@@ -155,7 +155,6 @@ class GGMessageViewController:
                     toId: recipient.jid,
                     fromId: self.fromId,
                     senderId: UserAPI.sharedInstance.jidBareStr,
-                    isOutgoing: true,
                     date: now,
                     media: photoMedia)
            
@@ -361,7 +360,6 @@ class GGMessageViewController:
                     toId: recipient.jid,
                     fromId: self.fromId,
                     senderId: UserAPI.sharedInstance.jidBareStr,
-                    isOutgoing: true,
                     date: NSDate(),
                     media: item)
                 self.messages.append(message)

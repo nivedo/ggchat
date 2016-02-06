@@ -56,7 +56,7 @@ class Message {
         }
     }
     
-    init(id: String, toId: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
+    init(id: String, toId: String, fromId: String, senderId: String, date: NSDate, attributedText: NSAttributedString) {
         self.id = id
         self.toId = toId
         self.fromId = fromId
@@ -66,15 +66,15 @@ class Message {
         self.text = self.attributedText!.string
         self.rawText = self.text
         self.isMediaMessage = false
-        self.isOutgoing = isOutgoing
+        self.isOutgoing = UserAPI.sharedInstance.isOutgoingJID(senderId)
     }
    
-    init(id: String, toId: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
+    init(id: String, toId: String, fromId: String, senderId: String, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
         self.id = id
         self.toId = toId
         self.fromId = fromId
         self.senderId = senderId
-        self.isOutgoing = isOutgoing
+        self.isOutgoing = UserAPI.sharedInstance.isOutgoingJID(fromId)
         self.date = date
         self.isMediaMessage = true
         self.media = media
@@ -209,7 +209,6 @@ class Message {
                                 toId: toId,
                                 fromId: fromId,
                                 senderId: senderId,
-                                isOutgoing: UserAPI.sharedInstance.isOutgoingJID(senderId),
                                 date: date,
                                 media: photoMedia)
                             return photoMessage
@@ -328,7 +327,6 @@ class MessagePacket {
                     toId: toId,
                     fromId: fromId,
                     senderId: senderId,
-                    isOutgoing: isOutgoing,
                     date: date,
                     media: wikiMedia,
                     attributedText: attributedText)
@@ -339,7 +337,6 @@ class MessagePacket {
                 toId: toId,
                 fromId: fromId,
                 senderId: senderId,
-                isOutgoing: isOutgoing,
                 date: date,
                 attributedText: attributedText)
             
