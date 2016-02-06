@@ -152,6 +152,7 @@ class GGMessageViewController:
                 let id = XMPPManager.sharedInstance.stream.generateUUID()
                 let message: Message = Message(
                     id: id,
+                    toId: recipient.jid,
                     fromId: self.fromId,
                     senderId: UserAPI.sharedInstance.jidBareStr,
                     isOutgoing: true,
@@ -325,6 +326,7 @@ class GGMessageViewController:
             // let text = packet.encodedText
             let id = XMPPManager.sharedInstance.stream.generateUUID()
             let message = packet.message(id,
+                toId: recipient.jid,
                 fromId: self.fromId,
                 senderId: UserAPI.sharedInstance.jidBareStr,
                 date: date,
@@ -348,21 +350,24 @@ class GGMessageViewController:
     
     override func composerTextView(textView: MessageComposerTextView,
         shouldPasteWithSender sender: AnyObject?) -> Bool {
-        if ((UIPasteboard.generalPasteboard().image) != nil) {
-            // If there's an image in the pasteboard, construct a media item with that image and `send` it.
-            let item: PhotoMediaItem = PhotoMediaItem(
-                image: UIPasteboard.generalPasteboard().image!,
-                delegate: self)
-            let message: Message = Message(
-                id: XMPPManager.sharedInstance.stream.generateUUID(),
-                fromId: self.fromId,
-                senderId: UserAPI.sharedInstance.jidBareStr,
-                isOutgoing: true,
-                date: NSDate(),
-                media: item)
-            self.messages.append(message)
-            self.finishSendingMessage()
-            return false
+        if let recipient = self.recipient {
+            if ((UIPasteboard.generalPasteboard().image) != nil) {
+                // If there's an image in the pasteboard, construct a media item with that image and `send` it.
+                let item: PhotoMediaItem = PhotoMediaItem(
+                    image: UIPasteboard.generalPasteboard().image!,
+                    delegate: self)
+                let message: Message = Message(
+                    id: XMPPManager.sharedInstance.stream.generateUUID(),
+                    toId: recipient.jid,
+                    fromId: self.fromId,
+                    senderId: UserAPI.sharedInstance.jidBareStr,
+                    isOutgoing: true,
+                    date: NSDate(),
+                    media: item)
+                self.messages.append(message)
+                self.finishSendingMessage()
+                return false
+            }
         }
         return true
     }

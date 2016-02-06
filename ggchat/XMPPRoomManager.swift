@@ -113,20 +113,21 @@ class XMPPRoomManager: NSObject,
         print("xmppRoomDidJoin \(roomJID)")
         if let chatRoom = self.rooms[roomJID] {
             self.delegate?.didJoinRoom(chatRoom)
-            for jid in chatRoom.inviteList {
+            for (index, jid) in chatRoom.inviteList.enumerate() {
                 chatRoom.xmppRoom.inviteUser(XMPPJID.jidWithString(jid), withMessage: self.welcome)
-            }
-            if chatRoom.inviteList.count > 0 {
-                let now = NSDate()
-                let id = "\(roomJID):\(now.description)"
-                let msg = Message(
-                    id: id,
-                    fromId: roomJID,
-                    senderId: UserAPI.sharedInstance.jidBareStr,
-                    isOutgoing: true,
-                    date: now,
-                    attributedText: NSAttributedString(string: self.welcome))
-                UserAPI.sharedInstance.newMessage(roomJID, date: now, message: msg)
+                if index == 0 {
+                    let now = NSDate()
+                    let id = "\(roomJID):\(now.description)"
+                    let msg = Message(
+                        id: id,
+                        toId: jid,
+                        fromId: roomJID,
+                        senderId: UserAPI.sharedInstance.jidBareStr,
+                        isOutgoing: true,
+                        date: now,
+                        attributedText: NSAttributedString(string: self.welcome))
+                    UserAPI.sharedInstance.newMessage(roomJID, date: now, message: msg)
+                }
             }
         }
     }

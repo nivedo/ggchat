@@ -10,6 +10,7 @@ import Foundation
 
 class Message {
    
+    var toId: String
     var fromId: String
     var senderId: String
     var senderDisplayName: String {
@@ -35,6 +36,12 @@ class Message {
     var id: String
     var readCount: Int = 0
     
+    var isGroupChatEcho: Bool {
+        get {
+            return self.senderId == self.toId
+        }
+    }
+    
     var displayText: String {
         get {
             if let text = self.attributedText?.string {
@@ -49,8 +56,9 @@ class Message {
         }
     }
     
-    init(id: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
+    init(id: String, toId: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, attributedText: NSAttributedString) {
         self.id = id
+        self.toId = toId
         self.fromId = fromId
         self.senderId = senderId
         self.date = date
@@ -61,8 +69,9 @@ class Message {
         self.isOutgoing = isOutgoing
     }
    
-    init(id: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
+    init(id: String, toId: String, fromId: String, senderId: String, isOutgoing: Bool, date: NSDate, media: MessageMediaData, attributedText: NSAttributedString? = nil) {
         self.id = id
+        self.toId = toId
         self.fromId = fromId
         self.senderId = senderId
         self.isOutgoing = isOutgoing
@@ -171,7 +180,8 @@ class Message {
         if let type = element?.attributeStringValueForName("type") {
             if type == "chat" || type == "groupchat" {
                 if let bodyElement = element?.elementForName("body"),
-                    let from = element?.attributeStringValueForName("from") {
+                    let from = element?.attributeStringValueForName("from"),
+                    let to = element?.attributeStringValueForName("to") {
                         if let content_type = element?.attributeStringValueForName("content_type") {
                             if content_type == "read_receipt" {
                                 return nil
@@ -187,6 +197,7 @@ class Message {
                             packet.variables = self.parseVariablesFromElement(ggbodyElement)
                         }
                         let (fromId, senderId) = self.stripJID(from, type: type)
+                        let toId = UserAPI.stripResourceFromJID(to)
                         
                         if let photo = bodyElement.elementForName("photo") {
                             let originalKey = photo.elementForName("originalKey")!.stringValue()
@@ -195,6 +206,7 @@ class Message {
                             let photoMedia = PhotoMediaItem(thumbnailKey: thumbnailKey, originalKey: originalKey, delegate: delegate)
                             let photoMessage = Message(
                                 id: id!,
+                                toId: toId,
                                 fromId: fromId,
                                 senderId: senderId,
                                 isOutgoing: UserAPI.sharedInstance.isOutgoingJID(senderId),
@@ -203,6 +215,7 @@ class Message {
                             return photoMessage
                         } else {
                             let fullMessage = packet.message(id!,
+                                toId: toId,
                                 fromId: fromId,
                                 senderId: senderId,
                                 date: date,
@@ -218,18 +231,22 @@ class Message {
                         let reason = reasonElement.stringValue()
                         var fromId: String!
                         var senderId: String!
+                        var toId: String!
                         if let from = element?.attributeStringValueForName("from") {
-                            senderId = inviteElement.attributeStringValueForName("from")
                             fromId = UserAPI.stripResourceFromJID(from)
-                        } else if let _ = element?.attributeStringValueForName("to") {
-                            senderId = inviteElement.attributeStringValueForName("to")
-                            fromId = UserAPI.sharedInstance.jidBareStr
+                            senderId = inviteElement.attributeStringValueForName("from")
+                            toId = UserAPI.sharedInstance.jidBareStr
+                        } else if let to = element?.attributeStringValueForName("to") {
+                            fromId = UserAPI.stripResourceFromJID(to)
+                            senderId = UserAPI.sharedInstance.jidBareStr
+                            toId = inviteElement.attributeStringValueForName("to")
                         } else {
                             return nil
                         }
                         let id = "\(fromId):\(senderId)"
                         let packet = MessagePacket(placeholderText: reason, encodedText: reason)
                         let fullMessage = packet.message(id,
+                            toId: toId,
                             fromId: fromId,
                             senderId: senderId,
                             date: date,
@@ -296,6 +313,7 @@ class MessagePacket {
     }
     
     func message(id: String,
+        toId: String,
         fromId: String,
         senderId: String,
         date: NSDate,
@@ -307,6 +325,7 @@ class MessagePacket {
                 let wikiMedia: WikiMediaItem = WikiMediaItem(imageURL: asset.url, placeholderURL: asset.placeholderURL, delegate: delegate)
                 let message = Message(
                     id: id,
+                    toId: toId,
                     fromId: fromId,
                     senderId: senderId,
                     isOutgoing: isOutgoing,
@@ -317,6 +336,7 @@ class MessagePacket {
             }
             let fullMessage = Message(
                 id: id,
+                toId: toId,
                 fromId: fromId,
                 senderId: senderId,
                 isOutgoing: isOutgoing,

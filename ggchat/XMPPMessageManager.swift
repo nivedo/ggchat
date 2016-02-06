@@ -652,7 +652,9 @@ extension XMPPManager {
 	// public func xmppStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage) {
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         let now = NSDate()
-        // let jid = UserAPI.stripResourceFromJID(message.from().bare())
+        let jid = UserAPI.stripResourceFromJID(message.from().bare())
+        print("didReceiveMessage from: \(jid) --> \(message)")
+        /*
         let (jid, senderId) = Message.stripJID(message.fromStr(), type: message.type())
         print("didReceiveMessage type: \(message.type()), from: \(jid), sender: \(senderId) --> \(message)")
         // if message.isGroupChatMessage() && UserAPI.sharedInstance.isOutgoingJID(senderId) {
@@ -660,9 +662,13 @@ extension XMPPManager {
             // Ignore group chat message sent by self
             return
         }
+        */
         
         if message.isChatOrGroupMessageWithBody() {
             if let msg = Message.parseMessageFromElement(message as DDXMLElement, date: now, delegate: nil) {
+                if msg.isGroupChatEcho {
+                    return
+                }
                 let chat = UserAPI.sharedInstance.newMessage(jid, date: now, message: msg)
                 chat.incrementUnread()
                 XMPPMessageManager.sharedInstance.delegate?.receiveMessage(jid, message: msg)
