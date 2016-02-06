@@ -326,8 +326,10 @@ public class XMPPMessageManager: NSObject {
                         }
                     }
                     */
-                    messages.append(message)
-                    self.archivedMessageIds.insert(message.id)
+                    if !message.isGroupChatEcho {
+                        messages.append(message)
+                        self.archivedMessageIds.insert(message.id)
+                    }
                 } else {
                     print("Unable to parse \(messageElement.messageStr)")
                 }
@@ -376,14 +378,16 @@ public class XMPPMessageManager: NSObject {
                     messageElement.messageStr,
                     date: messageElement.timestamp,
                     delegate: delegate) {
-                    if let composing = messageElement.isComposing {
-                        message.isFailedToSend = composing
-                        if composing {
-                            composingCount++
+                    if !message.isGroupChatEcho {
+                        if let composing = messageElement.isComposing {
+                            message.isFailedToSend = composing
+                            if composing {
+                                composingCount++
+                            }
                         }
+                        messages.append(message)
+                        self.archivedMessageIds.insert(message.id)
                     }
-                    messages.append(message)
-                    self.archivedMessageIds.insert(message.id)
                 } else if let readReceipt = ReadReceipt.parseReadReceiptFromString(messageElement.messageStr) {
                     // print("Loaded archived read receipt: \(readReceipt.ids.count)")
                     receipts.append(readReceipt)
