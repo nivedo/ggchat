@@ -74,7 +74,7 @@ class Message {
         self.toId = toId
         self.fromId = fromId
         self.senderId = senderId
-        self.isOutgoing = UserAPI.sharedInstance.isOutgoingJID(fromId)
+        self.isOutgoing = UserAPI.sharedInstance.isOutgoingJID(senderId)
         self.date = date
         self.isMediaMessage = true
         self.media = media

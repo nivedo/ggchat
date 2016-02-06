@@ -372,6 +372,7 @@ class UserAPI {
     ////////////////////////////////////////////////////////////////////
  
     func syncGroups(completion: ((Bool, String?) -> Void)?) {
+        print("=================== sync groups ====================")
         if let token = self.authToken {
             self.post(UserAPI.syncgroupsUrl,
                 authToken: token,
@@ -675,6 +676,7 @@ class UserAPI {
     }
     
     func loadProfilesFromJson(array: [AnyObject], completion: ((Bool) -> Void)? = nil) {
+        print("loadProfilesFromJson --------------------------------->")
         print(array)
         // self.buddyList.removeAll()
         // self.rosterMap.removeAll()
@@ -917,6 +919,7 @@ class UserAPI {
     }
     
     func sync(completion: ((Bool) -> Void)? = nil) {
+        print("=================== sync ====================")
         if let token = self.authToken {
             self.get(UserAPI.syncUrl,
                 authToken: token,
