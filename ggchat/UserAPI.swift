@@ -400,7 +400,7 @@ class UserAPI {
                             print("Room \(roomJID) created \(json)")
                             completion?(true, roomJID)
                             let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
-                            let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
+                            // let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
                             XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID,
                                 invitees: inviteesJID,
                                 groupName: groupName,
