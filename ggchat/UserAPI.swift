@@ -886,6 +886,7 @@ class UserAPI {
     }
     
     func loadMessagesFromJson(messagesArray: [AnyObject]) {
+        // print(messagesArray)
         dispatch_async(dispatch_get_main_queue()) {
             var sort = false
             for element in messagesArray {
