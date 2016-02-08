@@ -50,6 +50,7 @@ class RosterUser: Hashable {
         self.nickname = profile["nickname"] as! String
         self.avatar = profile["avatar"] as! String
         self.isBuddy = profile["is_buddy"] as! Bool
+        self.isGroup = profile["is_group"] as! Bool
             
         UserAPICoreData.sharedInstance.syncUser(self)
             
