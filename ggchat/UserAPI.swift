@@ -385,11 +385,14 @@ class UserAPI {
     
     func createGroup(groupName: String, avatar: String, users: Set<RosterUser>, completion: ((Bool, String?) -> Void)?) {
         if let token = self.authToken {
+            var membersJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
+            membersJID.append(self.jidBareStr)
             self.post(UserAPI.creategroupUrl,
                 authToken: token,
                 jsonBody: [
                     "groupname": groupName,
-                    "avatar": avatar
+                    "avatar": avatar,
+                    "members": membersJID,
                     ],
                 jsonCompletion: { (jsonDict: [String: AnyObject]?) -> Void in
                     print(jsonDict)
@@ -399,8 +402,8 @@ class UserAPI {
                         } else if let roomJID = json["jid"] as? String {
                             print("Room \(roomJID) created \(json)")
                             completion?(true, roomJID)
-                            let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
                             // let roomJID = "\(NSUUID().UUIDString)@conference.blub.io"
+                            let inviteesJID = users.map{ return UserAPI.stripResourceFromJID($0.jid) }
                             XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID,
                                 invitees: inviteesJID,
                                 groupName: groupName,

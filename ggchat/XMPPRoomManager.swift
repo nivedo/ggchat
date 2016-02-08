@@ -12,6 +12,7 @@ class ChatRoom {
     var jid: String
     var xmppRoom: XMPPRoom
     var inviteList: [String]
+    var invited: Bool = false
     var user: RosterUser
     
     init(jid: String, xmppRoom: XMPPRoom, inviteList: [String], groupName: String, avatar: String) {
@@ -105,14 +106,24 @@ class XMPPRoomManager: NSObject,
     }
     
     func xmppRoomDidJoin(sender: XMPPRoom) {
+        /*
+        // No longer need to sync groups
         UserAPI.sharedInstance.syncGroups({(success: Bool, errorMsg: String?) -> Void in
             print("sync groups \(success)")
         })
+        */
         
         let roomJID = UserAPI.stripResourceFromJID(sender.myRoomJID.bare())
         print("xmppRoomDidJoin \(roomJID)")
         if let chatRoom = self.rooms[roomJID] {
             self.delegate?.didJoinRoom(chatRoom)
+            self.inviteUsersToRoom(chatRoom)
+        }
+    }
+    
+    func inviteUsersToRoom(chatRoom: ChatRoom) {
+        if !chatRoom.invited {
+            let roomJID = chatRoom.jid
             for (index, jid) in chatRoom.inviteList.enumerate() {
                 chatRoom.xmppRoom.inviteUser(XMPPJID.jidWithString(jid), withMessage: self.welcome)
                 if index == 0 {
@@ -128,6 +139,7 @@ class XMPPRoomManager: NSObject,
                     UserAPI.sharedInstance.newMessage(roomJID, date: now, message: msg)
                 }
             }
+            chatRoom.invited = true
         }
     }
    
