@@ -23,6 +23,7 @@ class GroupMessageTableViewController:
     var selectedBuddySet = Set<RosterUser>()
     let photoPicker = UIImagePickerController()
     var groupAvatarImage: UIImage?
+    var groupAvatarPath: String = ""
     
     var groupAvatar: MessageAvatarImage {
         get {
@@ -101,6 +102,24 @@ class GroupMessageTableViewController:
             let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
             self.groupAvatarImage = chosenImage.gg_imageScaledToSize(self.avatarSize, isOpaque: false)
             
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "Uploading avatar."
+            
+            let uniquePath = "\(NSProcessInfo.processInfo().globallyUniqueString).jpg"
+            AWSS3UploadManager.sharedInstance.upload(self.groupAvatarImage!,
+                fileName: uniquePath,
+                userData: nil,
+                bucket: GGSetting.awsS3AvatarsBucketName,
+                completion: { (success: Bool) -> Void in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        MBProgressHUD.hideHUDForView(self.view, animated: false)
+                        if success {
+                            self.groupAvatarPath = uniquePath
+                        }
+                    }
+                }
+            )
+            
             self.dismissViewControllerAnimated(true, completion: nil)
             self.tableView.reloadData()
     }
@@ -127,7 +146,7 @@ class GroupMessageTableViewController:
             XMPPRoomManager.sharedInstance.joinOrCreateRoom(roomJID, invitees: inviteesJID, groupName: self.groupName, avatar: "")
             */
             UserAPI.sharedInstance.createGroup(self.groupName,
-                avatar: "",
+                avatar: self.groupAvatarPath,
                 users: self.selectedBuddySet,
                 completion: nil)
         }

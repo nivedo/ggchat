@@ -42,6 +42,8 @@ class RosterUser: Hashable {
         self.nickname = groupName
         self.avatar = avatar
         self.isGroup = true
+
+        self.initAvatar(nil)
     }
     
     init(profile: [String: AnyObject],
