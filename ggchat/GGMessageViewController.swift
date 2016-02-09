@@ -26,6 +26,9 @@ class GGMessageViewController:
                 self.navigationItem.title = recipient.displayName
                 if !recipient.isEqual(oldValue) {
                     self.loadArchivedMessagesFromCoreData(true, animated: true)
+                    if recipient.isGroup {
+                        XMPPRoomManager.sharedInstance.joinRoom(recipient)
+                    }
                 }
             }
         }

@@ -696,6 +696,9 @@ class UserAPI {
             if user.isBuddy {
                 buddyList.append(user)
             }
+            if user.isGroup {
+                XMPPRoomManager.sharedInstance.joinRoom(user)
+            }
             rosterMap[user.jid] = user
         }
         UserAPICoreData.sharedInstance.trimAllUsers(rosterMap)
@@ -721,6 +724,9 @@ class UserAPI {
                     let rosterUser = RosterUser(user: user, avatarCompletion: completion)
                     if rosterUser.isBuddy {
                         self.buddyList.append(rosterUser)
+                    }
+                    if rosterUser.isGroup {
+                        XMPPRoomManager.sharedInstance.joinRoom(rosterUser)
                     }
                     self.rosterMap[rosterUser.jid] = rosterUser
                 }

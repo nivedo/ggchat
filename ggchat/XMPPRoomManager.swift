@@ -25,6 +25,13 @@ class ChatRoom {
             avatar: avatar)
         UserAPI.sharedInstance.addRosterUser(self.user)
     }
+    
+    init(rosterUser: RosterUser, xmppRoom: XMPPRoom) {
+        self.jid = rosterUser.jid
+        self.xmppRoom = xmppRoom
+        self.inviteList = []
+        self.user = rosterUser
+    }
 }
 
 protocol XMPPRoomManagerDelegate : NSObjectProtocol {
@@ -60,7 +67,7 @@ class XMPPRoomManager: NSObject,
         if let chatRoom = self.rooms[roomID] {
             let xmppRoom = chatRoom.xmppRoom
             if !xmppRoom.isJoined {
-                xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.displayName,
+                xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.jidBareStr,
                     history: nil,
                     password: nil)
                 chatRoom.inviteList = invitees
@@ -74,6 +81,38 @@ class XMPPRoomManager: NSObject,
                 jid:roomJID,
                 dispatchQueue: dispatch_get_main_queue())
             self.rooms[roomID] = ChatRoom(jid: roomID, xmppRoom: xmppRoom, inviteList: invitees, groupName: groupName, avatar: avatar)
+            xmppRoom.activate(XMPPManager.sharedInstance.stream)
+            xmppRoom.addDelegate(self, delegateQueue: dispatch_get_main_queue())
+            xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.jidBareStr,
+                history: nil,
+                password: nil)
+        }
+    }
+    
+    func joinRoom(rosterUser: RosterUser) {
+        if !XMPPManager.sharedInstance.isConnected() {
+            return
+        }
+        if !rosterUser.isGroup {
+            return
+        }
+        let roomID = rosterUser.jid.lowercaseString
+        if let chatRoom = self.rooms[roomID] {
+            let xmppRoom = chatRoom.xmppRoom
+            if !xmppRoom.isJoined {
+                xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.jidBareStr,
+                    history: nil,
+                    password: nil)
+            }
+        } else {
+            print("joinRoomUserNickname, jid: \(roomID), uuid: \(UserAPI.sharedInstance.uuidStr)")
+            let roomJID = XMPPJID.jidWithString(roomID)
+            let roomMemory = XMPPRoomMemoryStorage()
+            let xmppRoom = XMPPRoom(
+                roomStorage: roomMemory,
+                jid:roomJID,
+                dispatchQueue: dispatch_get_main_queue())
+            self.rooms[roomID] = ChatRoom(rosterUser: rosterUser, xmppRoom: xmppRoom)
             xmppRoom.activate(XMPPManager.sharedInstance.stream)
             xmppRoom.addDelegate(self, delegateQueue: dispatch_get_main_queue())
             xmppRoom.joinRoomUsingNickname(UserAPI.sharedInstance.jidBareStr,
