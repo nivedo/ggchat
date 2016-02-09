@@ -99,6 +99,7 @@ class GGMessageViewController:
         if let recipient = self.recipient {
             if let firstDate = self.messages.first?.date {
                 UserAPI.sharedInstance.getHistory(recipient.jid,
+                    isGroup: recipient.isGroup,
                     limit: GGConfig.paginationLimit,
                     end: firstDate,
                     delegate: self,
@@ -254,6 +255,7 @@ class GGMessageViewController:
     func syncHistoryMessages(animated: Bool) {
         if let recipient = self.recipient {
             UserAPI.sharedInstance.getHistory(recipient.jid,
+                isGroup: recipient.isGroup,
                 limit: GGConfig.paginationLimit,
                 end: nil,
                 delegate: self,

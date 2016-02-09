@@ -349,9 +349,9 @@ class UserAPI {
         return "\(self.route("sync"))"
     }
     
-    class func historyUrl(peerJID: String, limit: Int? = nil, end: NSDate? = nil) -> String {
+    class func historyUrl(peerJID: String, isGroup: Bool, limit: Int? = nil, end: NSDate? = nil) -> String {
         let tokens = peerJID.componentsSeparatedByString("@")
-        let peerUUID = tokens[0]
+        let peerUUID = isGroup ? peerJID : tokens[0]
         let path = "history?peer=\(peerUUID)"
         var url = "\(self.route(path))"
         if let messageLimit = limit {
@@ -764,10 +764,10 @@ class UserAPI {
         return self.jidBareStr == UserAPI.stripResourceFromJID(jid)
     }
     
-    func getHistory(peerJID: String, limit: Int?, end: NSDate?, delegate: MessageMediaDelegate?, completion: HTTPMessagesCompletion? = nil) {
+    func getHistory(peerJID: String, isGroup: Bool, limit: Int?, end: NSDate?, delegate: MessageMediaDelegate?, completion: HTTPMessagesCompletion? = nil) {
         // print("getHistory")
         if let token = self.authToken {
-            self.get(UserAPI.historyUrl(peerJID, limit: limit, end: end),
+            self.get(UserAPI.historyUrl(peerJID, isGroup: isGroup, limit: limit, end: end),
                 authToken: token,
                 arrayCompletion: { (arrayBody: [AnyObject]?) -> Void in
                     if let array = arrayBody {
