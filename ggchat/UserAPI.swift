@@ -64,6 +64,9 @@ class RosterUser: Hashable {
         if let isBuddy = user.is_buddy?.boolValue {
             self.isBuddy = isBuddy
         }
+        if let isGroup = user.is_group?.boolValue {
+            self.isGroup = isGroup
+        }
         
         self.initAvatar(avatarCompletion)
     }

@@ -18,7 +18,8 @@ class User: NSManagedObject {
         return self.jid == rosterUser.jid &&
             self.nickname == rosterUser.nickname &&
             self.avatar == rosterUser.avatar &&
-            self.is_buddy?.boolValue == rosterUser.isBuddy
+            self.is_buddy?.boolValue == rosterUser.isBuddy &&
+            self.is_group?.boolValue == rosterUser.isGroup
     }
     
     func update(rosterUser: RosterUser) -> Bool {
@@ -26,6 +27,7 @@ class User: NSManagedObject {
             self.nickname = rosterUser.nickname
             self.avatar = rosterUser.avatar
             self.is_buddy = NSNumber(bool: rosterUser.isBuddy)
+            self.is_group = NSNumber(bool: rosterUser.isGroup)
             return true
         }
         return false
@@ -36,6 +38,6 @@ class User: NSManagedObject {
         self.nickname = rosterUser.nickname
         self.avatar = rosterUser.avatar
         self.is_buddy = NSNumber(bool: rosterUser.isBuddy)
+        self.is_group = NSNumber(bool: rosterUser.isGroup)
     }
-
 }

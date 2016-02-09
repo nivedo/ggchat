@@ -26,7 +26,6 @@
 		D433B15C1C3CB6AC0003E100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15A1C3CB6AC0003E100 /* User.swift */; };
 		D433B15E1C3CB6FE0003E100 /* UserAPICoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */; };
 		D433B1601C3F77200003E100 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B15F1C3F77200003E100 /* TabBarController.swift */; };
-		D433B1621C40FD6F0003E100 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */; };
 		D433B1641C45E2340003E100 /* XMPPRoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1631C45E2340003E100 /* XMPPRoomManager.swift */; };
 		D433B1681C45F8E80003E100 /* GroupMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1671C45F8E80003E100 /* GroupMessageTableViewController.swift */; };
 		D433B16B1C4617370003E100 /* ContactSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D433B1691C4617370003E100 /* ContactSelectTableViewCell.swift */; };
@@ -277,6 +276,7 @@
 		D4C8FE3D1C08421100992801 /* XMPPRosterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */; };
 		D4C8FE3F1C08522D00992801 /* XMPPPresenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */; };
 		D4D7EAAA1C6434EB000A9099 /* ReadReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7EAA91C6434EB000A9099 /* ReadReceipt.swift */; };
+		D4D7EAAC1C69F0E8000A9099 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7EAAB1C69F0E8000A9099 /* User+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -317,7 +317,6 @@
 		D433B15A1C3CB6AC0003E100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPICoreData.swift; sourceTree = "<group>"; };
 		D433B15F1C3F77200003E100 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D433B1631C45E2340003E100 /* XMPPRoomManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPRoomManager.swift; sourceTree = "<group>"; };
 		D433B1671C45F8E80003E100 /* GroupMessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMessageTableViewController.swift; sourceTree = "<group>"; };
 		D433B1691C4617370003E100 /* ContactSelectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSelectTableViewCell.swift; sourceTree = "<group>"; };
@@ -731,6 +730,7 @@
 		D4C8FE3C1C08421100992801 /* XMPPRosterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPRosterManager.swift; sourceTree = "<group>"; };
 		D4C8FE3E1C08522D00992801 /* XMPPPresenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPPresenceManager.swift; sourceTree = "<group>"; };
 		D4D7EAA91C6434EB000A9099 /* ReadReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadReceipt.swift; sourceTree = "<group>"; };
+		D4D7EAAB1C69F0E8000A9099 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1278,7 +1278,7 @@
 				D433B15D1C3CB6FE0003E100 /* UserAPICoreData.swift */,
 				D433B1561C3CB2BB0003E100 /* UserAPIModel.xcdatamodeld */,
 				D433B15A1C3CB6AC0003E100 /* User.swift */,
-				D433B1611C40FD6F0003E100 /* User+CoreDataProperties.swift */,
+				D4D7EAAB1C69F0E8000A9099 /* User+CoreDataProperties.swift */,
 			);
 			name = APIs;
 			sourceTree = "<group>";
@@ -2224,8 +2224,8 @@
 				D45FBD781C05754400E79B4E /* SettingTableHeaderCell.swift in Sources */,
 				D4C8FE041C06AA2300992801 /* XMPPvCardTempEmail.m in Sources */,
 				D4A9F5091BF510E000FA4444 /* MessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
+				D4D7EAAC1C69F0E8000A9099 /* User+CoreDataProperties.swift in Sources */,
 				D4A786501C0A93EF00C37427 /* SettingTextFieldTableViewController.swift in Sources */,
-				D433B1621C40FD6F0003E100 /* User+CoreDataProperties.swift in Sources */,
 				D4A7866F1C0EA0F700C37427 /* SettingManager.swift in Sources */,
 				D4C8FE0D1C06AA2300992801 /* XMPPIQ+XEP_0066.m in Sources */,
 				D4C8FDE91C06AA2300992801 /* XMPPJabberRPCModule.m in Sources */,
