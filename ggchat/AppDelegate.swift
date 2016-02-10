@@ -40,9 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
         // Register remote notifications with APNS
         if application.respondsToSelector("registerUserNotificationSettings:") {
+            print("Register iOS-8 device")
             let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         } else {
+            print("Register iOS-7 device")
             let type: UIRemoteNotificationType = UIRemoteNotificationType(rawValue: (UIRemoteNotificationType.Alert.rawValue | UIRemoteNotificationType.Badge.rawValue | UIRemoteNotificationType.Sound.rawValue))
             application.registerForRemoteNotificationTypes(type)
         }
