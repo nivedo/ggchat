@@ -1,10 +1,12 @@
 <?php
 
 // Put your device token here (without spaces):
-$deviceToken='35df6e43efea40a04065b56aa1da5bd79feaf5be4f0a1fbf014085b267ae22bf';
+$deviceToken='66eea6f3398affe2fa6fd9199306ee8dd077cf8417ecf2b36dce768a38a1a099';
+$deviceToken='9d256228d4645da19fb6038157de77e97e17d5ba9888208c37d255afdcbbec39';
 
 // Put your private key's passphrase here:
 $passphrase = 'disposable';
+$passphrase = '8788';
 
 // Put your alert message here:
 $message = 'My first push notification!';

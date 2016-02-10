@@ -1008,6 +1008,8 @@ class UserAPI {
                     if let json = jsonBody {
                         if let errorMsg = json["error"] as? String {
                             print("Unable to push token for \(self.displayName), reason: \(errorMsg)")
+                        } else {
+                            print("Successfully pushed token for \(self.displayName): \(pushToken)")
                         }
                     }
             })

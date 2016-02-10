@@ -128,6 +128,7 @@ public class XMPPMessageManager: NSObject {
         completeMessage.addAttributeWithName("from", stringValue: UserAPI.sharedInstance.jidBareStr)
        
         let receiptsElement = DDXMLElement(name: "receipts")
+        receiptsElement.addAttributeWithName("count", integerValue: ids.count)
         for id in ids {
             let readElement = DDXMLElement(name: "read")
             readElement.addAttributeWithName("id", stringValue: id)
