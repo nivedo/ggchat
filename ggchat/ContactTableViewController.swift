@@ -452,7 +452,7 @@ class ContactTableViewController: UITableViewController,
     
     func receiveMessage(from: String, message: Message) {
         dispatch_async(dispatch_get_main_queue()) {
-            TabBarController.incrementChatsBadge(self.tabBarController)
+            TabBarController.incrementChatsBadge(self.tabBarController, message: message)
         }
     }
     

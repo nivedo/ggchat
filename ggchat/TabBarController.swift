@@ -16,7 +16,10 @@ class TabBarController {
        // Nothing to do
     }
     
-    class func incrementChatsBadge(tabBarController: UITabBarController?, increment: Int = 1) {
+    class func incrementChatsBadge(tabBarController: UITabBarController?, message: Message, increment: Int = 1) {
+        if message.isGroupChatEcho {
+            return
+        }
         JSQSystemSoundPlayer.jsq_playMessageReceivedAlert()
         // AudioServicesPlaySystemSound(1103)
         

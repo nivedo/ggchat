@@ -271,7 +271,7 @@ class ChatTableViewController:
         dispatch_async(dispatch_get_main_queue()) {
             self.chatsList = UserAPI.sharedInstance.chatsList
             self.tableView.reloadData()
-            TabBarController.incrementChatsBadge(self.tabBarController)
+            TabBarController.incrementChatsBadge(self.tabBarController, message: message)
         }
     }
     
