@@ -325,6 +325,10 @@ class GGMessageViewController:
         date: NSDate) {
             
         if let recipient = self.recipient {
+            if recipient.isGroup {
+                XMPPRoomManager.sharedInstance.joinRoom(recipient)
+            }
+            
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
             // let text = packet.encodedText
